@@ -4,7 +4,7 @@ var app = express();
 app.use(express.static("Client"));
 
 app.get("/", (req, res, err) => {
-    res.send("Client/index.html");
+    res.send("dist/index.html");
 })
 
 app.listen(process.env.PORT, function() {

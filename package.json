@@ -4,6 +4,7 @@
   "description": "A medical dashboard for physiotherapists and patients",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --mode development ./Client/js/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,6 +15,16 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/soft3413p22b/dashboard#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   }
 }
