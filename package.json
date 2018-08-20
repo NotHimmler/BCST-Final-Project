@@ -1,0 +1,19 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "A medical dashboard for physiotherapists and patients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gmal6100@bitbucket.org/soft3413p22b/dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/soft3413p22b/dashboard#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
