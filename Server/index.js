@@ -7,6 +7,6 @@ app.get("/", (req, res, err) => {
     res.send("dist/index.html");
 })
 
-app.listen(process.env.PORT, function() {
+app.listen(process.env.PORT || 8080, function() {
     console.log("Server listening on port 8080.");
 })
