@@ -8,10 +8,10 @@ class Nav extends React.Component {
 
     render() {
         return (
-            <div>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="row d-flex">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
                     <Link className="navbar-brand m-0 p-0" to="/">
-                        <div onMouseLeave={this.handleMouseLeave} onMouseEnter={this.handleMouseEnter} className="d-inline-flex align-items-center justify-content-center p-1 logo">
+                        <div className="d-inline-flex align-items-center justify-content-center p-1 logo">
                             <strong>Physio Dashboard</strong>
                         </div>
                     </Link>

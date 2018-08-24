@@ -1,0 +1,12 @@
+i.fab, i.fas {
+    margin: 0 5px;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.row {
+	margin-left: 0;
+	margin-right: 0;
+}

@@ -11,10 +11,9 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Nav />
-        <div className="row content">
+        <div className="row d-flex wo-100 h-100">
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route component={FourOhFour} />
           </Switch>
         </div>
         <Footer />
