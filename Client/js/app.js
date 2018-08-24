@@ -4,11 +4,6 @@ import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 import Nav from "./components/Nav";
 import Home from "./components/Home";
-import Portfolio from "./components/Portfolio";
-import Blog from "./components/Blog";
-import Contact from "./components/Contact";
-import About from "./components/About";
-import FourOhFour from "./components/FourOhFour";
 import Footer from "./components/Footer";
 
 const App = () => {
