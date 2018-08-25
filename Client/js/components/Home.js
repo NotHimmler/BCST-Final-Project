@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 class Home extends React.Component {
     render() {
@@ -13,12 +13,16 @@ class Home extends React.Component {
           
                 <div className="row w-100">
                     <div className="col-md-6">
+                        <Link to="/doctorLogin">
                         <img href="#" src = "/img/doctor.jpg" className = "rounded-circle img-circle" />
                         <p className="text-center word">Doctor</p>
+                        </Link>
                     </div>
                     <div className="col-md-6">
-                        <img href="doctor.html" src = "/img/patient.jpg" className = "rounded-circle img-circle" />
+                        <Link to="/patientLogin">
+                        <img href="#" src = "/img/patient.jpg" className = "rounded-circle img-circle" />
                         <p className="text-center word">Patient</p>
+                        </Link>
                     </div>
                 </div>
             </div>
