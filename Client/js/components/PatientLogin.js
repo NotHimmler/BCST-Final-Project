@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class DoctorLogin extends React.Component {
+class PatientLogin extends React.Component {
     render() {
         return (
             <div className="row">
@@ -11,4 +11,4 @@ class DoctorLogin extends React.Component {
     }
 }
 
-export default DoctorLogin;
+export default PatientLogin;
