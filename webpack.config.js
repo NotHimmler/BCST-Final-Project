@@ -21,10 +21,11 @@ module.exports = {
       }
     ]
   },
+  watch: true,
   plugins: [
     new HtmlWebPackPlugin({
       template: "./Client/index.html",
-      filename: "./Client/index.html"
+      filename: "./index.html"
     })/**,
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
