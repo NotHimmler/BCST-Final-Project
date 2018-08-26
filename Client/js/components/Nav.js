@@ -31,7 +31,7 @@ class Nav extends React.Component {
                         <span className="nav-item nav-link active"><Link className="text-white" to="/">Home</Link> <span className="sr-only">(current)</span></span>
                         <span className="nav-item nav-link"><Link className="text-white" to="/about">About</Link></span>
                         <span className="nav-item nav-link"><Link className="text-white" to="/contact">Contact</Link></span>
-                        { !SessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white" to="/login">Login</Link></span> : <span className="nav-item nav-link"><Link onClick={this.handleLogout} to="/">Logout</Link></span>}
+                        { !SessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white" to="/login">Login</Link></span> : <span className="nav-item nav-link"><Link className="text-white" onClick={this.handleLogout} to="/">Logout</Link></span>}
                         </div>
                     </div>
                 </nav>
