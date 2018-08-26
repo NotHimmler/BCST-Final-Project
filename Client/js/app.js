@@ -9,6 +9,8 @@ import DoctorLogin from "./components/DoctorLogin";
 import PatientLogin from "./components/PatientLogin";
 import AddFitbit from "./components/AddFitbit";
 import FitbitAuth from "./components/FitbitAuth";
+import Physician from "./components/Physician";
+import Patient from "./components/Patient";
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
             <Route path="/patientLogin" component={PatientLogin} exact />
             <Route path="/addFitbit" component={AddFitbit} />
             <Route path="/fitbitData" component={FitbitAuth} />
+            <Route path="/physician" component={Physician} />
+            <Route path="/patient" component={Patient} />
           </Switch>
         </div>
         <Footer />
