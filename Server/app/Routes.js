@@ -50,6 +50,6 @@ app.get("/physio-dashboard", (req, res, err) => {
 });
 
 app.get("*", (req, res, err) => {
-    res.sendFile(path.join(__dirname, "../../dist/index.html"));
+    res.sendFile(path.join(__dirname, "../../dist/Client/index.html"));
 })
 }
