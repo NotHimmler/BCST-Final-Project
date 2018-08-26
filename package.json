@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development ./Client/js/app.js",
-    "dev": "nodemon ./Server/index.js",
+    "dev": "nodemon ./Server/index.js dev",
+    "deploy": "nodemon ./Server/index.js deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
