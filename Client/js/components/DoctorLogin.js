@@ -7,6 +7,7 @@ class DoctorLogin extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
     handleSubmit(event) {
         event.preventDefault();
         SessionStore.loggedIn = true;

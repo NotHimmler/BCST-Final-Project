@@ -29,7 +29,7 @@ class Nav extends React.Component {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
                         <span className="nav-item nav-link active"><Link className="text-white-50" to="/">Home</Link> <span className="sr-only">(current)</span></span>
-                        { !SessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white-50" to="/login">Login</Link></span> : <a href="/">Logout</a>}
+                        { !SessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white-50" to="/login">Login</Link></span> : <Link to="/">Logout</Link>}
                         <span className="nav-item nav-link"><Link className="text-white-50" to="/about">About</Link></span>
                         <span className="nav-item nav-link"><Link className="text-white-50" to="/contact">Contact</Link></span>
                         </div>
