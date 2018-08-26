@@ -5,7 +5,7 @@ class DoctorLogin extends React.Component {
     render() {
         return (
             <div className="row">
-                <h1>Doctor Login </h1>
+                <h1>Physiotherapist Login </h1>
             </div>
         )
     }
