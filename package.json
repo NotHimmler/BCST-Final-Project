@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development ./Client/js/app.js",
-    "dev": "node ./Server/index.js",
+    "dev": "nodemon ./Server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,8 +30,10 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
     "popper.js": "^1.14.3",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "request": "^2.88.0"
   }
 }

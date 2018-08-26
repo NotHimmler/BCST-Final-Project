@@ -10,3 +10,7 @@ i.fab, i.fas {
 	margin-left: 0;
 	margin-right: 0;
 }
+
+a:hover {
+    color: black;
+}

@@ -18,10 +18,10 @@ const App = () => {
         <div className="row d-flex wo-100 h-100">
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/doctorLogin" component={DoctorLogin} exact />
+            <Route path="/physiotherapistLogin" component={DoctorLogin} exact />
             <Route path="/patientLogin" component={PatientLogin} exact />
             <Route path="/addFitbit" component={AddFitbit} />
-            <Route path="/physio-dashboard" component={FitbitAuth} />
+            <Route path="/fitbitData" component={FitbitAuth} />
           </Switch>
         </div>
         <Footer />

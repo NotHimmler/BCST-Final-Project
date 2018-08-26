@@ -13,7 +13,7 @@ class Home extends React.Component {
           
                 <div className="row w-100 mt-1">
                     <div className="col-md-6">
-                        <Link to="/doctorLogin">
+                        <Link to="/physiotherapistLogin">
                         <img href="#" src = "/img/doctor.jpg" className = "rounded-circle img-circle" />
                         <p className="text-center word">Physiotherapist</p>
                         </Link>
