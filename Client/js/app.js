@@ -7,6 +7,8 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import DoctorLogin from "./components/DoctorLogin";
 import PatientLogin from "./components/PatientLogin";
+import AddFitbit from "./components/AddFitbit";
+import FitbitAuth from "./components/FitbitAuth";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
             <Route path="/" component={Home} exact />
             <Route path="/doctorLogin" component={DoctorLogin} exact />
             <Route path="/patientLogin" component={PatientLogin} exact />
+            <Route path="/addFitbit" component={AddFitbit} />
+            <Route path="/physio-dashboard" component={FitbitAuth} />
           </Switch>
         </div>
         <Footer />
