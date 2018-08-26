@@ -1,0 +1,36 @@
+.name{
+	float: left;
+    font-size: 28px;
+    color: white;
+    height:8%;
+}
+
+.logout{
+	float:right;
+}
+
+.patients{
+	float:left;
+	width:20%;
+}
+
+.btn-group-vertical{
+	width:100%;
+}
+
+.doctor-home{
+	float:left;
+	width:60%;
+}
+
+.doctor-home img{
+	width: 92%;
+    height: 76%;
+    margin-left: 5%;
+    margin-top: 7%;
+}
+
+.technology{
+	width: 20%;
+	float:right;
+}
