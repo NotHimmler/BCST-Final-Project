@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import SessionStore from "../stores/SessionStore";
 
 class DoctorLogin extends React.Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class DoctorLogin extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
+        SessionStore.loggedIn = true;
         this.props.history.push("physician");
     }
 
