@@ -21,7 +21,6 @@ const App = () => {
             <Route path="/" component={Home} exact />
             <Route path="/physiotherapistLogin" component={DoctorLogin} exact />
             <Route path="/patientLogin" component={PatientLogin} exact />
-            <Route path="/addFitbit" component={AddFitbit} />
             <Route path="/fitbitData" component={FitbitAuth} />
             <Route path="/physician" component={Physician} />
             <Route path="/patient" component={Patient} />
