@@ -7,7 +7,6 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import DoctorLogin from "./components/DoctorLogin";
 import PatientLogin from "./components/PatientLogin";
-import AddFitbit from "./components/AddFitbit";
 import FitbitAuth from "./components/FitbitAuth";
 import Physician from "./components/Physician";
 import Patient from "./components/Patient";
