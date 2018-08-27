@@ -12,6 +12,7 @@ class Nav extends React.Component {
     handleLogout(evt) {
         evt.preventDefault;
         SessionStore.loggedIn = false;
+        localStorage.loggedIn = false;
     }
 
     render() {
