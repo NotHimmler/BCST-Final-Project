@@ -1,11 +1,3 @@
-drop table Feedback;
-drop table PatientMatchTherapist;
-drop table Therapist;
-drop table AmountTable;
-drop table FitbitTable;
-drop table Patient;
-drop table IUser;
-
 create table IUser
 (
   UserID   varchar primary key,
