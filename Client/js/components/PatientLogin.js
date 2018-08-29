@@ -9,7 +9,7 @@ class PatientLogin extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        SessionStore.loggedIn = true;
+        this.props.sessionStore.setLoggedIn(true);
         this.props.history.push("patient");
     }
 

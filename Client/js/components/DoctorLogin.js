@@ -7,17 +7,17 @@ class DoctorLogin extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     handleSubmit(event) {
         event.preventDefault();
-        SessionStore.loggedIn = true;
+        this.props.sessionStore.setLoggedIn(true);
         this.props.history.push("physician");
     }
 
     render() {
         return (
             <div className="row d-flex flex-column w-100 h-100 justify-content-center align-items-center">
-            <h2 className="mb-3">Physiotherapist Login</h2>
+                <h2 className="mb-3">Physiotherapist Login</h2>
                 <form onSubmit={this.handleSubmit}>
                 <div className="row d-flex justify-content-center">
                     <div className= "col-6 d-flex flex-column align-items-end pr-1">
@@ -28,7 +28,7 @@ class DoctorLogin extends React.Component {
                         <input type="text" name="email"></input>
                         <input type="password"></input>
                     </div>
-                    <button className="mt-2" type="submit" name="submit">Submit</button>
+                    <button id="doctor-login-submit" className="mt-2" type="submit" name="submit">Submit</button>
                 </div>
                 </form>
             </div>

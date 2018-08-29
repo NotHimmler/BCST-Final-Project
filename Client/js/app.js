@@ -10,20 +10,23 @@ import PatientLogin from "./components/PatientLogin";
 import FitbitAuth from "./components/FitbitAuth";
 import Physician from "./components/Physician";
 import Patient from "./components/Patient";
+import SessionStore from "./stores/SessionStore";
+
+let sessionStore = new SessionStore();
 
 const App = () => {
   return (
     <BrowserRouter>
       <div>
-        <Nav />
+        <Nav sessionStore={sessionStore}/>
         <div className="row d-flex wo-100 h-100">
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/physiotherapistLogin" component={DoctorLogin} exact />
-            <Route path="/patientLogin" component={PatientLogin} exact />
-            <Route path="/fitbitData" component={FitbitAuth} />
-            <Route path="/physician" component={Physician} />
-            <Route path="/patient" component={Patient} />
+            <Route path="/physiotherapistLogin" render={(props) => {return (<DoctorLogin {...props} sessionStore={sessionStore}/>)}} exact />
+            <Route path="/patientLogin" render={(props) => {return (<PatientLogin {...props} sessionStore={sessionStore}/>)}} exact />
+            <Route path="/fitbitData" render={(props) => {return (<FitbitAuth {...props} sessionStore={sessionStore}/>)}} />
+            <Route path="/physician" render={(props) => {return (<Physician {...props} sessionStore={sessionStore}/>)}} />
+            <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
           </Switch>
         </div>
         <Footer />
