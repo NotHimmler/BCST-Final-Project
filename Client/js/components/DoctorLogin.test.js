@@ -14,6 +14,8 @@ let mockSessionStore = new MockSessionStore();
 
 describe("DoctorLogin", () => {
     let mountedDoctorLogin;
+
+    //Creates a rendered DoctorLogin component to test
     const doctorLogin = () => {
         if(!mountedDoctorLogin) {
             mountedDoctorLogin = mount(<DoctorLogin sessionStore={mockSessionStore} history={[]}/>);
@@ -22,6 +24,7 @@ describe("DoctorLogin", () => {
         return mountedDoctorLogin;
     }
     
+    //Resets the rendered DoctorLogin component before each test
     beforeEach(() => {
         mountedDoctorLogin = undefined;
     });
@@ -36,7 +39,7 @@ describe("DoctorLogin", () => {
         expect(form.length).toBeGreaterThan(0);
     });
 
-    it("should try to set login store to logged in", () => {
+    it("should try to set login store to logged in when form is submitted", () => {
         const component = doctorLogin();
         
         component.find('form').first().simulate('submit');
