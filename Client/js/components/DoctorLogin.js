@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import SessionStore from "../stores/SessionStore";
 
 class DoctorLogin extends React.Component {
     constructor(props) {
@@ -16,8 +15,7 @@ class DoctorLogin extends React.Component {
 
     render() {
         return (
-            <div className="row d-flex flex-column w-100 h-100 justify-content-center align-items-center">
-                <h2 className="mb-3">Physiotherapist Login</h2>
+            <div className="row d-flex flex-column w-100 justify-content-center align-items-center">
                 <form onSubmit={this.handleSubmit}>
                 <div className="row d-flex justify-content-center">
                     <div className= "col-6 d-flex flex-column align-items-end pr-1">
