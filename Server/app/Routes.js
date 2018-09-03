@@ -57,6 +57,9 @@ app.get("/physio-dashboard", (req, res, err) => {
     
 });
 
+//Catchall route - allows usage of react router
+//Might be better to set each route individually
+//So that we can have 404 pages for non-existent pages
 app.get("*", (req, res, err) => {
     res.sendFile(path.join(__dirname, "../../dist/Client/index.html"));
 })
