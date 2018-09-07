@@ -37,11 +37,14 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
+    "nodemon": "^1.18.4",
     "popper.js": "^1.14.3",
     "react-router-dom": "^4.3.1",
     "request": "^2.88.0"
   },
   "jest": {
-    "setupFiles": ["./Client/js/setupTests.js"]
+    "setupFiles": [
+      "./Client/js/setupTests.js"
+    ]
   }
 }
