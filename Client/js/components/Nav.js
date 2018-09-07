@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SessionStore from "../stores/SessionStore";
 
 class Nav extends React.Component {
     constructor(props) {
@@ -11,8 +10,7 @@ class Nav extends React.Component {
 
     handleLogout(evt) {
         evt.preventDefault;
-        SessionStore.loggedIn = false;
-        localStorage.loggedIn = false;
+        this.props.sessionStore.setLoggedIn(false);
     }
 
     render() {
@@ -32,7 +30,7 @@ class Nav extends React.Component {
                         <span className="nav-item nav-link active"><Link className="text-white" to="/">Home</Link> <span className="sr-only">(current)</span></span>
                         <span className="nav-item nav-link"><Link className="text-white" to="/about">About</Link></span>
                         <span className="nav-item nav-link"><Link className="text-white" to="/contact">Contact</Link></span>
-                        { !SessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white" to="/login">Login</Link></span> : <span className="nav-item nav-link"><Link className="text-white" onClick={this.handleLogout} to="/">Logout</Link></span>}
+                        { !this.props.sessionStore.loggedIn ? <span className="nav-item nav-link"><Link className="text-white" to="/login">Login</Link></span> : <span className="nav-item nav-link"><Link className="text-white" onClick={this.handleLogout} to="/">Logout</Link></span>}
                         </div>
                     </div>
                 </nav>

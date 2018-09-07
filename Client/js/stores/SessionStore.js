@@ -1,10 +1,12 @@
-let data = {
-    token: "",
-    loggedIn: false
+class SessionStore {
+    constructor() {
+        this.loggedIn = false;
+        this.token = "";
+    }
+    
+    setLoggedIn(val) {
+        this.loggedIn = val;
+    }
 }
 
-if (localStorage.loggedIn) {
-    data.loggedIn = localStorage.loggedIn;
-}
-
-module.exports = data;
+export default SessionStore;

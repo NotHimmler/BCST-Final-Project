@@ -9,15 +9,13 @@ class PatientLogin extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        SessionStore.loggedIn = true;
-        localStorage.loggedIn = true;
+        this.props.sessionStore.setLoggedIn(true);
         this.props.history.push("patient");
     }
 
     render() {
         return (
-            <div className="row d-flex flex-column w-100 h-100 justify-content-center align-items-center">
-            <h2 className="mb-3">Patient Login</h2>
+            <div className="row d-flex flex-column w-100 justify-content-center align-items-center">
                 <form onSubmit={this.handleSubmit}>
                 <div className="row d-flex justify-content-center">
                     <div className= "col-6 d-flex flex-column align-items-end pr-1">
