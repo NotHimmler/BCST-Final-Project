@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 class Nav extends React.Component {
     constructor(props) {
         super(props);
-
         this.handleLogout = this.handleLogout.bind(this);
     }
 
@@ -15,6 +14,11 @@ class Nav extends React.Component {
 
     render() {
         return (
+            <nav id="topnav" class="navbar navbar-expand navbar-light">
+                <a id="logo" href="#">PHYSIODASHBOARD</a>
+            </nav>
+
+            /*
             <div className="row d-flex">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
                     <Link className="navbar-brand m-0 p-0" to="/">
@@ -34,7 +38,7 @@ class Nav extends React.Component {
                         </div>
                     </div>
                 </nav>
-            </div>
+            </div>*/
         )
     }
 }
