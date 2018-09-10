@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import SessionStore from "./stores/SessionStore";
+import Login from "./components/Login";
+import Patient from "./components/Patient";
 
 let sessionStore = new SessionStore();
 
@@ -22,63 +24,21 @@ const App = () => {
                 </div>
                 <hr/>
                 <div className="navbar-nav">
-                    <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-home nav-icon"></i>Home</a>
+                    <a className="nav-dark nav-item nav-link" href="/"><i className="fas fa-home nav-icon"></i>Home</a>
                     <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-inbox nav-icon"></i>Inbox</a>
                     <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-address-book nav-icon"></i>Patient Directory</a>
+                    <hr id="hr210"/>
+                    <a className="nav-dark nav-item nav-link" href="/patient"><i className="fas fa-user nav-icon"></i>Elizabeth Smith</a>
                 </div>
-                <hr/>
             </nav>
 
             
             <div id="content">
-                <div className = "patient-name">   
-                    <h1><i className="fas fa-user"></i>Elizabeth Smith</h1>
-                </div>
-                <hr/>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
-                <p>This is just some random text blah blah blah blah blah</p>
+                <Switch>
+                    <Route path="/" component={Home} exact />
+                    <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
+                    <Route path="/login" render={(props) => {return (<Login {...props} sessionStore={sessionStore}/>)}} />
+                </Switch>
             </div>
         </div>
       </div>

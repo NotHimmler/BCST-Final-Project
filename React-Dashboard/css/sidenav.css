@@ -68,8 +68,11 @@
     padding-left: 2px;
     padding-right: 2px;
 }
-.fa-user {
-    padding-right: 12px;
+
+#hr210 {
+    width:210px;
 }
 
-  
+.patient-name {
+    padding-left:10px;
+}

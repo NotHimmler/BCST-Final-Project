@@ -5,6 +5,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
+                <p>Welcome to the dashboard!</p>
                 <p>This is the home page.</p>
             </div>
         )
