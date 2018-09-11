@@ -10,7 +10,7 @@ class PatientLogin extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.sessionStore.setLoggedIn(true);
-        this.props.history.push("patient");
+        this.props.history.push("/");
     }
 
     render() {
