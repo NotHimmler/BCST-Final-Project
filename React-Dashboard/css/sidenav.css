@@ -76,3 +76,9 @@
 .patient-name {
     padding-left:10px;
 }
+
+.log-button {
+    position: absolute;
+    right:3%;
+    color: white;
+}
