@@ -2,34 +2,45 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
+//Import components
 import Nav from "./components/Nav";
 import Home from "./components/Home";
-import Footer from "./components/Footer";
-import DoctorLogin from "./components/DoctorLogin";
-import PatientLogin from "./components/PatientLogin";
-import FitbitAuth from "./components/FitbitAuth";
-import Physician from "./components/Physician";
-import Patient from "./components/Patient";
-import Login from "./components/Login";
 import SessionStore from "./stores/SessionStore";
+import Login from "./components/Login";
+import Patient from "./components/Patient";
 
 let sessionStore = new SessionStore();
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div>
+      <div className="row w-100">
         <Nav sessionStore={sessionStore}/>
-        <div className="row d-flex w-100 h-100 justify-content-center">
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/fitbitData" render={(props) => {return (<FitbitAuth {...props} sessionStore={sessionStore}/>)}} />
-            <Route path="/physician" render={(props) => {return (<Physician {...props} sessionStore={sessionStore}/>)}} />
-            <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
-            <Route path="/login" render={(props) => {return (<Login {...props} sessionStore={sessionStore}/>)}} />
-          </Switch>
+
+        <div className="wrapper">
+            <nav id="sidenav">
+                <div className="sidebar-header">
+                    <input type="text" class="form-control" id="search-patients" placeholder="Search patients..."/>
+                </div>
+                <hr/>
+                <div className="navbar-nav">
+                    <a className="nav-dark nav-item nav-link" href="/"><i className="fas fa-home nav-icon"></i>Home</a>
+                    <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-inbox nav-icon"></i>Inbox</a>
+                    <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-address-book nav-icon"></i>Patient Directory</a>
+                    <hr id="hr210"/>
+                    <a className="nav-dark nav-item nav-link" href="/patient"><i className="fas fa-user nav-icon"></i>Elizabeth Smith</a>
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <Switch>
+                    <Route path="/" component={Home} exact />
+                    <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
+                    <Route path="/login" render={(props) => {return (<Login {...props} sessionStore={sessionStore}/>)}} />
+                </Switch>
+            </div>
         </div>
-        <Footer />
       </div>
     </BrowserRouter>
   );
