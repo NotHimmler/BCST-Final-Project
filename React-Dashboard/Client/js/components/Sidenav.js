@@ -12,9 +12,9 @@ class Sidenav extends React.Component {
                     </div>
                     <hr/>
                     <div className="navbar-nav">
-                        <a className="nav-dark nav-item nav-link" href="/blah"><i className="fas fa-home nav-icon"></i>dsfdsf</a>
-                        <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-inbox nav-icon"></i>Inbox</a>
-                        <a className="nav-dark nav-item nav-link" href="#"><i className="fas fa-address-book nav-icon"></i>Patient Directory</a>
+                        <Link className="nav-dark nav-item nav-link" to="/"><i className="fas fa-home nav-icon"></i>Home</Link>
+                        <Link className="nav-dark nav-item nav-link" to="#"><i className="fas fa-inbox nav-icon"></i>Inbox</Link>
+                        <Link className="nav-dark nav-item nav-link" to="#"><i className="fas fa-address-book nav-icon"></i>Patient Directory</Link>
                     </div>
                     <hr/>
                 </nav>

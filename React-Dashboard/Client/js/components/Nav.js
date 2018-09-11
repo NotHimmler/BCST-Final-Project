@@ -15,7 +15,7 @@ class Nav extends React.Component {
     render() {
         return (
             <nav id="topnav" className="navbar navbar-expand navbar-light">
-                <a id="logo" href="#">PHYSIODASHBOARD</a>
+                <Link id="logo" to="/"><span id="logo">PHYSIODASHBOARD</span></Link>
                 { !this.props.sessionStore.loggedIn ? <span className="log-button nav-item nav-link"><a className="text-white" href="/login">Login</a></span> : <span className="log-button nav-item nav-link"><a className="text-white" onClick={this.handleLogout} href="/">Logout</a></span>}
             </nav>
         )
