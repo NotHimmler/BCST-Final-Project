@@ -47,6 +47,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLh-N9-HdE">
+                                <rect key="frame" x="16" y="323" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -54,11 +60,14 @@
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="leading" secondItem="49t-V1-Yyv" secondAttribute="leading" id="6WC-UK-7sX"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="7QQ-d0-Ua4"/>
                             <constraint firstItem="GIa-RT-wjp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="244" id="9pH-zT-5vJ"/>
+                            <constraint firstItem="JLh-N9-HdE" firstAttribute="leading" secondItem="8kF-WH-kwb" secondAttribute="leading" id="Igk-z6-Hqe"/>
                             <constraint firstItem="49t-V1-Yyv" firstAttribute="top" secondItem="8kF-WH-kwb" secondAttribute="bottom" constant="73" id="Kn7-5Q-fHM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="49t-V1-Yyv" secondAttribute="bottom" constant="173" id="Qgk-cW-0CX"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="trailing" secondItem="GIa-RT-wjp" secondAttribute="trailing" id="Ywt-Zx-hnJ"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="leading" secondItem="GIa-RT-wjp" secondAttribute="leading" id="cJz-HC-une"/>
+                            <constraint firstItem="JLh-N9-HdE" firstAttribute="trailing" secondItem="8kF-WH-kwb" secondAttribute="trailing" id="deS-zN-OKf"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="55" id="f3q-CH-6fW"/>
+                            <constraint firstItem="JLh-N9-HdE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ioG-uQ-9NA"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jau-OK-j2X"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="leading" secondItem="8kF-WH-kwb" secondAttribute="leading" id="mLE-0L-ra8"/>
                             <constraint firstItem="CN1-0x-xKE" firstAttribute="trailing" secondItem="49t-V1-Yyv" secondAttribute="trailing" id="o1C-ZP-fqo"/>
@@ -71,6 +80,7 @@
                         <outlet property="DistanceLabel" destination="8kF-WH-kwb" id="Qbb-SS-dpZ"/>
                         <outlet property="DurationLabel" destination="GIa-RT-wjp" id="jF5-dj-jZo"/>
                         <outlet property="RecrodBtton" destination="49t-V1-Yyv" id="p2y-zW-e9y"/>
+                        <outlet property="StepsLabel" destination="JLh-N9-HdE" id="89G-dN-mq8"/>
                         <outlet property="asdf" destination="CN1-0x-xKE" id="u3C-uX-r7t"/>
                     </connections>
                 </viewController>

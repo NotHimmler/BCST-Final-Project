@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import CoreData
+import CoreMotion
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var running = false;
@@ -19,9 +20,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var appDelegate: AppDelegate?
     var context: NSManagedObjectContext?
     var entity: NSEntityDescription?
+    let pedometer = CMPedometer()
+    var numSteps = 0
     
     // MARK: Properties
     
+    @IBOutlet weak var StepsLabel: UILabel!
     @IBOutlet weak var DistanceLabel: UILabel!
     @IBOutlet weak var DurationLabel: UILabel!
     @IBOutlet weak var asdf: UILabel!
@@ -41,6 +45,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 DurationLabel.text = "Error getting location. Please ensure that location services are enabled."
                 return
             }
+            if CMPedometer.isStepCountingAvailable() {
+                pedometer.startUpdates(from: Date()) {
+                    [weak self] pedometerData, error in
+                    guard let pedometerData = pedometerData, error == nil else {return}
+                    
+                    DispatchQueue.main.async {
+                        self!.numSteps = Int(pedometerData.numberOfSteps)
+                        self!.StepsLabel.text = "Num Steps: " + String(self!.numSteps)
+                        
+                    }
+                }
+            }
             DistanceLabel.text = ""
             DurationLabel.text = "Logging Your Walk"
             RecrodBtton.setTitle("Stop Logging Walk", for: .normal)
@@ -48,6 +64,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             running = true;
         } else {
             locationMgr.stopUpdatingLocation()
+            pedometer.stopUpdates()
             running = false;
             endTime = Date()
             var duration: TimeInterval = 0.0
