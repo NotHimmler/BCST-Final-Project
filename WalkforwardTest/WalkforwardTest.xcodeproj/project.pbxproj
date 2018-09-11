@@ -16,6 +16,11 @@
 		98C6F6472140ACA300B2524F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C6F6462140ACA300B2524F /* Assets.xcassets */; };
 		98C6F64A2140ACA300B2524F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C6F6482140ACA300B2524F /* LaunchScreen.storyboard */; };
 		98C6F6552140ACA300B2524F /* WalkforwardTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6F6542140ACA300B2524F /* WalkforwardTestTests.swift */; };
+		98D534652147B73F00DCBADD /* WalksDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D534642147B73F00DCBADD /* WalksDelegate.swift */; };
+		98D5346E2147CFB800DCBADD /* icons8-time-machine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346A2147CFB700DCBADD /* icons8-time-machine@2x.png */; };
+		98D5346F2147CFB800DCBADD /* icons8-walking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346B2147CFB700DCBADD /* icons8-walking@2x.png */; };
+		98D534702147CFB800DCBADD /* icons8-walking.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346C2147CFB800DCBADD /* icons8-walking.png */; };
+		98D534712147CFB800DCBADD /* icons8-time-machine.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346D2147CFB800DCBADD /* icons8-time-machine.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +46,11 @@
 		98C6F6502140ACA300B2524F /* WalkforwardTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalkforwardTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C6F6542140ACA300B2524F /* WalkforwardTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkforwardTestTests.swift; sourceTree = "<group>"; };
 		98C6F6562140ACA300B2524F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98D534642147B73F00DCBADD /* WalksDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalksDelegate.swift; sourceTree = "<group>"; };
+		98D5346A2147CFB700DCBADD /* icons8-time-machine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-time-machine@2x.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-time-machine@2x.png"; sourceTree = "<group>"; };
+		98D5346B2147CFB700DCBADD /* icons8-walking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-walking@2x.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-walking@2x.png"; sourceTree = "<group>"; };
+		98D5346C2147CFB800DCBADD /* icons8-walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-walking.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-walking.png"; sourceTree = "<group>"; };
+		98D5346D2147CFB800DCBADD /* icons8-time-machine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-time-machine.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-time-machine.png"; sourceTree = "<group>"; };
 		E90F1F5593BCF2FE32B295DC /* Pods-WalkforwardTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkforwardTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalkforwardTest/Pods-WalkforwardTest.debug.xcconfig"; sourceTree = "<group>"; };
 		ECC99917B2E9140B774FEAF8 /* Pods_WalkforwardTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalkforwardTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4463253BA6B67A9A556870B /* Pods-WalkforwardTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkforwardTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalkforwardTest/Pods-WalkforwardTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +107,10 @@
 		98C6F63E2140ACA000B2524F /* WalkforwardTest */ = {
 			isa = PBXGroup;
 			children = (
+				98D5346D2147CFB800DCBADD /* icons8-time-machine.png */,
+				98D5346A2147CFB700DCBADD /* icons8-time-machine@2x.png */,
+				98D5346C2147CFB800DCBADD /* icons8-walking.png */,
+				98D5346B2147CFB700DCBADD /* icons8-walking@2x.png */,
 				98C6F63F2140ACA000B2524F /* AppDelegate.swift */,
 				98C6F6412140ACA000B2524F /* ViewController.swift */,
 				98C6F6432140ACA000B2524F /* Main.storyboard */,
@@ -105,6 +119,7 @@
 				98C6F64B2140ACA300B2524F /* Info.plist */,
 				980D1A3121437CAC00EE1C3D /* HistoryViewController.swift */,
 				9897DA072143821E0021B8A8 /* Model.xcdatamodeld */,
+				98D534642147B73F00DCBADD /* WalksDelegate.swift */,
 			);
 			path = WalkforwardTest;
 			sourceTree = "<group>";
@@ -214,8 +229,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				98C6F64A2140ACA300B2524F /* LaunchScreen.storyboard in Resources */,
+				98D5346F2147CFB800DCBADD /* icons8-walking@2x.png in Resources */,
+				98D534712147CFB800DCBADD /* icons8-time-machine.png in Resources */,
+				98D5346E2147CFB800DCBADD /* icons8-time-machine@2x.png in Resources */,
 				98C6F6472140ACA300B2524F /* Assets.xcassets in Resources */,
 				98C6F6452140ACA000B2524F /* Main.storyboard in Resources */,
+				98D534702147CFB800DCBADD /* icons8-walking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +277,7 @@
 				98C6F6422140ACA000B2524F /* ViewController.swift in Sources */,
 				98C6F6402140ACA000B2524F /* AppDelegate.swift in Sources */,
 				9897DA092143821E0021B8A8 /* Model.xcdatamodeld in Sources */,
+				98D534652147B73F00DCBADD /* WalksDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

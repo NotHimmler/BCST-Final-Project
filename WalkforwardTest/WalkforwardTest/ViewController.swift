@@ -22,6 +22,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var entity: NSEntityDescription?
     let pedometer = CMPedometer()
     var numSteps = 0
+    weak var delegate: WalksDelegate?
     
     // MARK: Properties
     
@@ -33,6 +34,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        DistanceLabel.isHidden = true
+        StepsLabel.isHidden = true
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
@@ -59,7 +62,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
             DistanceLabel.text = ""
             DurationLabel.text = "Logging Your Walk"
+            StepsLabel.text = "Number of Steps: " + String(numSteps)
+            DistanceLabel.isHidden = false
+            StepsLabel.isHidden = false
             RecrodBtton.setTitle("Stop Logging Walk", for: .normal)
+            RecrodBtton.backgroundColor = UIColor.red
             startTime = Date()
             running = true;
         } else {
@@ -93,11 +100,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             RecrodBtton.setTitle("Start Recording", for: .normal)
             let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
             newWalk.setValue(durationInt, forKey: "duration")
+            newWalk.setValue(numSteps, forKey: "steps")
+            newWalk.setValue(startTime!, forKey: "date")
+            newWalk.setValue(distance, forKey: "distance")
             do {
                 try context!.save()
             } catch {
                 print("Failed saving")
             }
+            RecrodBtton.backgroundColor = UIColor.green
             walkLocations = []
         }
     }
