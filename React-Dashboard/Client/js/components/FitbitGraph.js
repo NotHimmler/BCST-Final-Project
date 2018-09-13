@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 class FitbitGraph extends React.Component {
 
     componentDidMount() {
-        var data = [30, 86, 168, 281, 303, 365];
-
         let result = d3.csv("/data/L007.csv", function(data) {
             let date = new Date(data.Date)
             if(date >= new Date("2015-10-20") && date <= new Date("2015-10-27")){
@@ -31,12 +29,13 @@ class FitbitGraph extends React.Component {
             console.log(steps);
 
             console.log(d);
-            d3.select(".chart")
+            d3.select("chart")
                 .selectAll("div")
                 .data(steps)
                     .enter()
                     .append("div")
-                    .style("width", function(steps) { return ((steps)/10) + "px"; })
+                    .style("width", "30px")
+                    .style("height", function(steps) { return ((steps)/20) + "px"; })
                     .text(function(steps) { return steps; });
         });
 

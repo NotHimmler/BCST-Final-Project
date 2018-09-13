@@ -1,8 +1,55 @@
-.chart div {
-    font: 10px sans-serif;
-    background-color: steelblue;
-    text-align: right;
-    padding: 3px;
-    margin: 3px;
-    color: white;
+
+
+.axis--x path {
+  display: none;
+}
+
+svg.fb{
+  border: solid 3px #eee;
+  background-color: #eee;
+  border-radius: 20px;
+}
+
+.axis-label {
+  fill: #222222;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.chart-title {
+  fill: #222222;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.goal-line {
+  stroke-width: 1px;
+  opacity: 10%;
+  stroke: black;
+}
+
+.legend rect {
+  fill:white;
+  stroke:black;
+  opacity:0.8;}
+
+.legend text {
+  fill: black;
+  position: relative;
+  text-anchor: start;
+  font-size:13px;
+}
+
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
   }
