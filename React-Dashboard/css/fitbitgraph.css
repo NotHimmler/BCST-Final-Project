@@ -30,7 +30,7 @@ svg.fb{
   stroke: black;
 }
 
-.legend rect {
+.legend-box {
   fill:white;
   stroke:black;
   opacity:0.8;}
@@ -40,6 +40,10 @@ svg.fb{
   position: relative;
   text-anchor: start;
   font-size:13px;
+}
+
+.legend-title {
+  font-weight: bold;
 }
 
   div.tooltip {
@@ -52,4 +56,8 @@ svg.fb{
     background: lightsteelblue;
     border: 0px;
     border-radius: 8px;
+  }
+
+  .legend-val {
+    stroke: black;
   }

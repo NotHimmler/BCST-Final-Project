@@ -109,15 +109,56 @@ class FitbitGraph2 extends React.Component {
                 .attr("class", "legend");
 
             legend.append("rect")
-                    .attr("width", width/3)
+                    .attr("class", "legend-box")
+                    .attr("width", 380)
                     .attr("height", 60)
                     .attr("x", 0)
                     .attr("y", height + 55);
             
             legend.append("text")
+                .attr("class", "legend-title")
                 .attr("x", 10)
                 .attr("y", height + 80)
                 .text("Legend");
+            
+            legend.append("line")
+                .attr("class", "goal-line")
+                .attr("x1", 15)
+                .attr("y1", height + 95)
+                .attr("x2", 35)
+                .attr("y2", height + 95);
+
+            legend.append("text")
+                .attr("x", 45)
+                .attr("y", height + 100)
+                .text("Goal");
+            
+            legend.append("rect")
+                .attr("class", "legend-val")
+                .style("fill", "brown")
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("x", 90)
+                .attr("y", height + 90);
+            
+            legend.append("text")
+                .attr("x", 110)
+                .attr("y", height + 100)
+                .text("Did not reach goal");
+
+            legend.append("rect")
+                .attr("class", "legend-val")
+                .style("fill", "rgb(113, 171, 206)")
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("x", 240)
+                .attr("y", height + 90);
+            
+            legend.append("text")
+                .attr("x", 260)
+                .attr("y", height + 100)
+                .text("Reached goal");
+
 
         });
 
