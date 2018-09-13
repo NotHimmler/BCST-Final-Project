@@ -11,7 +11,8 @@ class Patient extends React.Component {
             <div>
                 <h1><span className="fas fa-user"></span><span className="patient-name">Elizabeth Smith</span></h1>
                 <hr/>
-                <FitbitGraph/>
+                <h4>FitBit Data</h4>
+                <FitbitGraph2/>
             </div>
         )
     }
