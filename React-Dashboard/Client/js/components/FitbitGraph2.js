@@ -6,10 +6,10 @@ class FitbitGraph2 extends React.Component {
     componentDidMount() {
         var svg = d3.select("svg"),
             margin = {top: 20, right: 20, bottom: 30, left: 40},
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom;
-        
-        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            width = 500 - margin.left - margin.right,
+            height = 900 - margin.top - margin.bottom;
+
+            var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
             y = d3.scaleLinear().rangeRound([height, 0]);
 
         var g = svg.append("g")
@@ -28,12 +28,15 @@ class FitbitGraph2 extends React.Component {
           }
         );
 
-        result.then(function(d){
-            console.log(d)
+        result.then(function(new_data){
+            console.log(new_data);
+            console.log(new_data.Steps);
+            console.log(new_data.Date);
 
-            x.domain(d.map(function(dd) { return dd.date; }));
-            y.domain([0, d3.max(d, function(dd) { return dd.steps; })]);
+            x.domain(new_data.map(function(d) { return d.Date; }));
+            y.domain([0, d3.max(new_data, function(d) { return d.Steps; })]);
 
+            console.log(height);
             g.append("g")
                 .attr("class", "axis axis--x")
                 .attr("transform", "translate(0," + height + ")")
@@ -50,13 +53,13 @@ class FitbitGraph2 extends React.Component {
                 .text("Frequency");
 
             g.select(".bar")
-                .data(d)
+                .data(new_data)
                 .enter().append("rect")
                     .attr("class", "bar")
-                    .attr("x", function(d) { return x(d.date); })
-                    .attr("y", function(d) { return y(d.steps); })
+                    .attr("x", function(d) { return x(d.Date); })
+                    .attr("y", function(d) { return y(d.Steps); })
                     .attr("width", x.bandwidth())
-                    .attr("height", function(d) { return height - y(d.steps); });                         
+                    .attr("height", function(d) { return height - y(d.Steps); });                         
         });
 
         

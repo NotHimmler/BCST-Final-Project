@@ -36,7 +36,8 @@ class FitbitGraph extends React.Component {
                 .data(steps)
                     .enter()
                     .append("div")
-                    .style("width", function(steps) { return ((steps)/10) + "px"; })
+                    .style("width", "30px")
+                    .style("height", function(steps) { return ((steps)/20) + "px"; })
                     .text(function(steps) { return steps; });
         });
 
@@ -45,7 +46,7 @@ class FitbitGraph extends React.Component {
 
     render() {
         return (
-            <div className="chart"></div>
+            <div className="chart row"></div>
         )
     }
 }
