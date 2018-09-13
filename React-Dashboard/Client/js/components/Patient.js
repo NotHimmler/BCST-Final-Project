@@ -8,7 +8,7 @@ class Patient extends React.Component {
     render() {
         return (
             <div>
-                <h1><span className="fas fa-user"></span><span className="patient-name">Elizabeth Smith</span></h1>
+                <h1><span className="fas fa-user"></span><span className="patient-name">{this.props.match.params.name}</span></h1>
                 <hr/>
                 <FitbitGraph/>
             </div>

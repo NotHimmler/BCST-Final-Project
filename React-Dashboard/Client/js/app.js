@@ -25,7 +25,7 @@ const App = () => {
             <div id="content">
                 <Switch>
                     <Route path="/" component={Home} exact />
-                    <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
+                    <Route path="/patient/:name" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
                     <Route path="/login" render={(props) => {return (<Login {...props} sessionStore={sessionStore}/>)}} />
                 </Switch>
             </div>
