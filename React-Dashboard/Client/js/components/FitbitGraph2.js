@@ -78,7 +78,7 @@ class FitbitGraph2 extends React.Component {
                     .text("STEPS");
             
 
-            g.selectAll(".bar")
+            var bar = g.selectAll(".bar")
               .data(data)
               .enter().append("rect")
                 .attr("class", "bar")
@@ -97,6 +97,14 @@ class FitbitGraph2 extends React.Component {
                       .style("left", 50)             
                       .style("top", 50);
                     });
+            
+            g.selectAll(".text-value")
+                .data(data)
+                .enter().append("text")
+                .attr("class", "text-value")
+                .attr("x", function(d) { return x(getShortDate(d.date));})
+                .attr("y", function(d) { return y(d.steps) - 5;})
+                .text(function(d) {return d.steps;});
             
             g.append("line")
                 .attr("class", "goal-line")

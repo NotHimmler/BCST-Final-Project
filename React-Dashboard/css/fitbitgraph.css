@@ -24,6 +24,11 @@ svg.fb{
   font-weight: bold;
 }
 
+.text-value {
+  fill: black;
+  font-size: 12px;
+}
+
 .goal-line {
   stroke-width: 1px;
   opacity: 10%;
