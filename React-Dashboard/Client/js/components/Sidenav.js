@@ -14,7 +14,7 @@ class Sidenav extends React.Component {
                     <div className="navbar-nav">
                         <Link className="nav-dark nav-item nav-link" to="/"><i className="fas fa-home nav-icon"></i>Home</Link>
                         <Link className="nav-dark nav-item nav-link" to="#"><i className="fas fa-inbox nav-icon"></i>Inbox</Link>
-                        <Link className="nav-dark nav-item nav-link" to="#"><i className="fas fa-address-book nav-icon"></i>Patient Directory</Link>
+                        <Link className="nav-dark nav-item nav-link" to="/directory"><i className="fas fa-address-book nav-icon"></i>Patient Directory</Link>
                     </div>
                     <hr/>
                 </nav>
