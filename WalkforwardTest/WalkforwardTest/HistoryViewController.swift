@@ -22,7 +22,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         title = "Walk History"
-        tableView.dataSource = self as! UITableViewDataSource
+        tableView.dataSource = self as UITableViewDataSource
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
