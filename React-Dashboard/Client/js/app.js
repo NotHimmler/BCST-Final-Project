@@ -9,6 +9,7 @@ import SessionStore from "./stores/SessionStore";
 import Login from "./components/Login";
 import Patient from "./components/Patient";
 import Sidenav from "./components/Sidenav";
+import PatientDirectory from "./components/PatientDirectory";
 
 let sessionStore = new SessionStore();
 
@@ -25,8 +26,9 @@ const App = () => {
             <div id="content">
                 <Switch>
                     <Route path="/" component={Home} exact />
-                    <Route path="/patient" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
+                    <Route path="/patient/:name" render={(props) => {return (<Patient {...props} sessionStore={sessionStore}/>)}} />
                     <Route path="/login" render={(props) => {return (<Login {...props} sessionStore={sessionStore}/>)}} />
+                    <Route path="/directory" render={(props) => {return (<PatientDirectory {...props} sessionStore={sessionStore}/>)}} />
                 </Switch>
             </div>
         </div>

@@ -29,14 +29,8 @@ class Login extends React.Component {
     render() {
         return (
             <div className="row d-flex flex-column h-100 justify-content-center align-items-center">
-                <h2>Who wants to login?</h2>
-                <div className="row w-100 mb-2">
-                    <div className={ this.state.loginType == "therapist" ? this.generateClassForActiveLoginTab() : "col-6 text-center"} onClick={this.handleTherapistTypeLogin} style={{cursor: "pointer"}}>Therapist</div>
-                    <div className={ this.state.loginType == "patient" ? this.generateClassForActiveLoginTab() : "col-6 text-center"} onClick={this.handlePatientTypeLogin} style={{cursor: "pointer"}}>Patient</div>
-                </div>
-                <div className="row">
-                    { this.state.loginType == "therapist" ? <DoctorLogin sessionStore={this.props.sessionStore} history={this.props.history}/> : <PatientLogin sessionStore={this.props.sessionStore}  history={this.props.history}/>}
-                </div>
+                <h2>Log In</h2>
+                <DoctorLogin sessionStore={this.props.sessionStore} history={this.props.history}/>
             </div>
         )
     }

@@ -1,2 +1,3 @@
-node_modules/
+React-Dashboard/node_modules/
 .DS_Store
+React-Dashboard/dist/
