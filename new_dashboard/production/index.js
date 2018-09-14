@@ -48,5 +48,5 @@ function addGoal(){
 		appendix += "<td>" + rating + "</td></tr>";
 		$("#future_tasks tbody").append(appendix);
 	}
-	
+	return;
 }
