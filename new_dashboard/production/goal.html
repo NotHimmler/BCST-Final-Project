@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+	  <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>Physcio Dashboard | </title>
 
@@ -28,6 +28,15 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <style>
+      #goals{
+        display: none;
+      }
+      #switch_button{
+        float: right;
+        margin-right: 2%;
+      }
+    </style>
   </head>
 
   <body class="nav-md">
@@ -70,9 +79,7 @@
                   </li>
                   <li><a href="calendar.html"><i class="fa fa-desktop"></i> Calendar </a>
                   </li>
-                  <li><a href="goal.html"><i class="fa fa-table"></i> Goals </a>
-                  </li>
-                  <li><a href="patient_data.html"><i class="fa fa-bar-chart-o"></i> Data Presentation </a>
+                  <li><a href="goal.html"><i class="fa fa-table"></i> Patient Details </a>
                   </li>
                 </ul>
               </div>
@@ -194,9 +201,273 @@
           </div>
         </div>
         <!-- /top navigation -->
-
+        <!--Button for switch-->
+        <button class="btn btn-primary" id="switch_button" onclick="changeDisplay()">Goals</button>
+        <!--end of button-->
+        <!-- start!! -->
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="patient_data">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Patient D01's exercise detail</h3>
+              </div>
+
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-8 col-sm-8 col-xs-12 col-lg-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Steps from Fitbit</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                      <li class="dropdown">
+                          <button  id = "dropdown_fitbit" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
+                          <span class="caret"></span></button>
+                          <ul class="dropdown-menu">
+                            <li><a onclick="changeFitbit_daily()">Daily</a></li>
+                            <li><a onclick="changeFitbit_weekly()">Weekly</a></li>
+                            <li><a onclick="changeFitbit_monthly()">Monthly</a></li>
+                          </ul>
+                      </li>
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div id="mainb" style="height:350px;"></div>
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>AMOUNT table: <strong>2 out of 5 completed</strong></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Exercise title</th>
+                          <th>Sets</th>
+                          <th>Sets Left</th>
+                          <th>Sets Right</th>
+                          <th>Reps</th>
+                          <th>Reps Right</th>
+                          <th>Reps Left</th>
+                          <th>Durn</th>
+                          <th>Completed</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <th scope="row">Bilateral calf raises</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>yes</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Standing up and walking</th>
+                          <td>20</td>
+                          <td></td>
+                          <td></td>
+                          <td>5</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>no</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Standing sideways against a wall</th>
+                          <td>10</td>
+                          <td></td>
+                          <td></td>
+                          <td>10</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>yes</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Stepping to targets with hand support nearby</th>
+                          <td></td>
+                          <td></td>
+                          <td>3</td>
+                          <td></td>
+                          <td></td>
+                          <td>50</td>
+                          <td></td>
+                          <td>no</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Bridging</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>90</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>no</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-8 col-sm-8 col-xs-12 col-lg-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Distance from Walkforword App</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li class="dropdown">
+                            <button id = "dropdown_distance" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a onclick="changeDistance_daily()">Daily</a></li>
+                              <li><a onclick="changeDistance_weekly()">Weekly</a></li>
+                              <li><a onclick="changeDistance_monthly()">Monthly</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div id="mainc" style="height:350px;"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+              <div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>VR system table: <strong>0 out of 5 completed</strong></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Exercise</th>
+                          <th>Duration</th>
+                          <th>Level</th>
+                          <th>Series</th>
+                          <th>Reps</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Lunge</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Lunge</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Lunge</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Lunge</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Lunge</th>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td>300</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+
+          </div>
+        </div>
+        <!-- /page content -->
+        <!-- page content -->
+        <div class="right_col" role="main" id="goals">
 
           <div class="clearfix"></div>
           <!-- /weekly goal -->
@@ -432,22 +703,7 @@
                 <div class="x_content">
                   <br />
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                  <div class="form-group">
-                    <!--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                    </div>
-                  </div>-->
+            
 
                   <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_goal_set">Date Goal Set <span class="required">*</span>
@@ -544,8 +800,12 @@
     <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
+    <!-- ECharts -->
+    <script src="../vendors/echarts/dist/echarts.min.js"></script>
+    <script src="../vendors/echarts/map/js/world.js"></script>
+
     <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/custom.js"></script>
 
     <!-- Own js functions-->
     <script src="index.js"></script>
