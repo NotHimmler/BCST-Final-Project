@@ -48,5 +48,16 @@ function addGoal(){
 		appendix += "<td>" + rating + "</td></tr>";
 		$("#future_tasks tbody").append(appendix);
 	}
-	return;
+}
+function changeDisplay(){
+	var displaying = $("#switch_button").html();
+	if(displaying == "Goals"){
+		$("#patient_data").hide();
+		$("#goals").show();
+		$("#switch_button").html("Data Presentation");
+	}else{
+		$("#patient_data").show();
+		$("#goals").hide();
+		$("#switch_button").html("Goals");
+	}
 }
