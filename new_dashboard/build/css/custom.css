@@ -143,9 +143,13 @@ html , body{
 .calendar-exibit .calendar-table {
     padding: 0 0 4px 0
 }
+
 .left_col {
     background: #2A3F54
 }
+
+/* nav-sm */
+
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
     width: 70px;
@@ -179,6 +183,8 @@ html , body{
     font-size: 27px;
     margin: 13px 0 0 3px
 }
+
+/* site title */
 .site_title i {
     border: 1px solid #EAEAEA;
     padding: 5px 6px;
@@ -188,6 +194,8 @@ html , body{
     max-height: 66px;
     max-width: 180px;
 }
+
+
 .nav-sm .main_container .top_nav {
     display: block;
     margin-left: 70px;
@@ -579,6 +587,8 @@ table.no-margin .progress {
     margin: 0 auto;
     float: none !important
 }
+
+/* col */
 .col-md-55,
 .col-xs-1,
 .col-sm-1,
@@ -641,6 +651,8 @@ table.no-margin .progress {
 .grid_slider .col-md-6 {
     padding: 0 40px
 }
+
+/* headings, a */
 h1,
 .h1,
 h2,
@@ -673,6 +685,8 @@ a:hover,
 a:focus {
     text-decoration: none
 }
+
+/* navbar */
 .navbar {
     margin-bottom: 0
 }
