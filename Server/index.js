@@ -7,6 +7,7 @@ app.use("/css", express.static("css"));
 app.use("/img", express.static("img"));
 app.use("/data", express.static("data"));
 app.use("/vendors", express.static("vendors"));
+app.use("/js", express.static("js"));
 app.use("/main.js", express.static("dist/main.js"));
 require('./app/Routes.js')(app);
 
