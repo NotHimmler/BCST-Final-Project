@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FitbitGraph from "./FitbitGraph";
 
 class FitbitGraph2 extends React.Component {
 
@@ -51,7 +52,7 @@ class FitbitGraph2 extends React.Component {
                 .attr("class", "chart-title")
                 .attr("x", -margin.left + 10)
                 .attr("y", -margin.top + 30)
-                .text("Daily Step Count from " + startDate + " to " + endDate);
+                .text("Steps per day from " + startDate + " to " + endDate);
 
             g.append("g")
                 .attr("class", "axis axis--x")
@@ -187,7 +188,10 @@ class FitbitGraph2 extends React.Component {
     render() {
 
         return (
-            <svg className="fb" width="600" height="500"></svg>
+            <div className = "row">
+                <svg className="fb" width="600" height="500"></svg>
+            </div>
+            
         )
     }
 }

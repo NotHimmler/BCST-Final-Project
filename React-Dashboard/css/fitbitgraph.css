@@ -66,3 +66,11 @@ svg.fb{
   .legend-val {
     stroke: black;
   }
+
+  .goal-box {
+    border: solid 3px #eee;
+    background-color: #eee;
+    border-radius: 20px;
+    width: 200px;
+    height: 300px;
+  }
