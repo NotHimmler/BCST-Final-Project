@@ -17,13 +17,16 @@ import PatientDirectory from "./components/PatientDirectory";
 
 import Test from "./components/Test";
 import Sidebar from "./components/Sidebar";
+import Topnav from "./components/Topnav";
+
 
 const App = () => {
   return (
     <div className="nav-md">
       <div class="container body">
         <div class="main_container">
-          <Sidebar></Sidebar>
+          <Sidebar/>
+          <Topnav/>
         </div>
       </div>
     </div>
