@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 //Import components
+/*
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import SessionStore from "./stores/SessionStore";
@@ -10,11 +11,20 @@ import Login from "./components/Login";
 import Patient from "./components/Patient";
 import Sidenav from "./components/Sidenav";
 import PatientDirectory from "./components/PatientDirectory";
+*/
 
-let sessionStore = new SessionStore();
+//let sessionStore = new SessionStore();
+
+import Test from "./components/Test";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
   return (
+    <div>
+      Testing
+      <Sidebar></Sidebar>
+    </div>
+    /*
     <BrowserRouter>
       <div className="row w-100">
         <Nav sessionStore={sessionStore}/>
@@ -33,7 +43,7 @@ const App = () => {
             </div>
         </div>
       </div>
-    </BrowserRouter>
+    </BrowserRouter>*/
   );
 };
 export default App;
