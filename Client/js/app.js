@@ -20,9 +20,12 @@ import Sidebar from "./components/Sidebar";
 
 const App = () => {
   return (
-    <div>
-      Testing
-      <Sidebar></Sidebar>
+    <div className="nav-md">
+      <div class="container body">
+        <div class="main_container">
+          <Sidebar></Sidebar>
+        </div>
+      </div>
     </div>
     /*
     <BrowserRouter>
