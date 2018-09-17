@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import CoreData
 import CoreMotion
+import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var running = false;
@@ -26,7 +27,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var goalType = "distance"
     var distGoal = 0
     var stepGoal = 0
-    @IBOutlet weak var EmbbededStatusView: EmbeddedStatusUIView!
+    var goalVibeDone = false
+    var walkStats: WalkStats?
     
     // MARK: Properties
     
@@ -53,6 +55,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
+        RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
         setupButtons()
         setUpGoalTextFields()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
@@ -64,7 +67,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         stepGoalTextField.isUserInteractionEnabled = true
         distOkayImg.isUserInteractionEnabled = true
         stepsOkayImg.isUserInteractionEnabled = true
-        RecordButton.backgroundColor = UIColor.green
+        RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
         RecordButton.setTitle("Start Recording", for: .normal)
     }
     
@@ -74,7 +77,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         durationLabel.text = "Logging Your Walk"
         stepsLabel.text = "Number of Steps: " + String(numSteps)
         RecordButton.setTitle("Stop Logging Walk", for: .normal)
-        RecordButton.backgroundColor = UIColor.red
+        RecordButton.backgroundColor = UIColor(red: 1.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
         distKmGoalTextField.isUserInteractionEnabled = false
         distMeterGoalTextField.isUserInteractionEnabled = false
         stepGoalTextField.isUserInteractionEnabled = false
@@ -89,11 +92,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 guard let pedometerData = pedometerData, error == nil else {return}
                 
                 DispatchQueue.main.async {
-                    self!.numSteps = Int(truncating: pedometerData.numberOfSteps)
-                    self!.stepsLabel.text = "Num Steps: " + String(self!.numSteps)
+                    self!.walkStats!.addSteps(steps: Int(truncating: pedometerData.numberOfSteps))
+                    self!.stepsLabel.text = "Num Steps: " + String(self!.walkStats!.getSteps())
                     if self!.goalType == "steps" {
-                        let pctDone: Float = Float(self!.numSteps)/Float(self!.stepGoal)
+                        let pctDone: Float = Float(self!.walkStats!.getSteps())/Float(self!.stepGoal)
                         self!.goalProgressBar.progress = pctDone
+                        if pctDone >= 1.0 && !self!.goalVibeDone {
+                            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                            self!.goalVibeDone = true
+                        }
                     }
                 }
             }
@@ -103,13 +110,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    fileprivate func saveWalk() {
+        let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
+        newWalk.setValue(walkStats!.getDuration(), forKey: "duration")
+        newWalk.setValue(walkStats!.getSteps(), forKey: "steps")
+        newWalk.setValue(startTime!, forKey: "date")
+        newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
+        do {
+            try context!.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
+    
     @IBAction func ButtonClickHandler(_ sender: Any) {
         if (!running) {
-            metersWalked = 0
-            numSteps = 0
-            walkLocations = []
+            walkStats = WalkStats()
             startTime = Date()
-            running = true;
+            running = true
+            goalVibeDone = false
             setUIElementsForRunStart()
             locationMgr.requestAlwaysAuthorization()
             if !startReceivingLocationChanges() {
@@ -123,34 +142,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         } else {
             locationMgr.stopUpdatingLocation()
             pedometer.stopUpdates()
-            running = false;
-            endTime = Date()
+            running = false
+            walkStats!.endWalk()
             var duration: TimeInterval = 0.0
-            var durationInt: Int64 = 0
-            var minutes: Int64 = 0
-            var seconds: Int64 = 0
+            var time: Time = Time(duration: 0.0)
             if startTime != nil {
                 duration = (endTime!.timeIntervalSince(startTime!))
-                let truncated = duration.truncatingRemainder(dividingBy: 1.0)
-                duration -= truncated
-                durationInt = Int64(duration)
-                seconds = durationInt%60
-                minutes = (durationInt - seconds)/60
+                time = Time(duration: duration)
             }
-            let distance = getDistanceFromWalks()
-            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", minutes, seconds)
+            
+            let distance = walkStats!.getDistanceFromWalks()
+            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes!, time.seconds!)
             distanceLabel.text = String(format: "You walked %.2f meters.", distance)
             
-            let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
-            newWalk.setValue(durationInt, forKey: "duration")
-            newWalk.setValue(numSteps, forKey: "steps")
-            newWalk.setValue(startTime!, forKey: "date")
-            newWalk.setValue(distance, forKey: "distance")
-            do {
-                try context!.save()
-            } catch {
-                print("Failed saving")
-            }
+            saveWalk()
             resetUIElements()
         }
     }
@@ -158,19 +163,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func getDistanceFromWalks() -> Double {
-        var distance: Double = 0.0
-        if walkLocations.count > 1 {
-            for index in 1...(walkLocations.count - 1) {
-                let previousLocation = walkLocations[index - 1]
-                let currentLocation = walkLocations[index]
-                distance += currentLocation.distance(from: previousLocation)
-            }
-        }
-        
-        return distance
     }
     
     func startReceivingLocationChanges() -> Bool {
@@ -184,7 +176,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         locationMgr.desiredAccuracy = kCLLocationAccuracyBest
-        
         locationMgr.distanceFilter = 15.0
         locationMgr.delegate = self
         locationMgr.startUpdatingLocation()
@@ -194,15 +185,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let lastLocation = locations.last!
         if lastLocation.timestamp.timeIntervalSince(startTime!) >= 0 {
-            walkLocations.append(lastLocation)
+            filterAndAddLocation(lastLocation)
         }
         
-        let distance = Int(getDistanceFromWalks())
+        let distance = Int(walkStats!.getDistanceFromWalks())
         distanceLabel.text = "Distance Walked: " + String(distance) + " meters"
         
         if goalType == "distance" {
-            goalProgressBar.progress = Float(distance)/Float(distGoal)
+            let pctProgress = Float(distance)/Float(distGoal)
+            goalProgressBar.progress = pctProgress
+            if pctProgress >= 1.0 && !self.goalVibeDone {
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                self.goalVibeDone = true
+            }
         }
+        
+    }
+    
+    //Author Taka Mizutori
+    //Source: https://medium.com/@mizutori/make-it-even-better-than-nike-how-to-filter-locations-tracking-highly-accurate-location-in-774be045f8d6
+    func filterAndAddLocation(_ location: CLLocation) -> Bool{
+        let age = -location.timestamp.timeIntervalSinceNow
+        
+        if age > 10{
+            return false
+        }
+        
+        if location.horizontalAccuracy < 0{
+            return false
+        }
+        
+        if location.horizontalAccuracy > 100{
+            return false
+        }
+        
+        walkStats!.addWalkLocation(location: location)
+        
+        return true
         
     }
     
@@ -257,30 +276,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
-@IBDesignable
-class EmbeddedStatusUIView: UIView {
-    public func printHello() {
-        print("Hello")
-    }
+class Time {
+    var minutes: Int?
+    var seconds: Int?
+    var hours: Int?
+    var totalSeconds: Int?
     
-    /**
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            self.layer.cornerRadius = cornerRadius
-        }
+    init(duration: TimeInterval) {
+        let truncated = duration.truncatingRemainder(dividingBy: 1.0)
+        self.totalSeconds = Int(duration - truncated)
+        self.seconds = self.totalSeconds!%60
+        self.minutes = (self.totalSeconds! - self.seconds!)/60
     }
-    
-    @IBInspectable var borderColor: UIColor = UIColor.black {
-        didSet {
-            self.layer.borderColor = borderColor.cgColor
-        }
-    }
-    
-    @IBInspectable var borderWidth: CGFloat = 2.0 {
-        didSet {
-            self.layer.borderWidth = borderWidth
-        }
-    }
-    **/
 }
-
