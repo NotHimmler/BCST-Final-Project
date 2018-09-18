@@ -25,7 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var numSteps = 0
     var metersWalked = 0
     var goalType = "distance"
-    var distGoal = 0
+    var goalValue = 0
     var stepGoal = 0
     var goalVibeDone = false
     var walkStats: WalkStats?
@@ -43,10 +43,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var distanceGoal: UIView!
     @IBOutlet weak var stepsOkayImg: UIImageView!
     @IBOutlet weak var distOkayImg: UIImageView!
-    @IBOutlet weak var distKmGoalTextField: UITextField!
     @IBOutlet weak var distMeterGoalTextField: UITextField!
+    @IBOutlet weak var goalLabel: UILabel!
     
-    @IBOutlet weak var stepGoalTextField: UITextField!
     @IBOutlet weak var goalProgressBar: UIProgressView!
     
     override func viewDidLoad() {
@@ -62,9 +61,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     fileprivate func resetUIElements() {
-        distKmGoalTextField.isUserInteractionEnabled = true
         distMeterGoalTextField.isUserInteractionEnabled = true
-        stepGoalTextField.isUserInteractionEnabled = true
         distOkayImg.isUserInteractionEnabled = true
         stepsOkayImg.isUserInteractionEnabled = true
         RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
@@ -78,9 +75,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         stepsLabel.text = "Number of Steps: " + String(numSteps)
         RecordButton.setTitle("Stop Logging Walk", for: .normal)
         RecordButton.backgroundColor = UIColor(red: 1.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
-        distKmGoalTextField.isUserInteractionEnabled = false
         distMeterGoalTextField.isUserInteractionEnabled = false
-        stepGoalTextField.isUserInteractionEnabled = false
         distOkayImg.isUserInteractionEnabled = false
         stepsOkayImg.isUserInteractionEnabled = false
     }
@@ -95,7 +90,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     self!.walkStats!.addSteps(steps: Int(truncating: pedometerData.numberOfSteps))
                     self!.stepsLabel.text = "Num Steps: " + String(self!.walkStats!.getSteps())
                     if self!.goalType == "steps" {
-                        let pctDone: Float = Float(self!.walkStats!.getSteps())/Float(self!.stepGoal)
+                        let pctDone: Float = Float(self!.walkStats!.getSteps())/Float(self!.goalValue)
                         self!.goalProgressBar.progress = pctDone
                         if pctDone >= 1.0 && !self!.goalVibeDone {
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -147,7 +142,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             var duration: TimeInterval = 0.0
             var time: Time = Time(duration: 0.0)
             if startTime != nil {
-                duration = (endTime!.timeIntervalSince(startTime!))
+                duration = walkStats!.getDuration()
                 time = Time(duration: duration)
             }
             
@@ -192,7 +187,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         distanceLabel.text = "Distance Walked: " + String(distance) + " meters"
         
         if goalType == "distance" {
-            let pctProgress = Float(distance)/Float(distGoal)
+            let pctProgress = Float(distance)/Float(goalValue)
             goalProgressBar.progress = pctProgress
             if pctProgress >= 1.0 && !self.goalVibeDone {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -241,38 +236,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if view == stepsOkayImg {
                 goalType = "steps"
                 distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+                goalLabel.text = "steps"
             } else {
                 goalType = "distance"
                 stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+                goalLabel.text = "meters"
             }
             
         }
     }
     
     func setUpGoalTextFields() {
-        distKmGoalTextField.addTarget(self, action: #selector(kmTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
         
         distMeterGoalTextField.addTarget(self, action: #selector(meterTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
-
-        stepGoalTextField.addTarget(self, action: #selector(stepTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
-    }
-    
-    @objc func kmTextFieldChange(textField: UITextField) {
-        let numKms = (textField.text! as NSString).integerValue
-        let numMeters = (distMeterGoalTextField!.text! as NSString).integerValue
-        distGoal = numKms*1000 + numMeters
     }
     
     @objc func meterTextFieldChange(textField: UITextField) {
         let numMeters = (textField.text! as NSString).integerValue
-        let numKms = (distKmGoalTextField!.text! as NSString).integerValue
-        distGoal = numKms*1000 + numMeters
-    }
-    
-    @objc func stepTextFieldChange(textField: UITextField) {
-        let stepString: String = stepGoalTextField!.text!
-        let stepInt: Int = (stepString as NSString).integerValue
-        stepGoal = stepInt
+        goalValue = numMeters
     }
 }
 
