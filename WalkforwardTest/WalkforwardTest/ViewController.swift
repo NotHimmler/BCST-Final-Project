@@ -147,8 +147,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
             
             let distance = walkStats!.getDistanceFromWalks()
-            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes!, time.seconds!)
-            distanceLabel.text = String(format: "You walked %.2f meters.", distance)
+            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes, time.seconds)
+            distanceLabel.text = String(format: "You walked %d meters.", Int(distance))
             
             saveWalk()
             resetUIElements()
@@ -258,15 +258,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 }
 
 class Time {
-    var minutes: Int?
-    var seconds: Int?
-    var hours: Int?
-    var totalSeconds: Int?
+    var minutes: Int = 0
+    var seconds: Int = 0
+    var hours: Int = 0
+    var totalSeconds: Int = 0
     
     init(duration: TimeInterval) {
         let truncated = duration.truncatingRemainder(dividingBy: 1.0)
         self.totalSeconds = Int(duration - truncated)
-        self.seconds = self.totalSeconds!%60
-        self.minutes = (self.totalSeconds! - self.seconds!)/60
+        self.seconds = self.totalSeconds%60
+        self.minutes = (self.totalSeconds - self.seconds)/60
+        if (self.minutes >= 60) {
+            self.hours = (self.minutes - self.minutes%60)/60
+            self.minutes = self.minutes%60
+        }
     }
 }

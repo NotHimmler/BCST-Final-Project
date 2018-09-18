@@ -30,7 +30,7 @@ class WalkStats {
     }
     
     func addSteps(steps: Int) {
-        numSteps += steps
+        numSteps = steps
     }
     
     func getDistance() -> Int {

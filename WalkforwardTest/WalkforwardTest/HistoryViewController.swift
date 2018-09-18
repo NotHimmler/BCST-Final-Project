@@ -53,8 +53,10 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         if walks[indexPath.row].value(forKey: "date") != nil {
             date = walks[indexPath.row].value(forKey: "date") as! Date
         }
-        
-        let cellString = String(date.description(with: .current)) + "\nSteps: " + String(steps) + "\nDistance: " + String(distance) + "\nDuration: " + generateDurationString(duration: duration)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        let cellString = dateFormatter.string(from: date) + "\nSteps: " + String(steps) + "\nDistance: " + String(Int(distance)) + " meters\nDuration: " + generateDurationString(duration: duration)
         
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping;
@@ -101,7 +103,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         var durationString = ""
         
         let seconds = duration % 60
-        var minutes = duration - seconds
+        var minutes = (duration - seconds)/60
         let hours = (minutes - minutes%60)/60
         if hours > 0 {
             minutes = minutes % 60
