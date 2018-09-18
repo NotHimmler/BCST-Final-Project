@@ -15,8 +15,6 @@ import AVFoundation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var running = false;
     let locationMgr = CLLocationManager();
-    var startTime: Date?
-    var endTime: Date?
     var walkLocations: [CLLocation] = [];
     var appDelegate: AppDelegate?
     var context: NSManagedObjectContext?
@@ -54,6 +52,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
+        locationMgr.allowsBackgroundLocationUpdates = true
         RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
         setupButtons()
         setUpGoalTextFields()
@@ -109,7 +108,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
         newWalk.setValue(walkStats!.getDuration(), forKey: "duration")
         newWalk.setValue(walkStats!.getSteps(), forKey: "steps")
-        newWalk.setValue(startTime!, forKey: "date")
+        newWalk.setValue(walkStats!.getStartTime(), forKey: "date")
         newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
         do {
             try context!.save()
@@ -121,7 +120,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func ButtonClickHandler(_ sender: Any) {
         if (!running) {
             walkStats = WalkStats()
-            startTime = Date()
             running = true
             goalVibeDone = false
             setUIElementsForRunStart()
@@ -141,10 +139,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             walkStats!.endWalk()
             var duration: TimeInterval = 0.0
             var time: Time = Time(duration: 0.0)
-            if startTime != nil {
-                duration = walkStats!.getDuration()
-                time = Time(duration: duration)
-            }
+            duration = walkStats!.getDuration()
+            time = Time(duration: duration)
             
             let distance = walkStats!.getDistanceFromWalks()
             durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes, time.seconds)
@@ -179,7 +175,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let lastLocation = locations.last!
-        if lastLocation.timestamp.timeIntervalSince(startTime!) >= 0 {
+        if lastLocation.timestamp.timeIntervalSince(walkStats!.getStartTime()) >= 0 {
             filterAndAddLocation(lastLocation)
         }
         

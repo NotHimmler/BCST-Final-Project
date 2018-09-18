@@ -56,7 +56,11 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
-        let cellString = dateFormatter.string(from: date) + "\nSteps: " + String(steps) + "\nDistance: " + String(Int(distance)) + " meters\nDuration: " + generateDurationString(duration: duration)
+        let dcFormatter = DateComponentsFormatter()
+        dcFormatter.unitsStyle = .full
+        dcFormatter.allowedUnits = [.minute, .second, .hour]
+        let cellString = dateFormatter.string(from: date) + "\nSteps: " + String(steps) + "\nDistance: " + String(Int(distance)) + " meters\nDuration: " + String(dcFormatter.string(from: Double(duration) as TimeInterval)!)
+        //String(format: "%s\nSteps: %d\nDistance: %d meters\nDuration: %s", dateFormatter.string(from: date), steps, Int(distance), dcFormatter.string(from: Double(duration) as TimeInterval)!)
         
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping;

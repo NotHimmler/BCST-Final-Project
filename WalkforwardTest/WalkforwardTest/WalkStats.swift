@@ -49,6 +49,14 @@ class WalkStats {
         walkLocations.append(location)
     }
     
+    func getStartTime() -> Date {
+        return startTime
+    }
+    
+    func getEndTime() -> Date {
+        return endTime!
+    }
+    
     func getDistanceFromWalks() -> Double {
         var distance: Double = 0.0
         if walkLocations.count > 1 {
