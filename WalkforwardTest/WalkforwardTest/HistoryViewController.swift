@@ -53,8 +53,14 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         if walks[indexPath.row].value(forKey: "date") != nil {
             date = walks[indexPath.row].value(forKey: "date") as! Date
         }
-        
-        let cellString = String(date.description(with: .current)) + "\nSteps: " + String(steps) + "\nDistance: " + String(distance) + "\nDuration: " + generateDurationString(duration: duration)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        let dcFormatter = DateComponentsFormatter()
+        dcFormatter.unitsStyle = .full
+        dcFormatter.allowedUnits = [.minute, .second, .hour]
+        let cellString = dateFormatter.string(from: date) + "\nSteps: " + String(steps) + "\nDistance: " + String(Int(distance)) + " meters\nDuration: " + String(dcFormatter.string(from: Double(duration) as TimeInterval)!)
+        //String(format: "%s\nSteps: %d\nDistance: %d meters\nDuration: %s", dateFormatter.string(from: date), steps, Int(distance), dcFormatter.string(from: Double(duration) as TimeInterval)!)
         
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping;
@@ -101,7 +107,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         var durationString = ""
         
         let seconds = duration % 60
-        var minutes = duration - seconds
+        var minutes = (duration - seconds)/60
         let hours = (minutes - minutes%60)/60
         if hours > 0 {
             minutes = minutes % 60
