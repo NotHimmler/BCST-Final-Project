@@ -173,11 +173,11 @@ class Sidebar extends React.Component {
                   <div className="menu_section">
                     <h3>General</h3>
                     <ul className="nav side-menu">
-                      <li><a href="home.html"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></a></li>
+                      <li><a href="/"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></a></li>
                       <li><a><i className="fa fa-edit"></i> Patients <span className="fa fa-chevron-down"></span></a>
                         <ul className="nav child_menu">
-                          <li><a href="contacts.html">Current Patient</a></li>
-                          <li><a href="out.html">Archived Patient</a></li>
+                          <li><a href="curPatients">Current Patient</a></li>
+                          <li><a href="disPatients">Discharged Patient</a></li>
                         </ul>
                       </li>
                     </ul>
