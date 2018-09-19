@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import PatientSidebar from "../components/PatientSidebar";
+
 //NOTES//
 //Implement className="navbar nav_title" style="border: 0;"
 //Links
 
 class Sidebar extends React.Component {
+
     componentDidMount() {
 
       (function($,sr){
@@ -142,6 +145,12 @@ class Sidebar extends React.Component {
 }
 
     render() {
+
+      var currentPath = window.location.pathname;
+      console.log(currentPath);
+      console.log(currentPath.includes("patient"));
+      
+
         return (
             <div className="col-md-3 left_col">
               <div className="left_col scroll-view">
@@ -184,6 +193,10 @@ class Sidebar extends React.Component {
                   </div>
                 </div>
                 {/* /Sidebar menu */}
+
+                {currentPath.includes('patient')
+                    ? <PatientSidebar/> 
+                    : null }
      
               </div>
             </div>
