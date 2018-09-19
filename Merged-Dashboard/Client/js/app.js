@@ -25,8 +25,8 @@ const App = () => {
     <div className="nav-md">
       <div class="container body">
         <div class="main_container">
+          <Sidebar/>
           <Topnav/>
-          <Test/>
         </div>
       </div>
     </div>
