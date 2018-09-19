@@ -180,7 +180,6 @@ class Sidebar extends React.Component {
                           <li><a href="out.html">Archived Patient</a></li>
                         </ul>
                       </li>
-                      <li><a href="calendar.html"><i className="fa fa-desktop"></i> Calendar <span className="label label-success pull-right"></span></a></li>
                     </ul>
                   </div>
                 </div>
