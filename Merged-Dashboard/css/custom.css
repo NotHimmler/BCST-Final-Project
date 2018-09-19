@@ -1,4 +1,8 @@
+/*changed menu_toggle and @media 991*/
 
+#menu_toggle {
+    display:none;
+}
 html , body{
 	
   height:100%;
@@ -379,7 +383,7 @@ html , body{
          margin: 0
      }
      .nav-md .container.body .col-md-3.left_col {
-         display: none
+         /*display: none*/
      }
      .nav-md .container.body .right_col {
          width: 100%;
