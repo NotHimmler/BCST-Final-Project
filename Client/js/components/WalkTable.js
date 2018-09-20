@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class FitbitTable extends React.Component {
+class WalkTable extends React.Component {
   constructor(props) {
     super(props);
     this.change_daily = this.change_daily.bind(this);
@@ -12,31 +12,26 @@ class FitbitTable extends React.Component {
     this.state = {
       echart: null,
               // optionss
-              options_fitbit : {
+              options_distance : {
                 title: {
-                  text: 'Daily: 4 out of 7 Goals compteted',
-                  subtext: 'Walked Steps and Goal Steps'
+                  text: 'Daily: 6 out of 7 Goals compteted',
+                  subtext: 'Walked disance and goal disance'
                 },
                 tooltip: {
                   trigger: 'axis'
                 },
                 legend: {
-                  data: ['Walked Steps', 'Goal Steps']
+                  data: ['Walked Distance (KM)', 'Goal Distance (KM)']
                 },
                 toolbox: {
-                  show: false,
-                  feature : {
-                     dataZoom : {show: true},
-                 }
+                  show: false
                 },
-          
                 dataZoom : {
                   show : true,
                   realtime: true,
                   start : 0,
                   end : 100
-                }
-                ,
+                },
                 calculable: false,
                 xAxis: [{
                   type: 'category',
@@ -46,28 +41,28 @@ class FitbitTable extends React.Component {
                   type: 'value'
                 }],
                 series: [{
-                  name: 'Walked Steps',
+                  name: 'Walked Distance (KM)',
                   type: 'bar',
-                  data: [2292, 2000, 1860, 1881, 2188, 2140, 2088],
+                  data: [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1],
                   markPoint: {
                     data: [{
                       type: 'max',
-                      name: 'maximum'
+                      name: 'Maximum'
                     }, {
                       type: 'min',
-                      name: 'minimum'
+                      name: 'Minimum'
                     }]
                   },
                   markLine: {
                     data: [{
                       type: 'average',
-                      name: 'average'
+                      name: 'Average'
                     }]
                   }
                 }, {
-                  name: 'Goal Steps',
+                  name: 'Goal Distance (KM)',
                   type: 'bar',
-                  data: [2000, 2000, 3000, 3000, 2000, 2000, 3000],
+                  data: [1.0, 1.0, 1.1, 1.1, 1.3, 1.3, 1.3],
                   markLine: {
                     data: [{
                       type: 'average',
@@ -538,10 +533,10 @@ class FitbitTable extends React.Component {
     // /Panel toolbox
 
     //echart Bar
-    var ec = echarts.init(document.getElementById('mainb'), this.state.theme);
+    var ec = echarts.init(document.getElementById('mainc'), this.state.theme);
 
-      ec.setOption(this.state.options_fitbit);
-            //   let option =  options_fitbit;
+      ec.setOption(this.state.options_distance);
+            //   let option =  options_distance;
             //   option.title.text = 'bbbb';
             //   echartBar.setOption(option);
     this.setState({echart:ec});
@@ -554,34 +549,34 @@ class FitbitTable extends React.Component {
 
          // changefunc
           change_daily() {
-          document.getElementById('dropdown_fitbit').innerHTML = 'Daily' + ' <span className="caret"></span>';
+          document.getElementById('dropdown_distance').innerHTML = 'Daily' + ' <span className="caret"></span>';
   
   
-          var echartBar1 = echarts.init(document.getElementById('mainb'), this.state.theme1);
-          var ops = this.state.options_fitbit;
+          var echartBar1 = echarts.init(document.getElementById('mainc'), this.state.theme1);
+          var ops = this.state.options_distance;
               ops.title.text = 'Daily: 4 out of 7 Goals compteted';
   
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-              ops.series[0].data = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
-              ops.series[1].data = [2000, 2000, 3000, 3000, 2000, 2000, 3000];
-          this.setState({options_fitbit : ops});
-          echartBar1.setOption(this.state.options_fitbit);
+              ops.series[0].data = [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1];
+              ops.series[1].data = [1.0, 1.0, 1.1, 1.1, 1.3, 1.3, 1.3];
+          this.setState({options_distance : ops});
+          echartBar1.setOption(this.state.options_distance);
           this.setStaet({echart: echartBar1}); 
   
           }
            change_weekly() {
-            document.getElementById('dropdown_fitbit').innerHTML = 'Weekly' + ' <span className="caret"></span>';
+            document.getElementById('dropdown_distance').innerHTML = 'Weekly' + ' <span className="caret"></span>';
   
-             var echartBar2 = echarts.init(document.getElementById('mainb'), this.state.theme1);
+             var echartBar2 = echarts.init(document.getElementById('mainc'), this.state.theme1);
   
-              var ops = this.state.options_fitbit;
+              var ops = this.state.options_distance;
               ops.title.text = 'Weekly: 2 out of 4 Goals compteted';
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
-              ops.series[0].data = [15305, 23274, 16881, 5004];
-              ops.series[1].data = [10000, 20000, 25000, 20000];
-              this.setState({options_fitbit : ops});
-              echartBar2.setOption(this.state.options_fitbit);
+              ops.series[0].data = [7.2, 8.4, 12.3, 5.4];
+              ops.series[1].data = [5, 10, 10, 15];
+              this.setState({options_distance : ops});
+              echartBar2.setOption(this.state.options_distance);
               this.setStaet({echart: echartBar2}); 
 
               // $(".btn:first-child #dropdown_fitbit")[0].html('Weekly' + ' <span className="caret"></span>');
@@ -590,21 +585,21 @@ class FitbitTable extends React.Component {
           }
   
            change_monthly() {
-            document.getElementById('dropdown_fitbit').innerHTML = 'Monthly' + ' <span className="caret"></span>';
+            document.getElementById('dropdown_distance').innerHTML = 'Monthly' + ' <span className="caret"></span>';
   
-               var echartBar3 = echarts.init(document.getElementById('mainb'), this.state.theme1);
-              var ops = this.state.options_fitbit;
+               var echartBar3 = echarts.init(document.getElementById('mainc'), this.state.theme1);
+              var ops = this.state.options_distance;
               ops.title.text = 'Monthly: 3 out of 12 Goals compteted';
               ops.xAxis[0].data = ['Jan-15', 'Feb-15', 'Mar-15', 'Apr-15',
                   'May-15', 'Jun-15',  'Jul-15',  'Aug-15', 'Sep-15',  'Oct-15',
                   'Nov-15',  'Dec-15'];
-              ops.series[0].data = [93901, 76572, 161213, 172121, 117865, 121369,
-                  109692, 100313, 127364, 159968, 126587, 100234];
-              ops.series[1].data = [110000, 100000, 150000, 160000,
-                  150000, 150000, 130000,  110000, 130000, 140000, 130000,  150000];
+              ops.series[0].data = [29.2, 31.1, 32.4, 34.1, 36.2, 27.3,
+                23.5, 42.3, 39.9, 32.2, 21.8, 20.1];
+              ops.series[1].data = [20, 20, 25, 25,
+                25, 30, 30,  30, 40, 40, 50,  50];
               
-              this.setState({options_fitbit : ops});
-              echartBar3.setOption(this.state.options_fitbit);
+              this.setState({options_distance : ops});
+              echartBar3.setOption(this.state.options_distance);
               this.setStaet({echart: echartBar3}); 
           }
          
@@ -615,11 +610,11 @@ class FitbitTable extends React.Component {
           <div className="row col-lg-12">
             <div className="x_panel">
               <div className="x_title">
-                <h2>Steps from Fitbit</h2>
+                <h2>Distance from Walkforward App</h2>
 
                 <ul className="nav navbar-right panel_toolbox">
                 <li className="dropdown">
-                    <button  id = "dropdown_fitbit" className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
+                    <button  id = "dropdown_distance" className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
                     <span className="caret"></span></button>
                     <ul className="dropdown-menu">
                     <li><a onClick={this.change_daily}>Daily</a></li>
@@ -636,7 +631,7 @@ class FitbitTable extends React.Component {
                 <div className="clearfix"></div>
               </div>
               <div className="x_content">
-                <div id="mainb">
+                <div id="mainc">
                 </div>
               </div>
 
@@ -647,4 +642,4 @@ class FitbitTable extends React.Component {
     }
 }
 
-export default FitbitTable;
+export default WalkTable;
