@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XDn-77-77R">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XDn-77-77R">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,7 +66,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-ok" translatesAutoresizingMaskIntoConstraints="NO" id="L8Q-7H-DUc">
-                                                        <rect key="frame" x="24" y="37" width="36" height="36"/>
+                                                        <rect key="frame" x="23.5" y="37" width="36" height="36"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="36" id="1mj-CJ-Dza"/>
                                                             <constraint firstAttribute="height" constant="36" id="ER0-rb-QUO"/>
@@ -93,7 +92,7 @@
                                                 <rect key="frame" x="252" y="8" width="83" height="88"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czG-BY-0dn">
-                                                        <rect key="frame" x="20" y="8" width="44" height="21"/>
+                                                        <rect key="frame" x="19.5" y="8" width="44" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="EnG-yf-g2g"/>
                                                             <constraint firstAttribute="height" constant="21" id="HEz-zE-QTq"/>
@@ -103,7 +102,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-ok" translatesAutoresizingMaskIntoConstraints="NO" id="MFB-8V-ahi">
-                                                        <rect key="frame" x="24" y="37" width="36" height="36"/>
+                                                        <rect key="frame" x="23.5" y="37" width="36" height="36"/>
                                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="36" id="bxA-eb-BCr"/>
@@ -152,7 +151,6 @@
                                             <constraint firstItem="1Lg-Q0-eLb" firstAttribute="width" secondItem="Hgc-ca-CXl" secondAttribute="width" id="g98-1U-zfg"/>
                                             <constraint firstItem="1Lg-Q0-eLb" firstAttribute="top" secondItem="YlI-3g-Q64" secondAttribute="top" constant="8" id="gdx-QA-3PH"/>
                                             <constraint firstAttribute="trailing" secondItem="Hgc-ca-CXl" secondAttribute="trailing" constant="8" id="hPV-lh-8d8"/>
-                                            <constraint firstAttribute="width" constant="343" id="sJN-jf-FIp"/>
                                             <constraint firstAttribute="trailing" secondItem="Hgc-ca-CXl" secondAttribute="trailing" constant="8" id="z6a-sN-mxH"/>
                                         </constraints>
                                     </view>
@@ -167,6 +165,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="198" id="1VS-nc-H5R"/>
                                     <constraint firstItem="YlI-3g-Q64" firstAttribute="leading" secondItem="bQy-Jq-qhg" secondAttribute="leading" id="67E-yo-xAS"/>
+                                    <constraint firstAttribute="trailing" secondItem="YlI-3g-Q64" secondAttribute="trailing" id="Myq-3K-6JO"/>
+                                    <constraint firstItem="YlI-3g-Q64" firstAttribute="leading" secondItem="bQy-Jq-qhg" secondAttribute="leading" id="RyH-7o-N4j"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRr-jS-9Zb" secondAttribute="trailing" constant="20" symbolic="YES" id="UV1-1c-E2j"/>
                                     <constraint firstItem="PRr-jS-9Zb" firstAttribute="top" secondItem="bQy-Jq-qhg" secondAttribute="top" id="Wnb-pQ-wBf"/>
                                     <constraint firstItem="YlI-3g-Q64" firstAttribute="top" secondItem="PRr-jS-9Zb" secondAttribute="bottom" constant="14" id="YbR-PI-s3o"/>
@@ -196,7 +196,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="yAa-Cm-zLT">
-                                        <rect key="frame" x="125" y="157" width="150" height="9"/>
+                                        <rect key="frame" x="125.5" y="157" width="149.5" height="9"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="8" id="HLn-8R-zT2"/>
                                         </constraints>
@@ -347,7 +347,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon-ok" width="25" height="25"/>
+        <image name="icon-ok" width="37.5" height="37.5"/>
         <image name="icons8-time-machine.png" width="25" height="25"/>
         <image name="icons8-walking.png" width="25" height="25"/>
     </resources>
