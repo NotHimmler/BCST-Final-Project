@@ -203,7 +203,7 @@
         <!-- /top navigation -->
        	<div class="navbar-right" style="margin-right: 2%">
        		<div class="btn-group">
-       			<button type="button" class="btn btn-primary" id="summary" onclick="changeDisplay('summary')">Summary</button>
+       			<button type="button" class="btn btn-primary" id="summary" onclick="changeDisplay('id')">Summary</button>
   				<button type="button" class="btn btn-primary" id="graphs" onclick="changeDisplay('graphs')">Graphs</button>
   				<button type="button" class="btn btn-primary" id="goals" onclick="changeDisplay('goals')">Goals</button>
 			</div>
@@ -504,7 +504,7 @@
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="4">
+                      <ul role="menu" class="dropdown-menu" id="1_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -513,7 +513,7 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_4">4/5</td>
+                  <td id="situation_1">4/5</td>
                 </tr>
                 <tr>
                   <th scope="row">9.24-9.30</th>
@@ -521,7 +521,7 @@
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="5">
+                      <ul role="menu" class="dropdown-menu" id="2_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -530,7 +530,7 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_5">4/5</td>
+                  <td id="situation_2">4/5</td>
                 </tr>
                 <tr>
                   <th scope="row">10.1-10.7</th>
@@ -538,7 +538,7 @@
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="6">
+                      <ul role="menu" class="dropdown-menu" id="3_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -547,7 +547,7 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_6">0/5</td>
+                  <td id="situation_3">0/5</td>
                 </tr>
                 <tr>
                   <th scope="row">10.8-10.14</th>
@@ -555,7 +555,7 @@
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="7">
+                      <ul role="menu" class="dropdown-menu" id="4_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -564,7 +564,7 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_7">0/5</td>
+                  <td id="situation_4">0/5</td>
                 </tr>
               </tbody>
             </table>
@@ -585,7 +585,7 @@
                         <th>Progress/Comments</th>
                       </tr>
                     </thead>
-                  <tbody>
+                  <tbody id = "global_goal">
                     <tr>
                       <td></td>
                       <td>To walk independently to and from Bankstown train station from your home (~1km away) at least once per week to access community group activites within 5 months.</td>
@@ -601,7 +601,7 @@
                         <th>Progress/Comments</th>
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="sub_goal">
                   	<tr>
                       <td></td>
                       <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
@@ -680,7 +680,7 @@
             	  <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select_weekly">Select <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" id="select_weekly" name="select_weekly">
                         	<option>Weekly</option>
                             <option>Monthly</option>
                             <option>Yearly</option>
@@ -699,9 +699,9 @@
                   <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="goal_type">Select Goal type <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" id="goal_type" name="goal_type">
                         	<option>Global Goal</option>
-                            <option>Sub goal</option>
+                            <option>Sub Goal</option>
                         </select>
                     </div>
                   </div>
