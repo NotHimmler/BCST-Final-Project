@@ -3,7 +3,32 @@ import { Link } from "react-router-dom";
 
 class PatientSidebar extends React.Component {
 
+  componentDidMount() {
+    $('a').filter(function () {
+      var $li = $(this).parent();
+      if ($li.is('.current-page')) {
+        $li.removeClass('current-page');}
+        console.log("Href: "+ $(this).attr("href"));
+      return $(this).attr("href") == window.location.pathname;
+    }).parent('li').addClass('current-page');
+  }
+
   render() {
+
+    function updateActive() {
+      console.log("update: " + window.location.pathname);
+
+      $('a').filter(function () {
+        var $li = $(this).parent();
+        if ($li.is('.current-page')) {
+          $li.removeClass('current-page');}
+          console.log("Href: "+ $(this).attr("href"));
+        return $(this).attr("href") == window.location.pathname;
+      }).parent('li').addClass('current-page');
+    }
+
+    updateActive();
+    
       return (
         <div>
           <hr id="sidebar-hr" ></hr>
