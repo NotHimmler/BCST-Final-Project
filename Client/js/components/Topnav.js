@@ -29,6 +29,71 @@ class Topnav extends React.Component {
                       <li><a href="login.html"><i className="fa fa-sign-out pull-right"></i> Log Out</a></li>
                     </ul>
                   </li>
+
+                  <li role="presentation" className="dropdown">
+                  <a href="javascript:;" className="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i className="fa fa-bell-o"></i>
+                    <span className="badge bg-green">4</span>
+                  </a>
+                  <ul id="menu1" className="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>Leanne Hassett</span>
+                          <span className="time">15/Sep</span>
+                        </span>
+                        <span className="message">
+                          Patient D01 report due
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>Leanne Hassett</span>
+                          <span className="time">17/Sep</span>
+                        </span>
+                        <span className="message">
+                          Patient D02 report due
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>Leanne Hassett</span>
+                          <span className="time">18/Sep</span>
+                        </span>
+                        <span className="message">
+                          Patient D03 report due
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>Leanne Hassett</span>
+                          <span className="time">19/Sep</span>
+                        </span>
+                        <span className="message">
+                           Patient D04 report due
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div className="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i className="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
                 </ul>
 
               </nav>
