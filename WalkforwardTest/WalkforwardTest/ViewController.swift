@@ -20,11 +20,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var context: NSManagedObjectContext?
     var entity: NSEntityDescription?
     let pedometer = CMPedometer()
-    var numSteps = 0
-    var metersWalked = 0
     var goalType = "distance"
     var goalValue = 0
-    var stepGoal = 0
     var goalVibeDone = false
     var walkStats: WalkStats?
     
@@ -71,7 +68,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         goalProgressBar.progress = 0.0
         distanceLabel.text = ""
         durationLabel.text = "Logging Your Walk"
-        stepsLabel.text = "Number of Steps: " + String(numSteps)
+        stepsLabel.text = "Number of Steps: 0"
         RecordButton.setTitle("Stop Logging Walk", for: .normal)
         RecordButton.backgroundColor = UIColor(red: 1.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
         distMeterGoalTextField.isUserInteractionEnabled = false

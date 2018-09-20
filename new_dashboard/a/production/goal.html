@@ -29,13 +29,13 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <style>
-      #goals{
+      #goals_page{
         display: none;
       }
-      #switch_button{
+      /*#switch_button{
         float: right;
         margin-right: 2%;
-      }
+      }*/
     </style>
   </head>
 
@@ -201,12 +201,28 @@
           </div>
         </div>
         <!-- /top navigation -->
-        <!--Button for switch-->
-        <button class="btn btn-primary" id="switch_button" onclick="changeDisplay()">Goals</button>
-        <!--end of button-->
+       	<div class="navbar-right" style="margin-right: 2%">
+       		<div class="btn-group">
+       			<button type="button" class="btn btn-primary" id="summary" onclick="changeDisplay('id')">Summary</button>
+  				<button type="button" class="btn btn-primary" id="graphs" onclick="changeDisplay('graphs')">Graphs</button>
+  				<button type="button" class="btn btn-primary" id="goals" onclick="changeDisplay('goals')">Goals</button>
+			</div>
+        	<!--<div class="row">
+        		<div class="col-md-4">
+        			<button class="btn btn-primary" style="width:100%" id="p1" onclick="changeDisplay()">Graphs</button>
+        		</div>
+        		<div class="col-md-4">
+        			<button class="btn btn-primary" style="width:100%" id="p2" onclick="changeDisplay()">Goals</button>
+        		</div>
+        		<div class="col-md-4">
+        			<button class="btn btn-primary" style="width:100%" id="p3" onclick="changeDisplay()">Summary</button>
+        		</div>
+        	</div>-->
+        </div>
         <!-- start!! -->
         <!-- page content -->
         <div class="right_col" role="main" id="patient_data">
+        	
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -467,7 +483,7 @@
         </div>
         <!-- /page content -->
         <!-- page content -->
-        <div class="right_col" role="main" id="goals">
+        <div class="right_col" role="main" id="goals_page">
 
           <div class="clearfix"></div>
           <!-- /weekly goal -->
@@ -483,12 +499,12 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Monday</th>
+                  <th scope="row">9.17-9.23</th>
                   <td>
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="1">
+                      <ul role="menu" class="dropdown-menu" id="1_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -500,12 +516,12 @@
                   <td id="situation_1">4/5</td>
                 </tr>
                 <tr>
-                  <th scope="row">Tuesday</th>
+                  <th scope="row">9.24-9.30</th>
                   <td>
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="2">
+                      <ul role="menu" class="dropdown-menu" id="2_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -514,32 +530,15 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_2">3/5</td>
-                </tr>
-                <<tr>
-                  <th scope="row">Wednesday</th>
-                  <td>
-                    <div class="btn-group">
-                      <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
-                      </button>
-                      <ul role="menu" class="dropdown-menu" id="3">
-                        <li><a href="#">Side walking</a></li>
-                        <li><a href="#">Keep lifting</a></li>
-                        <li><a href="#">Sit to stand</a></li>
-                        <li><a href="#">Dynamic balance</a></li>
-                        <li><a href="#">Walk for 500 steps</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td id="situation_3">5/5</td>
+                  <td id="situation_2">4/5</td>
                 </tr>
                 <tr>
-                  <th scope="row">Thursday</th>
+                  <th scope="row">10.1-10.7</th>
                   <td>
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="4">
+                      <ul role="menu" class="dropdown-menu" id="3_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -548,15 +547,15 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_4">2/5</td>
+                  <td id="situation_3">0/5</td>
                 </tr>
                 <tr>
-                  <th scope="row">Friday</th>
+                  <th scope="row">10.8-10.14</th>
                   <td>
                     <div class="btn-group">
                       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
                       </button>
-                      <ul role="menu" class="dropdown-menu" id="5">
+                      <ul role="menu" class="dropdown-menu" id="4_week">
                         <li><a href="#">Side walking</a></li>
                         <li><a href="#">Keep lifting</a></li>
                         <li><a href="#">Sit to stand</a></li>
@@ -565,124 +564,98 @@
                       </ul>
                     </div>
                   </td>
-                  <td id="situation_5">4/5</td>
-                </tr>
-                <tr>
-                  <th scope="row">Saturday</th>
-                  <td>
-                    <div class="btn-group">
-                      <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
-                      </button>
-                      <ul role="menu" class="dropdown-menu" id="6">
-                        <li><a href="#">Side walking</a></li>
-                        <li><a href="#">Keep lifting</a></li>
-                        <li><a href="#">Sit to stand</a></li>
-                        <li><a href="#">Dynamic balance</a></li>
-                        <li><a href="#">Walk for 500 steps</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td id="situation_6">0/5</td>
-                </tr>
-                <tr>
-                  <th scope="row">Sunday</th>
-                  <td>
-                    <div class="btn-group">
-                      <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">Goals <span class="caret"></span>
-                      </button>
-                      <ul role="menu" class="dropdown-menu" id="7">
-                        <li><a href="#">Side walking</a></li>
-                        <li><a href="#">Keep lifting</a></li>
-                        <li><a href="#">Sit to stand</a></li>
-                        <li><a href="#">Dynamic balance</a></li>
-                        <li><a href="#">Walk for 500 steps</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td id="situation_7">0/5</td>
+                  <td id="situation_4">0/5</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="clearfix"></div>
-
-          <div class="col-md-6 col-sm-6 col-xs-12">
+          <!-- Global goals and sub goals-->
+          <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
               <div class="x_title">
-                <h2>Goals <small>Long-term goals</small></h2>
+                <h2>Goals</h2>
                   <table class="table table-striped" id="long_term_table">
-                    <thead>
+                  	<thead>
                       <tr>
-                        <th>Duration</th>
-                        <th>Items</th>
-                        <th>Situation</th>
+                        <th>Date goal set</th>
+                        <th>Global Goals</th>
+                        <th>Rating</th>
+                        <th>Progress/Comments</th>
                       </tr>
                     </thead>
-                  <tbody>
+                  <tbody id = "global_goal">
                     <tr>
-                      <td>1 Month</td>
-                      <td>Stand for 10 mins</td>
-                      <td>Completed</td>
-                    </tr>
-                    <tr>
-                      <td>3 months</td>
-                      <td>Walk for 10 steps</td>
-                      <td>Ongoing</td>
-                    </tr>
-                    <tr>
-                      <td>6 months</td>
-                      <td>Walk without help</td>
-                      <td>Ongoing</td>
-                    </tr>
-                    <tr>
-                      <td>1 year</td>
-                      <td>Run</td>
-                      <td>Ongoing</td>
+                      <td></td>
+                      <td>To walk independently to and from Bankstown train station from your home (~1km away) at least once per week to access community group activites within 5 months.</td>
+                      <td></td>
+                      <td></td>
                     </tr>
                   </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-              <div class="x_title">
-                <h2>Future Tasks</h2>
-                  <table class="table table-striped" id="future_tasks">
-                    <thead>
+                  <thead>
                       <tr>
-                        <th>Start Date</th>
-                        <th>Statement</th>
-                        <th>Progress</th>
-                        <th>Review Date</th>
+                        <th>Date goal set</th>
+                        <th>Subgoal(s)</th>
                         <th>Rating</th>
+                        <th>Progress/Comments</th>
                       </tr>
-                    </thead>
-                  <tbody>
-                    <tr>
-                      <td>2018-10-20</td>
-                      <td>Walk</td>
-                      <td>Ongoing</td>
-                      <td>2018-10-31</td>
-                      <td>1</td>
+                  </thead>
+                  <tbody id="sub_goal">
+                  	<tr>
+                      <td></td>
+                      <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
+                      <td></td>
+                      <td></td>
                     </tr>
                     <tr>
-                      <td>2018-10-20</td>
-                      <td>Walk</td>
-                      <td>Ongoing</td>
-                      <td>2018-10-31</td>
-                      <td>4</td>
+                      <td></td>
+                      <td>To walk to the end of your stree and back without stopping on at least 3 days of the week measuring your walk using Runkeeper for the next 2 weeks.</td>
+                      <td></td>
+                      <td></td>
                     </tr>
                     <tr>
-                      <td>2018-10-20</td>
-                      <td>Walk</td>
-                      <td>Ongoing</td>
-                      <td>2018-10-31</td>
-                      <td>5</td>
+                      <td></td>
+                      <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
+                      <td></td>
+                      <td></td>
                     </tr>
-
+                    <tr>
+                      <td></td>
+                      <td>To walk at least 6000 steps on at least 3 days of the week measured using your Fitbit for the next 2 weeks.</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>To play the WiiFit jogging plus game at least 3 times a week and complete the track in < 8 minutes within 4 weeks.</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>To achieve a score of > ........ on the Xbox kinect “stomp it” game by stepping only on the purple and orange lights within 2 weeks.</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>To complete 50 repetitions without a rest using the Humac left right weight shift game in < 5 minutes with a score > 80% within 1 week .</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>To achieve a score of > ....... on the Fysiogaming sideways walking game (difficulty level 5) within 2 weeks.</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>To complete 50 stepping exercises on the stepping tiles/Ipad stepping exercise with your right foot without using your hands within 2 weeks.</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -703,13 +676,33 @@
                 <div class="x_content">
                   <br />
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-            
+
+            	  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select_weekly">Select <span class="required">*</span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" id="select_weekly" name="select_weekly">
+                        	<option>Weekly</option>
+                            <option>Monthly</option>
+                            <option>Yearly</option>
+                        </select>
+                    </div>
+                  </div>
 
                   <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_goal_set">Date Goal Set <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <input type="date" id="date_goal_set" name="date_goal_set" required="required" class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="goal_type">Select Goal type <span class="required">*</span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" id="goal_type" name="goal_type">
+                        	<option>Global Goal</option>
+                            <option>Sub Goal</option>
+                        </select>
                     </div>
                   </div>
 

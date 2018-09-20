@@ -82,11 +82,8 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
                 result = try managedContext.fetch(fetchRequest)
                 for object in result! {
                     if object == walks[indexPath.row]{
-                        print("Matching object found")
                         managedContext.delete(object)
                         try managedContext.save()
-                    } else {
-                        print("No matching object found")
                     }
                 }
                 
