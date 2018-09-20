@@ -165,9 +165,15 @@ class Sidebar extends React.Component {
           var $li = $(this).parent();
           if ($li.is('.current-page')) {
             $li.removeClass('current-page');}
+
+            if ($li.is('.active')) {
+              $li.removeClass('active');
+            }
             console.log("Href: "+ $(this).attr("href"));
           return $(this).attr("href") == window.location.pathname;
-        }).parent('li').addClass('current-page');
+        }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+          //setContentHeight();
+        }).parent().addClass('active');;
       }
 
       updateActive();
