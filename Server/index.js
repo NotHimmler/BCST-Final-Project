@@ -3,15 +3,15 @@ var app = express();
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
-app.use("/css", express.static("css"));
-app.use("/img", express.static("img"));
-app.use("/data", express.static("data"));
-app.use("/vendors", express.static("vendors"));
-app.use("/javascript", express.static("javascript"));
-app.use("/main.js", express.static("dist/main.js"));
+app.use("/css", express.static("Merged-Dashboard/css"));
+app.use("/img", express.static("Merged-Dashboard/img"));
+app.use("/data", express.static("Merged-Dashboard/data"));
+app.use("/vendors", express.static("Merged-Dashboard/vendors"));
+app.use("/javascript", express.static("Merged-Dashboard/javascript"));
+app.use("/main.js", express.static("Merged-Dashboard/dist/main.js"));
 require('./app/Routes.js')(app);
 
-
-app.listen(process.env.PORT || 8080, function() {
-    console.log("Server listening on port 8080.");
+let port = process.env.PORT || 8080
+app.listen(port, function() {
+    console.log("Server listening on port " + port);
 })

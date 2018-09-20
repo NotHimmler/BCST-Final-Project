@@ -182,7 +182,7 @@ class Sidebar extends React.Component {
                 </div>
                 {/* /Sidebar title */}
 
-                <div class="clearfix"></div>
+                <div className="clearfix"></div>
 
                 {/* Sidebar profile quick info */}
                 <div className="profile clearfix">
