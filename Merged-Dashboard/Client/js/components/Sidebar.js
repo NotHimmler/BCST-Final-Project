@@ -154,6 +154,8 @@ class Sidebar extends React.Component {
 
     render() {
 
+
+
       var currentPath = window.location.pathname;
       console.log(currentPath);
       console.log(currentPath.includes("patient"));
@@ -177,6 +179,8 @@ class Sidebar extends React.Component {
       }
 
       updateActive();
+
+      
 
         return (
             <div className="col-md-3 left_col">
