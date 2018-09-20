@@ -10,6 +10,8 @@ import Topnav from "./components/Topnav";
 import Home from "./components/Home";
 import CurPatients from "./components/CurPatients";
 import DisPatients from "./components/DisPatients";
+import ExamplePatient from "./components/ExamplePatient";
+
 
 
 
@@ -27,6 +29,7 @@ const App = () => {
                     <Route path="/" component={Home} exact />
                     <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                     <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
+                    <Route path="/patient" render={(props) => {return (<ExamplePatient/>)}} />
               </Switch>
             </div>
           </div>
