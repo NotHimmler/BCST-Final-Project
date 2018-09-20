@@ -9,6 +9,12 @@ import PatientSidebar from "../components/PatientSidebar";
 
 class Sidebar extends React.Component {
 
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = { active: window.location.pathname};
+  }
+
     componentDidMount() {
 
       (function($,sr){
@@ -40,7 +46,7 @@ class Sidebar extends React.Component {
     })(jQuery,'smartresize');
 
 
-      var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
+      var CURRENT_URL = window.location.pathname,
           $BODY = $('body'),
           $MENU_TOGGLE = $('#menu_toggle'),
           $SIDEBAR_MENU = $('#sidebar-menu'),
@@ -119,6 +125,8 @@ class Sidebar extends React.Component {
   
     // check active menu
     $SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
+
+    console.log("Current URL: " + CURRENT_URL);
   
     $SIDEBAR_MENU.find('a').filter(function () {
       return this.href == CURRENT_URL;
@@ -149,7 +157,20 @@ class Sidebar extends React.Component {
       var currentPath = window.location.pathname;
       console.log(currentPath);
       console.log(currentPath.includes("patient"));
-      
+
+      function updateActive() {
+        console.log("update: " + window.location.pathname);
+
+        $('#sidebar-menu').find('a').filter(function () {
+          var $li = $(this).parent();
+          if ($li.is('.current-page')) {
+            $li.removeClass('current-page');}
+            console.log("Href: "+ $(this).attr("href"));
+          return $(this).attr("href") == window.location.pathname;
+        }).parent('li').addClass('current-page');
+      }
+
+      updateActive();
 
         return (
             <div className="col-md-3 left_col">
@@ -182,11 +203,11 @@ class Sidebar extends React.Component {
                   <div className="menu_section">
                     <h3>General</h3>
                     <ul className="nav side-menu">
-                      <li><a href="/"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></a></li>
+                      <li><Link to="/"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></Link></li>
                       <li><a><i className="fa fa-edit"></i> Patients <span className="fa fa-chevron-down"></span></a>
                         <ul className="nav child_menu">
-                          <li><a href="curPatients">Current Patient</a></li>
-                          <li><a href="disPatients">Discharged Patient</a></li>
+                          <li><Link to="/curPatients">Current Patient</Link></li>
+                          <li><Link to="/disPatients">Discharged Patient</Link></li>
                         </ul>
                       </li>
                     </ul>
