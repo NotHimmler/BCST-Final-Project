@@ -1,1 +1,1 @@
-web: node ./Merged-Dashboard/Server/index.js build
+web: cd Merged-Dashboard/ && node ./Merged-Dashboard/Server/index.js build

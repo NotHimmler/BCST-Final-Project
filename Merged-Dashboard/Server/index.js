@@ -11,7 +11,7 @@ app.use("/javascript", express.static("javascript"));
 app.use("/main.js", express.static("dist/main.js"));
 require('./app/Routes.js')(app);
 
-
-app.listen(process.env.PORT || 8080, function() {
-    console.log("Server listening on port 8080.");
+let port = process.env.PORT || 8080
+app.listen(port, function() {
+    console.log("Server listening on port " + port);
 })
