@@ -1,19 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import FitbitTable from '../components/FitbitTable'
-import WalkTable from '../components/WalkTable'
-import AmountTable from '../components/AmountTable'
+import PatientGraph from '../components/PatientGraph'
+import PatientGoal from '../components/PatientGoal'
 
 class ExamplePatient extends React.Component {
+
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = { 
+      content : "Goal",
+    };
+  }
+
 
     render() {
         return (
             <div>
               <div className="btn-group patient-toggle">
-                <button type="button" className="btn btn-primary" id="summary">Summary</button>
-                <button type="button" className="btn btn-primary" id="graphs">Graphs</button>
-                <button type="button" className="btn btn-primary" id="goals">Goals</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => this.setState({content: 'Graph'})}
+                >Summary</button>
+                <button type="button" className="btn btn-primary" 
+                onClick={() => this.setState({content: 'Graph'})}
+                >Graphs</button>
+                <button type="button" className="btn btn-primary" 
+                onClick={() => this.setState({content: 'Goal'})}
+                >Goals</button>
               </div>
               <div className="">
                 <div className="page-title">
@@ -25,11 +39,17 @@ class ExamplePatient extends React.Component {
                 <div className="clearfix"></div>
                 </div>
 
-                {/*FITBIT TABLE*/}
-                <FitbitTable/>
-                <AmountTable/>
-                <WalkTable/>
+              {
+                (this.state.content === "Graph")
+                    ? <PatientGraph/>
+                    : null
+              }
 
+              {
+                (this.state.content === "Goal")
+                    ? <PatientGoal/>
+                    : null
+              }
 
             </div>
         )
