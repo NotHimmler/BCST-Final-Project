@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Current_patients</title>
+    <title>Current Patients</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,9 +15,22 @@
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-
+    
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <style>
+      table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+    }
+    th {
+        text-align: left;
+        font:900;
+    }
+    </style>
   </head>
 
   <body class="nav-md">
@@ -193,6 +206,7 @@
                 <h3>In Patients</h3>
               </div>
 
+              <!-- search bar-->
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
@@ -207,356 +221,62 @@
 
             <div class="clearfix"></div>
 
-            <div class="row">
-              <div class="col-md-12">
-                <div class="x_panel">
-                  <div class="x_content">
-                    <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                        <ul class="pagination pagination-split">
-
-                        </ul>
-                      </div>
-
-                      <div class="clearfix"></div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>Patients</i></h4>
-                            <div class="left col-xs-7">
-                              <h2>D01</h2>
-								<p><strong>Age: </strong> 81 </p>
-							<p><strong>Sex: </strong> Male </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-                              <ul class="list-unstyled">
-
-                              </ul>
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                               <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                              <button  type="button" class="btn btn-primary btn-xs">
-                                <button onclick="window.location.href='patient_data.html'"><i class="fa fa-user"> </i> View Profile
-
-
-
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D02</h2>
-								<p><strong>Age: </strong> 83 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                              <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D03</h2>
-								<p><strong>Age: </strong> 55 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Neurological </p>
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D04</h2>
-								<p><strong>Age: </strong> 66 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D05</h2>
-								<p><strong>Age: </strong> 84 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>Patient</i></h4>
-                            <div class="left col-xs-7">
-                              <h2>D06</h2>
-								<p><strong>Age: </strong> 89 </p>
-							<p><strong>Sex: </strong> Male </p>
-                              <p><strong>Health condition: </strong> Neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
- <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D07</h2>
-								<p><strong>Age: </strong> 57 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                              <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                              <h2>D08</h2>
-								<p><strong>Age: </strong> 60 </p>
-							<p><strong>Sex: </strong> Male </p>
-                              <p><strong>Health condition: </strong> Neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-						 <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D09</h2>
-								<p><strong>Age: </strong> 88 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                              <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                            <h2>D10</h2>
-								<p><strong>Age: </strong> 25 </p>
-							<p><strong>Sex: </strong> Female </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-							<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
- <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                               <h2>D11</h2>
-								<p><strong>Age: </strong> 40 </p>
-							<p><strong>Sex: </strong> Male </p>
-                              <p><strong>Health condition: </strong> Non-neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-
-                              <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
-                        <div class="well profile_view">
-                          <div class="col-sm-12">
-                            <h4 class="brief"><i>patient</i></h4>
-                            <div class="left col-xs-7">
-                              <h2>D12</h2>
-								<p><strong>Age: </strong> 35 </p>
-							<p><strong>Sex: </strong> Male </p>
-                              <p><strong>Health condition: </strong> Neurological </p>
-
-                            </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/user.png" alt="" class="img-circle img-responsive">
-                            </div>
-                          </div>
-                          <div class="col-xs-12 bottom text-center">
-                            <div class="col-xs-12 col-sm-6 emphasis"> </div>
-                            <div class="col-xs-12 col-sm-6 emphasis">
-<button type="button" class="btn btn-primary btn-xs">
-                            <i class="fa fa-user"> </i> View Profile
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <table style = "width:100%">
+              <tr>
+                <th>MRN</th>
+                <th>Name</th>
+                <th>WalkForward</th>
+                <th>Fitbit</th>
+                <th>AMOUNT</th>
+                <th>VR</th>
+              </tr>
+              <tr>
+                <td><a href = "patient_data.html">1239369</a></td>
+                <td>Jill Smith</td>
+                <td>&#10004</td>
+                <td>&#10004</td>
+                <td>&#10004</td>
+                <td>&#10005</td>
+              </tr>
+              <tr>
+                  <td>1759123</td>
+                  <td>Chris Walker</td>
+                  <td>&#10004</td>
+                  <td>&#10005</td>
+                  <td>&#10004</td>
+                  <td>&#10005</td>
+              </tr>
+              <tr>
+                  <td>1279398</td>
+                  <td>Judy Smith</td>
+                  <td>&#10004</td>
+                  <td>&#10005</td>
+                  <td>&#10005</td>
+                  <td>&#10004</td>
+              </tr>
+              <tr>
+                  <td>1275138</td>
+                  <td>Jamie Stone</td>
+                  <td>&#10004</td>
+                  <td>&#10005</td>
+                  <td>&#10004</td>
+                  <td>&#10005</td>
+              </tr>
+              <tr>
+                  <td>1271868</td>
+                  <td>Sarah Hyland</td>
+                  <td>&#10005</td>
+                  <td>&#10005</td>
+                  <td>&#10005</td>
+                  <td>&#10004</td>
+              </tr>
+            </table>
         <!-- /page content -->
 
         <!-- footer content -->
         <footer>
           </div>
-          <div class="clearfix"></div>
+          
         </footer>
         <!-- /footer content -->
       </div>
