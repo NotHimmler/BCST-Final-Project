@@ -2,3 +2,12 @@
   border-color:#BAB8B8;
   width:75%;
 }
+
+.patient-toggle {
+  display:flex;
+  float:right;
+}
+
+#mainb {
+  height:350px;
+}
