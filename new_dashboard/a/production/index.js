@@ -3,7 +3,7 @@ function addGoal(){
 
 	select_weekly = $("#select_weekly").val();
 	date_goal_set = $("#date_goal_set").val();
-	goal_type = #("#goal_type").val();
+	goal_type = $("#goal_type").val();
 	goal_statement = $("#goal_statement").val();
 	progress = $("#progress").val();
 	review_dt = $("#review_date").val();
