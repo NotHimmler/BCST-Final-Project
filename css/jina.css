@@ -23,3 +23,11 @@
 #h3-goal {
   text-align:center;
 }
+
+#ecdonut {
+  height:300px;
+}
+
+.x_title.donut h2 {
+  overflow: visible !important;
+}
