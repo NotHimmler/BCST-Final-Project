@@ -1,10 +1,14 @@
 function addGoal(){
-	var date_goal_set, goal_statement, progress, review_dt, rating;
+	var select_weekly, date_goal_set, goal_type, goal_statement, progress, review_dt, rating;
+
+	select_weekly = $("#select_weekly").val();
 	date_goal_set = $("#date_goal_set").val();
+	goal_type = $("#goal_type").val();
 	goal_statement = $("#goal_statement").val();
 	progress = $("#progress").val();
 	review_dt = $("#review_date").val();
 	rating = $("#rating").val();
+
 	if(parseInt(rating) > 5 || parseInt(rating) < 0){
 		alert("Rating should be between 1 to 5 inclusive.");
 		return;
@@ -49,15 +53,15 @@ function addGoal(){
 		$("#future_tasks tbody").append(appendix);
 	}
 }
-function changeDisplay(){
-	var displaying = $("#switch_button").html();
-	if(displaying == "Goals"){
+
+function changeDisplay(id){
+	if(id == "goals"){
+		$("#goals_page").show();
 		$("#patient_data").hide();
-		$("#goals").show();
-		$("#switch_button").html("Data Presentation");
-	}else{
+	}else if(id == "graphs"){
 		$("#patient_data").show();
-		$("#goals").hide();
-		$("#switch_button").html("Goals");
+		$("#goals_page").hide();
+	}else if(id == "summary"){
+
 	}
 }
