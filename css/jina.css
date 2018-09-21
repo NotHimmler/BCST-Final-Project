@@ -2,3 +2,32 @@
   border-color:#BAB8B8;
   width:75%;
 }
+
+.patient-toggle {
+  display:flex;
+  float:right;
+}
+
+#mainb {
+  height:350px;
+}
+
+#mainc {
+  height:350px;
+}
+
+.nav-md .container.body .col-md-3.left_col {
+  height:1500px;
+}
+
+#h3-goal {
+  text-align:center;
+}
+
+#ecdonut {
+  height:300px;
+}
+
+.x_title.donut h2 {
+  overflow: visible !important;
+}
