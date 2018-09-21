@@ -32,7 +32,8 @@ class ExamplePatient extends React.Component {
               <div className="">
                 <div className="page-title">
                   <div className="title_left">
-                    <h3>Patient D01 | Overview</h3>
+                    <h3>Elizabeth Smith</h3>
+                    <p>MRN: 88124213</p>
                     <p><i>Last check up: 30/02/2018</i></p>
                   </div>
                 </div>
