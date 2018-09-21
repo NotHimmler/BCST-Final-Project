@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import PatientCard from "../components/PatientCard";
+import PatientList from "../components/PatientList";
 
 
 class DisPatients extends React.Component {
@@ -27,7 +27,7 @@ class DisPatients extends React.Component {
             </div>
 
             <div className="clearfix"></div>
-            <PatientCard/>
+            <PatientList archived={true}/>
             </div>
         )
     }
