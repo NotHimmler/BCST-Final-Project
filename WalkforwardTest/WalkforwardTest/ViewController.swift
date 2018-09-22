@@ -24,13 +24,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var goalValue = 0
     var goalVibeDone = false
     var walkStats: WalkStats?
+    var timer: Timer?
+    var timeCounter: Double = 0.0
     
     // MARK: Properties
     
-    @IBOutlet weak var stepsLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var stepCountLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var stepPaceLabel: UILabel!
+    @IBOutlet weak var distancePaceLabel: UILabel!
     @IBOutlet weak var RecordButton: UIButton!
     
     // MARK: Goals
@@ -66,9 +69,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     fileprivate func setUIElementsForRunStart() {
         goalProgressBar.progress = 0.0
-        distanceLabel.text = ""
-        durationLabel.text = "Logging Your Walk"
-        stepsLabel.text = "Number of Steps: 0"
+        distanceLabel.text = "0 meters"
+        durationLabel.text = "0m 0s"
+        stepCountLabel.text = "0"
+        stepPaceLabel.text = "0"
+        distancePaceLabel.text = "0 m/s"
         RecordButton.setTitle("Stop Logging Walk", for: .normal)
         RecordButton.backgroundColor = UIColor(red: 1.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
         distMeterGoalTextField.isUserInteractionEnabled = false
@@ -83,10 +88,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 guard let pedometerData = pedometerData, error == nil else {return}
                 
                 DispatchQueue.main.async {
-                    self!.walkStats!.addSteps(steps: Int(truncating: pedometerData.numberOfSteps))
-                    self!.stepsLabel.text = "Num Steps: " + String(self!.walkStats!.getSteps())
+                    let numSteps = Int(truncating: pedometerData.numberOfSteps)
+                    self!.walkStats!.addSteps(steps: numSteps)
+                    self!.stepCountLabel.text = String(numSteps)
+                    self!.stepPaceLabel.text = String(format: "%.2f", Double(numSteps)/((self!.timeCounter)/60.0))
                     if self!.goalType == "steps" {
-                        let pctDone: Float = Float(self!.walkStats!.getSteps())/Float(self!.goalValue)
+                        let pctDone: Float = Float(numSteps)/Float(self!.goalValue)
                         self!.goalProgressBar.progress = pctDone
                         if pctDone >= 1.0 && !self!.goalVibeDone {
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -121,31 +128,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             goalVibeDone = false
             setUIElementsForRunStart()
             locationMgr.requestAlwaysAuthorization()
+            timeCounter = 0.0
             if !startReceivingLocationChanges() {
-                durationLabel.text = "Error getting location. Please ensure that location services are enabled."
+                //durationLabel.text = "Error getting location. Please ensure that location services are enabled."
                 return
             }
             if !startRecievingPedometerChanges() {
-                stepsLabel.text = "Error getting pedometer data. Please ensure that motion permissions are enabled."
+                //stepsLabel.text = "Error getting pedometer data. Please ensure that motion permissions are enabled."
                 return
             }
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
         } else {
             locationMgr.stopUpdatingLocation()
+            timer!.invalidate()
             pedometer.stopUpdates()
             running = false
             walkStats!.endWalk()
-            var duration: TimeInterval = 0.0
-            var time: Time = Time(duration: 0.0)
-            duration = walkStats!.getDuration()
-            time = Time(duration: duration)
-            
-            let distance = walkStats!.getDistanceFromWalks()
-            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes, time.seconds)
-            distanceLabel.text = String(format: "You walked %d meters.", Int(distance))
             
             saveWalk()
             resetUIElements()
         }
+    }
+    
+    @objc func UpdateTimer() {
+        
+        let dcFormatter = DateComponentsFormatter()
+        dcFormatter.unitsStyle = .full
+        dcFormatter.allowedUnits = [.minute, .second, .hour]
+        timeCounter += 1
+        durationLabel.text = String(dcFormatter.string(from: timeCounter as TimeInterval)!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -173,12 +184,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let lastLocation = locations.last!
         if lastLocation.timestamp.timeIntervalSince(walkStats!.getStartTime()) >= 0 {
+            print("Location retrieved")
             filterAndAddLocation(lastLocation)
         }
         
         let distance = Int(walkStats!.getDistanceFromWalks())
-        distanceLabel.text = "Distance Walked: " + String(distance) + " meters"
-        
+        distanceLabel.text = String(distance) + " meters"
+        distancePaceLabel.text = distance > 0 ? String(format: "%.2f m/s", Double(distance)/self.timeCounter) : "0 m/s"
         if goalType == "distance" {
             let pctProgress = Float(distance)/Float(goalValue)
             goalProgressBar.progress = pctProgress
