@@ -5,7 +5,6 @@ import PatientSidebar from "../components/PatientSidebar";
 
 //NOTES//
 //Implement className="navbar nav_title" style="border: 0;"
-//Links
 
 class Sidebar extends React.Component {
 
@@ -154,8 +153,7 @@ class Sidebar extends React.Component {
 
     render() {
 
-
-
+      //Update active page
       var currentPath = window.location.pathname;
       console.log(currentPath);
       console.log(currentPath.includes("patient"));
