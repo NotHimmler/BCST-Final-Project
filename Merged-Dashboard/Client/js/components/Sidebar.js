@@ -180,15 +180,13 @@ class Sidebar extends React.Component {
 
       updateActive();
 
-      
-
         return (
             <div className="col-md-3 left_col">
               <div className="left_col scroll-view">
 
                 {/* Sidebar title */}
                 <div className="navbar nav_title">
-                  <a href="#home" className="site_title"><i className="fa fa-paw"></i> <span>Dashboard</span></a>
+                  <Link to="/" className="site_title"><i className="fa fa-paw"></i> <span>Dashboard</span></Link>
                 </div>
                 {/* /Sidebar title */}
 
