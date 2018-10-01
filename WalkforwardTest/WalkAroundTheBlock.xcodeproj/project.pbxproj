@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		581C026B89BDAECFEC6F8E64 /* Pods_WalkforwardTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC99917B2E9140B774FEAF8 /* Pods_WalkforwardTest.framework */; };
 		980D1A3221437CAC00EE1C3D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980D1A3121437CAC00EE1C3D /* HistoryViewController.swift */; };
+		980D98F72161E24D00C05E09 /* CurrentWalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980D98F62161E24D00C05E09 /* CurrentWalkViewController.swift */; };
 		9897DA092143821E0021B8A8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9897DA072143821E0021B8A8 /* Model.xcdatamodeld */; };
 		98C6F6402140ACA000B2524F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6F63F2140ACA000B2524F /* AppDelegate.swift */; };
 		98C6F6422140ACA000B2524F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6F6412140ACA000B2524F /* ViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		980D1A3121437CAC00EE1C3D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		980D98F62161E24D00C05E09 /* CurrentWalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWalkViewController.swift; sourceTree = "<group>"; };
 		9897DA082143821E0021B8A8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		98C6F63C2140ACA000B2524F /* WalkAroundTheBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalkAroundTheBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C6F63F2140ACA000B2524F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		98C6F63E2140ACA000B2524F /* WalkforwardTest */ = {
 			isa = PBXGroup;
 			children = (
+				980D98F62161E24D00C05E09 /* CurrentWalkViewController.swift */,
 				98D5346D2147CFB800DCBADD /* icons8-time-machine.png */,
 				98D5346A2147CFB700DCBADD /* icons8-time-machine@2x.png */,
 				98D5346C2147CFB800DCBADD /* icons8-walking.png */,
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				980D1A3221437CAC00EE1C3D /* HistoryViewController.swift in Sources */,
+				980D98F72161E24D00C05E09 /* CurrentWalkViewController.swift in Sources */,
 				98C6F6422140ACA000B2524F /* ViewController.swift in Sources */,
 				98C6F6402140ACA000B2524F /* AppDelegate.swift in Sources */,
 				9897DA092143821E0021B8A8 /* Model.xcdatamodeld in Sources */,
