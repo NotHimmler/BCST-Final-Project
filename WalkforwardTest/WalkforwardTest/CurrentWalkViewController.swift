@@ -13,12 +13,13 @@ import CoreMotion
 import AVFoundation
 
 class CurrentWalkViewController: UIViewController {
-    var running = true;
+    var running = false;
     let locationMgr = CLLocationManager();
     var walkLocations: [CLLocation] = [];
     var appDelegate: AppDelegate?
     var context: NSManagedObjectContext?
     var entity: NSEntityDescription?
+    let motionMgr = CMMotionManager()
     let pedometer = CMPedometer()
     var goalVibeDone = false
     var goalType: String = "distance"
@@ -42,7 +43,13 @@ class CurrentWalkViewController: UIViewController {
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
+        
         locationMgr.allowsBackgroundLocationUpdates = true
+        if !startReceivingLocationChanges() {
+            
+            locationMgr.requestAlwaysAuthorization()
+        }
+        
         if !startReceivingLocationChanges() {
             //durationLabel.text = "Error getting location. Please ensure that location services are enabled."
             print("Error getting location updates")
@@ -53,7 +60,7 @@ class CurrentWalkViewController: UIViewController {
             print("Error getting pedometer updates")
             return
         }
-        
+        running = true
         walkStats = WalkStats()
         running = true
         goalVibeDone = false
