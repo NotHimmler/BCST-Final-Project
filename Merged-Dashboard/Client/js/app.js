@@ -12,10 +12,6 @@ import CurPatients from "./components/CurPatients";
 import DisPatients from "./components/DisPatients";
 import ExamplePatient from "./components/ExamplePatient";
 
-
-
-
-
 const App = () => {
   return (
     <BrowserRouter>
