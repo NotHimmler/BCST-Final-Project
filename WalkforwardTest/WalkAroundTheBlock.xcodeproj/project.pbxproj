@@ -37,14 +37,14 @@
 /* Begin PBXFileReference section */
 		980D1A3121437CAC00EE1C3D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		9897DA082143821E0021B8A8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		98C6F63C2140ACA000B2524F /* WalkforwardTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalkforwardTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98C6F63C2140ACA000B2524F /* WalkAroundTheBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalkAroundTheBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C6F63F2140ACA000B2524F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C6F6412140ACA000B2524F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		98C6F6442140ACA000B2524F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98C6F6462140ACA300B2524F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98C6F6492140ACA300B2524F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98C6F64B2140ACA300B2524F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		98C6F6502140ACA300B2524F /* WalkforwardTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalkforwardTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98C6F6502140ACA300B2524F /* WalkAroundTheBlockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalkAroundTheBlockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C6F6542140ACA300B2524F /* WalkforwardTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkforwardTestTests.swift; sourceTree = "<group>"; };
 		98C6F6562140ACA300B2524F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98D534642147B73F00DCBADD /* WalksDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalksDelegate.swift; sourceTree = "<group>"; };
@@ -100,8 +100,8 @@
 		98C6F63D2140ACA000B2524F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				98C6F63C2140ACA000B2524F /* WalkforwardTest.app */,
-				98C6F6502140ACA300B2524F /* WalkforwardTestTests.xctest */,
+				98C6F63C2140ACA000B2524F /* WalkAroundTheBlock.app */,
+				98C6F6502140ACA300B2524F /* WalkAroundTheBlockTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,9 +147,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		98C6F63B2140ACA000B2524F /* WalkforwardTest */ = {
+		98C6F63B2140ACA000B2524F /* WalkAroundTheBlock */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98C6F6592140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkforwardTest" */;
+			buildConfigurationList = 98C6F6592140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkAroundTheBlock" */;
 			buildPhases = (
 				34BF0ADFA18ED81405E23571 /* [CP] Check Pods Manifest.lock */,
 				98C6F6382140ACA000B2524F /* Sources */,
@@ -160,14 +160,14 @@
 			);
 			dependencies = (
 			);
-			name = WalkforwardTest;
+			name = WalkAroundTheBlock;
 			productName = WalkforwardTest;
-			productReference = 98C6F63C2140ACA000B2524F /* WalkforwardTest.app */;
+			productReference = 98C6F63C2140ACA000B2524F /* WalkAroundTheBlock.app */;
 			productType = "com.apple.product-type.application";
 		};
-		98C6F64F2140ACA300B2524F /* WalkforwardTestTests */ = {
+		98C6F64F2140ACA300B2524F /* WalkAroundTheBlockTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98C6F65C2140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkforwardTestTests" */;
+			buildConfigurationList = 98C6F65C2140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkAroundTheBlockTests" */;
 			buildPhases = (
 				98C6F64C2140ACA300B2524F /* Sources */,
 				98C6F64D2140ACA300B2524F /* Frameworks */,
@@ -178,9 +178,9 @@
 			dependencies = (
 				98C6F6522140ACA300B2524F /* PBXTargetDependency */,
 			);
-			name = WalkforwardTestTests;
+			name = WalkAroundTheBlockTests;
 			productName = WalkforwardTestTests;
-			productReference = 98C6F6502140ACA300B2524F /* WalkforwardTestTests.xctest */;
+			productReference = 98C6F6502140ACA300B2524F /* WalkAroundTheBlockTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -207,7 +207,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 98C6F6372140ACA000B2524F /* Build configuration list for PBXProject "WalkforwardTest" */;
+			buildConfigurationList = 98C6F6372140ACA000B2524F /* Build configuration list for PBXProject "WalkAroundTheBlock" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -220,8 +220,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				98C6F63B2140ACA000B2524F /* WalkforwardTest */,
-				98C6F64F2140ACA300B2524F /* WalkforwardTestTests */,
+				98C6F63B2140ACA000B2524F /* WalkAroundTheBlock */,
+				98C6F64F2140ACA300B2524F /* WalkAroundTheBlockTests */,
 			);
 		};
 /* End PBXProject section */
@@ -298,7 +298,7 @@
 /* Begin PBXTargetDependency section */
 		98C6F6522140ACA300B2524F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 98C6F63B2140ACA000B2524F /* WalkforwardTest */;
+			target = 98C6F63B2140ACA000B2524F /* WalkAroundTheBlock */;
 			targetProxy = 98C6F6512140ACA300B2524F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -492,7 +492,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalkforwardTest.app/WalkforwardTest";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalkAroundTheBlock.app/WalkAroundTheBlock";
 			};
 			name = Debug;
 		};
@@ -513,14 +513,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalkforwardTest.app/WalkforwardTest";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalkAroundTheBlock.app/WalkAroundTheBlock";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		98C6F6372140ACA000B2524F /* Build configuration list for PBXProject "WalkforwardTest" */ = {
+		98C6F6372140ACA000B2524F /* Build configuration list for PBXProject "WalkAroundTheBlock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98C6F6572140ACA300B2524F /* Debug */,
@@ -529,7 +529,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98C6F6592140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkforwardTest" */ = {
+		98C6F6592140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkAroundTheBlock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98C6F65A2140ACA300B2524F /* Debug */,
@@ -538,7 +538,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98C6F65C2140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkforwardTestTests" */ = {
+		98C6F65C2140ACA300B2524F /* Build configuration list for PBXNativeTarget "WalkAroundTheBlockTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98C6F65D2140ACA300B2524F /* Debug */,
