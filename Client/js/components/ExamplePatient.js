@@ -28,6 +28,7 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Goal'})}
                 >Goals</button>
+                
               </div>
               <div className="">
                 <div className="page-title">
@@ -35,6 +36,8 @@ class ExamplePatient extends React.Component {
                     <h3>Elizabeth Smith</h3>
                     <p>MRN: 88124213</p>
                     <p><i>Last check up: 30/02/2018</i></p>
+                    <button type="button" className="btn btn-primary"
+                    ><Link to="/patientsettings">Settings</Link></button>
                   </div>
                 </div>
                 <div className="clearfix"></div>
