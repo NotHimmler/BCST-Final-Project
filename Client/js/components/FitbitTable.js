@@ -18,10 +18,13 @@ class FitbitTable extends React.Component {
                   subtext: 'Walked Steps and Goal Steps'
                 },
                 tooltip: {
-                  trigger: 'axis'
+                  trigger: 'item'
                 },
                 legend: {
-                  data: ['Walked Steps', 'Goal Steps']
+                  data: ['Walked Steps', {
+                    name:'Goal',
+                    icon: 'roundRect'
+                  }]
                 },
                 toolbox: {
                   show: false,
@@ -57,27 +60,27 @@ class FitbitTable extends React.Component {
                       type: 'min',
                       name: 'minimum'
                     }]
-                  },
+                  }
+                },
+                {
+                  name: 'Goal',
+                  type: 'line',
                   markLine: {
                     data: [{
-                      type: 'average',
-                      name: 'average'
+                      name: 'Goal',
+                      yAxis: 2000,
+                      lineStyle: {
+                        normal :{
+                          width:5
+                        }
+                      }
                     }]
                   }
-                }, {
-                  name: 'Goal Steps',
-                  type: 'bar',
-                  data: [2000, 2000, 3000, 3000, 2000, 2000, 3000],
-                  markLine: {
-                    data: [{
-                      type: 'average',
-                      name: 'average'
-                    }]
-                  }
-                }]
+                }
+              ]
             },
 
-                //Theme
+          //Theme
           theme : {
             color: [
               '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
