@@ -549,7 +549,7 @@ class WalkTable extends React.Component {
 
          // changefunc
           change_daily() {
-          document.getElementById('dropdown_distance').innerHTML = 'Daily' + ' <span className="caret"></span>';
+          document.getElementById('dropdown_distance').innerHTML = 'Daily' + ' <span class="caret"></span>';
   
   
           var echartBar1 = echarts.init(document.getElementById('mainc'), this.state.theme1);
@@ -561,11 +561,11 @@ class WalkTable extends React.Component {
               ops.series[1].data = [1.0, 1.0, 1.1, 1.1, 1.3, 1.3, 1.3];
           this.setState({options_distance : ops});
           echartBar1.setOption(this.state.options_distance);
-          this.setStaet({echart: echartBar1}); 
+          this.setState({echart: echartBar1}); 
   
           }
            change_weekly() {
-            document.getElementById('dropdown_distance').innerHTML = 'Weekly' + ' <span className="caret"></span>';
+            document.getElementById('dropdown_distance').innerHTML = 'Weekly' + ' <span class="caret"></span>';
   
              var echartBar2 = echarts.init(document.getElementById('mainc'), this.state.theme1);
   
@@ -577,7 +577,7 @@ class WalkTable extends React.Component {
               ops.series[1].data = [5, 10, 10, 15];
               this.setState({options_distance : ops});
               echartBar2.setOption(this.state.options_distance);
-              this.setStaet({echart: echartBar2}); 
+              this.setState({echart: echartBar2}); 
 
               // $(".btn:first-child #dropdown_fitbit")[0].html('Weekly' + ' <span className="caret"></span>');
               // var nn = 'Weekly';
@@ -585,7 +585,7 @@ class WalkTable extends React.Component {
           }
   
            change_monthly() {
-            document.getElementById('dropdown_distance').innerHTML = 'Monthly' + ' <span className="caret"></span>';
+            document.getElementById('dropdown_distance').innerHTML = 'Monthly' + ' <span class="caret"></span>';
   
                var echartBar3 = echarts.init(document.getElementById('mainc'), this.state.theme1);
               var ops = this.state.options_distance;
@@ -600,7 +600,7 @@ class WalkTable extends React.Component {
               
               this.setState({options_distance : ops});
               echartBar3.setOption(this.state.options_distance);
-              this.setStaet({echart: echartBar3}); 
+              this.setState({echart: echartBar3}); 
           }
          
     
