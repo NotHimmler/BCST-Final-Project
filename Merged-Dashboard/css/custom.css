@@ -404,6 +404,18 @@ html , body{
          height: inherit
      }
  }
+
+ @media (max-width: 2000px) {
+    .x_title h2 {
+        width: 62%;
+        font-size: 17px
+    }
+    .tile,
+    .graph {
+        zoom: 85%;
+        height: inherit
+    }
+ }
  @media (max-width: 1270px) and (min-width: 192px) {
      .x_title h2 small {
          display: none

@@ -65,6 +65,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping;
         cell.textLabel?.text = cellString
+        cell.textLabel?.font = UIFont.init(name: "HelveticaNeue-Light", size: 25.0)
         return cell
     }
     

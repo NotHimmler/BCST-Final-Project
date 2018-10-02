@@ -13,139 +13,56 @@ import CoreMotion
 import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    var running = false;
-    let locationMgr = CLLocationManager();
-    var walkLocations: [CLLocation] = [];
-    var appDelegate: AppDelegate?
-    var context: NSManagedObjectContext?
-    var entity: NSEntityDescription?
-    let pedometer = CMPedometer()
     var goalType = "distance"
     var goalValue = 0
-    var goalVibeDone = false
-    var walkStats: WalkStats?
+    var goalDarkenUIViews: [UIImageView]?
+    let DARK_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
+    let LIGHT_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
     
     // MARK: Properties
-    
-    @IBOutlet weak var stepsLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var RecordButton: UIButton!
+    @IBOutlet weak var distGoalTextField: UITextField!
+    @IBOutlet weak var stepGoalTextField: UITextField!
+    @IBOutlet weak var minGoalTextField: UITextField!
+    @IBOutlet weak var distGoalStackView: UIStackView!
+    @IBOutlet weak var stepGoalStackView: UIStackView!
+    @IBOutlet weak var timeGoalStackView: UIStackView!
     
     // MARK: Goals
     @IBOutlet weak var stepsGoal: UIView!
     @IBOutlet weak var distanceGoal: UIView!
     @IBOutlet weak var stepsOkayImg: UIImageView!
+    @IBOutlet weak var minsOkayImg: UIImageView!
     @IBOutlet weak var distOkayImg: UIImageView!
-    @IBOutlet weak var distMeterGoalTextField: UITextField!
-    @IBOutlet weak var goalLabel: UILabel!
     
     @IBOutlet weak var goalProgressBar: UIProgressView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        context = appDelegate!.persistentContainer.viewContext
-        entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
-        locationMgr.allowsBackgroundLocationUpdates = true
         RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
+        RecordButton.layer.cornerRadius = 5
         setupButtons()
         setUpGoalTextFields()
+        goalDarkenUIViews = [makeDarkenBackgroundView(),makeDarkenBackgroundView(),makeDarkenBackgroundView()]
+        goalDarkenUIViews![1].backgroundColor = DARK_GREY
+        goalDarkenUIViews![2].backgroundColor = DARK_GREY
+        pinBackground(goalDarkenUIViews![0], to: distGoalStackView)
+        pinBackground(backgroundViewDist, to: distGoalStackView)
+        pinBackground(goalDarkenUIViews![1], to: stepGoalStackView)
+        pinBackground(backgroundViewSteps, to: stepGoalStackView)
+        pinBackground(goalDarkenUIViews![2], to: timeGoalStackView)
+        pinBackground(backgroundViewTime, to: timeGoalStackView)
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
-    fileprivate func resetUIElements() {
-        distMeterGoalTextField.isUserInteractionEnabled = true
-        distOkayImg.isUserInteractionEnabled = true
-        stepsOkayImg.isUserInteractionEnabled = true
-        RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
-        RecordButton.setTitle("Start Recording", for: .normal)
-    }
-    
-    fileprivate func setUIElementsForRunStart() {
-        goalProgressBar.progress = 0.0
-        distanceLabel.text = ""
-        durationLabel.text = "Logging Your Walk"
-        stepsLabel.text = "Number of Steps: 0"
-        RecordButton.setTitle("Stop Logging Walk", for: .normal)
-        RecordButton.backgroundColor = UIColor(red: 1.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
-        distMeterGoalTextField.isUserInteractionEnabled = false
-        distOkayImg.isUserInteractionEnabled = false
-        stepsOkayImg.isUserInteractionEnabled = false
-    }
-    
-    fileprivate func startRecievingPedometerChanges() -> Bool {
-        if CMPedometer.isStepCountingAvailable() {
-            pedometer.startUpdates(from: Date()) {
-                [weak self] pedometerData, error in
-                guard let pedometerData = pedometerData, error == nil else {return}
-                
-                DispatchQueue.main.async {
-                    self!.walkStats!.addSteps(steps: Int(truncating: pedometerData.numberOfSteps))
-                    self!.stepsLabel.text = "Num Steps: " + String(self!.walkStats!.getSteps())
-                    if self!.goalType == "steps" {
-                        let pctDone: Float = Float(self!.walkStats!.getSteps())/Float(self!.goalValue)
-                        self!.goalProgressBar.progress = pctDone
-                        if pctDone >= 1.0 && !self!.goalVibeDone {
-                            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                            self!.goalVibeDone = true
-                        }
-                    }
-                }
-            }
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    fileprivate func saveWalk() {
-        let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
-        newWalk.setValue(walkStats!.getDuration(), forKey: "duration")
-        newWalk.setValue(walkStats!.getSteps(), forKey: "steps")
-        newWalk.setValue(walkStats!.getStartTime(), forKey: "date")
-        newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
-        do {
-            try context!.save()
-        } catch {
-            print("Failed saving")
-        }
-    }
-    
     @IBAction func ButtonClickHandler(_ sender: Any) {
-        if (!running) {
-            walkStats = WalkStats()
-            running = true
-            goalVibeDone = false
-            setUIElementsForRunStart()
-            locationMgr.requestAlwaysAuthorization()
-            if !startReceivingLocationChanges() {
-                durationLabel.text = "Error getting location. Please ensure that location services are enabled."
-                return
-            }
-            if !startRecievingPedometerChanges() {
-                stepsLabel.text = "Error getting pedometer data. Please ensure that motion permissions are enabled."
-                return
-            }
+        if checkHasRequiredPermissions() {
+            performSegue(withIdentifier: "CurrentWalkSegue", sender: self)
         } else {
-            locationMgr.stopUpdatingLocation()
-            pedometer.stopUpdates()
-            running = false
-            walkStats!.endWalk()
-            var duration: TimeInterval = 0.0
-            var time: Time = Time(duration: 0.0)
-            duration = walkStats!.getDuration()
-            time = Time(duration: duration)
-            
-            let distance = walkStats!.getDistanceFromWalks()
-            durationLabel.text = String(format: "Walk was %d minutes and %d seconds long.", time.minutes, time.seconds)
-            distanceLabel.text = String(format: "You walked %d meters.", Int(distance))
-            
-            saveWalk()
-            resetUIElements()
+            print("Don't have permissions")
         }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -153,8 +70,111 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func startReceivingLocationChanges() -> Bool {
+    func setupButtons() {
+        stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+        minsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+        
+        let distGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let stepGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let minsGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let distTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let stepTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let minsTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        
+        
+        stepsOkayImg.isUserInteractionEnabled = true
+        stepsOkayImg.addGestureRecognizer(stepGestureRecognizer)
+        distOkayImg.isUserInteractionEnabled = true
+        distOkayImg.addGestureRecognizer(distGestureRecognizer)
+        minsOkayImg.isUserInteractionEnabled = true
+        minsOkayImg.addGestureRecognizer(minsGestureRecognizer)
+        stepGoalTextField.isUserInteractionEnabled = true
+        stepGoalTextField.addGestureRecognizer(stepTfGestureRecognizer)
+        distGoalTextField.isUserInteractionEnabled = true
+        distGoalTextField.addGestureRecognizer(distTfGestureRecognizer)
+        minGoalTextField.isUserInteractionEnabled = true
+        minGoalTextField.addGestureRecognizer(minsTfGestureRecognizer)
+    }
+    
+    @objc func setActive(_ sender: UITapGestureRecognizer) {
+        if let view = sender.view {
+            print(view)
+            view.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
+            if view == stepsOkayImg || view == stepGoalTextField {
+                if view == stepGoalTextField {
+                    stepGoalTextField.becomeFirstResponder()
+                }
+                goalType = "steps"
+                goalDarkenUIViews![0].backgroundColor = DARK_GREY
+                goalDarkenUIViews![2].backgroundColor = DARK_GREY
+                goalDarkenUIViews![1].backgroundColor = LIGHT_GREY
+                stepsOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
+                distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+                minsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+            } else if view == distOkayImg || view == distGoalTextField {
+                if view == distGoalTextField {
+                    distGoalTextField.becomeFirstResponder()
+                }
+                goalType = "distance"
+                goalDarkenUIViews![1].backgroundColor = DARK_GREY
+                goalDarkenUIViews![2].backgroundColor = DARK_GREY
+                goalDarkenUIViews![0].backgroundColor = LIGHT_GREY
+                distOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
+                stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+                minsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+            } else {
+                if view == minGoalTextField {
+                    minGoalTextField.becomeFirstResponder()
+                }
+                goalType = "minutes"
+                goalDarkenUIViews![0].backgroundColor = DARK_GREY
+                goalDarkenUIViews![1].backgroundColor = DARK_GREY
+                goalDarkenUIViews![2].backgroundColor = LIGHT_GREY
+                minsOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
+                stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+                distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
+            }
+            
+        }
+    }
+    
+    func setUpGoalTextFields() {
+        
+        distGoalTextField.addTarget(self, action: #selector(meterTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
+        stepGoalTextField.addTarget(self, action: #selector(stepTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
+        minGoalTextField.addTarget(self, action: #selector(minTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
+    }
+    
+    @objc func meterTextFieldChange(textField: UITextField) {
+        let numMeters = (textField.text! as NSString).integerValue
+        goalValue = numMeters
+    }
+    
+    @objc func stepTextFieldChange(textField: UITextField) {
+        let numMeters = (textField.text! as NSString).integerValue
+        goalValue = numMeters
+    }
+    
+    @objc func minTextFieldChange(textField: UITextField) {
+        let numMeters = (textField.text! as NSString).integerValue
+        goalValue = numMeters
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC : CurrentWalkViewController = segue.destination as! CurrentWalkViewController
+        destVC.goalType = self.goalType
+        destVC.goalValue = self.goalValue
+    }
+    
+    func checkHasRequiredPermissions() -> Bool {
         let authStatus = CLLocationManager.authorizationStatus()
+        
+        if authStatus == .notDetermined {
+            let locMgr = CLLocationManager()
+            locMgr.requestAlwaysAuthorization()
+            while CLLocationManager.authorizationStatus() == .notDetermined {}
+        }
+        
         if authStatus != .authorizedWhenInUse && authStatus != .authorizedAlways {
             return false
         }
@@ -163,107 +183,77 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             return false
         }
         
-        locationMgr.desiredAccuracy = kCLLocationAccuracyBest
-        locationMgr.distanceFilter = 15.0
-        locationMgr.delegate = self
-        locationMgr.startUpdatingLocation()
-        return true
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        let lastLocation = locations.last!
-        if lastLocation.timestamp.timeIntervalSince(walkStats!.getStartTime()) >= 0 {
-            filterAndAddLocation(lastLocation)
-        }
+        let cmAuthStatus = CMPedometer.authorizationStatus()
         
-        let distance = Int(walkStats!.getDistanceFromWalks())
-        distanceLabel.text = "Distance Walked: " + String(distance) + " meters"
-        
-        if goalType == "distance" {
-            let pctProgress = Float(distance)/Float(goalValue)
-            goalProgressBar.progress = pctProgress
-            if pctProgress >= 1.0 && !self.goalVibeDone {
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                self.goalVibeDone = true
+        if cmAuthStatus == .notDetermined {
+            let pedometer = CMPedometer()
+            pedometer.queryPedometerData(from: Date(), to: Date())  {
+                [weak self] pedometerData, error in
+                while CMPedometer.authorizationStatus() == .notDetermined {
+                    
+                }
             }
         }
         
-    }
-    
-    //Author Taka Mizutori
-    //Source: https://medium.com/@mizutori/make-it-even-better-than-nike-how-to-filter-locations-tracking-highly-accurate-location-in-774be045f8d6
-    func filterAndAddLocation(_ location: CLLocation) -> Bool{
-        let age = -location.timestamp.timeIntervalSinceNow
-        
-        if age > 10{
+        if cmAuthStatus != .authorized {
             return false
         }
-        
-        if location.horizontalAccuracy < 0{
-            return false
-        }
-        
-        if location.horizontalAccuracy > 100{
-            return false
-        }
-        
-        walkStats!.addWalkLocation(location: location)
         
         return true
-        
     }
     
-    func setupButtons() {
-        let distGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
-        let stepGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
-        
-        stepsOkayImg.isUserInteractionEnabled = true
-        stepsOkayImg.addGestureRecognizer(stepGestureRecognizer)
-        distOkayImg.isUserInteractionEnabled = true
-        distOkayImg.addGestureRecognizer(distGestureRecognizer)
+    private lazy var backgroundViewDist: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "distance-drive-foggy-24821.jpg")
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private lazy var backgroundViewSteps: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "beach-salt-water-sand-17727.jpg")
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private lazy var backgroundViewTime: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art-blur-brass-678248.jpg")
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    func makeDarkenBackgroundView() -> UIImageView {
+        let view = UIImageView()
+        view.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
     }
     
-    @objc func setActive(_ sender: UITapGestureRecognizer) {
-        if let view = sender.view {
-            view.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
-            if view == stepsOkayImg {
-                goalType = "steps"
-                distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
-                goalLabel.text = "steps"
-            } else {
-                goalType = "distance"
-                stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
-                goalLabel.text = "meters"
-            }
-            
-        }
-    }
     
-    func setUpGoalTextFields() {
-        
-        distMeterGoalTextField.addTarget(self, action: #selector(meterTextFieldChange(textField:)), for: UIControlEvents.editingChanged)
-    }
     
-    @objc func meterTextFieldChange(textField: UITextField) {
-        let numMeters = (textField.text! as NSString).integerValue
-        goalValue = numMeters
+    private func pinBackground(_ view: UIImageView, to stackView: UIStackView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        stackView.insertSubview(view, at: 0)
+        view.pin(to: stackView)
     }
 }
 
-class Time {
-    var minutes: Int = 0
-    var seconds: Int = 0
-    var hours: Int = 0
-    var totalSeconds: Int = 0
-    
-    init(duration: TimeInterval) {
-        let truncated = duration.truncatingRemainder(dividingBy: 1.0)
-        self.totalSeconds = Int(duration - truncated)
-        self.seconds = self.totalSeconds%60
-        self.minutes = (self.totalSeconds - self.seconds)/60
-        if (self.minutes >= 60) {
-            self.hours = (self.minutes - self.minutes%60)/60
-            self.minutes = self.minutes%60
-        }
+public extension UIImageView {
+    public func pin(to view: UIView) {
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
     }
 }
