@@ -41,6 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         RecordButton.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
+        RecordButton.layer.cornerRadius = 5
         setupButtons()
         setUpGoalTextFields()
         goalDarkenUIViews = [makeDarkenBackgroundView(),makeDarkenBackgroundView(),makeDarkenBackgroundView()]
@@ -76,6 +77,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let distGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
         let stepGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
         let minsGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let distTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let stepTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        let minsTfGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(setActive(_:)))
+        
         
         stepsOkayImg.isUserInteractionEnabled = true
         stepsOkayImg.addGestureRecognizer(stepGestureRecognizer)
@@ -83,31 +88,49 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         distOkayImg.addGestureRecognizer(distGestureRecognizer)
         minsOkayImg.isUserInteractionEnabled = true
         minsOkayImg.addGestureRecognizer(minsGestureRecognizer)
+        stepGoalTextField.isUserInteractionEnabled = true
+        stepGoalTextField.addGestureRecognizer(stepTfGestureRecognizer)
+        distGoalTextField.isUserInteractionEnabled = true
+        distGoalTextField.addGestureRecognizer(distTfGestureRecognizer)
+        minGoalTextField.isUserInteractionEnabled = true
+        minGoalTextField.addGestureRecognizer(minsTfGestureRecognizer)
     }
     
     @objc func setActive(_ sender: UITapGestureRecognizer) {
         if let view = sender.view {
             print(view)
             view.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
-            if view == stepsOkayImg {
+            if view == stepsOkayImg || view == stepGoalTextField {
+                if view == stepGoalTextField {
+                    stepGoalTextField.becomeFirstResponder()
+                }
                 goalType = "steps"
                 goalDarkenUIViews![0].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = DARK_GREY
                 goalDarkenUIViews![1].backgroundColor = LIGHT_GREY
+                stepsOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
                 distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
                 minsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
-            } else if view == distOkayImg {
+            } else if view == distOkayImg || view == distGoalTextField {
+                if view == distGoalTextField {
+                    distGoalTextField.becomeFirstResponder()
+                }
                 goalType = "distance"
                 goalDarkenUIViews![1].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = DARK_GREY
                 goalDarkenUIViews![0].backgroundColor = LIGHT_GREY
+                distOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
                 stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
                 minsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
             } else {
+                if view == minGoalTextField {
+                    minGoalTextField.becomeFirstResponder()
+                }
                 goalType = "minutes"
                 goalDarkenUIViews![0].backgroundColor = DARK_GREY
                 goalDarkenUIViews![1].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = LIGHT_GREY
+                minsOkayImg.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
                 stepsOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
                 distOkayImg.tintColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1)
             }
@@ -184,6 +207,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         view.image = UIImage(named: "distance-drive-foggy-24821.jpg")
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.layer.cornerRadius = 5
         return view
     }()
     
@@ -192,6 +216,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         view.image = UIImage(named: "beach-salt-water-sand-17727.jpg")
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.layer.cornerRadius = 5
         return view
     }()
     
@@ -200,6 +225,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         view.image = UIImage(named: "art-blur-brass-678248.jpg")
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.layer.cornerRadius = 5
         return view
     }()
     
@@ -208,6 +234,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         view.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.layer.cornerRadius = 5
         return view
     }
     
