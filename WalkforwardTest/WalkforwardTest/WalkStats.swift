@@ -23,6 +23,7 @@ class WalkStats {
         startTime = Date()
         walkLocations = []
         duration = 0
+        startTime = Date()
     }
     
     func getSteps() -> Int {

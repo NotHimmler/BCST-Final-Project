@@ -12,9 +12,9 @@ import CoreData
 import CoreMotion
 import AVFoundation
 
-class CurrentWalkViewController: UIViewController {
+class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     var running = false;
-    let locationMgr = CLLocationManager();
+    let locationMgr: CLLocationManager = CLLocationManager();
     var walkLocations: [CLLocation] = [];
     var appDelegate: AppDelegate?
     var context: NSManagedObjectContext?
@@ -40,15 +40,21 @@ class CurrentWalkViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        goalProgressBar.layer.cornerRadius = 4
+        goalProgressBar.clipsToBounds = true
+        goalProgressBar.progressTintColor = UIColor(displayP3Red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        stopButtonOutlet.layer.cornerRadius = 5
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
-        
+        locationMgr.delegate = self as? CLLocationManagerDelegate
         locationMgr.allowsBackgroundLocationUpdates = true
-        if !startReceivingLocationChanges() {
-            
-            locationMgr.requestAlwaysAuthorization()
-        }
+        
+        running = true
+        walkStats = WalkStats()
+        goalVibeDone = false
+        timeCounter = 0.0
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
         
         if !startReceivingLocationChanges() {
             //durationLabel.text = "Error getting location. Please ensure that location services are enabled."
@@ -58,14 +64,8 @@ class CurrentWalkViewController: UIViewController {
         if !startRecievingPedometerChanges() {
             //stepsLabel.text = "Error getting pedometer data. Please ensure that motion permissions are enabled."
             print("Error getting pedometer updates")
-            return
+            //return
         }
-        running = true
-        walkStats = WalkStats()
-        running = true
-        goalVibeDone = false
-        timeCounter = 0.0
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
     }
     
@@ -91,32 +91,54 @@ class CurrentWalkViewController: UIViewController {
         dcFormatter.unitsStyle = .full
         dcFormatter.allowedUnits = [.minute, .second, .hour]
         timeCounter += 1
+        if goalType == "minutes" {
+            let pctProgress = Float(timeCounter)/Float(goalValue*60)
+            goalProgressBar.progress = pctProgress
+            setProgressColour(pctProgress)
+            if pctProgress >= 1.0 && !self.goalVibeDone {
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                self.goalVibeDone = true
+            }
+        }
         durationLabel.text = String(dcFormatter.string(from: timeCounter as TimeInterval)!)
+    }
+    
+    func setProgressColour(_ pctProgress: Float) {
+        print(pctProgress)
+        if pctProgress < 0.33 {
+            goalProgressBar.progressTintColor = UIColor(displayP3Red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        } else if pctProgress < 0.66 {
+            goalProgressBar.progressTintColor = UIColor(red:1.00, green:0.49, blue:0.00, alpha:1.0)
+        } else if pctProgress < 0.85 {
+            goalProgressBar.progressTintColor = UIColor(displayP3Red: 1.0, green: 215.0/255.0, blue: 0.0, alpha: 1.0)
+        } else {
+            goalProgressBar.progressTintColor = UIColor(displayP3Red: 127.0/255.0, green: 1.0, blue: 0.0, alpha: 1.0)
+        }
     }
     
     func startReceivingLocationChanges() -> Bool {
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus != .authorizedWhenInUse && authStatus != .authorizedAlways {
+            print("Location status not authorised")
             return false
         }
         
         if !CLLocationManager.locationServicesEnabled() {
+            print("Location services disabled")
             return false
         }
         
         locationMgr.desiredAccuracy = kCLLocationAccuracyBest
         locationMgr.distanceFilter = 15.0
-        locationMgr.delegate = self as? CLLocationManagerDelegate
+        print("Starting to get location updates")
+        locationMgr.requestAlwaysAuthorization()
         locationMgr.startUpdatingLocation()
         return true
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let lastLocation = locations.last!
-        if lastLocation.timestamp.timeIntervalSince(walkStats!.getStartTime()) >= 0 {
-            print("Location retrieved")
-            filterAndAddLocation(lastLocation)
-        }
+        filterAndAddLocation(lastLocation)
         
         let distance = Int(walkStats!.getDistanceFromWalks())
         distanceLabel.text = String(distance) + " meters"
@@ -124,6 +146,7 @@ class CurrentWalkViewController: UIViewController {
         if goalType == "distance" {
             let pctProgress = Float(distance)/Float(goalValue)
             goalProgressBar.progress = pctProgress
+            setProgressColour(pctProgress)
             if pctProgress >= 1.0 && !self.goalVibeDone {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 self.goalVibeDone = true
@@ -132,26 +155,29 @@ class CurrentWalkViewController: UIViewController {
         
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location updates failed with error")
+        print(error)
+    }
+    
     //Author Taka Mizutori
     //Source: https://medium.com/@mizutori/make-it-even-better-than-nike-how-to-filter-locations-tracking-highly-accurate-location-in-774be045f8d6
-    func filterAndAddLocation(_ location: CLLocation) -> Bool{
+    func filterAndAddLocation(_ location: CLLocation) {
         let age = -location.timestamp.timeIntervalSinceNow
         
-        if age > 10{
-            return false
+        if age > 10 {
+            return
         }
         
         if location.horizontalAccuracy < 0{
-            return false
+            return
         }
         
         if location.horizontalAccuracy > 100{
-            return false
+            return
         }
         
         walkStats!.addWalkLocation(location: location)
-        
-        return true
         
     }
     
@@ -169,6 +195,7 @@ class CurrentWalkViewController: UIViewController {
                     if self!.goalType == "steps" {
                         let pctDone: Float = Float(numSteps)/Float(self!.goalValue)
                         self!.goalProgressBar.progress = pctDone
+                        self!.setProgressColour(pctDone)
                         if pctDone >= 1.0 && !self!.goalVibeDone {
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                             self!.goalVibeDone = true
@@ -205,22 +232,4 @@ class CurrentWalkViewController: UIViewController {
     }
     */
 
-}
-
-class Time {
-    var minutes: Int = 0
-    var seconds: Int = 0
-    var hours: Int = 0
-    var totalSeconds: Int = 0
-    
-    init(duration: TimeInterval) {
-        let truncated = duration.truncatingRemainder(dividingBy: 1.0)
-        self.totalSeconds = Int(duration - truncated)
-        self.seconds = self.totalSeconds%60
-        self.minutes = (self.totalSeconds - self.seconds)/60
-        if (self.minutes >= 60) {
-            self.hours = (self.minutes - self.minutes%60)/60
-            self.minutes = self.minutes%60
-        }
-    }
 }

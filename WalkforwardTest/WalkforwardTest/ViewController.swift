@@ -12,14 +12,14 @@ import CoreData
 import CoreMotion
 import AVFoundation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
     var goalType = "distance"
     var goalValue = 0
     var goalDarkenUIViews: [UIImageView]?
     let DARK_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
     let LIGHT_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
     
-    // MARK: Properties
+    // MARK: Interface Outlets
     @IBOutlet weak var RecordButton: UIButton!
     @IBOutlet weak var distGoalTextField: UITextField!
     @IBOutlet weak var stepGoalTextField: UITextField!
@@ -27,15 +27,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var distGoalStackView: UIStackView!
     @IBOutlet weak var stepGoalStackView: UIStackView!
     @IBOutlet weak var timeGoalStackView: UIStackView!
-    
-    // MARK: Goals
-    @IBOutlet weak var stepsGoal: UIView!
-    @IBOutlet weak var distanceGoal: UIView!
     @IBOutlet weak var stepsOkayImg: UIImageView!
     @IBOutlet weak var minsOkayImg: UIImageView!
     @IBOutlet weak var distOkayImg: UIImageView!
-    
-    @IBOutlet weak var goalProgressBar: UIProgressView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,8 +92,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @objc func setActive(_ sender: UITapGestureRecognizer) {
         if let view = sender.view {
-            print(view)
-            view.tintColor = UIColor(red: 75/255.0, green: 160/255.0, blue: 253/255.0, alpha: 1)
             if view == stepsOkayImg || view == stepGoalTextField {
                 if view == stepGoalTextField {
                     stepGoalTextField.becomeFirstResponder()
@@ -167,35 +159,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func checkHasRequiredPermissions() -> Bool {
+        return true
         let authStatus = CLLocationManager.authorizationStatus()
         
         if authStatus == .notDetermined {
+            print("Location status not determined")
             let locMgr = CLLocationManager()
             locMgr.requestAlwaysAuthorization()
-            while CLLocationManager.authorizationStatus() == .notDetermined {}
+            while CLLocationManager.authorizationStatus() == .notDetermined {print("Hello")}
         }
         
         if authStatus != .authorizedWhenInUse && authStatus != .authorizedAlways {
+            print("Location status not authorised")
             return false
         }
         
         if !CLLocationManager.locationServicesEnabled() {
+            print("Location services disabled")
             return false
         }
         
         let cmAuthStatus = CMPedometer.authorizationStatus()
         
         if cmAuthStatus == .notDetermined {
+            print("Pedometer status not determined")
             let pedometer = CMPedometer()
             pedometer.queryPedometerData(from: Date(), to: Date())  {
                 [weak self] pedometerData, error in
                 while CMPedometer.authorizationStatus() == .notDetermined {
-                    
+                    print("Hello")
                 }
             }
         }
         
         if cmAuthStatus != .authorized {
+            print("Pedometer status not authorised")
             return false
         }
         
