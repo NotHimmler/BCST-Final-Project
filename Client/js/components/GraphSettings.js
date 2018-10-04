@@ -18,7 +18,7 @@ class GraphSettings extends React.Component {
                         </label>
 
                     <div className="col-md-9 col-sm-9 col-xs-12">
-                        <form {/*method="post" action=""*/}>
+                        <form /* method="post" action="" */> {/*attach to backend here*/}
                         <div className="checkbox">
                             <label>
                                 <input type="checkbox" name="choices" value="fitbit"/> Fitbit Application data.
