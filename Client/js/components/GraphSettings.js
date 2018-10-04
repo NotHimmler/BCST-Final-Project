@@ -13,22 +13,24 @@ class GraphSettings extends React.Component {
                     </label>
 
                     <div class="col-md-9 col-sm-9 col-xs-12">
+                        <form method="post" action="">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value=""/> Fitbit Application data.
+                                <input type="checkbox" name="choices" value="fitbit"/> Fitbit Application data.
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value=""/> AMOUNT Application data.
+                                <input type="checkbox" name="choices" value="amount"/> AMOUNT Application data.
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value=""/> WALKFORWARD Application data.
+                                <input type="checkbox" name="choices" value="walkforward"/> WALKFORWARD Application data.
                             </label>
                         </div>
                         <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
