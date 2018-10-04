@@ -40,6 +40,7 @@ class GraphSettings extends React.Component {
                 </div>
 
               </div>
+              </div>
 
                 
             </div>
