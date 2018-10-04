@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import DateRangePicker from '../components/DateRangePicker'
+
 class FitbitTable extends React.Component {
   constructor(props) {
     super(props);
@@ -353,7 +355,7 @@ class FitbitTable extends React.Component {
 
           var echartBar1 = echarts.init(document.getElementById('mainb'), this.state.theme);
           var ops = this.state.options_fitbit;
-              ops.title.text = 'Daily: 4 out of 7 Goals compteted';
+              ops.title.text = 'Daily';
 
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
               ops.series[0].data = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
@@ -370,7 +372,7 @@ class FitbitTable extends React.Component {
              var echartBar2 = echarts.init(document.getElementById('mainb'), this.state.theme);
 
               var ops = this.state.options_fitbit;
-              ops.title.text = 'Weekly: 2 out of 4 Goals compteted';
+              ops.title.text = 'Weekly';
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
               ops.series[0].data = [15305, 23274, 16881, 5004];
@@ -390,7 +392,7 @@ class FitbitTable extends React.Component {
 
                var echartBar3 = echarts.init(document.getElementById('mainb'), this.state.theme);
               var ops = this.state.options_fitbit;
-              ops.title.text = 'Monthly: 3 out of 12 Goals compteted';
+              ops.title.text = 'Monthly';
               ops.xAxis[0].data = ['Jan-15', 'Feb-15', 'Mar-15', 'Apr-15',
                   'May-15', 'Jun-15',  'Jul-15',  'Aug-15', 'Sep-15',  'Oct-15',
                   'Nov-15',  'Dec-15'];
@@ -412,30 +414,37 @@ class FitbitTable extends React.Component {
           <div className="row col-lg-12">
             <div className="x_panel">
               <div className="x_title">
-                <h2>Steps from Fitbit</h2>
-
-                <ul className="nav navbar-right panel_toolbox">
-                <li className="dropdown">
-                    <button  id = "dropdown_fitbit" className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
-                    <span className="caret"></span></button>
-                    <ul className="dropdown-menu">
-                    <li><a onClick={this.change_daily}>Daily</a></li>
-                      <li><a onClick={this.change_weekly}>Weekly</a></li>
-                      <li><a onClick={this.change_monthly}>Monthly</a></li>
+                <div className="col-md-4"><h2>Steps from Fitbit</h2></div>
+                <div className="col-md-auto"></div>
+                  <div className="col-md-4">
+                    <DateRangePicker/></div>
+                    <div className="col-md-3 pull-right">
+                    <ul className="nav navbar-right panel_toolbox">
+                    <li className="dropdown">
+                        <button  id = "dropdown_fitbit" className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Daily
+                        <span className="caret"></span></button>
+                        <ul className="dropdown-menu">
+                        <li><a onClick={this.change_daily}>Daily</a></li>
+                          <li><a onClick={this.change_weekly}>Weekly</a></li>
+                          <li><a onClick={this.change_monthly}>Monthly</a></li>
+                        </ul>
+                    </li>
+                    {/*<li><a className="collapse-link"><i className="fa fa-chevron-up"></i></a>
+                    </li> */}
+                    <li><a className="close-link"><i className="fa fa-close"></i></a>
+                    </li>
                     </ul>
-                </li>
-{/*                 <li><a className="collapse-link"><i className="fa fa-chevron-up"></i></a>
-                </li> */}
-                <li><a className="close-link"><i className="fa fa-close"></i></a>
-                </li>
-                </ul>
+                
+                </div>
+                  
+                
 
                 <div className="clearfix"></div>
-              </div>
+              </div> {/*end x_title*/}
               <div className="x_content">
                 <div id="mainb">
                 </div>
-              </div>
+              </div> {/*end x_content*/}
 
             </div>
 
