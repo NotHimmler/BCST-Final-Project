@@ -32,7 +32,21 @@ let patients = [
       "lastName": "Smith",
       "archived": true,
       "dateArchived": "29-03-2017"
-  }
+  },
+  {
+        "mrn": "85639445",
+        "firstName": "Mary",
+        "lastName": "Smith",
+        "archived": true,
+        "dateArchived": "20-01-2018"
+    },
+    {
+        "mrn": "85765622",
+        "firstName": "Test",
+        "lastName": "Test",
+        "archived": true,
+        "dateArchived": "20-01-2018"
+    }
 ]
 
 class PatientRow extends React.Component {
@@ -54,7 +68,8 @@ class PatientRow extends React.Component {
       return(
         !this.props.patient.archived ?
           <tr>
-              <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th>
+              <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
+              {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
               <td scope="row">{this.props.patient.firstName}</td>
               <td scope="row">{this.props.patient.lastName}</td>
               <td scope="row">{this.props.patient.weeklySteps}</td>
@@ -64,7 +79,8 @@ class PatientRow extends React.Component {
           </tr>
           : 
           <tr>
-              <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th>
+              <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
+              {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
               <td scope="row">{this.props.patient.firstName}</td>
               <td scope="row">{this.props.patient.lastName}</td>
               <td scope="row">{this.props.patient.dateArchived}</td>
@@ -106,12 +122,12 @@ class PatientList extends React.Component {
   }
 
   componentDidMount() {
-    //this.setState({"archived": this.props.archived});
+    this.setState({"archived": this.props.archived});
 
     let rows = []
     for (let patient of patients) {
         
-        if (patient.archived == this.state.archived) {
+        if (patient.archived == this.props.archived) {
             rows.push(<PatientRow key={patient.mrn} patient={patient}/>)
         } 
     }
@@ -120,6 +136,7 @@ class PatientList extends React.Component {
 }
     
     render() {
+
         return (
           <div>
             <div className='x_panel'>
