@@ -53,26 +53,10 @@ class GoalForm extends React.Component {
                   </div>
 
                   <div className="form-group">
-                    <label className="control-label col-md-3 col-sm-3 col-xs-12" for="progress">Progress <span className="required">*</span>
-                    </label>
-                    <div className="col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" id="progress" name="progress" required="required" className="form-control col-md-7 col-xs-12"/>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
                     <label className="control-label col-md-3 col-sm-3 col-xs-12" for="review_date">Review Date <span className="required">*</span>
                     </label>
                     <div className="col-md-6 col-sm-6 col-xs-12">
                       <input type="date" id="review_date" name="review_date" required="required" className="form-control col-md-7 col-xs-12"/>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="control-label col-md-3 col-sm-3 col-xs-12" for="rating">Rating <span className="required">*</span>
-                    </label>
-                    <div className="col-md-6 col-sm-6 col-xs-12">
-                      <input type="number" id="rating" name="rating" required="required" className="form-control col-md-7 col-xs-12" max="5" min="1"/>
                     </div>
                   </div>
 

@@ -31,3 +31,7 @@
 .x_title.donut h2 {
   overflow: visible !important;
 }
+
+#red {
+  color:red;
+}

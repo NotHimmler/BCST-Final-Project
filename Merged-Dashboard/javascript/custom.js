@@ -2722,7 +2722,7 @@ if (typeof NProgress != 'undefined') {
 
 
 		/* ECHRTS */
-        var theme1 = {
+/*         var theme1 = {
         color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
@@ -2934,7 +2934,7 @@ if (typeof NProgress != 'undefined') {
         }
     };
 
-    // optionss
+    // optionss 
     var options_fitbit = {
       title: {
         text: 'Daily: 4 out of 7 Goals compteted',
@@ -2998,7 +2998,7 @@ if (typeof NProgress != 'undefined') {
           }]
         }
       }]
-  };
+		};
   var options_distance = {
     title: {
       text: 'Daily: 6 out of 7 Goals compteted',
@@ -5456,7 +5456,7 @@ if (typeof NProgress != 'undefined') {
 
 			}
 
-		}
+		} */
 
 
 	$(document).ready(function() {
@@ -5480,7 +5480,7 @@ if (typeof NProgress != 'undefined') {
 		init_SmartWizard();
 		init_EasyPieChart();
 		init_charts();
-		init_echarts();
+		//init_echarts();
 		init_morris_charts();
 		init_skycons();
 		init_select2();
