@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import DateRangePicker from '../components/DateRangePicker'
+
 class WalkTable extends React.Component {
   constructor(props) {
     super(props);
@@ -409,7 +411,10 @@ class WalkTable extends React.Component {
           <div className="row col-lg-12">
             <div className="x_panel">
               <div className="x_title">
-                <h2>Distance from Walkforward App</h2>
+              <div className="col-md-5"><h2>Distance from Walkforward App</h2></div>
+                  <div className="col-md-4">
+                    <DateRangePicker/></div>
+                    <div className="col-md-3 pull-right">
 
                 <ul className="nav navbar-right panel_toolbox">
                 <li className="dropdown">
@@ -426,6 +431,7 @@ class WalkTable extends React.Component {
                 <li><a className="close-link"><i className="fa fa-close"></i></a>
                 </li>
                 </ul>
+                </div>
 
                 <div className="clearfix"></div>
               </div>

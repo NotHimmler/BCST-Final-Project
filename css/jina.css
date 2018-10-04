@@ -35,3 +35,15 @@
 #red {
   color:red;
 }
+
+#reportrange {
+  background: #fff; 
+  cursor: pointer; 
+  padding: 5px 10px; 
+  border: 1px solid #ccc;
+  display:inline;
+}
+
+.icon-padding {
+  padding-right:8px;
+}
