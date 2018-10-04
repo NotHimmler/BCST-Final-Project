@@ -411,10 +411,10 @@ class WalkTable extends React.Component {
           <div className="row col-lg-12">
             <div className="x_panel">
               <div className="x_title">
-              <div className="col-md-5"><h2>Distance from Walkforward App</h2></div>
+              <div className="col-md-4"><h2 id="overflow">Distance from Walkforward App</h2></div>
                   <div className="col-md-4">
                     <DateRangePicker/></div>
-                    <div className="col-md-3 pull-right">
+                    <div className="col-md-4 pull-right">
 
                 <ul className="nav navbar-right panel_toolbox">
                 <li className="dropdown">

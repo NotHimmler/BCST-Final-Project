@@ -47,3 +47,7 @@
 .icon-padding {
   padding-right:8px;
 }
+
+#overflow {
+  overflow: visible !important;
+}
