@@ -27,6 +27,11 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     var walkStats: WalkStats?
     var timer: Timer?
     var timeCounter: Double = 0.0
+    var pctProgress: Float = 0.0
+    
+    let GOAL_NOT_MET_STRING = "Almost there! You achieved %d%% of your goal. Try harder next time to meet your goal!"
+    let GOAL_MET_STRING = "Well done! You met your goal with %d%%! Keep it up!"
+    let GOAL_EXCEEDED_STRING = "Fantastic! You exceeded your goal getting %d%%!"
     
     // MARK: Properties
     @IBOutlet weak var stepCountLabel: UILabel!
@@ -78,7 +83,19 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             walkStats!.endWalk()
             stopButtonOutlet.setTitle("Start New Walk", for: .normal)
             saveWalk()
+            var stringToUse = GOAL_MET_STRING
+            if pctProgress < 1.0 {
+                stringToUse = GOAL_NOT_MET_STRING
+            } else if pctProgress < 1.25 {
+                stringToUse = GOAL_MET_STRING
+            } else {
+                stringToUse = GOAL_EXCEEDED_STRING
+            }
+            let alertController = UIAlertController(title: "Finished!", message: String(format: stringToUse, Int(pctProgress*100)), preferredStyle: UIAlertControllerStyle.alert)
             
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
         } else {
             dismiss(animated: true, completion: nil)
         }
@@ -92,8 +109,8 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         dcFormatter.allowedUnits = [.minute, .second, .hour]
         timeCounter += 1
         if goalType == "minutes" {
-            let pctProgress = Float(timeCounter)/Float(goalValue*60)
-            goalProgressBar.progress = pctProgress
+            self.pctProgress = Float(timeCounter)/Float(goalValue*60)
+            goalProgressBar.progress = self.pctProgress
             setProgressColour(pctProgress)
             if pctProgress >= 1.0 && !self.goalVibeDone {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -144,8 +161,8 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         distanceLabel.text = String(distance) + " meters"
         distancePaceLabel.text = distance > 0 ? String(format: "%.2f m/s", Double(distance)/self.timeCounter) : "0 m/s"
         if goalType == "distance" {
-            let pctProgress = Float(distance)/Float(goalValue)
-            goalProgressBar.progress = pctProgress
+            self.pctProgress = Float(distance)/Float(goalValue)
+            goalProgressBar.progress = self.pctProgress
             setProgressColour(pctProgress)
             if pctProgress >= 1.0 && !self.goalVibeDone {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -193,10 +210,10 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
                     self!.stepCountLabel.text = String(numSteps)
                     self!.stepPaceLabel.text = String(format: "%.2f", Double(numSteps)/((self!.timeCounter)/60.0))
                     if self!.goalType == "steps" {
-                        let pctDone: Float = Float(numSteps)/Float(self!.goalValue)
-                        self!.goalProgressBar.progress = pctDone
-                        self!.setProgressColour(pctDone)
-                        if pctDone >= 1.0 && !self!.goalVibeDone {
+                        self!.pctProgress = Float(numSteps)/Float(self!.goalValue)
+                        self!.goalProgressBar.progress = self!.pctProgress
+                        self!.setProgressColour(self!.pctProgress)
+                        if self!.pctProgress >= 1.0 && !self!.goalVibeDone {
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                             self!.goalVibeDone = true
                         }
