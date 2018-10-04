@@ -14,17 +14,19 @@ class FitbitTable extends React.Component {
               // optionss
               options_fitbit : {
                 title: {
-                  text: 'Daily: 4 out of 7 Goals compteted',
-                  subtext: 'Walked Steps and Goal Steps'
+                  text: 'Daily',
+                  //subtext: 'Walked Steps and Goal Steps'
                 },
                 tooltip: {
-                  trigger: 'item'
+                  trigger: 'axis'
                 },
                 legend: {
-                  data: ['Walked Steps', {
+                  data: ['Steps Walked', 'Goal (Steps)'
+                  /* {
                     name:'Goal',
                     icon: 'roundRect'
-                  }]
+                  } */
+                ]
                 },
                 toolbox: {
                   show: false,
@@ -49,7 +51,7 @@ class FitbitTable extends React.Component {
                   type: 'value'
                 }],
                 series: [{
-                  name: 'Walked Steps',
+                  name: 'Steps Walked',
                   type: 'bar',
                   data: [2292, 2000, 1860, 1881, 2188, 2140, 2088],
                   markPoint: {
@@ -63,6 +65,11 @@ class FitbitTable extends React.Component {
                   }
                 },
                 {
+                  name: 'Goal (Steps)',
+                  type: 'line',
+                  data: [2000, 2000, 2000,2000,2000,2000,2000]
+                }
+                /* {
                   name: 'Goal',
                   type: 'line',
                   markLine: {
@@ -76,7 +83,7 @@ class FitbitTable extends React.Component {
                       }
                     }]
                   }
-                }
+                } */
               ]
             },
 
@@ -350,8 +357,8 @@ class FitbitTable extends React.Component {
 
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
               ops.series[0].data = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
-              ops.series[1].markLine.data[0].yAxis = 2000;
-              //ops.series[1].data = [2000, 2000, 3000, 3000, 2000, 2000, 3000];
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
           this.setState({options_fitbit : ops});
           echartBar1.setOption(this.state.options_fitbit);
           this.setState({echart: echartBar1});
@@ -367,8 +374,8 @@ class FitbitTable extends React.Component {
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
               ops.series[0].data = [15305, 23274, 16881, 5004];
-              ops.series[1].markLine.data[0].yAxis = 10000;
-              //ops.series[1].data = [10000, 20000, 25000, 20000];
+              //ops.series[1].markLine.data[0].yAxis = 10000;
+              ops.series[1].data = [10000, 20000, 25000, 20000];
               this.setState({options_fitbit : ops});
               echartBar2.setOption(this.state.options_fitbit);
               this.setState({echart: echartBar2});
@@ -389,9 +396,9 @@ class FitbitTable extends React.Component {
                   'Nov-15',  'Dec-15'];
               ops.series[0].data = [93901, 76572, 161213, 172121, 117865, 121369,
                   109692, 100313, 127364, 159968, 126587, 100234];
-              ops.series[1].markLine.data[0].yAxis = 120000;
-              //ops.series[1].data = [110000, 100000, 150000, 160000,
-                  //150000, 150000, 130000,  110000, 130000, 140000, 130000,  150000];
+              //ops.series[1].markLine.data[0].yAxis = 120000;
+              ops.series[1].data = [110000, 100000, 150000, 160000,
+                  150000, 150000, 130000,  110000, 130000, 140000, 130000,  150000];
 
               this.setState({options_fitbit : ops});
               echartBar3.setOption(this.state.options_fitbit);
