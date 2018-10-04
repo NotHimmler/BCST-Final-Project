@@ -9,6 +9,7 @@ class WalkTable extends React.Component {
     this.change_daily = this.change_daily.bind(this);
     this.change_weekly = this.change_weekly.bind(this);
     this.change_monthly = this.change_monthly.bind(this);
+    this.colorize_bars = this.colorize_bars.bind(this);
 
 
     this.state = {
@@ -345,6 +346,32 @@ class WalkTable extends React.Component {
 
   }
 
+  colorize_bars(rawSteps, rawGoal) {
+    var coloredBars = [];
+
+    var ColoredBarObject = {
+      value: 1.0,
+      itemStyle: null,
+      createBar: function (v) {
+        this.value = v;
+      }
+    };
+
+
+    for (var i = 0; i < rawSteps.length; i ++) {
+      let cbo = new ColoredBarObject.createBar(rawSteps[i]);
+      if (cbo.value < rawGoal[i]) {
+        // console.log("err?")
+        cbo.itemStyle = {normal: {color: 'red'}};
+      }
+      // else {
+      //   cbo.itemStyle = {color: '#FF0000'};
+      // }
+      coloredBars.push(cbo);
+    }
+    return coloredBars;
+  }
+
          // changefunc
           change_daily() {
           document.getElementById('dropdown_distance').innerHTML = 'Daily' + ' <span class="caret"></span>';
@@ -355,9 +382,12 @@ class WalkTable extends React.Component {
               ops.title.text = 'Daily';
 
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-              ops.series[0].data = [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1];
-              //ops.series[1].markLine.data[0].yAxis = 1.0;
-              ops.series[1].data = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+              var rawBars = [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1];
+              var rawGoal = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+
+              ops.series[0].data = this.colorize_bars(rawBars, rawGoal);
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = rawGoal;
           this.setState({options_distance : ops});
           echartBar1.setOption(this.state.options_distance);
           this.setState({echart: echartBar1});
@@ -372,9 +402,13 @@ class WalkTable extends React.Component {
               ops.title.text = 'Weekly';
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
-              ops.series[0].data = [7.2, 8.4, 12.3, 5.4];
-              //ops.series[1].markLine.data[0].yAxis = 6.5;
-              ops.series[1].data = [5, 10, 10, 15];
+
+              var rawBars = [7.2, 8.4, 12.3, 5.4];
+              var rawGoal = [5, 10, 10, 15];
+
+              ops.series[0].data = this.colorize_bars(rawBars, rawGoal);
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = rawGoal;
               this.setState({options_distance : ops});
               echartBar2.setOption(this.state.options_distance);
               this.setState({echart: echartBar2});
@@ -393,12 +427,14 @@ class WalkTable extends React.Component {
               ops.xAxis[0].data = ['Jan-15', 'Feb-15', 'Mar-15', 'Apr-15',
                   'May-15', 'Jun-15',  'Jul-15',  'Aug-15', 'Sep-15',  'Oct-15',
                   'Nov-15',  'Dec-15'];
-              ops.series[0].data = [29.2, 31.1, 32.4, 34.1, 36.2, 27.3,
+              var rawBars = [29.2, 31.1, 32.4, 34.1, 36.2, 27.3,
                 23.5, 42.3, 39.9, 32.2, 21.8, 20.1];
-              //ops.series[1].markLine.data[0].yAxis = 30.0;
-              ops.series[1].data = [20, 20, 25, 25,
+              var rawGoal = [20, 20, 25, 25,
                 25, 30, 30,  30, 40, 40, 50,  50];
 
+              ops.series[0].data = this.colorize_bars(rawBars, rawGoal);
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = rawGoal;
               this.setState({options_distance : ops});
               echartBar3.setOption(this.state.options_distance);
               this.setState({echart: echartBar3});
