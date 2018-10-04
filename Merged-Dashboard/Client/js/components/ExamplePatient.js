@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import PatientGraph from '../components/PatientGraph'
 import PatientGoal from '../components/PatientGoal'
+import GraphSettings from '../components/GraphSettings'
+
 
 class ExamplePatient extends React.Component {
 
@@ -10,7 +12,7 @@ class ExamplePatient extends React.Component {
     super(props);
     // Don't call this.setState() here!
     this.state = { 
-      content : "Graph",
+      content : "Data",
     };
   }
 
@@ -19,15 +21,15 @@ class ExamplePatient extends React.Component {
         return (
             <div>
               <div className="btn-group patient-toggle">
-                <button type="button" className="btn btn-primary"
-                onClick={() => this.setState({content: 'Graph'})}
-                >Summary</button>
                 <button type="button" className="btn btn-primary" 
-                onClick={() => this.setState({content: 'Graph'})}
-                >Graphs</button>
+                onClick={() => this.setState({content: 'Data'})}
+                >Data</button>
                 <button type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Goal'})}
                 >Goals</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => this.setState({content: 'Settings'})}
+                >Settings</button>
                 
               </div>
               <div className="">
@@ -36,15 +38,13 @@ class ExamplePatient extends React.Component {
                     <h3>Elizabeth Smith</h3>
                     <p>MRN: 88124213</p>
                     <p><i>Last check up: 30/02/2018</i></p>
-                    <button type="button" className="btn btn-primary"
-                    ><Link to="/patientsettings">Settings</Link></button>
                   </div>
                 </div>
                 <div className="clearfix"></div>
                 </div>
 
               {
-                (this.state.content === "Graph")
+                (this.state.content === "Data")
                     ? <PatientGraph/>
                     : null
               }
@@ -52,6 +52,12 @@ class ExamplePatient extends React.Component {
               {
                 (this.state.content === "Goal")
                     ? <PatientGoal/>
+                    : null
+              }
+
+              {
+                (this.state.content === "Settings")
+                    ? <GraphSettings/>
                     : null
               }
 
