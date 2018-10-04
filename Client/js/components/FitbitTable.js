@@ -7,6 +7,7 @@ class FitbitTable extends React.Component {
     this.change_daily = this.change_daily.bind(this);
     this.change_weekly = this.change_weekly.bind(this);
     this.change_monthly = this.change_monthly.bind(this);
+    this.colorizeBars = this.colorizeBars.bind(this);
 
 
     this.state = {
@@ -335,6 +336,7 @@ class FitbitTable extends React.Component {
     var ec = echarts.init(document.getElementById('mainb'), this.state.theme);
 
       ec.setOption(this.state.options_fitbit);
+      this.change_daily();
             //   let option =  options_fitbit;
             //   option.title.text = 'bbbb';
             //   echartBar.setOption(option);
@@ -346,6 +348,31 @@ class FitbitTable extends React.Component {
 
   }
 
+          colorizeBars(rawSteps, rawGoal) {
+            var coloredSteps = [];
+
+            var ColoredBarObject = {
+              value: 1000,
+              itemStyle: null,
+              createBar: function (v) {
+                this.value = v;
+              }
+            };
+
+
+            for (var i = 0; i < rawSteps.length; i ++) {
+              let cbo = new ColoredBarObject.createBar(rawSteps[i]);
+              if (cbo.value < rawGoal[i]) {
+                // console.log("err?")
+                cbo.itemStyle = {normal: {color: 'red'}};
+              }
+              // else {
+              //   cbo.itemStyle = {color: '#FF0000'};
+              // }
+              coloredSteps.push(cbo);
+            }
+            return coloredSteps;
+          }
          // changefunc
           change_daily() {
           document.getElementById('dropdown_fitbit').innerHTML = 'Daily' + ' <span class="caret"></span>';
@@ -356,9 +383,14 @@ class FitbitTable extends React.Component {
               ops.title.text = 'Daily: 4 out of 7 Goals compteted';
 
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-              ops.series[0].data = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
+              // process the input data
+              // var rawSteps = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
+              var rawSteps = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
+              var rawGoal = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
+
+              ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
               //ops.series[1].markLine.data[0].yAxis = 2000;
-              ops.series[1].data = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
+              ops.series[1].data = rawGoal;
           this.setState({options_fitbit : ops});
           echartBar1.setOption(this.state.options_fitbit);
           this.setState({echart: echartBar1});
@@ -373,9 +405,12 @@ class FitbitTable extends React.Component {
               ops.title.text = 'Weekly: 2 out of 4 Goals compteted';
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
-              ops.series[0].data = [15305, 23274, 16881, 5004];
-              //ops.series[1].markLine.data[0].yAxis = 10000;
-              ops.series[1].data = [10000, 20000, 25000, 20000];
+              var rawSteps = [15305, 23274, 16881, 5004];
+              var rawGoal = [10000, 20000, 25000, 20000];
+
+              ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = rawGoal;
               this.setState({options_fitbit : ops});
               echartBar2.setOption(this.state.options_fitbit);
               this.setState({echart: echartBar2});
@@ -394,11 +429,14 @@ class FitbitTable extends React.Component {
               ops.xAxis[0].data = ['Jan-15', 'Feb-15', 'Mar-15', 'Apr-15',
                   'May-15', 'Jun-15',  'Jul-15',  'Aug-15', 'Sep-15',  'Oct-15',
                   'Nov-15',  'Dec-15'];
-              ops.series[0].data = [93901, 76572, 161213, 172121, 117865, 121369,
+              var rawSteps = [93901, 76572, 161213, 172121, 117865, 121369,
                   109692, 100313, 127364, 159968, 126587, 100234];
-              //ops.series[1].markLine.data[0].yAxis = 120000;
-              ops.series[1].data = [110000, 100000, 150000, 160000,
+              var rawGoal = [110000, 100000, 150000, 160000,
                   150000, 150000, 130000,  110000, 130000, 140000, 130000,  150000];
+
+              ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
+              //ops.series[1].markLine.data[0].yAxis = 2000;
+              ops.series[1].data = rawGoal;
 
               this.setState({options_fitbit : ops});
               echartBar3.setOption(this.state.options_fitbit);
