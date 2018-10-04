@@ -1575,7 +1575,7 @@ if (typeof NProgress != 'undefined') {
 			if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
 			console.log('init_daterangepicker');
 
-			var cb = function(start, end, label) {
+/* 			var cb = function(start, end, label) {
 			  console.log(start.toISOString(), end.toISOString(), label);
 			  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 			};
@@ -1643,7 +1643,7 @@ if (typeof NProgress != 'undefined') {
 			  $('#reportrange').data('daterangepicker').remove();
 			});
 
-		}
+		} */
 
 	   function init_daterangepicker_right() {
 
@@ -5496,4 +5496,4 @@ if (typeof NProgress != 'undefined') {
 		init_autosize();
 		init_autocomplete();
 
-	});
+	});}
