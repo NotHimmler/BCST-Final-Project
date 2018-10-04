@@ -14,17 +14,19 @@ class WalkTable extends React.Component {
               // optionss
               options_distance : {
                 title: {
-                  text: 'Daily: 6 out of 7 Goals compteted',
-                  subtext: 'Walked disance and goal disance'
+                  text: 'Daily',
+                  //subtext: 'Walked disance and goal disance'
                 },
                 tooltip: {
                   trigger: 'axis'
                 },
                 legend: {
-                  data: ['Walked Distance (KM)', {
+                  data: ['Distance Walked (KM)', 'Goal (KM)'
+                  /* {
                     name:'Goal',
                     icon: 'roundRect'
-                  }]
+                  } */
+                ]
                 },
                 toolbox: {
                   show: false
@@ -44,7 +46,7 @@ class WalkTable extends React.Component {
                   type: 'value'
                 }],
                 series: [{
-                  name: 'Walked Distance (KM)',
+                  name: 'Distance Walked (KM)',
                   type: 'bar',
                   data: [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1],
                   markPoint: {
@@ -57,6 +59,11 @@ class WalkTable extends React.Component {
                     }]
                   }
                 }, {
+                  name: 'Goal (KM)',
+                  type: 'line',
+                  data: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+                }
+                /* {
                   name: 'Goal',
                   type: 'line',
                   markLine: {
@@ -70,7 +77,8 @@ class WalkTable extends React.Component {
                       }
                     }]
                   }
-                }]
+                } */
+              ]
             },
 
                 //Theme
@@ -342,12 +350,12 @@ class WalkTable extends React.Component {
 
           var echartBar1 = echarts.init(document.getElementById('mainc'), this.state.theme);
           var ops = this.state.options_distance;
-              ops.title.text = 'Daily: 4 out of 7 Goals compteted';
+              ops.title.text = 'Daily';
 
               ops.xAxis[0].data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
               ops.series[0].data = [2.08, 1.08, 1.09, 1.23, 2.3, 1.6, 2.1];
-              ops.series[1].markLine.data[0].yAxis = 1.0;
-              //ops.series[1].data = [1.0, 1.0, 1.1, 1.1, 1.3, 1.3, 1.3];
+              //ops.series[1].markLine.data[0].yAxis = 1.0;
+              ops.series[1].data = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
           this.setState({options_distance : ops});
           echartBar1.setOption(this.state.options_distance);
           this.setState({echart: echartBar1});
@@ -359,12 +367,12 @@ class WalkTable extends React.Component {
              var echartBar2 = echarts.init(document.getElementById('mainc'), this.state.theme);
 
               var ops = this.state.options_distance;
-              ops.title.text = 'Weekly: 2 out of 4 Goals compteted';
+              ops.title.text = 'Weekly';
               ops.xAxis[0].data = ['19/11-25/11','26/11-02/12',
                   '03/12-09/12','10/12-16/12'];
               ops.series[0].data = [7.2, 8.4, 12.3, 5.4];
-              ops.series[1].markLine.data[0].yAxis = 6.5;
-              //ops.series[1].data = [5, 10, 10, 15];
+              //ops.series[1].markLine.data[0].yAxis = 6.5;
+              ops.series[1].data = [5, 10, 10, 15];
               this.setState({options_distance : ops});
               echartBar2.setOption(this.state.options_distance);
               this.setState({echart: echartBar2});
@@ -379,15 +387,15 @@ class WalkTable extends React.Component {
 
                var echartBar3 = echarts.init(document.getElementById('mainc'), this.state.theme);
               var ops = this.state.options_distance;
-              ops.title.text = 'Monthly: 3 out of 12 Goals compteted';
+              ops.title.text = 'Monthly';
               ops.xAxis[0].data = ['Jan-15', 'Feb-15', 'Mar-15', 'Apr-15',
                   'May-15', 'Jun-15',  'Jul-15',  'Aug-15', 'Sep-15',  'Oct-15',
                   'Nov-15',  'Dec-15'];
               ops.series[0].data = [29.2, 31.1, 32.4, 34.1, 36.2, 27.3,
                 23.5, 42.3, 39.9, 32.2, 21.8, 20.1];
-              ops.series[1].markLine.data[0].yAxis = 30.0;
-              //ops.series[1].data = [20, 20, 25, 25,
-                //25, 30, 30,  30, 40, 40, 50,  50];
+              //ops.series[1].markLine.data[0].yAxis = 30.0;
+              ops.series[1].data = [20, 20, 25, 25,
+                25, 30, 30,  30, 40, 40, 50,  50];
 
               this.setState({options_distance : ops});
               echartBar3.setOption(this.state.options_distance);
