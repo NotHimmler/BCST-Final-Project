@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 class Topnav extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
     render() {
         return (
           <div className="top_nav">
@@ -14,7 +19,7 @@ class Topnav extends React.Component {
                 <ul className="nav navbar-nav navbar-right">
                   <li className="">
                     <a href="javascript:;" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img src="../img/leanne_icon.jpg" alt=""/>Leanne Hassett
+                      <img src="../img/leanne_icon.jpg" alt=""/>{this.props.username}
                       <span className=" fa fa-angle-down"></span>
                     </a>
                     <ul className="dropdown-menu dropdown-usermenu pull-right">
@@ -26,7 +31,7 @@ class Topnav extends React.Component {
                         </a>
                       </li>
                       <li><a href="javascript:;">Help</a></li>
-                      <li><a href="login.html"><i className="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                      <li><Link to="/login"><i className="fa fa-sign-out pull-right"></i> Log Out</Link></li>
                     </ul>
                   </li>
 
@@ -40,7 +45,7 @@ class Topnav extends React.Component {
                       <a>
                         <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>Leanne Hassett</span>
+                          <span>{this.props.username}</span>
                           <span className="time">15/Sep</span>
                         </span>
                         <span className="message">
@@ -52,7 +57,7 @@ class Topnav extends React.Component {
                       <a>
                         <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>Leanne Hassett</span>
+                          <span>{this.props.username}</span>
                           <span className="time">17/Sep</span>
                         </span>
                         <span className="message">
@@ -64,7 +69,7 @@ class Topnav extends React.Component {
                       <a>
                         <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>Leanne Hassett</span>
+                          <span>{this.props.username}</span>
                           <span className="time">18/Sep</span>
                         </span>
                         <span className="message">
@@ -76,7 +81,7 @@ class Topnav extends React.Component {
                       <a>
                         <span className="image"><img src="../img/leanne_icon.jpg" alt="Profile Image" /></span>
                         <span>
-                          <span>Leanne Hassett</span>
+                          <span>{this.props.username}</span>
                           <span className="time">19/Sep</span>
                         </span>
                         <span className="message">
