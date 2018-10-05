@@ -9,7 +9,13 @@ class GoalList extends React.Component {
               <div className="clearfix"></div>
               <div className="x_panel">
                 <div className="x_title">
-                  <h2>Goals</h2>
+                <div className="row">
+                <h2>Goals</h2>
+                </div>
+                  
+                  <div className="row">
+                    <p id="italics">Click to open subgoals</p>
+                  </div>
                   <div className="clearfix"></div>
                 </div>
                 <div className="x_content"></div>
