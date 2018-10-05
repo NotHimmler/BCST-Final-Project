@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 let patients = [
   {
       "mrn": "88124213",
+      "ward": "F9",
       "firstName": "Elizabeth",
       "lastName": "Smith",
       "weeklySteps": "24937",
@@ -16,6 +17,7 @@ let patients = [
 
   {
     "mrn": "83940584",
+    "ward": "A1",
     "firstName": "Nicole",
     "lastName": "Pearson",
     "weeklySteps": "45678",
@@ -70,6 +72,7 @@ class PatientRow extends React.Component {
           <tr>
               <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
               {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
+              <td scope="row">{this.props.patient.ward}</td>
               <td scope="row">{this.props.patient.firstName}</td>
               <td scope="row">{this.props.patient.lastName}</td>
               <td scope="row">{this.props.patient.weeklySteps}</td>
@@ -93,6 +96,7 @@ const activePatientHeader  = () => {
   return(
       <tr>
           <th scope="col">{"MRN"}</th>
+          <th scope="col">{"Ward"}</th>
           <th scope="col">{"First Name"}</th>
           <th scope="col">{"Last Name"}</th>
           <th scope="col">{"Weekly Fitbit Steps"}</th>
