@@ -13,13 +13,20 @@ class GoalList extends React.Component {
                   <div className="clearfix"></div>
                 </div>
                 <div className="x_content"></div>
-                  <table className="table table-striped" id="long_term_table">
-                    <thead>
+                
+
+                {/*start of accordion*/}
+                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel">
+                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          {/* <h4 class="panel-title">Walking Goal</h4> */}
+                          <table className="table table-striped" id="long_term_table">
+                          <thead>
                       <tr>
-                      <th>Date goal set</th>
-                        <th>Global Goals</th>
-                        <th>Rating</th>
-                        <th>Progress/Comments</th>
+                        <th width="10%">Date Set</th>
+                        <th width="70%">Description</th>
+                        <th width="10%">Goal</th>
+                        <th width="10%">Progress</th>
                       </tr>
                     </thead>
 
@@ -31,32 +38,32 @@ class GoalList extends React.Component {
                       <td></td>
                     </tr>
                   </tbody>
+                          </table>
+                        </a>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="panel-body">
+                          <table className="table table-striped" id="long_term_table">
+
+
+                  <thead>
+                            <tr>
+                              <th colSpan="4">Sub Goal(s)</th>
+                            </tr>
+                          </thead>
 
                   <thead>
                       <tr>
-                        <th>Date goal set</th>
-                        <th>Subgoal(s)</th>
-                        <th>Rating</th>
-                        <th>Progress/Comments</th>
+                        <th width="10%">Date Set</th>
+                        <th width="70%">Description</th>
+                        <th width="10%">Goal</th>
+                        <th width="10%">Progress</th>
                       </tr>
                   </thead>
 
                   <tbody id="sub_goal">
-                  	<tr>
-                      <td></td>
-                      <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
                     <tr>
                       <td></td>
                       <td>To walk to the end of your stree and back without stopping on at least 3 days of the week measuring your walk using Runkeeper for the next 2 weeks.</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
                       <td></td>
                       <td></td>
                     </tr>
@@ -90,16 +97,75 @@ class GoalList extends React.Component {
                       <td></td>
                       <td></td>
                     </tr>
-                    <tr>
-                      <td></td>
-                      <td>To complete 50 stepping exercises on the stepping tiles/Ipad stepping exercise with your right foot without using your hands within 2 weeks.</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
                     
                   </tbody>
 
                   </table>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel">
+                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          {/* <h4 class="panel-title">Collapsible Group Items #2</h4> */}
+                          <table className="table table-striped" id="long_term_table">
+                          <thead>
+                            <tr>
+                              <th width="10%">Date Set</th>
+                              <th width="70%">Description</th>
+                              <th width="10%">Goal</th>
+                              <th width="10%">Progress</th>
+                            </tr>
+                          </thead>
+
+                          <tbody id = "global_goal">
+                          <tr>
+                            <td></td>
+                            <td>To complete all your Ipad AMOUNT walking program exercises at least 5 times per week for the next 4 weeks.</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                        </table>
+                        </a>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                          <div class="panel-body">
+                          <table className="table table-striped" id="long_term_table">
+
+
+                        <thead>
+                                  <tr>
+                                    <th colSpan="4">Sub Goal(s)</th>
+                                  </tr>
+                                </thead>
+
+                        <thead>
+                            <tr>
+                              <th width="10%">Date Set</th>
+                              <th width="70%">Description</th>
+                              <th width="10%">Goal</th>
+                              <th width="10%">Progress</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="sub_goal">
+                        <tr>
+                          <td></td>
+                          <td>To complete 50 stepping exercises on the stepping tiles/Ipad stepping exercise with your right foot without using your hands within 2 weeks.</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                          </tbody>
+                          
+                          </table>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                     {/* end of accordion */}
+
+                  
               </div>
 
 
