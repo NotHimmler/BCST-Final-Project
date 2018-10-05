@@ -184,7 +184,7 @@ class Sidebar extends React.Component {
 
                 {/* Sidebar title */}
                 <div className="navbar nav_title">
-                  <Link to="/" className="site_title"><i className="fa fa-paw"></i> <span>Dashboard</span></Link>
+                  <Link to="/home" className="site_title"><i className="fa fa-paw"></i> <span>Dashboard</span></Link>
                 </div>
                 {/* /Sidebar title */}
 
@@ -197,7 +197,7 @@ class Sidebar extends React.Component {
                   </div>
                   <div className="profile_info">
                     <span>Welcome,</span>
-                    <h2>Leanne Hassett</h2>
+                    <h2>{this.props.username}</h2>
                   </div>
                 </div>
                 {/* /Sidebar profile quick info */}
@@ -209,11 +209,11 @@ class Sidebar extends React.Component {
                   <div className="menu_section">
                     <h3>General</h3>
                     <ul className="nav side-menu">
-                      <li><Link to="/"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></Link></li>
+                      <li><Link to="/home"><em className="fa fa-home"></em> Home <span  className="label label-success pull-right"></span></Link></li>
                       <li><a><i className="fa fa-edit"></i> Patients <span className="fa fa-chevron-down"></span></a>
                         <ul className="nav child_menu">
-                          <li><Link to="/curPatients">Current Patients</Link></li>
-                          <li><Link to="/disPatients">Discharged Patients</Link></li>
+                          <li><Link to="/curPatients">Current Patient</Link></li>
+                          <li><Link to="/disPatients">Discharged Patient</Link></li>
                         </ul>
                       </li>
                     </ul>
