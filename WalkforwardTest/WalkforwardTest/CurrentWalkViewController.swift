@@ -32,6 +32,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     let GOAL_NOT_MET_STRING = "Almost there! You achieved %d%% of your goal. Try harder next time to meet your goal!"
     let GOAL_MET_STRING = "Well done! You met your goal with %d%%! Keep it up!"
     let GOAL_EXCEEDED_STRING = "Fantastic! You exceeded your goal getting %d%%!"
+    let BUTTON_PURPLE: UIColor = UIColor(displayP3Red: 88/255.0, green: 86/255.0, blue: 214/255.0, alpha: 1.0)
     
     // MARK: Properties
     @IBOutlet weak var stepCountLabel: UILabel!
@@ -95,6 +96,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
             
+            stopButtonOutlet.backgroundColor = BUTTON_PURPLE
             self.present(alertController, animated: true, completion: nil)
         } else {
             dismiss(animated: true, completion: nil)

@@ -18,6 +18,9 @@ class ViewController: UIViewController {
     var goalDarkenUIViews: [UIImageView]?
     let DARK_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
     let LIGHT_GREY = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
+    let MINUTES_KEY = "minutes"
+    let STEPS_KEY = "steps"
+    let DIST_KEY = "meters"
     
     // MARK: Interface Outlets
     @IBOutlet weak var RecordButton: UIButton!
@@ -47,7 +50,30 @@ class ViewController: UIViewController {
         pinBackground(backgroundViewSteps, to: stepGoalStackView)
         pinBackground(goalDarkenUIViews![2], to: timeGoalStackView)
         pinBackground(backgroundViewTime, to: timeGoalStackView)
+        getSavedGoals();
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+    }
+    
+    func getSavedGoals() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Goals")
+        var result: [NSManagedObject]?
+        do {
+            result = try managedContext.fetch(fetchRequest)
+            if result!.count > 0 {
+                goalValue = result![0].value(forKey: "meters") as! Int
+                distGoalTextField.text = String(goalValue)
+                stepGoalTextField.text = String(result![0].value(forKey: "steps") as! Int)
+                minGoalTextField.text = String(result![0].value(forKey: "minutes") as! Int)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
     
     @IBAction func ButtonClickHandler(_ sender: Any) {
@@ -97,6 +123,7 @@ class ViewController: UIViewController {
                     stepGoalTextField.becomeFirstResponder()
                 }
                 goalType = "steps"
+                goalValue = Int(stepGoalTextField.text!)!
                 goalDarkenUIViews![0].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = DARK_GREY
                 goalDarkenUIViews![1].backgroundColor = LIGHT_GREY
@@ -108,6 +135,7 @@ class ViewController: UIViewController {
                     distGoalTextField.becomeFirstResponder()
                 }
                 goalType = "distance"
+                goalValue = Int(distGoalTextField.text!)!
                 goalDarkenUIViews![1].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = DARK_GREY
                 goalDarkenUIViews![0].backgroundColor = LIGHT_GREY
@@ -119,6 +147,7 @@ class ViewController: UIViewController {
                     minGoalTextField.becomeFirstResponder()
                 }
                 goalType = "minutes"
+                goalValue = Int(minGoalTextField.text!)!
                 goalDarkenUIViews![0].backgroundColor = DARK_GREY
                 goalDarkenUIViews![1].backgroundColor = DARK_GREY
                 goalDarkenUIViews![2].backgroundColor = LIGHT_GREY
@@ -139,17 +168,70 @@ class ViewController: UIViewController {
     
     @objc func meterTextFieldChange(textField: UITextField) {
         let numMeters = (textField.text! as NSString).integerValue
+        overWriteDefaultGoal("meters", numMeters)
         goalValue = numMeters
     }
     
     @objc func stepTextFieldChange(textField: UITextField) {
         let numMeters = (textField.text! as NSString).integerValue
+        overWriteDefaultGoal("steps", numMeters)
         goalValue = numMeters
     }
     
     @objc func minTextFieldChange(textField: UITextField) {
         let numMeters = (textField.text! as NSString).integerValue
+        overWriteDefaultGoal("minutes", numMeters)
         goalValue = numMeters
+    }
+    
+    func overWriteDefaultGoal(_ goalType: String, _ goalValue: Int) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Goals")
+        var result: [NSManagedObject]?
+        do {
+            result = try managedContext.fetch(fetchRequest)
+            if result!.count > 0 {
+                result![0].setValue(goalValue, forKey: goalType);
+            } else {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                
+                let managedContext = appDelegate.persistentContainer.viewContext
+                
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Goals")
+                var result: [NSManagedObject]?
+                do {
+                    result = try managedContext.fetch(fetchRequest)
+                    if result!.count > 0 {
+                        self.goalValue = result![0].value(forKey: "meters") as! Int
+                        distGoalTextField.text = String(goalValue)
+                        stepGoalTextField.text = String(result![0].value(forKey: "steps") as! Int)
+                        minGoalTextField.text = String(result![0].value(forKey: "minutes") as! Int)
+                    } else {
+                        let entity = NSEntityDescription.entity(forEntityName: "Goals", in: managedContext)!
+                        let newWalk = NSManagedObject(entity: entity, insertInto: managedContext)
+                        newWalk.setValue(0, forKey: "meters")
+                        newWalk.setValue(0, forKey: "steps")
+                        newWalk.setValue(0, forKey: "minutes")
+                        newWalk.setValue(goalValue, forKey: goalType)
+                    }
+                    
+                    try managedContext.save()
+                    
+                } catch let error as NSError {
+                    print("Could not fetch. \(error), \(error.userInfo)")
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

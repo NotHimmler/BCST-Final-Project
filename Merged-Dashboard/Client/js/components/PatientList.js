@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 let patients = [
   {
       "mrn": "88124213",
+      "ward": "F9",
       "firstName": "Elizabeth",
       "lastName": "Smith",
       "weeklySteps": "24937",
@@ -16,6 +17,7 @@ let patients = [
 
   {
     "mrn": "83940584",
+    "ward": "A1",
     "firstName": "Nicole",
     "lastName": "Pearson",
     "weeklySteps": "45678",
@@ -25,6 +27,30 @@ let patients = [
     "archived": false,
     "dateArchived": null
 }, 
+{
+    "mrn": "87123012",
+    "ward": "B3",
+    "firstName": "Jonathon",
+    "lastName": "McIntyre",
+    "weeklySteps": "13895",
+    "pctStepGoal": "45%",
+    "weeklyWalk": "9.05km",
+    "pctWalkGoal": "42%",
+    "archived": false,
+    "dateArchived": null
+},
+{
+    "mrn": "89123516",
+    "ward": "E3",
+    "firstName": "Alyson",
+    "lastName": "Hannigon",
+    "weeklySteps": "22328",
+    "pctStepGoal": "79%",
+    "weeklyWalk": "15.7km",
+    "pctWalkGoal": "75%",
+    "archived": false,
+    "dateArchived": null
+},  
   
   {
       "mrn": "88177742",
@@ -70,12 +96,13 @@ class PatientRow extends React.Component {
           <tr>
               <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
               {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
+              <td scope="row">{this.props.patient.ward}</td>
               <td scope="row">{this.props.patient.firstName}</td>
               <td scope="row">{this.props.patient.lastName}</td>
               <td scope="row">{this.props.patient.weeklySteps}</td>
-              <td scope="row">{this.props.patient.pctStepGoal}</td>
+              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctStepGoal)}</td>
               <td scope="row">{this.props.patient.weeklyWalk}</td>
-              <td scope="row">{this.props.patient.pctWalkGoal}</td>
+              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctWalkGoal)}</td>
           </tr>
           : 
           <tr>
@@ -93,6 +120,7 @@ const activePatientHeader  = () => {
   return(
       <tr>
           <th scope="col">{"MRN"}</th>
+          <th scope="col">{"Ward"}</th>
           <th scope="col">{"First Name"}</th>
           <th scope="col">{"Last Name"}</th>
           <th scope="col">{"Weekly Fitbit Steps"}</th>

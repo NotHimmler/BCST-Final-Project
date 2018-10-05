@@ -26,6 +26,9 @@
 		98D534702147CFB800DCBADD /* icons8-walking.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346C2147CFB800DCBADD /* icons8-walking.png */; };
 		98D534712147CFB800DCBADD /* icons8-time-machine.png in Resources */ = {isa = PBXBuildFile; fileRef = 98D5346D2147CFB800DCBADD /* icons8-time-machine.png */; };
 		98D5347B214F726700DCBADD /* WalkStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D5347A214F726700DCBADD /* WalkStats.swift */; };
+		98EEF8452166C762006D21B5 /* walking-man@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98EEF8422166C762006D21B5 /* walking-man@3x.png */; };
+		98EEF8462166C762006D21B5 /* walking-man.png in Resources */ = {isa = PBXBuildFile; fileRef = 98EEF8432166C762006D21B5 /* walking-man.png */; };
+		98EEF8472166C762006D21B5 /* walking-man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98EEF8442166C762006D21B5 /* walking-man@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		98D5346C2147CFB800DCBADD /* icons8-walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-walking.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-walking.png"; sourceTree = "<group>"; };
 		98D5346D2147CFB800DCBADD /* icons8-time-machine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-time-machine.png"; path = "../../../../../../Volumes/Data HDD/Google Drive/icons8-time-machine.png"; sourceTree = "<group>"; };
 		98D5347A214F726700DCBADD /* WalkStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkStats.swift; sourceTree = "<group>"; };
+		98EEF8422166C762006D21B5 /* walking-man@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walking-man@3x.png"; sourceTree = "<group>"; };
+		98EEF8432166C762006D21B5 /* walking-man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walking-man.png"; sourceTree = "<group>"; };
+		98EEF8442166C762006D21B5 /* walking-man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walking-man@2x.png"; sourceTree = "<group>"; };
 		E90F1F5593BCF2FE32B295DC /* Pods-WalkforwardTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkforwardTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalkforwardTest/Pods-WalkforwardTest.debug.xcconfig"; sourceTree = "<group>"; };
 		ECC99917B2E9140B774FEAF8 /* Pods_WalkforwardTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalkforwardTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4463253BA6B67A9A556870B /* Pods-WalkforwardTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkforwardTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalkforwardTest/Pods-WalkforwardTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -117,6 +123,9 @@
 		98C6F63E2140ACA000B2524F /* WalkforwardTest */ = {
 			isa = PBXGroup;
 			children = (
+				98EEF8432166C762006D21B5 /* walking-man.png */,
+				98EEF8442166C762006D21B5 /* walking-man@2x.png */,
+				98EEF8422166C762006D21B5 /* walking-man@3x.png */,
 				980D98F62161E24D00C05E09 /* CurrentWalkViewController.swift */,
 				98D5346D2147CFB800DCBADD /* icons8-time-machine.png */,
 				98D5346A2147CFB700DCBADD /* icons8-time-machine@2x.png */,
@@ -248,8 +257,11 @@
 				98D534712147CFB800DCBADD /* icons8-time-machine.png in Resources */,
 				98D5346E2147CFB800DCBADD /* icons8-time-machine@2x.png in Resources */,
 				98C6F6472140ACA300B2524F /* Assets.xcassets in Resources */,
+				98EEF8472166C762006D21B5 /* walking-man@2x.png in Resources */,
+				98EEF8452166C762006D21B5 /* walking-man@3x.png in Resources */,
 				98C6F6452140ACA000B2524F /* Main.storyboard in Resources */,
 				980D98FB2162DDE800C05E09 /* distance-drive-foggy-24821.jpg in Resources */,
+				98EEF8462166C762006D21B5 /* walking-man.png in Resources */,
 				980D98FC2162DDE800C05E09 /* art-blur-brass-678248.jpg in Resources */,
 				980D98FD2162DDE800C05E09 /* beach-salt-water-sand-17727.jpg in Resources */,
 				98D534702147CFB800DCBADD /* icons8-walking.png in Resources */,
