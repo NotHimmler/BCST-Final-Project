@@ -76,9 +76,9 @@ class PatientRow extends React.Component {
               <td scope="row">{this.props.patient.firstName}</td>
               <td scope="row">{this.props.patient.lastName}</td>
               <td scope="row">{this.props.patient.weeklySteps}</td>
-              <td scope="row">{this.props.patient.pctStepGoal}</td>
+              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctStepGoal)}</td>
               <td scope="row">{this.props.patient.weeklyWalk}</td>
-              <td scope="row">{this.props.patient.pctWalkGoal}</td>
+              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctWalkGoal)}</td>
           </tr>
           : 
           <tr>
