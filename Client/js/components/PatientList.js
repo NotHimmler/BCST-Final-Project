@@ -27,6 +27,30 @@ let patients = [
     "archived": false,
     "dateArchived": null
 }, 
+{
+    "mrn": "87123012",
+    "ward": "B3",
+    "firstName": "Jonathon",
+    "lastName": "McIntyre",
+    "weeklySteps": "13895",
+    "pctStepGoal": "45%",
+    "weeklyWalk": "9.05km",
+    "pctWalkGoal": "42%",
+    "archived": false,
+    "dateArchived": null
+},
+{
+    "mrn": "87123012",
+    "ward": "E3",
+    "firstName": "Alyson",
+    "lastName": "Hannigon",
+    "weeklySteps": "22328",
+    "pctStepGoal": "79%",
+    "weeklyWalk": "15.7km",
+    "pctWalkGoal": "75%",
+    "archived": false,
+    "dateArchived": null
+},  
   
   {
       "mrn": "88177742",
