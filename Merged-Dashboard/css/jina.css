@@ -52,15 +52,6 @@
   overflow: visible !important;
 }
 
-.th-1 {
-  width:10%
-}
-.th-2 {
-  width:70%
-}
-.th-3 {
-  width:10%
-}
-.th-4 {
-  width:10%
+#italics {
+  font-style: "italic" !important;
 }
