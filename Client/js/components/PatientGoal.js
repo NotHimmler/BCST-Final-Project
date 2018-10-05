@@ -11,8 +11,6 @@ class PatientGoal extends React.Component {
     render() {
         return (
           <div>
-            <h3 id="h3-goal"> Weekly Goal </h3>
-
             <GoalTable/>
             <GoalList/>
             <GoalForm/>
