@@ -6,7 +6,13 @@ class GoalTable extends React.Component {
     render() {
         return (
             <div>
-              <table className="table">
+              <div className="x_panel">
+                <div className="x_title">
+                <h2>Weekly Goals</h2>
+                <div className="clearfix"></div>
+                </div>
+                <div className="x_content">
+                <table className="table">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -85,6 +91,10 @@ class GoalTable extends React.Component {
                 </tr>
               </tbody>
               </table>
+
+                </div>
+              
+              </div>
             </div>
         )
     }
