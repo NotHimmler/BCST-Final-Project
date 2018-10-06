@@ -1,14 +1,14 @@
 import React from "react";
 import {
-    Link
+    Link, Redirect
 } from "react-router-dom";
 
 class Register extends React.Component {
 	constructor(props, context) {
         super(props,context);
         this.state = {
-            isLoggedin: false,
-            loginInfo: ""
+			errorMessage: "",
+			redirect: false
         };
      
         this.submitHandler = this.submitHandler.bind(this);
@@ -34,17 +34,38 @@ class Register extends React.Component {
             data:data,
             contentType:"application/json;charset=utf-8",
             success: (data)=>{
-                console.log(data);
-                if (data.error) {
-					this.setState();
-					window.location.href='/register';
+				console.log(data);
+				let error = data.error;
+                if (error) {
+					this.setState({
+						errorMessage:error
+					});
                 }else{
-					window.location.href=`/home?username=${userid}`;
+					this.setState({
+						redirect:true
+					})
+					this.props.updateAppStatus({
+                        isLoggedin:true,
+                        username:userid
+                    });
 				}
             }
         });
-    }
+	}
+	
+	getErrorMessage() {
+		let errorMessage = this.state.errorMessage;
+		if(!errorMessage){
+			return null;
+		}
+		return <div className="login-error">{errorMessage}</div>;
+	}
+
 	render(){
+		if(this.state.redirect){
+			return <Redirect push to="/" />
+		}
+		let ErrorMessage = this.getErrorMessage();
 		return(
 			<div className="register">
 			<div className="login_wrapper">
@@ -62,14 +83,14 @@ class Register extends React.Component {
 	                            <input type="password" className="form-control password" placeholder="Password" required="" />
 	                        </div>
 	                        <div>
-	                            <Link to="/home" className="btn btn-default submit" onClick={this.submitHandler}>Submit</Link>
+	                            <Link to="/" className="btn btn-default submit" onClick={this.submitHandler}>Submit</Link>
 	                        </div>
 
 	                        <div className="clearfix"></div>
 
 	                        <div className="separator">
 	                            <p className="change_link">Already a member ?
-	                                <Link to="/login" className="to_register" > Log in </Link>
+	                                <Link to="/" className="to_register" > Log in </Link>
 	                            </p>
 
 	                            <div className="clearfix"></div>
@@ -77,7 +98,8 @@ class Register extends React.Component {
 	                        </div>
 	                    </form>
 	                </section>
-	            </div>
+					{ErrorMessage}
+				</div>
 	            </div>
             </div>
         )

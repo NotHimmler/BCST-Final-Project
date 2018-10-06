@@ -1,16 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {hashHistory} from "react-router";
-
-// import { Form } from 'antd';
-// const FormItem = Form.Item;
 
 class Login extends React.Component {
     constructor(props, context) {
         super(props,context);
         this.state = {
-            isLoggedin: false,
-            loginInfo: ""
+            errorMessage: ""
         };
      
         this.submitHandler = this.submitHandler.bind(this);
@@ -35,17 +30,31 @@ class Login extends React.Component {
             contentType:"application/json;charset=utf-8",
             success: (data)=>{
                 console.log(data);
-                if (data.error) {
-                    this.setState();
-                    window.location.href='/';
+                let error = data.error;
+                if (error) {
+					this.setState({
+						errorMessage:error
+					});
                 }else{
-                    window.location.href=`/home?username=${userid}`;
+                    this.props.updateAppStatus({
+                        isLoggedin:true,
+                        username:userid
+                    });
                 }
             }
         });
     }
 
+    getErrorMessage() {
+		let errorMessage = this.state.errorMessage;
+		if(!errorMessage){
+			return null;
+		}
+		return <div className="login-error">{errorMessage}</div>;
+	}
+
     render() {
+        let ErrorMessage = this.getErrorMessage();
         return (
             <div className="login">
 
@@ -61,7 +70,7 @@ class Login extends React.Component {
                             <input type="password" className="form-control password" placeholder="Password" required="" />
                         </div>
                         <div>
-                            <Link to="/home" className="btn btn-default submit" onClick={this.submitHandler}>Log in</Link>
+                            <Link to="/" className="btn btn-default submit" onClick={this.submitHandler}>Log in</Link>
                             <a className="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -77,6 +86,7 @@ class Login extends React.Component {
                         </div>
                     </form>
                 </section>
+                {ErrorMessage}
             </div>
         </div>
     </div>

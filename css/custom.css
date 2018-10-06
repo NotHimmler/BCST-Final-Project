@@ -4106,6 +4106,12 @@ ul.project_files li a i {
     z-index: 22;
 }
 
+.login-error {
+    color: red;
+    font-size: 1.2em;
+    text-align: center;
+}
+
 .login .fa-paw {
     font-size: 26px
 }

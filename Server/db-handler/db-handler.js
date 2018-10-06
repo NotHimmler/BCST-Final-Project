@@ -1,6 +1,6 @@
 "use strict";
+let modelsConfig = require('../config').modelsConfig;
 let Sequelize = require("sequelize");
-let Util = require("../core/util");
 
 class DBHandler {
     constructor() {
@@ -21,8 +21,8 @@ class DBHandler {
             operatorsAliases: false,
             logging: false
         });
-        // create model-table link
-        this.createUserInfoModel().then(() => {
+        // initialize DB
+        this.initializeModels().then(() => {
             this.ready = true;
             console.log("DB is ready now");
         });
@@ -41,10 +41,12 @@ class DBHandler {
                     type: Sequelize.STRING
                 },
                 "registeredOn": {
-                    type: Sequelize.STRING
+                    type: Sequelize.DATE,
+                    defaultValue: Sequelize.NOW
                 },
                 "admin": {
-                    type: Sequelize.BOOLEAN
+                    type: Sequelize.BOOLEAN,
+                    defaultValue:false
                 },
                 "username": {
                     type: Sequelize.STRING
@@ -56,15 +58,45 @@ class DBHandler {
         };
     }
 
-    createUserInfoModel(modelType, syncOption) {
-        let option = this.defaultOption();
+    // create all models here
+    // config models option in config.js:modelsConfig
+    initializeModels() {
+        let promiseList = [];
+        for(let i = 0,l = modelsConfig.length; i<l; i++) {
+            let option = modelsConfig[i];
+            // modelName and column is needed
+            if(!option.modelName||!option.column) {
+                continue;
+            }
+            let createModel = this.createModel(option);
+            promiseList.push(createModel);
+        }
+        // let createUserInfoModel = this.createModel();
+        // promiseList.push(createUserInfoModel);
+        return Promise.all(promiseList);
+    }
+
+    // create a model
+    createModel(option) {
+        option = option || this.defaultOption();
         let modelName = option.modelName;
-        let modelColumn = option.column;
-        return this.sequelize.define(modelName, modelColumn, {
+        let column = option.column;
+        return this.sequelize.define(modelName, column, {
             freezeTableName: true, // table name is same as model name
             timestamps: false
-        }).sync(syncOption);
+            //it will delete the old model and create if option.sync = true
+        }).sync(option.sync);
     }
+
+    // createUserInfoModel(modelType, syncOption) {
+    //     let option = this.defaultOption();
+    //     let modelName = option.modelName;
+    //     let modelColumn = option.column;
+    //     return this.sequelize.define(modelName, modelColumn, {
+    //         freezeTableName: true, // table name is same as model name
+    //         timestamps: false
+    //     }).sync(syncOption);
+    // }
 
     updateUserInfoModel(userInfo) {
         let option = this.defaultOption();
