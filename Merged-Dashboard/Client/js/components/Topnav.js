@@ -7,7 +7,12 @@ class Topnav extends React.Component {
     super(props);
   }
 
-    render() {
+  logOutHandler(e) {
+    e.preventDefault();
+    window.location.href = "/";
+  }
+
+  render() {
         return (
           <div className="top_nav">
             <div className="nav_menu">
@@ -31,7 +36,7 @@ class Topnav extends React.Component {
                         </a>
                       </li>
                       <li><a href="javascript:;">Help</a></li>
-                      <li><Link to="/login"><i className="fa fa-sign-out pull-right"></i> Log Out</Link></li>
+                      <li><Link to="/" onClick={this.logOutHandler.bind(this)}><i className="fa fa-sign-out pull-right"></i> Log Out</Link></li>
                     </ul>
                   </li>
 
