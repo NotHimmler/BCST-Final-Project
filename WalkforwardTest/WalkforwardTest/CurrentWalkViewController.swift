@@ -28,6 +28,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     var timer: Timer?
     var timeCounter: Double = 0.0
     var pctProgress: Float = 0.0
+    var paused = false
     
     let GOAL_NOT_MET_STRING = "Almost there! You achieved %d%% of your goal. Try harder next time to meet your goal!"
     let GOAL_MET_STRING = "Well done! You met your goal with %d%%! Keep it up!"
@@ -42,6 +43,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var stepPaceLabel: UILabel!
     @IBOutlet weak var goalProgressBar: UIProgressView!
     @IBOutlet weak var stopButtonOutlet: UIButton!
+    @IBOutlet weak var pauseButtonOutlet: UIButton!
     
 
     override func viewDidLoad() {
@@ -50,6 +52,8 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         goalProgressBar.clipsToBounds = true
         goalProgressBar.progressTintColor = UIColor(displayP3Red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
         stopButtonOutlet.layer.cornerRadius = 5
+        pauseButtonOutlet.layer.cornerRadius = 5
+        pauseButtonOutlet.backgroundColor = UIColor(displayP3Red: 1.0, green: 149/255.0, blue: 0.0, alpha: 1.0)
         appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         context = appDelegate!.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "Walk", in: context!)!
@@ -74,15 +78,28 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         }
         // Do any additional setup after loading the view.
     }
+    @IBAction func handlePauseButtonTap(_ sender: Any) {
+        if !paused {
+            timer!.invalidate()
+            pauseButtonOutlet.backgroundColor = UIColor(displayP3Red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
+            pauseButtonOutlet.setTitle("Resume Walk", for: .normal)
+            paused = true
+        } else {
+            paused = false
+            pauseButtonOutlet.backgroundColor = UIColor(displayP3Red: 1.0, green: 149/255.0, blue: 0.0, alpha: 1.0)
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
+            pauseButtonOutlet.setTitle("Pause Walk", for: .normal)
+        }
+    }
     
-    @IBAction func stopButton(_ sender: Any) {
+    @IBAction func handleStopButtonTap(_ sender: Any) {
         if running {
             locationMgr.stopUpdatingLocation()
             timer!.invalidate()
             pedometer.stopUpdates()
             running = false
             walkStats!.endWalk()
-            stopButtonOutlet.setTitle("Start New Walk", for: .normal)
+            stopButtonOutlet.setTitle("Finish", for: .normal)
             saveWalk()
             var stringToUse = GOAL_MET_STRING
             if pctProgress < 1.0 {
@@ -95,7 +112,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             let alertController = UIAlertController(title: "Finished!", message: String(format: stringToUse, Int(pctProgress*100)), preferredStyle: UIAlertControllerStyle.alert)
             
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-            
+            pauseButtonOutlet.isHidden = true
             stopButtonOutlet.backgroundColor = BUTTON_PURPLE
             self.present(alertController, animated: true, completion: nil)
         } else {
@@ -230,7 +247,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
     
     fileprivate func saveWalk() {
         let newWalk = NSManagedObject(entity: entity!, insertInto: context!)
-        newWalk.setValue(walkStats!.getDuration(), forKey: "duration")
+        newWalk.setValue(timeCounter, forKey: "duration")
         newWalk.setValue(walkStats!.getSteps(), forKey: "steps")
         newWalk.setValue(walkStats!.getStartTime(), forKey: "date")
         newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
