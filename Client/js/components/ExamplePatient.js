@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import PatientGraph from '../components/PatientGraph'
 import PatientGoal from '../components/PatientGoal'
-import GraphSettings from '../components/GraphSettings'
+import PatientSettings from '../components/PatientSettings'
 
 
 class ExamplePatient extends React.Component {
@@ -57,7 +57,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Settings")
-                    ? <GraphSettings/>
+                    ? <PatientSettings archived={false}/>
                     : null
               }
 
