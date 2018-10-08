@@ -5,8 +5,6 @@ class GraphSettings extends React.Component {
     
     render() {
         return (
-            <div>
-              {/*ALL HTML MUST BE WITHIN THIS DIV*/}
               <div className="x_panel">
                 <div className="x_title">
                     <h2>Data Settings</h2>
@@ -39,11 +37,8 @@ class GraphSettings extends React.Component {
                     </div>
                 </div>
 
+              </div> {/*End x_content*/}
               </div>
-              </div>
-
-                
-            </div>
 
         )
     }
