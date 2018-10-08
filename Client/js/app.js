@@ -19,8 +19,10 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isLoggedin: false,
-      username: "Log in"
+      //isLoggedin: false,
+      //username: "Log in"
+      isLoggedin: true,
+      username: "Leanne Hasset"
     }
   }
   
