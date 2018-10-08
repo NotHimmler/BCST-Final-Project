@@ -8,7 +8,7 @@ class StatusSettings extends React.Component {
             <div>
               <div className="x_panel">
                 <div className="x_title">
-                  <h2>Patient Status</h2>
+                  <h2>Change Patient Status</h2>
                   <div className="clearfix"></div>
                 </div>
                 <div className="x_content">
