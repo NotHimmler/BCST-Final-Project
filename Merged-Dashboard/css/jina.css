@@ -55,3 +55,8 @@
 #italics {
   font-style: "italic" !important;
 }
+
+/* TEST CHART STUFF */
+#test_chart {
+  height: 250px;
+}
