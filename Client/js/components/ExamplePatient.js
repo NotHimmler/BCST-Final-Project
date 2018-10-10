@@ -5,6 +5,9 @@ import PatientGraph from '../components/PatientGraph'
 import PatientGoal from '../components/PatientGoal'
 import PatientSettings from '../components/PatientSettings'
 
+//For testing
+import TestChart from '../components/Charts/TestChart'
+
 
 class ExamplePatient extends React.Component {
 
@@ -58,6 +61,13 @@ class ExamplePatient extends React.Component {
               {
                 (this.state.content === "Settings")
                     ? <PatientSettings archived={false}/>
+                    : null
+              }
+
+              {/*For testing...*/}
+              {
+                (this.state.content === "Test")
+                    ? <TestChart/>
                     : null
               }
 
