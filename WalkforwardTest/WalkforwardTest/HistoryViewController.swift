@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import CoreData
 
-class HistoryViewController: UIViewController, UITableViewDataSource, CLLocationManagerDelegate, WalksDelegate {
+class HistoryViewController: UIViewController, UITableViewDataSource, CLLocationManagerDelegate, WalksDelegate, UITableViewDelegate {
     // MARK: Properties
     
     @IBOutlet weak var TextLabel: UILabel!
@@ -23,6 +23,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         // Do any additional setup after loading the view, typically from a nib.
         title = "Walk History"
         tableView.dataSource = self as UITableViewDataSource
+        tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
@@ -39,12 +40,35 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC : CurrentWalkViewController = segue.destination as! CurrentWalkViewController
+        let index = tableView.indexPathForSelectedRow?.row
+        let walk = walks[index!]
+        let steps = walk.value(forKey: "steps") as! Int
+        let distance = walk.value(forKey: "distance") as! Int
+        let duration = walk.value(forKey: "duration") as! Int
+        let walkStat = WalkStats(steps, distance, duration)
+        destVC.walkStats = walkStat
+        destVC.goalType = (walk.value(forKey: "goal") as! String? ?? "steps")
+        destVC.goalValue = (walk.value(forKey: "goalValue") as! Int? ?? 0)
+        destVC.fromHistory = true
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return walks.count
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Cell tapped")
+        self.performSegue(withIdentifier: "historyToStats", sender: self)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let duration = walks[indexPath.row].value(forKey: "duration") as! Int64
         let distance = walks[indexPath.row].value(forKey: "distance") as! Double
@@ -66,6 +90,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         cell.textLabel?.lineBreakMode = .byWordWrapping;
         cell.textLabel?.text = cellString
         cell.textLabel?.font = UIFont.init(name: "HelveticaNeue-Light", size: 25.0)
+        
         return cell
     }
     

@@ -12,7 +12,7 @@ import CoreLocation
 class WalkStats {
     private var numSteps: Int
     private var distanceWalked: Int
-    private var startTime: Date
+    private var startTime: Date?
     private var endTime: Date?
     private var duration: Int
     private var walkLocations: [CLLocation]
@@ -24,6 +24,13 @@ class WalkStats {
         walkLocations = []
         duration = 0
         startTime = Date()
+    }
+    
+    init(_ numSteps: Int, _ distanceWalked: Int, _ duration: Int) {
+        self.numSteps = numSteps
+        self.distanceWalked = distanceWalked
+        self.duration = duration
+        walkLocations = []
     }
     
     func getSteps() -> Int {
@@ -43,7 +50,7 @@ class WalkStats {
     }
     
     func getDuration() -> TimeInterval {
-        return endTime!.timeIntervalSince(startTime)
+        return Double(duration)
     }
     
     func addWalkLocation(location: CLLocation) {
@@ -51,7 +58,7 @@ class WalkStats {
     }
     
     func getStartTime() -> Date {
-        return startTime
+        return startTime!
     }
     
     func getEndTime() -> Date {
