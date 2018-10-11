@@ -150,7 +150,8 @@ class HistoryViewController: UIViewController, UITableViewDataSource, CLLocation
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Walk")
-        
+        let sort = NSSortDescriptor(key: "date", ascending: false)
+        fetchRequest.sortDescriptors = [sort]
         do {
             walks = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
