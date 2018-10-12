@@ -104,6 +104,17 @@ class DBHandler {
         return this.sequelize.model(modelName).create(userInfo);
     }
 
+    removeUserInfo(userInfo) {
+        let userId = userInfo.userid;
+        let errorInfo = {"error": "User does not exist"}
+        let sqlQuery = `delete from User_info where userid in ('${userId}')`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0]
+            })
+        })
+    }
+
     loginHandler(inputUserInfo) {
         let iputUserid = inputUserInfo.userid;
         let inputPassword = inputUserInfo.password;
