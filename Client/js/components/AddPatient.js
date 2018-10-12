@@ -50,7 +50,7 @@ class AddPatient extends React.Component {
                     <label><input type="checkbox" name="fitbit" checked={this.state.fitbit} onChange={this.handleInputChange}/> Fitbit</label><br />
                     <label><input type="checkbox" name="watb" checked={this.state.watb} onChange={this.handleInputChange}/> WalkAroundTheBlock</label><br />
                     <br />
-                    <div style={{"display":"flex", "justify-content": "center", "width": "100%"}}>
+                    <div style={{"display":"flex", "justifyContent": "center", "width": "100%"}}>
                     <input type="submit" value="Submit"/>
                     </div>
                 </form>
