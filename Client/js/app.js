@@ -13,6 +13,7 @@ import DisPatients from "./components/DisPatients";
 import ExamplePatient from "./components/ExamplePatient";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import AddPatient from "./components/AddPatient";
 
 class App extends React.Component {
   constructor(props){
@@ -56,6 +57,7 @@ class App extends React.Component {
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
                       <Route path="/patient" render={(props) => {return (<ExamplePatient/>)}} />
+                      <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
                 </Switch>
               </div>
             </div>

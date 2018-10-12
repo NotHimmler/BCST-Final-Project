@@ -216,6 +216,8 @@ class Sidebar extends React.Component {
                           <li><Link to="/disPatients">Discharged Patient</Link></li>
                         </ul>
                       </li>
+                      <li><Link to="/addPatient"><i className="fa fa-edit"></i> Add New Patient</Link>
+                      </li>
                     </ul>
                   </div>
                 </div>
