@@ -31,6 +31,8 @@ class AddPatient extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        //Call the passsed onSubmit function for testing
+        if (this.props.onSubmit()) this.props.onSubmit(this.state);
         //Make a call to the back-end then redirect to patient page
     }
 

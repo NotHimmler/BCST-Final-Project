@@ -13,11 +13,12 @@ class MockSessionStore {
 
 describe("AddPatient", () => {
     let mountedAddPatient;
+    let onSubmit = jest.fn();
 
     //Creates a rendered AddPatient component to test
     const addPatient = () => {
         if(!mountedAddPatient) {
-            mountedAddPatient = mount(<AddPatient props={{}}/>);
+            mountedAddPatient = mount(<AddPatient onSubmit={onSubmit}/>);
         }
     
         return mountedAddPatient;
@@ -26,6 +27,7 @@ describe("AddPatient", () => {
     //Resets the rendered AddPatient component before each test
     beforeEach(() => {
         mountedAddPatient = undefined;
+        onSubmit = jest.fn();
     });
 
     it("always renders a div", () => {
@@ -36,6 +38,52 @@ describe("AddPatient", () => {
     it("always renders a form", () => {
         const form = addPatient().find("form");
         expect(form.length).toBeGreaterThan(0);
+    });
+
+    it('always renders a first name input', () => {
+        const submitButton = addPatient().find('input[name="firstName"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders a last name input', () => {
+        const submitButton = addPatient().find('input[name="lastName"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders an mrn input', () => {
+        const submitButton = addPatient().find('input[name="mrn"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders a ward input', () => {
+        const submitButton = addPatient().find('input[name="ward"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders an amount checkbox', () => {
+        const submitButton = addPatient().find('input[name="amount"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders a fitbit checkbox', () => {
+        const submitButton = addPatient().find('input[name="fitbit"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders a walk around the block checkbox', () => {
+        const submitButton = addPatient().find('input[name="watb"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it('always renders a submit button', () => {
+        const submitButton = addPatient().find('input[type="submit"]')
+        expect(submitButton.length).toEqual(1);
+    });
+
+    it("calls onSubmit when form is submitted and passes state", () => {
+        const submitButton = addPatient().find("form").last();
+        submitButton.simulate("submit");
+        expect(onSubmit).toBeCalled();
     });
 
     describe("the rendered div", () => {
