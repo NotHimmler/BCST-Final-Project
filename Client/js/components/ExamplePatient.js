@@ -15,7 +15,7 @@ class ExamplePatient extends React.Component {
     super(props);
     // Don't call this.setState() here!
     this.state = { 
-      content : "Data",
+      content : "Test",
     };
   }
 
