@@ -37,6 +37,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
+    "echarts": "^4.2.0-rc.1",
+    "echarts-for-react": "^2.0.15-beta.0",
     "express": "^4.16.3",
     "nodemon": "^1.18.4",
     "popper.js": "^1.14.3",

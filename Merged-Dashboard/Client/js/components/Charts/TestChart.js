@@ -1,80 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import echarts from "echarts";
+import ReactEcharts from "echarts-for-react";
 
 import etheme from '../../components/Charts/Theme'
+import payload from '../../components/Charts/TestPayload'
+import op from '../../components/Charts/FitbitOptions'
+
 
 class TestChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.registerTheme();
+        this.state = {
+            theme: 'my_theme',
+            option:op,
+        }
+    }
+
+    registerTheme() {
+        echarts.registerTheme('my_theme', etheme);
+    };
 
     componentDidMount() {
+        console.log("Trying to add data");
+        console.log(payload.data);
+        console.log(payload.goal);
+        
+        // Trying to load data but not working urgh
+        let newOp = this.state.option;
+        newOp.series[0].data = payload.data;
+        newOp.series[1].data = payload.goal;
 
-        let options_fitbit = {
-            title: {
-              text: 'Daily',
-              //subtext: 'Walked Steps and Goal Steps'
-            },
-            tooltip: {
-              trigger: 'axis'
-            },
-            legend: {
-              data: ['Steps Walked', 'Goal (Steps)'
-              /* {
-                name:'Goal',
-                icon: 'roundRect'
-              } */
-            ]
-            },
-            toolbox: {
-              show: false,
-              feature : {
-                 dataZoom : {show: true},
-             }
-            },
-
-            dataZoom : {
-              show : true,
-              realtime: true,
-              start : 0,
-              end : 100
-            }
-            ,
-            calculable: false,
-            xAxis: [{
-              type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            }],
-            yAxis: [{
-              type: 'value'
-            }],
-            series: [{
-              name: 'Steps Walked',
-              type: 'bar',
-              data: [2292, 2000, 1860, 1881, 2188, 2140, 2088],
-              markPoint: {
-                data: [{
-                  type: 'max',
-                  name: 'maximum'
-                }, {
-                  type: 'min',
-                  name: 'minimum'
-                }]
-              }
-            },
-            {
-              name: 'Goal (Steps)',
-              type: 'line',
-              data: [2000, 2000, 2000,2000,2000,2000,2000]
-            }]
-        };
-
-        var ec = echarts.init(document.getElementById('test_chart'), etheme);
-        ec.setOption(options_fitbit);
+        this.setState({option:newOp})
+        
     }
     
     render() {
+        
         return (
             <div>
               <h3>This is a testing area</h3>
-              <div id="test_chart"></div>
+              <ReactEcharts option={this.state.option} theme={"my_theme"}/>
 
             </div>
         )
