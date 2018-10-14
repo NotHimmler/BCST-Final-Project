@@ -1,5 +1,5 @@
 "use strict";
-let modelsConfig = require('../config').modelsConfig;
+let modelsConfig = require('../config/config.js').modelsConfig;
 let Sequelize = require("sequelize");
 
 class DBHandler {
@@ -31,7 +31,7 @@ class DBHandler {
     defaultOption() {
         return {
             dialect: "sqlite",
-            storage: "./server_db/userInfo.sqlite",
+            storage: "./server_db/dashboard.sqlite",
             modelName: "User_Info",
             column: {
                 "userid": {
@@ -71,9 +71,32 @@ class DBHandler {
             let createModel = this.createModel(option);
             promiseList.push(createModel);
         }
+        // this.intiModelsRelation();
+
         // let createUserInfoModel = this.createModel();
         // promiseList.push(createUserInfoModel);
         return Promise.all(promiseList);
+    }
+
+    // intiModelsRelation() {
+    //     let sequelize = this.sequelize;
+    //     let User = sequelize.model("User_Info");
+    //     let Paitent = sequelize.model("Patient");
+    //     let Therapist = sequelize.model("Therapist");
+    //     Paitent.belongsTo(User);
+    //     Therapist.belongsTo(User);
+    // }
+
+    intiModelsRelation() {
+        modelsConfig.forEach((item) => {
+            let belongsToModelName = item.belongsTo;
+            if(!belongsToModelName) {
+                return;
+            }
+            let sequelize = this.sequelize;
+            let belongsToModel =sequelize.model(belongsToModelName);
+            sequelize.model(item.modelName).belongsTo(belongsToModel);
+        });
     }
 
     // create a model
@@ -118,6 +141,7 @@ class DBHandler {
             this.sequelize.query(sqlQueryUserId).then(data => {
                 let response = data[0];
                 if (response && response[0] && inputPassword === response[0].password) {
+                    console.log('login:'+iputUserid);
                     resolve(response);
                 } else {
                     resolve(errorInfo);
@@ -157,6 +181,31 @@ class DBHandler {
         });
         return promise;
     }
+
+    lastCheckoutHandler(patientId) {
+        let errorInfo = {
+            error: "No such patient."
+        };
+        if (!patientId) {
+            return Promise.resolve(errorInfo);
+        }
+        let sqlQuery = `select last_checkout from Patient where patient_id in ('${patientId}')`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0] && response[0].last_checkout) {
+                    resolve(response[0].last_checkout);
+                } else {
+                    resolve(errorInfo);
+                }
+
+            }).catch((e) => {
+                resolve(e);
+            });
+        });
+        return promise;
+
+    }
 }
-let dBHandler = new DBHandler();
-module.exports = dBHandler;
+let dbHandler = new DBHandler();
+module.exports = dbHandler;

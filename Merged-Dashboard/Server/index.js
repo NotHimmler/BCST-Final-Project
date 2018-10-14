@@ -15,34 +15,6 @@ require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;
 
-app.all('/api/v1/login', function (req, res) {
-    let body = req.body;
-    let userInfo = body.userInfo;
-    if (!dbHandler.ready) {
-        res.send({
-            error: "DB is not ready"
-        });
-        return;
-    }
-    dbHandler.loginHandler(userInfo).then((userInfoRes) => {
-        res.send(userInfoRes);
-    });
-});
-
-app.all('/api/v1/register', function (req, res) {
-    let body = req.body;
-    let userInfo = body.userInfo;
-    if (!dbHandler.ready) {
-        res.send({
-            error: "DB is not ready"
-        });
-        return;
-    }
-    dbHandler.registerHandler(userInfo).then((userInfoRes) => {
-        res.send(userInfoRes);
-    });
-});
-
 app.listen(port, function () {
     console.log("Server listening on port " + port);
 });

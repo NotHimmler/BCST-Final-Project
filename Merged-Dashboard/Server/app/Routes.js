@@ -1,6 +1,8 @@
 var path = require('path');
 var request = require('request');
 
+var dbHandler = require('../db-handler/db-handler');
+
 const data = process.argv[2] == "dev" ? require('./TestConfig') : require('./BuildConfig');
 
 let code = "";
@@ -55,6 +57,48 @@ app.get("/physio-dashboard", (req, res, err) => {
         });
     } 
     
+});
+
+app.get('/api/v1/patient/lastCheckout', function (req, res) {
+    let query = req.query;
+    let patientId = query.patientId;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.lastCheckoutHandler(patientId).then((lastCheckoutRes) => {
+        res.send(lastCheckoutRes);
+    });
+});
+
+app.post('/api/v1/login', function (req, res) {
+    let body = req.body;
+    let userInfo = body.userInfo;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.loginHandler(userInfo).then((userInfoRes) => {
+        res.send(userInfoRes);
+    });
+});
+
+app.post('/api/v1/register', function (req, res) {
+    let body = req.body;
+    let userInfo = body.userInfo;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.registerHandler(userInfo).then((userInfoRes) => {
+        res.send(userInfoRes);
+    });
 });
 
 app.get("*", (req, res, err) => {
