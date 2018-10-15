@@ -36,6 +36,9 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Test'})}
                 >Test</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => window.print()}
+                >Download</button>
                 
               </div>
               <div className="">
