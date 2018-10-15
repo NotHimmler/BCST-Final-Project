@@ -2,72 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import etheme from '../../components/Charts/Theme'
+import payload from '../../components/Charts/TestPayload'
+import op from '../../components/Charts/FitbitOptions'
+
 
 class TestChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            theme: etheme,
+            option:op,
+        };
+        this.addData = this.addData.bind(this);
+    }
 
     componentDidMount() {
+        let ec = echarts.init(document.getElementById('test_chart'), this.state.theme);
+        ec.setOption(this.state.option);
+        this.setState({ec:ec});
+    }
 
-        let options_fitbit = {
-            title: {
-              text: 'Daily',
-              //subtext: 'Walked Steps and Goal Steps'
-            },
-            tooltip: {
-              trigger: 'axis'
-            },
-            legend: {
-              data: ['Steps Walked', 'Goal (Steps)'
-              /* {
-                name:'Goal',
-                icon: 'roundRect'
-              } */
-            ]
-            },
-            toolbox: {
-              show: false,
-              feature : {
-                 dataZoom : {show: true},
-             }
-            },
-
-            dataZoom : {
-              show : true,
-              realtime: true,
-              start : 0,
-              end : 100
-            }
-            ,
-            calculable: false,
-            xAxis: [{
-              type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            }],
-            yAxis: [{
-              type: 'value'
-            }],
-            series: [{
-              name: 'Steps Walked',
-              type: 'bar',
-              data: [2292, 2000, 1860, 1881, 2188, 2140, 2088],
-              markPoint: {
-                data: [{
-                  type: 'max',
-                  name: 'maximum'
-                }, {
-                  type: 'min',
-                  name: 'minimum'
-                }]
-              }
-            },
-            {
-              name: 'Goal (Steps)',
-              type: 'line',
-              data: [2000, 2000, 2000,2000,2000,2000,2000]
-            }]
-        };
-
-        var ec = echarts.init(document.getElementById('test_chart'), etheme);
-        ec.setOption(options_fitbit);
+    addData() {
+        let newOp = this.state.option;
+        newOp.series[0].data = payload.data;    //Get data from payload
+        newOp.series[1].data = payload.goal;    //Get goal data from payload
+        this.setState(state =>({option: newOp}));
+        this.state.ec.setOption(this.state.option);
     }
     
     render() {
@@ -75,6 +35,7 @@ class TestChart extends React.Component {
             <div>
               <h3>This is a testing area</h3>
               <div id="test_chart"></div>
+              <button onClick={this.addData}>Add data</button>
 
             </div>
         )
