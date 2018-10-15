@@ -205,7 +205,7 @@ class DBHandler {
             this.sequelize.query(sqlQuery).then(data => {
                 let response = data[0];
                 if (response && response[0] && response[0].last_checkout) {
-                    resolve(response[0].last_checkout);
+                    resolve({lastChecked: response[0].last_checkout});
                 } else {
                     resolve(errorInfo);
                 }
