@@ -15,7 +15,7 @@ class ExamplePatient extends React.Component {
     super(props);
     // Don't call this.setState() here!
     this.state = { 
-      content : "Test",
+      content : "Data",
     };
   }
 
@@ -33,6 +33,9 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => this.setState({content: 'Test'})}
+                >Test</button>
                 
               </div>
               <div className="">
