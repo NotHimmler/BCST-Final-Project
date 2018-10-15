@@ -173,7 +173,33 @@ let modelsConfig = [{
         }
     },
     amountData,
-    patient
+    patient,
+    {
+        modelName: "App_Report",
+        column: {
+            "MRN": {
+                type: Sequelize.STRING
+            },
+            "date": {
+                type: Sequelize.DATE
+            },
+            "numSteps": {
+                type: Sequelize.INTEGER
+            },
+            "distance": {
+                type: Sequelize.INTEGER
+            },
+            "duration": {
+                type: Sequelize.INTEGER
+            },
+            "goalType": {
+                type: Sequelize.STRING
+            },
+            "goalValue": {
+                type: Sequelize.INTEGER
+            }
+        }
+    }
     // add models config here
     // {
     //  modelName: "Test_Model",
