@@ -13,7 +13,7 @@ class PatientGraph extends React.Component {
                 <FitbitTable/>
                 <AmountTable/>
                 <WalkTable/>
-
+                
             </div>
         )
     }
