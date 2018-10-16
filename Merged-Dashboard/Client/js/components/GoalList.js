@@ -22,10 +22,10 @@ class GoalList extends React.Component {
                 
 
                 {/*start of accordion*/}
-                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                      <div class="panel">
-                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          {/* <h4 class="panel-title">Walking Goal</h4> */}
+                <div className="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div className="panel">
+                        <a className="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          {/* <h4 className="panel-title">Walking Goal</h4> */}
                           <table className="table table-striped" id="long_term_table">
                           <thead>
                       <tr>
@@ -46,8 +46,8 @@ class GoalList extends React.Component {
                   </tbody>
                           </table>
                         </a>
-                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                          <div class="panel-body">
+                        <div id="collapseOne" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                          <div className="panel-body">
                           <table className="table table-striped" id="long_term_table">
 
 
@@ -111,9 +111,9 @@ class GoalList extends React.Component {
                           </div>
                         </div>
                       </div>
-                      <div class="panel">
-                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                          {/* <h4 class="panel-title">Collapsible Group Items #2</h4> */}
+                      <div className="panel">
+                        <a className="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          {/* <h4 className="panel-title">Collapsible Group Items #2</h4> */}
                           <table className="table table-striped" id="long_term_table">
                           <thead>
                             <tr>
@@ -134,8 +134,8 @@ class GoalList extends React.Component {
                         </tbody>
                         </table>
                         </a>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                          <div class="panel-body">
+                        <div id="collapseTwo" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                          <div className="panel-body">
                           <table className="table table-striped" id="long_term_table">
 
 
