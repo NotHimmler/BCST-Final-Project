@@ -23,7 +23,7 @@ class App extends React.Component {
       //username: "Log in"
       isLoggedin: true,
       username: "Leanne Hasset"
-    }
+    };
   }
   
   updateStatus(option){
@@ -56,7 +56,7 @@ class App extends React.Component {
                       <Route path="/" component={Home} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
-                      <Route path="/patient" render={(props) => {return (<ExamplePatient/>)}} />
+                      <Route path="/patient" render={(props) => {return (<ExamplePatient username={this.state.username}/>)}} />
                       <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
                 </Switch>
               </div>
