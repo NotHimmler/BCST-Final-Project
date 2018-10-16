@@ -104,4 +104,18 @@ app.post('/api/v1/register', function (req, res) {
 app.get("*", (req, res, err) => {
     res.sendFile(path.join(__dirname, "../../dist/Client/index.html"));
 })
+
+app.get('/api/v1/therapist/patientList', function (req, res) {
+    let query = req.query;
+    let therapistId = query.therapistId;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.patientListHandler(therapistId).then((patientListRes) => {
+        res.send(patientListRes);
+    });
+});
 }
