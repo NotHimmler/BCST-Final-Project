@@ -60,3 +60,7 @@
 #test_chart {
   height: 250px;
 }
+
+label {
+  display: block;
+}

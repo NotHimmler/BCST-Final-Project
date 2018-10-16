@@ -10,14 +10,23 @@ class PatientGoal extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            newGoal: {},
         };
 
         this.handleClose = this.handleClose.bind(this);
+        this.receiveNewGoal = this.receiveNewGoal.bind(this);
+
     }
 
     handleClose() {
         this.setState({ showModal: false });
+    }
+
+    receiveNewGoal(val) {
+        this.setState({ newGoal: val });
+        console.log("New goal has been received:");
+        console.log(val);
     }
 
     render() {
@@ -33,8 +42,7 @@ class PatientGoal extends React.Component {
             <GoalList/>
             <GoalForm/>
 
-            <GoalModal show={this.state.showModal} onHide={this.handleClose}/>
-
+            <GoalModal show={this.state.showModal} onHide={this.handleClose} handlegoal={this.receiveNewGoal}/>
           </div>
         )
     }

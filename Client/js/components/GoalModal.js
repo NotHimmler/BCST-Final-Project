@@ -1,106 +1,87 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Modal, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { withFormik, Form, Field } from 'formik'
+
+import GoalTemplate from '../components/GoalTemplate'
+import GoalFormik from '../components/GoalFormik'
+
+const TypeForm = props => {
+    const {
+      values,
+      handleChange,
+      isSubmitting 
+    } = props;
+    return(
+        <Form>
+            <Field component="select" name="goalType">
+                <option value="template">Use goal template</option>
+                <option value="custom">Create custom goal</option>
+            </Field>
+            <button className="btn btn-primary" type="submit" disabled={isSubmitting}>Next</button>
+        </Form>
+    );
+}
+
+const EnhancedTypeForm = withFormik({
+    mapPropsToValues({ goalType }) {
+        return {
+          goalType: goalType || 'template',
+        }
+      },    
+      handleSubmit(values, { setSubmitting, props }) {
+      setTimeout(() => {
+        console.log("Setting goal type");
+        console.log(values);
+        props.setGoalType(values.goalType);
+        setSubmitting(false);
+      }, 500)
+    }
+  })(TypeForm)
 
 class GoalModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            goalType: "",
+        }
+        this.setGoalType = this.setGoalType.bind(this);
+    }
+
+    setGoalType(type){
+        this.setState({ goalType:type});
+    }
     
     render() {
         return (
-            <Modal 
+            <Modal
               {...this.props}
               animation={false}
             >
                 <Modal.Header>
-                <Modal.Title closeButton>Add a new goal</Modal.Title>
+                <Modal.Title>Add a new goal</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <div>
-                        <p>Fields may be left blank if not applicable</p>
-                        <p>THIS IS JUST BASIC FORM. I will improve and make this look nicer later :) - Jina</p>
-                        <form>
-                            <FormGroup controlId="goalStart">
-                                <ControlLabel>Goal Start*</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    placeholder="Start date ..."
-                                />
-                            </FormGroup>
-                            <FormGroup controlId="goalEnd">
-                                <ControlLabel>Goal End*</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    placeholder="End date ..."
-                                />
-                            </FormGroup>
-                            <FormGroup controlId="goalStatement">
-                                <ControlLabel>Goal Activity*</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    placeholder="To ..."
-                                />
-                            </FormGroup>
+                        <p>This select thing needs to be fixed...</p>
+                        <EnhancedTypeForm setGoalType={this.setGoalType}/>
 
-                            <FormGroup controlId="goalMeasurement">
-                                <ControlLabel>Goal Measurement</ControlLabel>
-                                <FormControl componentClass="select" placeholder="select">
-                                    <option value="none">-</option>
-                                    <option value="select">at least</option>
-                                    <option value="other">in under</option>
-                                </FormControl>
-                            </FormGroup>
+                        {
+                            (this.state.goalType === "template")
+                                ? <GoalTemplate/>
+                                : null
+                        }
 
-                            <FormGroup controlId="goalMeasurement2">
-                                <FormControl
-                                    type="text"
-                                    placeholder="Enter value here"
-                                />
-                            </FormGroup>
-
-                            <FormGroup controlId="goalMeasurement3">
-                                <FormControl componentClass="select" placeholder="select">
-                                    <option value="none">-</option>
-                                    <option value="times">time(s)</option>
-                                    <option value="steps">step(s)</option>
-                                    <option value="ms">metre(s)</option>
-                                    <option value="kms">kilometre(s)</option>
-                                    <option value="secs">second(s)</option>
-                                    <option value="pts">point(s)</option>
-                                </FormControl>
-                            </FormGroup>
-
-                            <FormGroup controlId="goalFrequency">
-                                <ControlLabel>Goal Frequency</ControlLabel>
-                                <FormControl componentClass="select" placeholder="select">
-                                    <option value="none">-</option>
-                                    <option value="select">at least</option>
-                                </FormControl>
-                            </FormGroup>
-
-                            <FormGroup controlId="goalFrequency2">
-                                <FormControl
-                                    type="text"
-                                    placeholder="Enter value here"
-                                />
-                            </FormGroup>
-
-                            <FormGroup controlId="goalFrequency3">
-                                <FormControl componentClass="select" placeholder="select">
-                                    <option value="none">-</option>
-                                    <option value="times">time(s)</option>
-                                    <option value="days">day(s)</option>
-                                </FormControl>
-                            </FormGroup>
-                            <FormGroup controlId="goalFrequency4">
-                                <p>per</p>
-                                <FormControl componentClass="select" placeholder="select">
-                                    <option value="none">-</option>
-                                    <option value="day">day</option>
-                                    <option value="week">week</option>
-                                    <option value="month">month</option>
-                                </FormControl>
-                            </FormGroup>
-                        </form>
+                        {
+                            (this.state.goalType === "custom")
+                                ? <GoalFormik 
+                                    closeForm={this.props.onHide}
+                                    handlegoal={this.props.handlegoal}
+                                    />
+                                : null
+                        }
+                        
                     </div>
                 </Modal.Body>
 
