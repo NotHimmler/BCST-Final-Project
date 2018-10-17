@@ -10,8 +10,11 @@ const op = Sequelize.Op;
 
 class DBHandler {
     constructor(args) {
+        if (args) {
+            console.log("using test database");
+            this.defaultOption.storage = "./server_db/dashboard_test.sqlite"
+        }
         this.initialize();
-        if (args) this.defaultOption.storage = "./server_db/dashboard_test.sqlite"
     }
 
     initialize() {
