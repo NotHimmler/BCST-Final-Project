@@ -1,4 +1,5 @@
 var dbHandler = require('./db-handler');
+dbHandler = new dbHandler("test");
 
 test('add user adds a user', () => {
     //Remove user we want to add to make sure it doesn't exist

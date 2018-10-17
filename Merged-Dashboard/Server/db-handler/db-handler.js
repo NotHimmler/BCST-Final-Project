@@ -9,8 +9,9 @@ let UserInfoModel = require('../config/models/UserInfoModel');
 const op = Sequelize.Op;
 
 class DBHandler {
-    constructor() {
+    constructor(args) {
         this.initialize();
+        if (args) this.defaultOption.storage = "./server_db/dashboard_test.sqlite"
     }
 
     initialize() {
@@ -359,5 +360,5 @@ class DBHandler {
         return promise;
     }
 }
-let dbHandler = new DBHandler();
-module.exports = dbHandler;
+
+module.exports = DBHandler;
