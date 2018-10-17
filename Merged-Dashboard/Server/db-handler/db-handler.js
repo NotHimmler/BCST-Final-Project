@@ -255,6 +255,43 @@ class DBHandler {
         return promise;
 
     }
+
+    insertWalkData(walkData, mrn) {
+        let sqlQuery = `select mrn from Patient inner join Patient ON Patient.patientid=User_Info.userid where User_Info.token=${walkData.token}`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0] && response[0].last_checkout) {
+                    resolve(response[0].last_checkout);
+                } else {
+                    reject(errorInfo);
+                }
+
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+        return promise;
+    }
+
+    walkDataHandler(walkData) {
+        let sqlQuery = `INSERT INTO App_Report (numSteps, distance, duration, goalType, goalValue, date, MRN) VALUES ( ${walkData.numSteps}, ${walkData.distance}, ${walkData.duration},${walkData.goalType},${walkData.goalValue}, ${new Date(walkData.date)} (select mrn from Patient inner join Patient ON Patient.patientid=User_Info.userid where User_Info.token=${walkData.token}))`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0] && response[0].last_checkout) {
+                    console.log(response[0])
+                    resolve();
+                } else {
+                    reject(errorInfo);
+                }
+
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+        return promise;
+    }
 }
 let dbHandler = new DBHandler();
 module.exports = dbHandler;
