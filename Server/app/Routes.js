@@ -77,13 +77,15 @@ app.post('/api/v1/login', function (req, res) {
     let body = req.body;
     let userInfo = body.userInfo;
     if (!dbHandler.ready) {
-        res.send({
+        res.json({
             error: "DB is not ready"
         });
         return;
     }
     dbHandler.loginHandler(userInfo).then((userInfoRes) => {
-        res.send(userInfoRes);
+        res.send({token: userInfoRes[0].token});
+    }).catch(err => {
+        res.send(err)
     });
 });
 
