@@ -1,11 +1,12 @@
 "use strict";
 let modelsConfig = require('../config/config.js').modelsConfig;
 let Sequelize = require("sequelize");
+
 let crypto = require('crypto');
 let base64url = require('base64url');
 let UserInfoModel = require('../config/models/UserInfoModel');
 
-
+const op = Sequelize.Op;
 
 class DBHandler {
     constructor() {
@@ -243,7 +244,72 @@ class DBHandler {
             this.sequelize.query(sqlQuery).then(data => {
                 let response = data[0];
                 if (response && response[0] && response[0].last_checkout) {
-                    resolve(response[0].last_checkout);
+                    resolve({lastChecked: response[0].last_checkout});
+                } else {
+                    resolve(errorInfo);
+                }
+
+            }).catch((e) => {
+                resolve(e);
+            });
+        });
+        return promise;
+
+    }
+
+    patientListHandler(therapistId) {
+        let errorInfo = {
+            error: "No such therapist."
+        };
+        if (!therapistId) {
+            return Promise.resolve(errorInfo);
+        }
+        // Patient.findAll({
+        //     include: [{
+        //         model: PatientMatchTherapist,
+        //         where: {
+
+        //         }
+        //     }]
+        // }
+        // )
+
+        // let sqlQuery = `select patient_id from PatientMatchTherapist where therapist_id in ('${therapistId}')`;
+        // let promise = new Promise((resolve, reject) => {
+        //     this.sequelize.query(sqlQuery).then(data => {
+        //         let response = data[0];
+        //         if (response && response[0] && response[0].last_checkout) {
+        //             resolve(response[0].last_checkout);
+        //         } else {
+        //             resolve(errorInfo);
+        //         }
+
+        //     }).catch((e) => {
+        //         resolve(e);
+        //     });
+        // });
+        // return promise;
+
+    }
+
+    //FITBIT DATA
+    fitbitHandler(patientId) {
+        let errorInfo = {
+            error: "No such patient."
+        };
+        if (!patientId) {
+            return Promise.resolve(errorInfo);
+        }
+        let sqlQuery = `SELECT date,step 
+                        FROM FitbitData 
+                        WHERE patient_id ="${patientId}"
+                        ORDER BY date(date)
+                        `;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0]) {
+                    resolve({data: data[0]});
                 } else {
                     resolve(errorInfo);
                 }

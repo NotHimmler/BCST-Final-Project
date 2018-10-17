@@ -16,7 +16,29 @@ class ExamplePatient extends React.Component {
     // Don't call this.setState() here!
     this.state = { 
       content : "Data",
+      lastCheckedup: ""
     };
+  }
+
+  componentWillMount() {
+        $.ajax({
+            url:`/api/v1/patient/lastCheckout?patientId=${this.props.username}`,
+            type:"get",
+            contentType:"application/json;charset=utf-8",
+            success: (data)=>{
+                console.log(data);
+                let error = data.error;
+                if (error) {
+                  this.setState({
+                    errorMessage:error
+                  });
+                } else {
+                    this.setState({
+                      lastCheckedup:data.lastChecked
+                    });
+                }
+            }
+        });
   }
 
 
@@ -33,6 +55,12 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => this.setState({content: 'Test'})}
+                >Test</button>
+                <button type="button" className="btn btn-primary"
+                onClick={() => window.print()}
+                >Download</button>
                 
               </div>
               <div className="">
@@ -40,7 +68,7 @@ class ExamplePatient extends React.Component {
                   <div className="title_left">
                     <h3>Elizabeth Smith</h3>
                     <p>MRN: 88124213</p>
-                    <p><i>Last check up: 30/02/2018</i></p>
+                    <p><i>Last check up: {this.state.lastCheckedup}</i></p>
                   </div>
                 </div>
                 <div className="clearfix"></div>
