@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+var $ = require('jquery');
 
 class AddPatient extends React.Component {
     constructor(props) {
@@ -32,8 +33,28 @@ class AddPatient extends React.Component {
         event.preventDefault();
 
         //Call the passsed onSubmit function for testing
-        if (this.props.onSubmit()) this.props.onSubmit(this.state);
+        if (this.props.onSubmit) this.props.onSubmit(this.state);
         //Make a call to the back-end then redirect to patient page
+        let data = JSON.stringify({patientInfo: this.state});
+        $.ajax({
+            url:'/api/v1/addPatient',
+            type:"post",
+            data:data,
+            contentType:"application/json;charset=utf-8",
+            success: (data)=>{
+				console.log(data);
+				let error = data.error;
+                if (error) {
+					this.setState({
+						errorMessage:error
+					});
+                }else{
+					this.setState({
+						redirect:true
+					})
+				}
+            }
+        });
     }
 
     render() {
