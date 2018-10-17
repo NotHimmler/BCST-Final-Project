@@ -16,8 +16,6 @@ class GoalModal extends React.Component {
     }
 
     setGoalType(event){
-        console.log("Setting goal type");
-        console.log(event.target.value);
         this.setState({ goalType: event.target.value});
     }
     
@@ -34,7 +32,7 @@ class GoalModal extends React.Component {
                 <Modal.Body>
                     <div>
                         <select 
-                            class="form-control"
+                            className="form-control"
                             value={this.state.goalType} 
                             onChange={this.setGoalType}
                             placeholder="Please select ...">
