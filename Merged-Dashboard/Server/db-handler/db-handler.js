@@ -178,6 +178,7 @@ class DBHandler {
                 //Username and password are correct
                 if (response && response[0] && inputPassword == response[0].password) {
                     //Check if there's already an auth token
+                    
                     let token = response[0].token;
                     if (token == null) {
                         //No auth token, create one
@@ -190,12 +191,13 @@ class DBHandler {
                     response[0].token = token
                     resolve(response);
                 } else {
-                    resolve(errorInfo);
+                    
+                    reject(errorInfo);
                 }
 
             }).catch((e) => {
                 console.log(e);
-                resolve(errorInfo);
+                reject(errorInfo);
             });
         });
         return promise;
