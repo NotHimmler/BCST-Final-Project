@@ -21,7 +21,7 @@ class App extends React.Component {
     this.state = {
       //isLoggedin: false,
       //username: "Log in"
-      isLoggedin: true,
+      isLoggedin: false,
       username: "Leanne Hasset"
     }
   }
@@ -49,15 +49,17 @@ class App extends React.Component {
     return (
       <div className="container body">
             <div className="main_container">
-              <Sidebar username={this.state.username} />
-              <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} />
+              {this.state.isLoggedin ? <Sidebar username={this.state.username} /> : null}
+              {this.state.isLoggedin ? <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} /> : null}
               <div className="right_col" role="main">
                 <Switch>
-                      <Route path="/" component={Home} exact />
+                      <Route path="/" component={this.state.isLoggedin ? Home : Login} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
                       <Route path="/patient" render={(props) => {return (<ExamplePatient/>)}} />
                       <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
+                      <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
+                      <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
                 </Switch>
               </div>
             </div>
