@@ -262,7 +262,11 @@ class DBHandler {
         if (!patientId) {
             return Promise.resolve(errorInfo);
         }
-        let sqlQuery = `select date,step from FitbitData where patient_id ="${patientId}"`;
+        let sqlQuery = `SELECT date,step 
+                        FROM FitbitData 
+                        WHERE patient_id ="${patientId}"
+                        ORDER BY date(date)
+                        `;
         let promise = new Promise((resolve, reject) => {
             this.sequelize.query(sqlQuery).then(data => {
                 let response = data[0];

@@ -1,9 +1,13 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var dbHandler = require('./db-handler/db-handler');
+//Routes
+var fitbit = require('./app/FitbitRouter')
+var patient = require('./app/PatientRouter')
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/json' }));
+
+//Front end stuff
 app.use("/css", express.static("css"));
 app.use("/img", express.static("img"));
 app.use("/data", express.static("data"));
@@ -11,6 +15,10 @@ app.use("/vendors", express.static("vendors"));
 app.use("/javascript", express.static("javascript"));
 app.use("/main.js", express.static("dist/main.js"));
 app.use("/login.html", express.static("Client/login.html"));
+
+//Route stuff
+app.use('/api/fitbit', fitbit);
+app.use('/api/patient', patient);
 require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;
