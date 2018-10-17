@@ -253,6 +253,32 @@ class DBHandler {
         // return promise;
 
     }
+
+    //FITBIT DATA
+    fitbitHandler(patientId) {
+        let errorInfo = {
+            error: "No such patient."
+        };
+        if (!patientId) {
+            return Promise.resolve(errorInfo);
+        }
+        let sqlQuery = `select date,step from FitbitData where patient_id ="${patientId}"`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0]) {
+                    resolve({data: data[0]});
+                } else {
+                    resolve(errorInfo);
+                }
+
+            }).catch((e) => {
+                resolve(e);
+            });
+        });
+        return promise;
+
+    }
 }
 let dbHandler = new DBHandler();
 module.exports = dbHandler;
