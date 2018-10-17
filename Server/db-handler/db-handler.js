@@ -156,7 +156,7 @@ class DBHandler {
     createUserToken(userId) {
         let token = base64url(crypto.randomBytes(48));
         return new Promise((resolve, reject) => {
-            this.sequelize.model('User_Info').update({token: token}, { where: { userid: userId}})
+            this.sequelize.model('Tokens').insert({token: token, userid: userId})
             .then(result => {
                 resolve({token: token});
             }).catch(err => {
@@ -176,7 +176,7 @@ class DBHandler {
             errorInfo.error = "Username or password not given";
             return Promise.resolve(errorInfo);
         }
-        let sqlQueryUserId = `select userid,username,password,token from User_Info where userid in ('${iputUserid}')`;
+        let sqlQueryUserId = `select User_Info.userid, User_Info.username, User_Info.password, Tokens.token from User_Info left outer join Tokens ON User_Info.userid = Tokens.userid where User_Info.userid in ('${iputUserid}')`;
         let promise = new Promise((resolve, reject) => {
             this.sequelize.query(sqlQueryUserId).then(data => {
                 let response = data[0];
@@ -361,6 +361,22 @@ class DBHandler {
             });
         });
         return promise;
+    }
+
+    addPatientHandler(patientData) {
+        let sqlQuery = `SELECT mrn FROM Patient WHERE mrn=${patientData.MRN}`
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0] && response[0].last_checkout) {
+                    console.log(response[0]);
+                } else {
+                    reject(errorInfo);
+                }
+            }).catch((e) => {
+                reject(e);
+            });
+        });
     }
 }
 

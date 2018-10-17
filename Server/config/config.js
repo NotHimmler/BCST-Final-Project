@@ -27,11 +27,6 @@ let modelsConfig = [{
             },
             "password": {
                 type: Sequelize.STRING
-            },
-            "token": {
-                type: Sequelize.STRING,
-                defaultValue: null,
-                allowNull: true
             }
         }
     }, {
@@ -202,6 +197,24 @@ let modelsConfig = [{
             },
             "goalValue": {
                 type: Sequelize.INTEGER
+            }
+        }
+    },
+    {
+        modelName: "Tokens",
+        column: {
+            "userid": {
+                type: Sequelize.STRING,
+                allowNull: false,
+                references: {
+                    model: "User_Info",
+                    key: "userid"
+                },
+                primaryKey: true
+            },
+            "token": {
+                type: Sequelize.STRING,
+                allowNull: false
             }
         }
     }
