@@ -89,6 +89,21 @@ app.post('/api/v1/login', function (req, res) {
     });
 });
 
+app.post('/api/v1/walkData', function (req, res) {
+    let body = req.body;
+    if (!dbHandler.ready) {
+        res.json({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.walkDataHandler(body).then((dbResponse) => {
+        res.end(200);
+    }).catch(err => {
+        res.send(err)
+    });
+});
+
 app.post('/api/v1/register', function (req, res) {
     let body = req.body;
     let userInfo = body.userInfo;
