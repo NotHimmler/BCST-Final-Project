@@ -1,6 +1,11 @@
 "use strict";
 let modelsConfig = require('../config/config.js').modelsConfig;
 let Sequelize = require("sequelize");
+let crypto = require('crypto');
+let base64url = require('base64url');
+let UserInfoModel = require('../config/models/UserInfoModel');
+
+
 
 class DBHandler {
     constructor() {
@@ -53,6 +58,11 @@ class DBHandler {
                 },
                 "password": {
                     type: Sequelize.STRING
+                },
+                "token:": {
+                    type: Sequelize.STRING,
+                    default: null,
+                    allowNull: true
                 }
             }
         };
@@ -138,6 +148,19 @@ class DBHandler {
         })
     }
 
+    createUserToken(userId) {
+        let token = base64url(crypto.randomBytes(48));
+        return new Promise((resolve, reject) => {
+            this.sequelize.model('User_Info').update({token: token}, { where: { userid: userId}})
+            .then(result => {
+                resolve({token: token});
+            }).catch(err => {
+                console.log(err);
+                resolve({err: err});
+            })
+        })
+    }
+
     loginHandler(inputUserInfo) {
         let iputUserid = inputUserInfo.userid;
         let inputPassword = inputUserInfo.password;
@@ -145,20 +168,33 @@ class DBHandler {
             error: "Wrong user name or password"
         };
         if (!iputUserid || !inputPassword) {
+            errorInfo.error = "Username or password not given";
             return Promise.resolve(errorInfo);
         }
-        let sqlQueryUserId = `select userid,username,password from User_Info where userid in ('${iputUserid}')`;
+        let sqlQueryUserId = `select userid,username,password,token from User_Info where userid in ('${iputUserid}')`;
         let promise = new Promise((resolve, reject) => {
             this.sequelize.query(sqlQueryUserId).then(data => {
                 let response = data[0];
-                if (response && response[0] && inputPassword === response[0].password) {
-                    console.log('login:'+iputUserid);
+                //Username and password are correct
+                if (response && response[0] && inputPassword == response[0].password) {
+                    //Check if there's already an auth token
+                    let token = response[0].token;
+                    if (token == null) {
+                        //No auth token, create one
+                        token = this.createUserToken(iputUserid).then(data => {
+                            if (data.err) resolve(errorInfo);
+                            token = data.token;
+                        })
+                    }
+                    //Set auth token for response
+                    response[0].token = token
                     resolve(response);
                 } else {
                     resolve(errorInfo);
                 }
 
             }).catch((e) => {
+                console.log(e);
                 resolve(errorInfo);
             });
         });
