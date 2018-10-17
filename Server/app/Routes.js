@@ -153,5 +153,12 @@ app.get('/api/v1/therapist/patientList', function (req, res) {
     });
 });
 
+app.post('/api/v1/addPatient', function(req, res) {
+    let body = req.body;
+    console.log(body);
+    res.status(200);
+    res.end();
+})
+
 }
 
