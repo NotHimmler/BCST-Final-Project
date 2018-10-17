@@ -2,6 +2,7 @@ var path = require('path');
 var request = require('request');
 
 var dbHandler = require('../db-handler/db-handler');
+var dbHandler = new dbHandler();
 
 const data = process.argv[2] == "dev" ? require('./TestConfig') : require('./BuildConfig');
 
