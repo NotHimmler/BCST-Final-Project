@@ -21,7 +21,7 @@ class App extends React.Component {
     this.state = {
       //isLoggedin: false,
       //username: "Log in"
-      isLoggedin: false,
+      isLoggedin: true,
       username: "Leanne Hasset"
     }
   }
