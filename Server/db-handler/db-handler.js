@@ -5,6 +5,7 @@ let Sequelize = require("sequelize");
 let crypto = require('crypto');
 let base64url = require('base64url');
 let UserInfoModel = require('../config/models/UserInfoModel');
+let passwordGenerator = require('password-generator');
 
 const op = Sequelize.Op;
 
@@ -371,11 +372,25 @@ class DBHandler {
                 let response = data[0];
                 console.log("Before if");
                 if (response && response[0]) {
-                    console.log("response exists")
+                    //MRN already in the database
                     console.log(response[0]);
+                    reject({error: "MRN already in system"});
                 } else {
-                    console.log("response does not exist")
-                    reject(errorInfo);
+                    //Create a new user_info entry for the new patient
+                    //with random password, mrn = userid
+                    let userInfo = {
+                        userid: patientData.mrn,
+                        admin: false,
+                        username: patientData.mrn,
+                        password: passwordGenerator()
+                    }
+                    this.updateUserInfoModel(userInfo).then(data => {
+                        console.log("Successfully inserted into db");
+                        resolve(data);
+                    }).catch(err => {
+                        console.log(err);
+                        reject(err);
+                    })
                 }
             }).catch((e) => {
                 console.log(e)

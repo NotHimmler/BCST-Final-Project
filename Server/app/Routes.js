@@ -163,7 +163,7 @@ app.post('/api/v1/addPatient', function(req, res) {
         res.status(200);
         res.end();
     }).catch(err => {
-        res.status(400);
+        res.status(500);
         res.send(err);
     });
 })
