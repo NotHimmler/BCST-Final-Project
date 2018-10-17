@@ -17,7 +17,7 @@ class Register extends React.Component {
 
     submitHandler(e) {
 		e.preventDefault();
-		this.props.onSubmit();
+		if (this.props.onSubmit) this.props.onSubmit();
         var userid =$('.register .userid').val();
 		var password = $('.register .password').val();
 		var email = $('.register .email').val();
