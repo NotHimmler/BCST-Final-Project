@@ -364,19 +364,25 @@ class DBHandler {
     }
 
     addPatientHandler(patientData) {
-        let sqlQuery = `SELECT mrn FROM Patient WHERE mrn=${patientData.MRN}`
+        console.log(patientData);
+        let sqlQuery = `SELECT mrn FROM Patient WHERE mrn=${patientData.mrn}`
         let promise = new Promise((resolve, reject) => {
             this.sequelize.query(sqlQuery).then(data => {
                 let response = data[0];
-                if (response && response[0] && response[0].last_checkout) {
+                console.log("Before if");
+                if (response && response[0]) {
+                    console.log("response exists")
                     console.log(response[0]);
                 } else {
+                    console.log("response does not exist")
                     reject(errorInfo);
                 }
             }).catch((e) => {
+                console.log(e)
                 reject(e);
             });
         });
+        return promise;
     }
 }
 

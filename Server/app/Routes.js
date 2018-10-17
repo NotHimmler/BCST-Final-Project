@@ -155,9 +155,17 @@ app.get('/api/v1/therapist/patientList', function (req, res) {
 
 app.post('/api/v1/addPatient', function(req, res) {
     let body = req.body;
-    console.log(body);
-    res.status(200);
-    res.end();
+    if(!dbHandler.ready) {
+        res.send({error: "DB is not ready"});
+        return;
+    }
+    dbHandler.addPatientHandler(body.patientInfo).then(() => {
+        res.status(200);
+        res.end();
+    }).catch(err => {
+        res.status(400);
+        res.send(err);
+    });
 })
 
 }
