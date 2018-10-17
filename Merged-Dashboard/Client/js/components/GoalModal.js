@@ -6,50 +6,19 @@ import { withFormik, Form, Field } from 'formik'
 import GoalTemplate from '../components/GoalTemplate'
 import GoalFormik from '../components/GoalFormik'
 
-const TypeForm = props => {
-    const {
-      values,
-      handleChange,
-      isSubmitting 
-    } = props;
-    return(
-        <Form>
-            <Field component="select" name="goalType">
-                <option value="template">Use goal template</option>
-                <option value="custom">Create custom goal</option>
-            </Field>
-            <button className="btn btn-primary" type="submit" disabled={isSubmitting}>Next</button>
-        </Form>
-    );
-}
-
-const EnhancedTypeForm = withFormik({
-    mapPropsToValues({ goalType }) {
-        return {
-          goalType: goalType || 'template',
-        }
-      },    
-      handleSubmit(values, { setSubmitting, props }) {
-      setTimeout(() => {
-        console.log("Setting goal type");
-        console.log(values);
-        props.setGoalType(values.goalType);
-        setSubmitting(false);
-      }, 500)
-    }
-  })(TypeForm)
-
 class GoalModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            goalType: "",
+            goalType: "template",
         }
         this.setGoalType = this.setGoalType.bind(this);
     }
 
-    setGoalType(type){
-        this.setState({ goalType:type});
+    setGoalType(event){
+        console.log("Setting goal type");
+        console.log(event.target.value);
+        this.setState({ goalType: event.target.value});
     }
     
     render() {
@@ -64,8 +33,16 @@ class GoalModal extends React.Component {
 
                 <Modal.Body>
                     <div>
-                        <p>This select thing needs to be fixed...</p>
-                        <EnhancedTypeForm setGoalType={this.setGoalType}/>
+                        <select 
+                            class="form-control"
+                            value={this.state.goalType} 
+                            onChange={this.setGoalType}
+                            placeholder="Please select ...">
+                            <option value="template">Use goal template</option>
+                            <option value="custom">Create custom goal</option>
+                        </select>
+                        <div className="clearfix"/>
+                        <br/>
 
                         {
                             (this.state.goalType === "template")

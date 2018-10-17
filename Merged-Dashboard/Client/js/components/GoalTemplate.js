@@ -7,6 +7,7 @@ class GoalTemplate extends React.Component {
     render() {
         return (
             <div>
+                <p>Create a goal using the goal template</p>
                 <form>
                     <FormGroup controlId="goalStart">
                         <ControlLabel>Goal Start*</ControlLabel>
