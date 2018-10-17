@@ -27,6 +27,11 @@ let modelsConfig = [{
             },
             "password": {
                 type: Sequelize.STRING
+            },
+            "token": {
+                type: Sequelize.STRING,
+                defaultValue: null,
+                allowNull: true
             }
         }
     }, {
