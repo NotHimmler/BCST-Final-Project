@@ -73,6 +73,22 @@ app.get('/api/v1/patient/lastCheckout', function (req, res) {
     });
 });
 
+
+// FITBIT DATA QUERY
+app.get('/api/v1/patient/fitbit', function (req, res) {
+    let query = req.query;
+    let patientId = query.patientId;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.fitbitHandler(patientId).then((fitbitRes) => {
+        res.send(fitbitRes);
+    });
+});
+
 app.post('/api/v1/login', function (req, res) {
     let body = req.body;
     let userInfo = body.userInfo;
@@ -121,4 +137,20 @@ app.post('/api/v1/register', function (req, res) {
 app.get("*", (req, res, err) => {
     res.sendFile(path.join(__dirname, "../../dist/Client/index.html"));
 })
+
+app.get('/api/v1/therapist/patientList', function (req, res) {
+    let query = req.query;
+    let therapistId = query.therapistId;
+    if (!dbHandler.ready) {
+        res.send({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.patientListHandler(therapistId).then((patientListRes) => {
+        res.send(patientListRes);
+    });
+});
+
 }
+
