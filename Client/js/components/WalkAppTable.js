@@ -18,7 +18,7 @@ let generateWalkTableRow = (data) => {
             <td>{(new Date(data.date*1000)).toDateString()}</td>
             <td>{data.numSteps}</td>
             <td>{data.distance}</td>
-            <td>{secondsToHms(data.duration/60.0)}</td>
+            <td>{secondsToHms(data.duration)}</td>
             <td>{data.goalValue}</td>
             <td>{data.goalType}</td>
             <td>{((data.duration/60)/data.goalValue).toFixed(2)}%</td>
