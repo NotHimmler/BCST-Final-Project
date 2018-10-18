@@ -18,24 +18,24 @@ module.exports = {
       first_name: 'Leanne',
       last_name: 'Hassett',
       password: 'password',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       user_id: uuidv4(),
       email: 'test2@test.com',
       first_name: 'Bob',
       last_name: 'Tester',
       password: 'password',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       user_id: uuidv4(),
       email: 'test3@test.com',
       first_name: 'Sally',
       last_name: 'Tester',
       password: 'password',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
