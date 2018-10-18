@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    ward: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     age: {
       type: DataTypes.INTEGER
     },
@@ -38,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    date_archived: {
+      type: DataTypes.DATE,
     }
   }, {});
   Patient.associate = function(models) {
