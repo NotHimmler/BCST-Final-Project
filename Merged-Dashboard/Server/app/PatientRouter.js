@@ -59,7 +59,7 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
 
  patientRouter.post("/checkPatient", function(req, res) {
      let body = req.body.userInfo;
-     return db.Patient.findOne({where: {MRN:body.mrn, first_name: body.firstName, last_name: body.lastName}})
+     return db.Patient.findOne({where: {MRN:body.mrn, first_name: body.firstName.trim(), last_name: body.lastName.trim()}})
      .then(data => {
         console.log(data.dataValues);
         res.status(200)
