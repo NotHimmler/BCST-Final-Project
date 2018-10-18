@@ -26,7 +26,7 @@ class PatientRow extends React.Component {
       return(
         !this.props.patient.is_archived ?
           <tr>
-              <th scope="row"><Link to={"/patient"}>{this.props.patient.MRN}</Link></th>
+              <th scope="row"><Link to={"/patient"+`/${this.props.patient.MRN}`}>{this.props.patient.MRN}</Link></th>
               <td scope="row">{this.props.patient.ward}</td>
               <td scope="row">{this.props.patient.first_name}</td>
               <td scope="row">{this.props.patient.last_name}</td>
@@ -36,7 +36,7 @@ class PatientRow extends React.Component {
           </tr>
           : 
           <tr>
-              <th scope="row"><Link to={"/patient"}>{this.props.patient.MRN}</Link></th>
+              <th scope="row"><Link to={"/patient"+`/${this.props.patient.MRN}`}>{this.props.patient.MRN}</Link></th>
               <td scope="row">{this.props.patient.first_name}</td>
               <td scope="row">{this.props.patient.last_name}</td>
               <td scope="row">{this.props.patient.age}</td>

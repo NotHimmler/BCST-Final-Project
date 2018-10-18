@@ -37,7 +37,7 @@ class Home extends React.Component {
                           <i className="fa fa-user green"></i>
                         </a>
                         <div className="media-body">
-                          <Link to="/patient" className="title">Elizabeth Smith</Link>
+                          <Link to="/patient/80000001" className="title">Elizabeth Smith</Link>
                           <p><strong>34% </strong> uncompleted</p>
 
                         </div>
@@ -122,7 +122,7 @@ class Home extends React.Component {
                           <i className="fa fa-user green"></i>
                         </a>
                         <div className="media-body">
-                          <Link to="/patient" className="title">Elizabeth Smith</Link>
+                          <Link to="/patient/80000001" className="title">Elizabeth Smith</Link>
                           <p><strong>14 days </strong> since last checkup</p>
 
                         </div>
