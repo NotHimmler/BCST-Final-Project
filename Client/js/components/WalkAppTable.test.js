@@ -11,14 +11,14 @@ class MockSessionStore {
 }
 */
 
-describe("AddPatient", () => {
+describe("WalkAppTable", () => {
     let mountedWalkAppTable;
-    let onSubmit = jest.fn();
+    let getWalkData = jest.fn();
 
     //Creates a rendered AddPatient component to test
     const walkAppTable = () => {
         if(!mountedWalkAppTable) {
-            mountedWalkAppTable = shallow(<WalkAppTable />);
+            mountedWalkAppTable = shallow(<WalkAppTable getWalkData={getWalkData}/>);
         }
     
         return mountedWalkAppTable;
@@ -27,7 +27,7 @@ describe("AddPatient", () => {
     //Resets the rendered AddPatient component before each test
     beforeEach(() => {
         mountedWalkAppTable = undefined;
-        onSubmit = jest.fn();
+        getWalkData = jest.fn();
     });
 
     it("always renders a div", () => {
@@ -43,6 +43,11 @@ describe("AddPatient", () => {
     it("always has columns for data, steps, distance, duration, goaltype and amount", () => {
         const ths = walkAppTable().find("th");
         expect(ths.length).toEqual(6);
+    })
+
+    it("always makes a call for walk data to the api", () => {
+        walkAppTable();
+        expect(getWalkData).toBeCalled();
     })
 
     describe("the rendered div", () => {
