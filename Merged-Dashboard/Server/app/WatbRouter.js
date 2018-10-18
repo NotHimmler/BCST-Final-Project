@@ -1,9 +1,11 @@
 var express = require('express');
 var watbRouter = express.Router();
 const db = require('../../Database/models'); // new require for db object  
-
-watbRouter.get("/mrn/", function(req, res) {
-    return db.WatbData.findById(req.params.mrn)
+db.WatbData.sync().then(data => {
+    console.log("table created")
+})
+watbRouter.get("/mrn/:mrn", function(req, res) {
+    return db.WatbData.findAll({where: {MRN: req.params.mrn}})
     .then((data) => res.send(data))
     .catch((err) => {
         console.log('There was an error querying contacts', JSON.stringify(err))
