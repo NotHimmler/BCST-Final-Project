@@ -352,6 +352,7 @@ class DBHandler {
         let sqlQuery = `SELECT mrn FROM Patient JOIN User_Info ON User_Info.userid = Patient.patient_id JOIN Tokens on Tokens.userid = User_Info.userid WHERE token = "${token}"`
         return new Promise((resolve, reject) => {
             this.sequelize.query(sqlQuery).then(data => {
+                console.log(data[0]);
                 let mrn = data[0][0].mrn
                 if (mrn != undefined) {
                     resolve({mrn: mrn})
@@ -404,7 +405,7 @@ class DBHandler {
             this.sequelize.query(sqlQuery).then(data => {
                 let response = data[0]
                 if(response && response[0]) {
-                    console.log(response);
+                    //console.log(response);
                     resolve(response);
                 } else {
                     reject({error: "No data"})

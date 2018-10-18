@@ -117,10 +117,12 @@ app.post('/api/v1/walkData', function (req, res) {
     }
     dbHandler.walkDataHandler(body).then((dbResponse) => {
         console.log("Inserted data")
-        res.end(200);
+        res.status(200);
+        res.json({okay: "data successfully inserted"})
     }).catch(err => {
         console.log(err)
-        res.send(err)
+        res.status(400);
+        res.send({error: "Error inserting data"});
     });
 });
 
