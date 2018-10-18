@@ -2,6 +2,7 @@ var path = require('path');
 var request = require('request');
 
 var dbHandler = require('../db-handler/db-handler');
+var dbHandler = new dbHandler();
 
 const data = process.argv[2] == "dev" ? require('./TestConfig') : require('./BuildConfig');
 
@@ -93,13 +94,35 @@ app.post('/api/v1/login', function (req, res) {
     let body = req.body;
     let userInfo = body.userInfo;
     if (!dbHandler.ready) {
-        res.send({
+        res.json({
             error: "DB is not ready"
         });
         return;
     }
     dbHandler.loginHandler(userInfo).then((userInfoRes) => {
-        res.send(userInfoRes);
+        res.send({token: userInfoRes[0].token});
+    }).catch(err => {
+        res.send({error: "Login failed"})
+    });
+});
+
+app.post('/api/v1/walkData', function (req, res) {
+    let body = req.body;
+    console.log(body);
+    if (!dbHandler.ready) {
+        res.json({
+            error: "DB is not ready"
+        });
+        return;
+    }
+    dbHandler.walkDataHandler(body).then((dbResponse) => {
+        console.log("Inserted data")
+        res.status(200);
+        res.json({okay: "data successfully inserted"})
+    }).catch(err => {
+        console.log(err)
+        res.status(400);
+        res.send({error: "Error inserting data"});
     });
 });
 
@@ -134,6 +157,31 @@ app.get('/api/v1/therapist/patientList', function (req, res) {
         res.send(patientListRes);
     });
 });
+
+app.post('/api/v1/addPatient', function(req, res) {
+    let body = req.body;
+    if(!dbHandler.ready) {
+        res.send({error: "DB is not ready"});
+        return;
+    }
+    dbHandler.addPatientHandler(body.patientInfo).then(() => {
+        res.status(200);
+        res.end();
+    }).catch(err => {
+        res.status(500);
+        res.send(err);
+    });
+})
+
+app.post("/api/v1/getWalkData", function(req, res) {
+    let body = req.body;
+    dbHandler.getWalkDataHandler(body.mrn).then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.status(400);
+        res.json({error: "Could not get walk data"});
+    });
+})
 
 }
 

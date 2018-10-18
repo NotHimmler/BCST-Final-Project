@@ -2,6 +2,7 @@ import React from "react";
 import {
     Link, Redirect
 } from "react-router-dom";
+var $ = require('jquery');
 
 class Register extends React.Component {
 	constructor(props, context) {
@@ -15,7 +16,8 @@ class Register extends React.Component {
       }
 
     submitHandler(e) {
-        e.preventDefault();
+		e.preventDefault();
+		if (this.props.onSubmit) this.props.onSubmit();
         var userid =$('.register .userid').val();
 		var password = $('.register .password').val();
 		var email = $('.register .email').val();
@@ -71,7 +73,7 @@ class Register extends React.Component {
 			<div className="login_wrapper">
 				<div id="register" className="animate form registration_form">
 	                <section className="login_content">
-	                    <form>
+	                    <form onSubmit={this.submitHandler}>
 	                        <h1>Create Account</h1>
 	                        <div>
 	                            <input type="text" className="form-control userid" placeholder="Username" required="" />
@@ -83,14 +85,14 @@ class Register extends React.Component {
 	                            <input type="password" className="form-control password" placeholder="Password" required="" />
 	                        </div>
 	                        <div>
-	                            <Link to="/" className="btn btn-default submit" onClick={this.submitHandler}>Submit</Link>
+	                            <a><input type="submit" className="btn btn-default submit" value="Submit"/></a>
 	                        </div>
 
 	                        <div className="clearfix"></div>
 
 	                        <div className="separator">
 	                            <p className="change_link">Already a member ?
-	                                <Link to="/" className="to_register" > Log in </Link>
+	                                <a href="/">Log in</a>
 	                            </p>
 
 	                            <div className="clearfix"></div>

@@ -178,10 +178,13 @@ let modelsConfig = [{
         modelName: "App_Report",
         column: {
             "MRN": {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                primaryKey: true,
+                allowNull: false
             },
             "date": {
-                type: Sequelize.DATE
+                type: Sequelize.INTEGER,
+                primaryKey: true
             },
             "numSteps": {
                 type: Sequelize.INTEGER
@@ -197,6 +200,24 @@ let modelsConfig = [{
             },
             "goalValue": {
                 type: Sequelize.INTEGER
+            }
+        }
+    },
+    {
+        modelName: "Tokens",
+        column: {
+            "userid": {
+                type: Sequelize.STRING,
+                allowNull: false,
+                references: {
+                    model: "User_Info",
+                    key: "userid"
+                },
+                primaryKey: true
+            },
+            "token": {
+                type: Sequelize.STRING,
+                allowNull: false
             }
         }
     }

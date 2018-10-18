@@ -7,7 +7,8 @@
     "build": "webpack --mode development ./Client/js/app.js",
     "dev": "nodemon ./Server/index.js dev",
     "deploy": "nodemon ./Server/index.js deploy",
-    "test": "jest"
+    "test": "jest",
+    "heroku": "git subtree push --prefix Merged-Dashboard heroku master"
   },
   "repository": {
     "type": "git",
@@ -36,16 +37,21 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "base64url": "^3.0.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
     "express": "^4.16.3",
     "formik": "^1.3.1",
     "nodemon": "^1.18.4",
+    "password-generator": "^2.2.0",
     "popper.js": "^1.14.3",
+    "react-bootstrap": "^0.32.4",
     "react-router-dom": "^4.3.1",
     "request": "^2.88.0",
     "sequelize": "^4.39.0",
+    "sequelize-cli": "^5.1.0",
     "sqlite3": "^4.0.2",
+    "uuid": "^3.3.2",
     "yup": "^0.26.6"
   },
   "jest": {

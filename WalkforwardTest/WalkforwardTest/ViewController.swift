@@ -12,6 +12,8 @@ import CoreData
 import CoreMotion
 import AVFoundation
 
+
+
 class ViewController: UIViewController {
     var goalType = "distance"
     var goalValue = 0
@@ -53,6 +55,11 @@ class ViewController: UIViewController {
         pinBackground(backgroundViewTime, to: timeGoalStackView)
         getSavedGoals();
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("view did appear")
     }
      // Author  - Adam Stoller
     // https://stackoverflow.com/a/40063434
@@ -267,7 +274,7 @@ class ViewController: UIViewController {
     }
     
     func checkHasRequiredPermissions() -> Bool {
-        return true
+        
         let authStatus = CLLocationManager.authorizationStatus()
         
         if authStatus == .notDetermined {

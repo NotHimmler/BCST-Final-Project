@@ -1,10 +1,19 @@
 "use strict";
 let modelsConfig = require('../config/config.js').modelsConfig;
 let Sequelize = require("sequelize");
+
+let crypto = require('crypto');
+let base64url = require('base64url');
+let passwordGenerator = require('password-generator');
+
 const op = Sequelize.Op;
 
 class DBHandler {
-    constructor() {
+    constructor(args) {
+        if (args) {
+            console.log("using test database");
+            this.defaultOption.storage = "./server_db/dashboard_test.sqlite"
+        }
         this.initialize();
     }
 
@@ -54,6 +63,11 @@ class DBHandler {
                 },
                 "password": {
                     type: Sequelize.STRING
+                },
+                "token:": {
+                    type: Sequelize.STRING,
+                    default: null,
+                    allowNull: true
                 }
             }
         };
@@ -139,6 +153,20 @@ class DBHandler {
         })
     }
 
+    createUserToken(userId) {
+        let token = base64url(crypto.randomBytes(48));
+        return new Promise((resolve, reject) => {
+            this.sequelize.model('Tokens').create({token: token, userid: userId})
+            .then(result => {
+                console.log(result)
+                resolve({token: token});
+            }).catch(err => {
+                console.log(err);
+                reject({err: err});
+            })
+        })
+    }
+
     loginHandler(inputUserInfo) {
         let iputUserid = inputUserInfo.userid;
         let inputPassword = inputUserInfo.password;
@@ -146,21 +174,41 @@ class DBHandler {
             error: "Wrong user name or password"
         };
         if (!iputUserid || !inputPassword) {
+            errorInfo.error = "Username or password not given";
             return Promise.resolve(errorInfo);
         }
-        let sqlQueryUserId = `select userid,username,password from User_Info where userid in ('${iputUserid}')`;
+        let sqlQueryUserId = `select User_Info.userid, User_Info.username, User_Info.password, Tokens.token from User_Info left outer join Tokens ON User_Info.userid = Tokens.userid where User_Info.userid in ('${iputUserid}')`;
         let promise = new Promise((resolve, reject) => {
             this.sequelize.query(sqlQueryUserId).then(data => {
                 let response = data[0];
-                if (response && response[0] && inputPassword === response[0].password) {
-                    console.log('login:'+iputUserid);
-                    resolve(response);
+                //Username and password are correct
+                if (response && response[0] && inputPassword == response[0].password) {
+                    //Check if there's already an auth token
+                    
+                    let token = response[0].token;
+                    if (token == null) {
+                        //No auth token, create one
+                        this.createUserToken(iputUserid).then(data => {
+                            if (data.err) reject({error: "There was an error"});
+                            console.log("Token:")
+                            console.log(data)
+                            response[0].token = data.token;
+                            resolve(response);
+                        }).catch(err => {
+                            console.log(err)
+                            reject({error: "There was an error creating a token"})
+                        })
+                    }
+                    //Set auth token for response
+                    
                 } else {
-                    resolve(errorInfo);
+                    
+                    reject(errorInfo);
                 }
 
             }).catch((e) => {
-                resolve(errorInfo);
+                console.log(e);
+                reject(errorInfo);
             });
         });
         return promise;
@@ -285,6 +333,129 @@ class DBHandler {
         return promise;
 
     }
+
+    insertWalkData(walkData, mrn) {
+        let sqlQuery = `select mrn from Patient inner join Patient ON Patient.patientid=User_Info.userid where User_Info.token=${walkData.token}`;
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                if (response && response[0] && response[0].last_checkout) {
+                    resolve(response[0].last_checkout);
+                } else {
+                    reject(errorInfo);
+                }
+
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+        return promise;
+    }
+
+    getPatientMrnFromToken(token) {
+        let sqlQuery = `SELECT mrn FROM Patient JOIN User_Info ON User_Info.userid = Patient.patient_id JOIN Tokens on Tokens.userid = User_Info.userid WHERE token = "${token}"`
+        return new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                console.log(data[0]);
+                let mrn = data[0][0].mrn
+                if (mrn != undefined) {
+                    resolve({mrn: mrn})
+                } else {
+                    reject({error: "No MRN for token"})
+                }
+                
+            }).catch(err => {
+                console.log(err)
+                reject({error: "Token does not exist"})
+            })
+        })
+    }
+
+    walkDataHandler(walkData) {
+        let token = walkData.token
+        let promises = [];
+        
+        this.getPatientMrnFromToken(token).then((data) => {
+            for (let i in walkData.walks) {
+                let walk = walkData.walks[i]
+                console.log(data)
+                let sqlQuery = `INSERT INTO App_Report (numSteps, distance, duration, goalType, goalValue, date, MRN) VALUES ( ${walk.numSteps}, ${walk.distance}, ${walk.duration}, "${walk.goalType}", ${walk.goalValue}, ${Math.round(walk.date)}, "${data.mrn}")`;
+                promises.push(
+                    new Promise((resolve, reject) => {
+                        this.sequelize.query(sqlQuery).then(data => {
+                            let response = data[0];
+                            console.log("Inserted");
+                            if (response && response[0]) {
+                                resolve();
+                            }
+                            
+                        }).catch((e) => {
+                            console.log("Walk not inserted")
+                            reject(e);
+                        });
+                    })
+                )
+            }
+        }).catch(err => {
+            return err
+        })
+        
+        return Promise.all(promises)
+    }
+
+    getWalkDataHandler(mrn) {
+        let sqlQuery = `SELECT * FROM App_Report WHERE MRN = "${mrn}"`
+        return new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0]
+                if(response && response[0]) {
+                    //console.log(response);
+                    resolve(response);
+                } else {
+                    reject({error: "No data"})
+                }
+            }).catch(err => {
+                console.log(err);
+                reject({error: "DB Error"})
+            })
+        })
+    }
+
+    addPatientHandler(patientData) {
+        console.log(patientData);
+        let sqlQuery = `SELECT mrn FROM Patient WHERE mrn=${patientData.mrn}`
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0];
+                console.log("Before if");
+                if (response && response[0]) {
+                    //MRN already in the database
+                    console.log(response[0]);
+                    reject({error: "MRN already in system"});
+                } else {
+                    //Create a new user_info entry for the new patient
+                    //with random password, mrn = userid
+                    let userInfo = {
+                        userid: patientData.mrn,
+                        admin: false,
+                        username: patientData.mrn,
+                        password: passwordGenerator()
+                    }
+                    this.updateUserInfoModel(userInfo).then(data => {
+                        console.log("Successfully inserted into db");
+                        resolve(data);
+                    }).catch(err => {
+                        console.log(err);
+                        reject(err);
+                    })
+                }
+            }).catch((e) => {
+                console.log(e)
+                reject(e);
+            });
+        });
+        return promise;
+    }
 }
-let dbHandler = new DBHandler();
-module.exports = dbHandler;
+
+module.exports = DBHandler;
