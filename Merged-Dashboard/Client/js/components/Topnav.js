@@ -9,6 +9,7 @@ class Topnav extends React.Component {
 
   logOutHandler(e) {
     e.preventDefault();
+    this.props.updateAppStatus({isLoggedin: false, username: null})
     window.location.href = "/";
   }
 

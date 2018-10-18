@@ -22,13 +22,16 @@ class App extends React.Component {
     this.state = {
       //isLoggedin: false,
       //username: "Log in"
-      isLoggedin: true,
-      username: "Leanne Hasset"
+      isLoggedin: localStorage.isLoggedin ? localStorage.isLoggedin : false,
+      username: localStorage.username? localStorage.username : "Log In"
     }
+    console.log(this.state.isLoggedin)
   }
   
   updateStatus(option){
     this.setState(option);
+    localStorage.isLoggedin = option.isLoggedin;
+    localStorage.username = option.username;
   }
 
   getLoginPage(){
@@ -38,6 +41,7 @@ class App extends React.Component {
     return (
       <Switch>
             <Route path="/" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
+            <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
             <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
       </Switch>
     );
@@ -54,7 +58,7 @@ class App extends React.Component {
               {this.state.isLoggedin ? <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} /> : null}
               <div className="right_col" role="main">
                 <Switch>
-                      <Route path="/" component={this.state.isLoggedin ? Home : Login} exact />
+                      <Route path="/" component={Home} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
                       <Route path="/patient" render={(props) => {return (<ExamplePatient/>)}} />
