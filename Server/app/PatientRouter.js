@@ -12,6 +12,7 @@ patientRouter.get('/', function(req,res) {
     });
 });
 
+// Get current patients
 patientRouter.get('/current', function(req,res) {
     return db.Patient.findAll({
         where: {
@@ -25,6 +26,7 @@ patientRouter.get('/current', function(req,res) {
     });
 });
 
+// Get archived patients
 patientRouter.get('/archived', function(req,res) {
     return db.Patient.findAll({
         where: {
@@ -37,6 +39,16 @@ patientRouter.get('/archived', function(req,res) {
       return res.send(err)
     });
 });
+
+// Get patient with specific mrn
+patientRouter.get("/:mrn", function(req, res) {
+    return db.Patient.findById(req.params.mrn)
+    .then((patient) => res.send(patient))
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
 
 // 404 not found
 patientRouter.get('*', function(req,res) {
