@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      ward: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       age: {
         type: Sequelize.INTEGER
       },
@@ -28,6 +32,9 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      date_archived: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
