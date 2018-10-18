@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      isCompleted: {
+      is_completed: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,

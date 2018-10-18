@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isArchived: {
+      is_archived: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
