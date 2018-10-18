@@ -21,7 +21,7 @@ let generateWalkTableRow = (data) => {
             <td>{secondsToHms(data.duration)}</td>
             <td>{data.goalValue}</td>
             <td>{data.goalType}</td>
-            <td>{((data.duration)*100/data.goalValue*60.0).toFixed(2)}%</td>
+            <td>{((data.duration)*100/(data.goalValue*60.0)).toFixed(2)}%</td>
         </tr>
     )
 }
