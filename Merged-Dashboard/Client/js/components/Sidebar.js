@@ -125,7 +125,7 @@ class Sidebar extends React.Component {
     // check active menu
     $SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
 
-    console.log("Current URL: " + CURRENT_URL);
+    //console.log("Current URL: " + CURRENT_URL);
   
     $SIDEBAR_MENU.find('a').filter(function () {
       return this.href == CURRENT_URL;
@@ -155,11 +155,11 @@ class Sidebar extends React.Component {
 
       //Update active page
       var currentPath = window.location.pathname;
-      console.log(currentPath);
-      console.log(currentPath.includes("patient"));
+      //console.log(currentPath);
+      //console.log(currentPath.includes("patient"));
 
       function updateActive() {
-        console.log("update: " + window.location.pathname);
+        //console.log("update: " + window.location.pathname);
 
         $('#sidebar-menu').find('a').filter(function () {
           var $li = $(this).parent();
