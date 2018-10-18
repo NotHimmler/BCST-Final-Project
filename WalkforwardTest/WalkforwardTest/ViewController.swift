@@ -56,7 +56,6 @@ class ViewController: UIViewController {
         getSavedGoals();
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
-        WalkSyncing.syncWalkItems()
     }
     
     override func viewDidAppear(_ animated: Bool) {

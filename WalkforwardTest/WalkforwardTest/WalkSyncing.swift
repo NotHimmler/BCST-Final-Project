@@ -50,7 +50,7 @@ public class Reachability {
 
 class WalkSyncing {
     
-    static let apiString: String = "http://soft3413-physio-dashboard.herokuapp.com/api/v1/walkData/"
+    static let apiString: String = "http://192.168.1.117:8080/api/v1/walkData/"
     
     init() {
     }
@@ -151,7 +151,6 @@ class WalkSyncing {
                         print(json)
                         // handle json...
                     }
-                    result = try context.fetch(fetchRequest)
                     
                     for object in result! {
                         object.setValue(true, forKey: "synched")

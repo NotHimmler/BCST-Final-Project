@@ -134,6 +134,11 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             } else {
                 stringToUse = GOAL_EXCEEDED_STRING
             }
+            
+            if pctProgress.isNaN {
+                pctProgress = 0.0
+            }
+            
             let alertController = UIAlertController(title: "Finished!", message: String(format: stringToUse, Int(pctProgress*100)), preferredStyle: UIAlertControllerStyle.alert)
             
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
