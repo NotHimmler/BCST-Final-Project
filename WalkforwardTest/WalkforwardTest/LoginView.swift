@@ -105,7 +105,7 @@ class LoginView: UIViewController {
                         let newUserInfo = NSManagedObject(entity: entity, insertInto: context)
                         newUserInfo.setValue(token, forKey: "token")
                         newUserInfo.setValue(json["first_name"], forKey: "firstName")
-                        newUserInfo.setValue(json["last_name"], forKey: "firstName")
+                        newUserInfo.setValue(json["last_name"], forKey: "lastName")
                         do {
                             try context.save()
                             finished = true

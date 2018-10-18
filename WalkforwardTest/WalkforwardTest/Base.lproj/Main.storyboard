@@ -304,6 +304,24 @@
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dbp-0Y-9gb">
                                 <rect key="frame" x="8" y="89" width="304" height="334"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2b-hN-fT3">
+                                        <rect key="frame" x="8" y="8" width="288" height="32.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32.5" id="gpY-Zu-07H"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="D2b-hN-fT3" firstAttribute="leading" secondItem="Dbp-0Y-9gb" secondAttribute="leading" constant="8" id="AE0-Ig-03x"/>
+                                    <constraint firstItem="D2b-hN-fT3" firstAttribute="top" secondItem="Dbp-0Y-9gb" secondAttribute="top" constant="8" id="CQa-a1-L90"/>
+                                    <constraint firstAttribute="trailing" secondItem="D2b-hN-fT3" secondAttribute="trailing" constant="8" id="PUk-dB-eM6"/>
+                                    <constraint firstAttribute="bottom" secondItem="D2b-hN-fT3" secondAttribute="bottom" constant="293.5" id="ZHD-Hl-6ZE"/>
+                                    <constraint firstItem="D2b-hN-fT3" firstAttribute="centerX" secondItem="Dbp-0Y-9gb" secondAttribute="centerX" id="kvn-mY-2sR"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -321,6 +339,8 @@
                     <tabBarItem key="tabBarItem" title="Me" id="CNO-9L-rUL"/>
                     <connections>
                         <outlet property="loginButton" destination="rPf-3B-Deg" id="dZD-Jr-TLV"/>
+                        <outlet property="nameLabel" destination="D2b-hN-fT3" id="U9m-hW-U3h"/>
+                        <outlet property="scrollView" destination="Dbp-0Y-9gb" id="Ptt-OQ-wBZ"/>
                         <segue destination="chK-Bl-rrO" kind="presentation" identifier="loginSegue" id="jqm-gy-Icr"/>
                     </connections>
                 </viewController>

@@ -49,7 +49,7 @@ public class Reachability {
 }
 
 class WalkSyncing {
-    static let serverRoot: String = "http://192.168.1.117:8080/"//"http://soft3413-physio-dashboard.herokuapp.com/"
+    static let serverRoot: String = /**"http://192.168.1.117:8080/"**/ "http://soft3413-physio-dashboard.herokuapp.com/"
     static let apiString: String = serverRoot + "api/watb/addData/"
     static let loginString: String = serverRoot + "api/patient/checkPatient/"
     
