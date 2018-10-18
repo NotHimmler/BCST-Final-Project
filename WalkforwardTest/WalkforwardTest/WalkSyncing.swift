@@ -49,9 +49,9 @@ public class Reachability {
 }
 
 class WalkSyncing {
-    static let serverRoot: String = "http://soft3413-physio-dashboard.herokuapp.com/"
-    static let apiString: String = serverRoot + "api/v1/walkData/"
-    static let loginString: String = serverRoot + "api/v1/login/"
+    static let serverRoot: String = "http://192.168.1.117:8080/"//"http://soft3413-physio-dashboard.herokuapp.com/"
+    static let apiString: String = serverRoot + "api/watb/addData/"
+    static let loginString: String = serverRoot + "api/patient/checkPatient/"
     
     init() {
     }
@@ -87,7 +87,7 @@ class WalkSyncing {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Walk")
         var result: [NSManagedObject]?
         var walks: [Any] = []
-        var data = ["token": token!, "walks": walks ] as [String : Any]
+        var data = ["mrn": token!, "walks": walks ] as [String : Any]
         do {
             result = try context.fetch(fetchRequest)
             
