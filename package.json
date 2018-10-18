@@ -7,7 +7,8 @@
     "build": "webpack --mode development ./Client/js/app.js",
     "dev": "nodemon ./Server/index.js dev",
     "deploy": "nodemon ./Server/index.js deploy",
-    "test": "jest"
+    "test": "jest",
+    "heroku": "git subtree push --prefix Merged-Dashboard heroku master"
   },
   "repository": {
     "type": "git",
