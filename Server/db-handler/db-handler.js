@@ -398,6 +398,24 @@ class DBHandler {
         return Promise.all(promises)
     }
 
+    getWalkDataHandler(mrn) {
+        let sqlQuery = `SELECT * FROM App_Report WHERE MRN = "${mrn}"`
+        return new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                let response = data[0]
+                if(response && response[0]) {
+                    console.log(response);
+                    resolve(response);
+                } else {
+                    reject({error: "No data"})
+                }
+            }).catch(err => {
+                console.log(err);
+                reject({error: "DB Error"})
+            })
+        })
+    }
+
     addPatientHandler(patientData) {
         console.log(patientData);
         let sqlQuery = `SELECT mrn FROM Patient WHERE mrn=${patientData.mrn}`

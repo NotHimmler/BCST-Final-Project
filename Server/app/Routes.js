@@ -171,5 +171,15 @@ app.post('/api/v1/addPatient', function(req, res) {
     });
 })
 
+app.post("/api/v1/getWalkData", function(req, res) {
+    let body = req.body;
+    dbHandler.getWalkDataHandler(body.mrn).then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.status(400);
+        res.json({error: "Could not get walk data"});
+    });
+})
+
 }
 
