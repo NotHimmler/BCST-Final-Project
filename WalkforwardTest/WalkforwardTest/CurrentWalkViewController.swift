@@ -135,7 +135,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
                 stringToUse = GOAL_EXCEEDED_STRING
             }
             
-            if pctProgress.isNaN {
+            if pctProgress.isNaN || pctProgress.isInfinite {
                 pctProgress = 0.0
             }
             
