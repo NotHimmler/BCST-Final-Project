@@ -15,10 +15,16 @@ class PatientRow extends React.Component {
 
   }
 
+  getDate(d) {
+      let date = new Date(d);
+      console.log(date);
+      return (date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear());
+  }
+
   render() {
       
       return(
-        !this.props.patient.archived ?
+        !this.props.patient.is_archived ?
           <tr>
               <th scope="row"><Link to={"/patient"}>{this.props.patient.MRN}</Link></th>
               <td scope="row">{this.props.patient.ward}</td>
@@ -36,7 +42,7 @@ class PatientRow extends React.Component {
               <td scope="row">{this.props.patient.age}</td>
               <td scope="row">{this.props.patient.sex}</td>
               <td scope="row">{this.props.patient.health_condition}</td>
-              <td scope="row">{this.props.patient.date_archived}</td>
+              <td scope="row">{this.getDate(this.props.patient.date_archived)}</td>
           </tr>
       )
   }
@@ -98,7 +104,7 @@ class PatientList extends React.Component {
         let rows = []
         for (let patient of data) {
             console.log(patient);
-            rows.push(<PatientRow key={patient.mrn} patient={patient}/>)
+            rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
         this.setState({"patientRows": rows, loaded: true})
     });   
@@ -115,15 +121,15 @@ class PatientList extends React.Component {
 
               <div className='x_content'>
 
+{ loaded ?
               <table className="table">
                     <thead className="thead-light">
                         { !this.state.archived ? activePatientHeader() : archivedPatientHeader()}
-                        { loaded 
-                            ? this.state.patientRows 
-                            : <p>{placeholder}</p>}
+                        { this.state.patientRows  }
                     </thead>
                 </table>
-
+                : <p>{placeholder}</p>
+}
 
               </div>
 
