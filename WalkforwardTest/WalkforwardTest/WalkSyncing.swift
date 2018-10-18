@@ -49,8 +49,9 @@ public class Reachability {
 }
 
 class WalkSyncing {
-    
-    static let apiString: String = "http://192.168.1.117:8080/api/v1/walkData/"
+    static let serverRoot: String = "http://soft3413-physio-dashboard.herokuapp.com/"
+    static let apiString: String = serverRoot + "api/v1/walkData/"
+    static let loginString: String = serverRoot + "api/v1/login/"
     
     init() {
     }
