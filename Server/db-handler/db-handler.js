@@ -353,13 +353,11 @@ class DBHandler {
         let promises = [];
         for (let i in walkData.walks) {
             let walk = walkData.walks[i]
-            console.log(walk)
             let sqlQuery = `INSERT INTO App_Report (numSteps, distance, duration, goalType, goalValue, date, MRN) VALUES ( ${walk.numSteps}, ${walk.distance}, ${walk.duration}, "${walk.goalType}", ${walk.goalValue}, ${Math.round(walk.date)}, (select Patient.mrn from Patient inner join User_Info ON Patient.patient_id=User_Info.userid JOIN Tokens ON Tokens.userid = User_Info.userid where Tokens.token="${token}"))`;
             promises.push(
                 new Promise((resolve, reject) => {
                     this.sequelize.query(sqlQuery).then(data => {
                         let response = data[0];
-                        console.log(data)
                         console.log("Inserted");
                         if (response && response[0]) {
                             console.log(response[0])
