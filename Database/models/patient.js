@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.CHAR(8),
       allowNull: false,
       primaryKey: true,
+      validate: {
+        isNumeric: {
+          msg: "MRN needs to be numeric"
+        }
+      }
     },
     first_name: {
       type: DataTypes.STRING,
@@ -14,10 +19,32 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isArchived: {
+    ward: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    age: {
+      type: DataTypes.INTEGER
+    },
+    sex: {
+      type: DataTypes.STRING,
+      validate: {
+        isIn:{
+          args: [['M','F']],
+          msg: "Sex must be 'M' or 'F'",
+      },
+      }
+    },
+    health_condition: {
+      type: DataTypes.STRING
+    },
+    is_archived: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    date_archived: {
+      type: DataTypes.DATE,
     }
   }, {});
   Patient.associate = function(models) {
