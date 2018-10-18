@@ -102,12 +102,13 @@ app.post('/api/v1/login', function (req, res) {
     dbHandler.loginHandler(userInfo).then((userInfoRes) => {
         res.send({token: userInfoRes[0].token});
     }).catch(err => {
-        res.send(err)
+        res.send({error: "Login failed"})
     });
 });
 
 app.post('/api/v1/walkData', function (req, res) {
     let body = req.body;
+    console.log(body);
     if (!dbHandler.ready) {
         res.json({
             error: "DB is not ready"
@@ -115,9 +116,13 @@ app.post('/api/v1/walkData', function (req, res) {
         return;
     }
     dbHandler.walkDataHandler(body).then((dbResponse) => {
-        res.end(200);
+        console.log("Inserted data")
+        res.status(200);
+        res.json({okay: "data successfully inserted"})
     }).catch(err => {
-        res.send(err)
+        console.log(err)
+        res.status(400);
+        res.send({error: "Error inserting data"});
     });
 });
 
@@ -155,9 +160,27 @@ app.get('/api/v1/therapist/patientList', function (req, res) {
 
 app.post('/api/v1/addPatient', function(req, res) {
     let body = req.body;
-    console.log(body);
-    res.status(200);
-    res.end();
+    if(!dbHandler.ready) {
+        res.send({error: "DB is not ready"});
+        return;
+    }
+    dbHandler.addPatientHandler(body.patientInfo).then(() => {
+        res.status(200);
+        res.end();
+    }).catch(err => {
+        res.status(500);
+        res.send(err);
+    });
+})
+
+app.post("/api/v1/getWalkData", function(req, res) {
+    let body = req.body;
+    dbHandler.getWalkDataHandler(body.mrn).then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.status(400);
+        res.json({error: "Could not get walk data"});
+    });
 })
 
 }
