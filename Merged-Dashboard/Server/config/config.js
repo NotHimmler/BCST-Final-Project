@@ -179,7 +179,8 @@ let modelsConfig = [{
         column: {
             "MRN": {
                 type: Sequelize.STRING,
-                primaryKey: true
+                primaryKey: true,
+                allowNull: false
             },
             "date": {
                 type: Sequelize.INTEGER,
