@@ -150,6 +150,26 @@ class PatientList extends React.Component {
   }
 
   componentDidMount() {
+    let therapistId = 0;
+    $.ajax({
+        // url:'/api/v1/therapist/patientList?therapistId=${this.props.username}',
+        url:'/api/v1/therapist/patientList?therapistId=${therapistId}',
+        type:"get",
+        contentType:"application/json;charset=utf-8",
+        success: (data)=>{
+            console.log(data.patientIds);
+            console.log("pppppppappppkfoa");
+            let error = data.error;
+            if (error) {
+              this.setState({
+                errorMessage:error
+              });
+            } else {
+                // patients = data;
+            }
+        }
+    });
+
     this.setState({"archived": this.props.archived});
 
     let rows = []
