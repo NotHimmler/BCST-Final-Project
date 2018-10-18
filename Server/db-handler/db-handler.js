@@ -188,17 +188,19 @@ class DBHandler {
                     let token = response[0].token;
                     if (token == null) {
                         //No auth token, create one
-                        token = this.createUserToken(iputUserid).then(data => {
+                        this.createUserToken(iputUserid).then(data => {
                             if (data.err) reject({error: "There was an error"});
-                            token = data.token;
+                            console.log("Token:")
+                            console.log(data)
+                            response[0].token = data.token;
+                            resolve(response);
                         }).catch(err => {
                             console.log(err)
                             reject({error: "There was an error creating a token"})
                         })
                     }
                     //Set auth token for response
-                    response[0].token = token
-                    resolve(response);
+                    
                 } else {
                     
                     reject(errorInfo);
