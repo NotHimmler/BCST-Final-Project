@@ -84,8 +84,10 @@ class PatientList extends React.Component {
 
   componentDidMount() {
     this.setState({"archived": this.props.archived});
+    let endpoint = "";
+    this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
 
-    fetch("api/patient/")
+    fetch(endpoint)
     .then(response => {
       if (response.status !== 200) {
         return this.setState({ placeholder: "Something went wrong" });
@@ -96,14 +98,10 @@ class PatientList extends React.Component {
         let rows = []
         for (let patient of data) {
             console.log(patient);
-            if (patient.is_archived == this.props.archived) {
-                rows.push(<PatientRow key={patient.mrn} patient={patient}/>)
-            } 
+            rows.push(<PatientRow key={patient.mrn} patient={patient}/>)
         } 
         this.setState({"patientRows": rows, loaded: true})
-    });
-    
-    
+    });   
     
 }
     
