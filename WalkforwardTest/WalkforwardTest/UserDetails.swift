@@ -35,7 +35,7 @@ class UserDetails: UIViewController {
                 let userInfo = result![0]
                 firstName = userInfo.value(forKey: "firstName") as! String? ?? "John"
                 lastName = userInfo.value(forKey: "lastName") as! String? ?? "Doe"
-                loginButton.isHidden = true
+                loginButton.setTitle("Logout", for: .normal)
                 
             } else {
                 for object in result! {
@@ -49,7 +49,26 @@ class UserDetails: UIViewController {
     }
     
     @IBAction func handleLoginButton(_ sender: Any) {
-        performSegue(withIdentifier: "loginSegue", sender: self)
+        if loginButton.currentTitle == "Patient Login" {
+            performSegue(withIdentifier: "loginSegue", sender: self)
+        } else {
+            let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "UserInfo")
+            var result: [NSManagedObject]?
+            do {
+                result = try context.fetch(fetchRequest)
+                for object in result! {
+                    context.delete(object)
+                }
+                try context.save()
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+            loginButton.setTitle("Login", for: .normal)
+        }
+        
     }
     
     /*
