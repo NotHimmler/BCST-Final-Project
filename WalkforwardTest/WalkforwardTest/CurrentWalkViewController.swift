@@ -140,6 +140,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             setStopPauseButtonsToFinish()
             self.present(alertController, animated: true, completion: nil)
         } else {
+            WalkSyncing.syncWalkItems()
             dismiss(animated: true, completion: nil)
         }
     }
@@ -333,6 +334,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
         newWalk.setValue(goalType, forKey: "goal")
         newWalk.setValue(goalValue, forKey: "goalValue")
+        newWalk.setValue(false, forKey: "synched")
         do {
             try context!.save()
         } catch {

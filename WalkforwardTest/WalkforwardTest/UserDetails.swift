@@ -25,14 +25,18 @@ class UserDetails: UIViewController {
         var result: [NSManagedObject]?
         do {
             result = try context.fetch(fetchRequest)
+            print(result!.count)
             if result!.count == 1 {
-                context.delete(result![0])
-                /**
                 let userInfo = result![0]
-                firstName = userInfo.value(forKey: "firstName") as! String
-                lastName = userInfo.value(forKey: "lastName") as! String
+                firstName = userInfo.value(forKey: "firstName") as! String? ?? "John"
+                lastName = userInfo.value(forKey: "lastName") as! String? ?? "Doe"
                 loginButton.isHidden = true
-                **/        
+                
+            } else {
+                for object in result! {
+                    context.delete(object)
+                }
+                try context.save()
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
