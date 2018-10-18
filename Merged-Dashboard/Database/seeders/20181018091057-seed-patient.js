@@ -21,8 +21,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000002",
@@ -33,8 +33,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000003",
@@ -45,8 +45,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000004",
@@ -57,8 +57,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000005",
@@ -69,8 +69,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000006",
@@ -81,8 +81,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000007",
@@ -93,8 +93,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000008",
@@ -105,8 +105,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000009",
@@ -117,8 +117,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000010",
@@ -129,8 +129,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000011",
@@ -141,8 +141,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000012",
@@ -153,8 +153,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000013",
@@ -164,10 +164,10 @@ module.exports = {
       age: 87,
       sex: "F",
       is_archived: true,
-      date_archived: new Date().toDateString(),
+      date_archived: new Date(),
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000014",
@@ -177,10 +177,10 @@ module.exports = {
       age: 65,
       sex: "M",
       is_archived: true,
-      date_archived: new Date().toDateString(),
+      date_archived: new Date(),
       health_condition: 'Non-neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       MRN: "80000015",
@@ -190,10 +190,10 @@ module.exports = {
       age: 75,
       sex: "M",
       is_archived: true,
-      date_archived: new Date().toDateString(),
+      date_archived: new Date(),
       health_condition: 'Neurological',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
 ], {}).catch(function (msg) {console.log(msg)});
   },
