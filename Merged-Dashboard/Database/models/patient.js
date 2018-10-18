@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isArchived: {
+    is_archived: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
