@@ -125,6 +125,7 @@ class LoginView: UIViewController {
         if(failed) {
             self.present(alertController, animated: true, completion: nil)
         }
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelHandler(_ sender: Any) {

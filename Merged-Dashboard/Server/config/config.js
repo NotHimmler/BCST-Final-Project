@@ -178,10 +178,13 @@ let modelsConfig = [{
         modelName: "App_Report",
         column: {
             "MRN": {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                primaryKey: true,
+                allowNull: false
             },
             "date": {
-                type: Sequelize.DATE
+                type: Sequelize.INTEGER,
+                primaryKey: true
             },
             "numSteps": {
                 type: Sequelize.INTEGER

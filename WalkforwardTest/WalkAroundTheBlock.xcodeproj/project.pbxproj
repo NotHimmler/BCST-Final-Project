@@ -15,6 +15,7 @@
 		980D98FD2162DDE800C05E09 /* beach-salt-water-sand-17727.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 980D98FA2162DDE800C05E09 /* beach-salt-water-sand-17727.jpg */; };
 		981A27D32176E94600312630 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A27D22176E94600312630 /* UserDetails.swift */; };
 		981A27D52176EDBF00312630 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A27D42176EDBF00312630 /* LoginView.swift */; };
+		981A27D72178004700312630 /* WalkSyncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A27D62178004700312630 /* WalkSyncing.swift */; };
 		9897DA092143821E0021B8A8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9897DA072143821E0021B8A8 /* Model.xcdatamodeld */; };
 		98C6F6402140ACA000B2524F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6F63F2140ACA000B2524F /* AppDelegate.swift */; };
 		98C6F6422140ACA000B2524F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6F6412140ACA000B2524F /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 		980D98FA2162DDE800C05E09 /* beach-salt-water-sand-17727.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "beach-salt-water-sand-17727.jpg"; sourceTree = "<group>"; };
 		981A27D22176E94600312630 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		981A27D42176EDBF00312630 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		981A27D62178004700312630 /* WalkSyncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkSyncing.swift; sourceTree = "<group>"; };
 		9897DA082143821E0021B8A8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		98C6F63C2140ACA000B2524F /* WalkAroundTheBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalkAroundTheBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C6F63F2140ACA000B2524F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				98D5347A214F726700DCBADD /* WalkStats.swift */,
 				981A27D22176E94600312630 /* UserDetails.swift */,
 				981A27D42176EDBF00312630 /* LoginView.swift */,
+				981A27D62178004700312630 /* WalkSyncing.swift */,
 			);
 			path = WalkforwardTest;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			files = (
 				980D1A3221437CAC00EE1C3D /* HistoryViewController.swift in Sources */,
 				981A27D32176E94600312630 /* UserDetails.swift in Sources */,
+				981A27D72178004700312630 /* WalkSyncing.swift in Sources */,
 				980D98F72161E24D00C05E09 /* CurrentWalkViewController.swift in Sources */,
 				981A27D52176EDBF00312630 /* LoginView.swift in Sources */,
 				98C6F6422140ACA000B2524F /* ViewController.swift in Sources */,

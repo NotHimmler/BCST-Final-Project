@@ -2,5 +2,4 @@ node_modules/
 .DS_Store
 React-Dashboard/dist/
 WalkforwardTest/.DS_Store
-Merged-Dashboard/dist/
 Merged-Dashboard/server_db/dashboard_test.sqlite

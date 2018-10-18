@@ -134,12 +134,18 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
             } else {
                 stringToUse = GOAL_EXCEEDED_STRING
             }
+            
+            if pctProgress.isNaN || pctProgress.isInfinite {
+                pctProgress = 0.0
+            }
+            
             let alertController = UIAlertController(title: "Finished!", message: String(format: stringToUse, Int(pctProgress*100)), preferredStyle: UIAlertControllerStyle.alert)
             
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
             setStopPauseButtonsToFinish()
             self.present(alertController, animated: true, completion: nil)
         } else {
+            WalkSyncing.syncWalkItems()
             dismiss(animated: true, completion: nil)
         }
     }
@@ -333,6 +339,7 @@ class CurrentWalkViewController: UIViewController, CLLocationManagerDelegate {
         newWalk.setValue(walkStats!.getDistance(), forKey: "distance")
         newWalk.setValue(goalType, forKey: "goal")
         newWalk.setValue(goalValue, forKey: "goalValue")
+        newWalk.setValue(false, forKey: "synched")
         do {
             try context!.save()
         } catch {
