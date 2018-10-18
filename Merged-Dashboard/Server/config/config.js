@@ -181,7 +181,7 @@ let modelsConfig = [{
                 type: Sequelize.STRING
             },
             "date": {
-                type: Sequelize.DATE
+                type: Sequelize.INTEGER
             },
             "numSteps": {
                 type: Sequelize.INTEGER

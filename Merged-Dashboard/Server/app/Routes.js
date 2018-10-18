@@ -102,12 +102,13 @@ app.post('/api/v1/login', function (req, res) {
     dbHandler.loginHandler(userInfo).then((userInfoRes) => {
         res.send({token: userInfoRes[0].token});
     }).catch(err => {
-        res.send(err)
+        res.send({error: "Login failed"})
     });
 });
 
 app.post('/api/v1/walkData', function (req, res) {
     let body = req.body;
+    console.log(body);
     if (!dbHandler.ready) {
         res.json({
             error: "DB is not ready"
@@ -115,8 +116,10 @@ app.post('/api/v1/walkData', function (req, res) {
         return;
     }
     dbHandler.walkDataHandler(body).then((dbResponse) => {
+        console.log("Inserted data")
         res.end(200);
     }).catch(err => {
+        console.log(err)
         res.send(err)
     });
 });
