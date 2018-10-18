@@ -1,4 +1,4 @@
-[
+const data = [
 {"Date":"19/11/15","Calories Burned":"1455.00","Steps":"0.00","Distance":"0.00","Floors":"0.00","Minutes Sedentary":"1440.00","Minutes Lightly Active":"0.00","Minutes Fairly Active":"0.00","Minutes Very Active":"0.00","Activity Calories":"0.00"},
 {"Date":"20/11/15","Calories Burned":"1586.00","Steps":"1396.00","Distance":"0.99","Floors":"0.00","Minutes Sedentary":"1395.00","Minutes Lightly Active":"45.00","Minutes Fairly Active":"0.00","Minutes Very Active":"0.00","Activity Calories":"141.00"},
 {"Date":"21/11/15","Calories Burned":"1663.00","Steps":"3001.00","Distance":"2.20","Floors":"0.00","Minutes Sedentary":"1359.00","Minutes Lightly Active":"66.00","Minutes Fairly Active":"15.00","Minutes Very Active":"0.00","Activity Calories":"284.00"},
@@ -150,4 +150,6 @@
 {"Date":"15/4/16","Calories Burned":"1455.00","Steps":"0.00","Distance":"0.00","Floors":"0.00","Minutes Sedentary":"1440.00","Minutes Lightly Active":"0.00","Minutes Fairly Active":"0.00","Minutes Very Active":"0.00","Activity Calories":"0.00"},
 {"Date":"16/4/16","Calories Burned":"1455.00","Steps":"0.00","Distance":"0.00","Floors":"0.00","Minutes Sedentary":"1440.00","Minutes Lightly Active":"0.00","Minutes Fairly Active":"0.00","Minutes Very Active":"0.00","Activity Calories":"0.00"},
 {"Date":"17/4/16","Calories Burned":"1455.00","Steps":"0.00","Distance":"0.00","Floors":"0.00","Minutes Sedentary":"1440.00","Minutes Lightly Active":"0.00","Minutes Fairly Active":"0.00","Minutes Very Active":"0.00","Activity Calories":"0.00"}
-]
+];
+
+export default data;
