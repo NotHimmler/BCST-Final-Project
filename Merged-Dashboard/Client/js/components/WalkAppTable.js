@@ -15,8 +15,8 @@ function secondsToHms(d) {
 
 let generateWalkTableRow = (data) => {
     return (
-        <tr key={data.date}>
-            <td>{(new Date(data.date*1000)).toDateString()}</td>
+        <tr key={data.dateMillis}>
+            <td>{(new Date(data.dateMillis*1000)).toDateString()}</td>
             <td>{data.numSteps}</td>
             <td>{data.distance}</td>
             <td>{secondsToHms(data.duration)}</td>
@@ -44,11 +44,9 @@ class WalkAppTable extends React.Component {
     getWalkData() {
         if (this.props.getWalkData) this.props.getWalkData();
         let mrn = this.props.mrn;
-        let data = JSON.stringify({"mrn": mrn});
         $.ajax({
-            url: "/api/v1/getWalkData",
-            type: "post",
-            data: data,
+            url: "/api/watb/mrn/"+mrn,
+            type: "get",
             contentType:"application/json;charset=utf-8",
             success: (data) => {
                 console.log(data)

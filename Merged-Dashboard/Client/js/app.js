@@ -65,7 +65,7 @@ class App extends React.Component {
                       <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
                       <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
                       <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
-                      <Route path="/walkAppTable" render={(props) => {return (<WalkAppTable mrn={88888}/>)}} exact/>
+                      <Route path="/walkAppTable" render={(props) => {return (<WalkAppTable mrn={80000001}/>)}} exact/>
                       <Route path="/test" render={(props) => {return (<Test/>)}} exact/>
                 </Switch>
               </div>
