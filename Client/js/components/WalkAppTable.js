@@ -9,9 +9,10 @@ let generateWalkTableRow = (data) => {
             <td>{(new Date(data.date*1000)).toDateString()}</td>
             <td>{data.numSteps}</td>
             <td>{data.distance}</td>
-            <td>{data.duration}</td>
-            <td>{data.goalType}</td>
+            <td>{data.duration/60.0}</td>
             <td>{data.goalValue}</td>
+            <td>{data.goalType}</td>
+            <td>{(data.duration/60)/data.goalValue}</td>
         </tr>
     )
 }
@@ -67,6 +68,7 @@ class WalkAppTable extends React.Component {
                     <th>Duration (minutes)</th>
                     <th>Goal</th>
                     <th>Goal Type</th>
+                    <th>Goal Achieved %</th>
                     </tr>
                     {this.state.rows}
                 </thead>
