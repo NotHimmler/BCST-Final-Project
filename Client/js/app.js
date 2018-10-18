@@ -14,6 +14,7 @@ import ExamplePatient from "./components/ExamplePatient";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import AddPatient from "./components/AddPatient";
+import WalkAppTable from "./components/WalkAppTable";
 
 class App extends React.Component {
   constructor(props){
@@ -60,6 +61,7 @@ class App extends React.Component {
                       <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
                       <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
                       <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
+                      <Route path="/walkAppTable" render={(props) => {return (<WalkAppTable mrn={88888}/>)}} exact/>
                 </Switch>
               </div>
             </div>
