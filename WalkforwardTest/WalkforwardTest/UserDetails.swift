@@ -66,7 +66,7 @@ class UserDetails: UIViewController {
             } catch let error as NSError {
                 print("Could not fetch. \(error), \(error.userInfo)")
             }
-            loginButton.setTitle("Login", for: .normal)
+            loginButton.setTitle("Patient Login", for: .normal)
         }
         
     }
