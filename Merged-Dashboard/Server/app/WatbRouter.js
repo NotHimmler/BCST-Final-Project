@@ -12,18 +12,31 @@ watbRouter.get("/mrn/", function(req, res) {
  });
 
  watbRouter.post("/addData", function(req, res) {
-     let body = req.body
-     return db.WatbData.findOrCreate({where: {MRN: body.mrn, dateMillis: body.date},
-                                      defaults: {numSteps: body.numSteps,
-                                                distance: body.distance,
-                                                duration: body.duration,
-                                                goalType: body.goalType,
-                                                goalValue: body.goalValue
-                                    }                                      
-    }).then(data => {
+     let mrn = req.body.mrn;
+     let walks = req.body.walks;
+     let promises = [];
+     for(let index in walks) {
+         let walk = walks[index];
+         promises.push( new Promise((resolve, reject) => {
+            db.WatbData.findOrCreate({where: {MRN: mrn, dateMillis: Math.round(walk.date)},
+                defaults: {numSteps: walk.numSteps,
+                          distance: walk.distance,
+                          duration: walk.duration,
+                          goalType: walk.goalType,
+                          goalValue: walk.goalValue
+              }                                      
+        }).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject(err);
+        })
+        })
+        )
+     }
+     Promise.all(promises).then(data => {
         res.status(200);
         res.send({okay: "Data uploaded"})
-    }).catch(err => {
+     }).catch(err => {
         console.log(err);
         res.status(400);
         res.send({error: "Error inserting walk data into DB"})
