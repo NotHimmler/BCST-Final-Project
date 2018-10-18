@@ -66,7 +66,10 @@ class WalkAppTable extends React.Component {
     render() {
 
         return (
-          <div>
+            <div className="row col-lg-12">
+            <div className="x_panel">
+              <div className="x_title">
+              <div className="col-md-4"><h2 id="overflow">Walk Details from Walk Around The Block App</h2></div>
               <table className="table">
                 <thead>
                     <tr>
@@ -81,6 +84,8 @@ class WalkAppTable extends React.Component {
                     {this.state.rows}
                 </thead>
               </table>
+          </div>
+          </div>
           </div>
         )
     }
