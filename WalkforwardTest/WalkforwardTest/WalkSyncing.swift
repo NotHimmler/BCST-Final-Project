@@ -50,6 +50,8 @@ public class Reachability {
 
 class WalkSyncing {
     
+    static let apiString: String = "http://soft3413-physio-dashboard.herokuapp.com/api/v1/walkData/"
+    
     init() {
     }
     
@@ -105,9 +107,6 @@ class WalkSyncing {
                 let parameters = ["date": dateMillis, "numSteps": numSteps, "distance": distance, "duration": duration, "goalType":goalType, "goalValue": goalValue] as [String : Any]
                 
                 walks.append(parameters)
-                object.setValue(true, forKey: "synched")
-                
-                try context.save()
             }
             if walks.count == 0 {
                 print("No walks to sync")
@@ -115,7 +114,7 @@ class WalkSyncing {
             }
             data["walks"] = walks
             //create the url with NSURL
-            let url = NSURL(string: "http://192.168.1.117:8080/api/v1/walkData/")
+            let url = NSURL(string: self.apiString)
             
             //create the session object
             let session = URLSession.shared
@@ -137,6 +136,7 @@ class WalkSyncing {
             //create dataTask using the session object to send data to the server
             let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
                 guard error == nil else {
+                    print(error as Any)
                     return
                 }
                 
@@ -145,12 +145,18 @@ class WalkSyncing {
                 }
                 
                 do {
+                    print("Sync successful")
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject] {
                         print(json)
                         // handle json...
                     }
+                    result = try context.fetch(fetchRequest)
                     
+                    for object in result! {
+                        object.setValue(true, forKey: "synched")
+                    }
+                    try context.save()
                 } catch let error {
                     print(error.localizedDescription)
                 }

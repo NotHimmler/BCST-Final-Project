@@ -18,6 +18,11 @@ class UserDetails: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
         let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
         let context = appDelegate.persistentContainer.viewContext
         
@@ -41,7 +46,6 @@ class UserDetails: UIViewController {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func handleLoginButton(_ sender: Any) {

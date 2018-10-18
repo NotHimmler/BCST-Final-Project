@@ -58,6 +58,10 @@ class ViewController: UIViewController {
         
         WalkSyncing.syncWalkItems()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("view did appear")
+    }
      // Author  - Adam Stoller
     // https://stackoverflow.com/a/40063434
     func addDoneButtonOnKeyboard() {
@@ -271,7 +275,7 @@ class ViewController: UIViewController {
     }
     
     func checkHasRequiredPermissions() -> Bool {
-        return true
+        
         let authStatus = CLLocationManager.authorizationStatus()
         
         if authStatus == .notDetermined {
