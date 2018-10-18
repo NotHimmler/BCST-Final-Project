@@ -2,6 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 let $ = require("jquery");
 
+function secondsToHms(d) {
+    d = Number(d);
+
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    return ('0' + h).slice(-2) + ":" + ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2);
+}
 
 let generateWalkTableRow = (data) => {
     return (
@@ -9,10 +18,10 @@ let generateWalkTableRow = (data) => {
             <td>{(new Date(data.date*1000)).toDateString()}</td>
             <td>{data.numSteps}</td>
             <td>{data.distance}</td>
-            <td>{data.duration/60.0}</td>
+            <td>{secondsToHms(data.duration/60.0)}</td>
             <td>{data.goalValue}</td>
             <td>{data.goalType}</td>
-            <td>{(data.duration/60)/data.goalValue}</td>
+            <td>{((data.duration/60)/data.goalValue).toFixed(2)}%</td>
         </tr>
     )
 }
