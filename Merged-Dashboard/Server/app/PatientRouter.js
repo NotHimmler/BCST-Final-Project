@@ -41,14 +41,35 @@ patientRouter.get('/archived', function(req,res) {
 });
 
 // Get patient with specific mrn
-patientRouter.get("/:mrn", function(req, res) {
+patientRouter.get("/mrn/:mrn", function(req, res) {
+    console.log(req.params.mrn)
     return db.Patient.findById(req.params.mrn)
-    .then((patient) => res.send(patient))
+    .then((patient) => {
+        if (patient == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(patient)
+        }
+    })
     .catch((err) => {
         console.log('There was an error querying contacts', JSON.stringify(err))
       return res.send(err)
     });
  });
+
+ patientRouter.post("/checkPatient", function(req, res) {
+     let body = req.body.userInfo;
+     return db.Patient.findOne({where: {MRN:body.mrn, first_name: body.firstName, last_name: body.lastName}})
+     .then(data => {
+        console.log(data.dataValues);
+        res.status(200)
+        res.send(data.dataValues);
+     }).catch(err => {
+         console.log(error)
+        res.status(400);
+        res.end()
+     })
+ })
 
  patientRouter.post("/addPatient", function(req, res) {
      let body = req.body.patientInfo;
