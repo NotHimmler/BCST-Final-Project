@@ -7,6 +7,7 @@ import PatientSettings from '../components/PatientSettings'
 
 //For testing
 import TestChart from '../components/Charts/TestChart'
+import WalkAppTable from "./WalkAppTable";
 
 
 class ExamplePatient extends React.Component {
@@ -26,7 +27,7 @@ class ExamplePatient extends React.Component {
   componentWillMount() {
     const mrn = this.props.match.params.MRN;
     console.log(mrn);
-    let endpoint = `/api/patient/${mrn}`;
+    let endpoint = `/api/patient/mrn/${mrn}`;
 
     fetch(endpoint)
     .then(response => {
@@ -92,7 +93,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Data")
-                    ? <PatientGraph/>
+                    ? <PatientGraph mrn={this.state.data.MRN}/>
                     : null
               }
 
@@ -107,6 +108,7 @@ class ExamplePatient extends React.Component {
                     ? <PatientSettings archived={false}/>
                     : null
               }
+
 
               {/*For testing...*/}
               {
