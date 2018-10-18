@@ -8,7 +8,7 @@ class PatientSidebar extends React.Component {
       var $li = $(this).parent();
       if ($li.is('.current-page')) {
         $li.removeClass('current-page');}
-        console.log("Href: "+ $(this).attr("href"));
+        //console.log("Href: "+ $(this).attr("href"));
       return $(this).attr("href") == window.location.pathname;
     }).parent('li').addClass('current-page');
   }
@@ -16,13 +16,13 @@ class PatientSidebar extends React.Component {
   render() {
 
     function updateActive() {
-      console.log("update: " + window.location.pathname);
+      //console.log("update: " + window.location.pathname);
 
       $('a').filter(function () {
         var $li = $(this).parent();
         if ($li.is('.current-page')) {
           $li.removeClass('current-page');}
-          console.log("Href: "+ $(this).attr("href"));
+          //console.log("Href: "+ $(this).attr("href"));
         return $(this).attr("href") == window.location.pathname;
       }).parent('li').addClass('current-page');
     }
