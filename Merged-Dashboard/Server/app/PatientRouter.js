@@ -50,6 +50,24 @@ patientRouter.get("/:mrn", function(req, res) {
     });
  });
 
+ patientRouter.post("/addPatient", function(req, res) {
+     let body = req.body.patientInfo;
+     return db.Patient.findOrCreate({where: {MRN: body.mrn}, defaults: {first_name: body.firstName, last_name: body.lastName, ward:body.ward, age:body.age, sex: body.gender}})
+     .then(data => {
+        let isNewRecord = data[0].isNewRecord;
+        res.status(200);
+        if (isNewRecord) {
+            res.send({okay: "Patient added"})
+        } else {
+            res.send({error: "Patient with this mrn already exists"});
+        }
+     }).catch(err => {
+         res.status(400)
+         res.send({error: "Error with the database"});
+         console.log(err);
+     })
+ })
+
 // 404 not found
 patientRouter.get('*', function(req,res) {
     res.status(404).send('404 not found')

@@ -10,6 +10,8 @@ class AddPatient extends React.Component {
             firstName: "",
             lastName: "",
             ward: "",
+            age: 0,
+            gender: "F",
             amount: false,
             fitbit: false,
             watb: false
@@ -37,7 +39,7 @@ class AddPatient extends React.Component {
         //Make a call to the back-end then redirect to patient page
         let data = JSON.stringify({patientInfo: this.state});
         $.ajax({
-            url:'/api/v1/addPatient',
+            url:'/api/patient/addPatient',
             type:"post",
             data:data,
             contentType:"application/json;charset=utf-8",
@@ -66,6 +68,13 @@ class AddPatient extends React.Component {
                     <label>Ward:<br /><input type="text" name="ward" value={this.state.ward} onChange={this.handleInputChange}></input></label><br />
                     <label>First Name:<br /><input type="text" name="firstName" value={this.state.firstName} onChange={this.handleInputChange}></input></label><br />
                     <label>Last Name:<br /><input type="text" name="lastName" value={this.state.lastName} onChange={this.handleInputChange}></input></label><br />
+                    <label>Age:<br /><input type="number" name="age" value={this.state.age} onChange={this.handleInputChange}></input></label><br />
+                    <label>Gender:<br />
+                        <select name="gender" value={this.state.gender} onChange={this.handleInputChange}>
+                        <option value="F">Female</option>
+                        <option value="M">Male</option>
+                        </select>
+                    </label><br />
                     <br />
                     <label>Treatments:</label><br />
                     
