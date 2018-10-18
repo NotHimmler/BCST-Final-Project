@@ -54,7 +54,7 @@ class LoginView: UIViewController {
         let parameters = ["userInfo": ["userid": usernameTextField.text, "password": passwordTextField.text]]
         
         //create the url with NSURL
-        let url = NSURL(string: "http://192.168.1.117:8080/api/v1/login/")
+        let url = NSURL(string: WalkSyncing.loginString)
         
         //create the session object
         let session = URLSession.shared
