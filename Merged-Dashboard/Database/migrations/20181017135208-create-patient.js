@@ -15,10 +15,26 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isArchived: {
+      ward: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      age: {
+        type: Sequelize.INTEGER
+      },
+      sex: {
+        type: Sequelize.STRING
+      },
+      health_condition: {
+        type: Sequelize.STRING
+      },
+      is_archived: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      date_archived: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +44,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }).then(() => {
+      return queryInterface.addConstraint('Patients', ['sex'], {
+        type: 'check',
+        where: {
+           sex: ['M', 'F']
+        }
+      });
     });
   },
   down: (queryInterface, Sequelize) => {

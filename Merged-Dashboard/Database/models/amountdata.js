@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true,
     },
-    isCompleted: {
+    is_completed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

@@ -1,80 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-let patients = [
-  {
-      "mrn": "88124213",
-      "ward": "F9",
-      "firstName": "Elizabeth",
-      "lastName": "Smith",
-      "weeklySteps": "24937",
-      "pctStepGoal": "86%",
-      "weeklyWalk": "18.86km",
-      "pctWalkGoal": "87%",
-      "archived": false,
-      "dateArchived": null
-  }, 
-
-  {
-    "mrn": "83940584",
-    "ward": "A1",
-    "firstName": "Nicole",
-    "lastName": "Pearson",
-    "weeklySteps": "45678",
-    "pctStepGoal": "90%",
-    "weeklyWalk": "18.86km",
-    "pctWalkGoal": "89%",
-    "archived": false,
-    "dateArchived": null
-}, 
-{
-    "mrn": "87123012",
-    "ward": "B3",
-    "firstName": "Jonathon",
-    "lastName": "McIntyre",
-    "weeklySteps": "13895",
-    "pctStepGoal": "45%",
-    "weeklyWalk": "9.05km",
-    "pctWalkGoal": "42%",
-    "archived": false,
-    "dateArchived": null
-},
-{
-    "mrn": "89123516",
-    "ward": "E3",
-    "firstName": "Alyson",
-    "lastName": "Hannigon",
-    "weeklySteps": "22328",
-    "pctStepGoal": "79%",
-    "weeklyWalk": "15.7km",
-    "pctWalkGoal": "75%",
-    "archived": false,
-    "dateArchived": null
-},  
-  
-  {
-      "mrn": "88177742",
-      "firstName": "John",
-      "lastName": "Smith",
-      "archived": true,
-      "dateArchived": "29-03-2017"
-  },
-  {
-        "mrn": "85639445",
-        "firstName": "Mary",
-        "lastName": "Smith",
-        "archived": true,
-        "dateArchived": "20-01-2018"
-    },
-    {
-        "mrn": "85765622",
-        "firstName": "Test",
-        "lastName": "Test",
-        "archived": true,
-        "dateArchived": "20-01-2018"
-    }
-]
-
 class PatientRow extends React.Component {
   returnIconBasedOnPercentage(percentString) {
       
@@ -94,23 +20,23 @@ class PatientRow extends React.Component {
       return(
         !this.props.patient.archived ?
           <tr>
-              <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
-              {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
+              <th scope="row"><Link to={"/patient"}>{this.props.patient.MRN}</Link></th>
               <td scope="row">{this.props.patient.ward}</td>
-              <td scope="row">{this.props.patient.firstName}</td>
-              <td scope="row">{this.props.patient.lastName}</td>
-              <td scope="row">{this.props.patient.weeklySteps}</td>
-              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctStepGoal)}</td>
-              <td scope="row">{this.props.patient.weeklyWalk}</td>
-              <td scope="row">{this.returnIconBasedOnPercentage(this.props.patient.pctWalkGoal)}</td>
+              <td scope="row">{this.props.patient.first_name}</td>
+              <td scope="row">{this.props.patient.last_name}</td>
+              <td scope="row">{this.props.patient.age}</td>
+              <td scope="row">{this.props.patient.sex}</td>
+              <td scope="row">{this.props.patient.health_condition}</td>
           </tr>
           : 
           <tr>
-              <th scope="row"><Link to={"/patient"}>{this.props.patient.mrn}</Link></th>
-              {/* <th scope="row"><Link to={"/patient/"+this.props.patient.firstName+" "+this.props.patient.lastName}>{this.props.patient.mrn}</Link></th> */}
-              <td scope="row">{this.props.patient.firstName}</td>
-              <td scope="row">{this.props.patient.lastName}</td>
-              <td scope="row">{this.props.patient.dateArchived}</td>
+              <th scope="row"><Link to={"/patient"}>{this.props.patient.MRN}</Link></th>
+              <td scope="row">{this.props.patient.first_name}</td>
+              <td scope="row">{this.props.patient.last_name}</td>
+              <td scope="row">{this.props.patient.age}</td>
+              <td scope="row">{this.props.patient.sex}</td>
+              <td scope="row">{this.props.patient.health_condition}</td>
+              <td scope="row">{this.props.patient.date_archived}</td>
           </tr>
       )
   }
@@ -123,10 +49,9 @@ const activePatientHeader  = () => {
           <th scope="col">{"Ward"}</th>
           <th scope="col">{"First Name"}</th>
           <th scope="col">{"Last Name"}</th>
-          <th scope="col">{"Weekly Fitbit Steps"}</th>
-          <th scope="col">{"Fitbit Goal Attained %"}</th>
-          <th scope="col">{"Weekly Walkforward Distance"}</th>
-          <th scope="col">{"Walkforward Goal Attained %"}</th>
+          <th scope="col">{"Age"}</th>
+          <th scope="col">{"Sex"}</th>
+          <th scope="col">{"Health Condition"}</th>
       </tr>
   )
 }
@@ -137,6 +62,9 @@ const archivedPatientHeader  = () => {
           <th scope="col">{"MRN"}</th>
           <th scope="col">{"First Name"}</th>
           <th scope="col">{"Last Name"}</th>
+          <th scope="col">{"Age"}</th>
+          <th scope="col">{"Sex"}</th>
+          <th scope="col">{"Health Condition"}</th>
           <th scope="col">{"Date Archived"}</th>
       </tr>
   )
@@ -146,7 +74,12 @@ class PatientList extends React.Component {
 
   constructor() {
     super()
-    this.state = {"archived": false, "patientRows": []}
+    this.state = {
+        "archived": false, 
+        "patientRows": [],
+        loaded: false,
+        placeholder: "Loading..."
+    }
   }
 
   componentDidMount() {
@@ -171,19 +104,30 @@ class PatientList extends React.Component {
     });
 
     this.setState({"archived": this.props.archived});
+    let endpoint = "";
+    this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
 
-    let rows = []
-    for (let patient of patients) {
-        
-        if (patient.archived == this.props.archived) {
+    fetch(endpoint)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+        let rows = []
+        for (let patient of data) {
+            console.log(patient);
             rows.push(<PatientRow key={patient.mrn} patient={patient}/>)
         } 
-    }
-    this.setState({"patientRows": rows})
+        this.setState({"patientRows": rows, loaded: true})
+    });   
     
 }
     
     render() {
+
+        const { loaded, placeholder } = this.state;
 
         return (
           <div>
@@ -194,7 +138,9 @@ class PatientList extends React.Component {
               <table className="table">
                     <thead className="thead-light">
                         { !this.state.archived ? activePatientHeader() : archivedPatientHeader()}
-                        { this.state.patientRows }
+                        { loaded 
+                            ? this.state.patientRows 
+                            : <p>{placeholder}</p>}
                     </thead>
                 </table>
 

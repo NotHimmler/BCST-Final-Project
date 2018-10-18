@@ -30,7 +30,7 @@ module.exports = {
       return queryInterface.sequelize.queryInterface.addConstraint('FitbitData', ['MRN','date'], {
         type: 'primary key',
         name: 'pk_fitbitdata'
-     });;
+     });
     });
   },
   down: (queryInterface, Sequelize) => {
