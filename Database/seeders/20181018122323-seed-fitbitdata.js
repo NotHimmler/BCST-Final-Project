@@ -1,7 +1,5 @@
 'use strict';
-const csvFilePath = '../csv/test.csv'
-const csv=require("csvtojson");
-const fs=require('fs');
+import data from '../csv/D01FB'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -15,10 +13,6 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   console.log("trying?");
-   csv().fromFile(csvFilePath).then( () => {
-     console.log("anything?");
-   });
   },
 
   down: (queryInterface, Sequelize) => {
