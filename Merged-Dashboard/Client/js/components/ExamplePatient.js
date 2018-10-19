@@ -98,7 +98,7 @@ class ExamplePatient extends React.Component {
 
 
     render() {
-      const {loaded, placeholder} = this.state;
+      const {data, loaded, placeholder} = this.state;
         return (
             <div>
               <div className="btn-group patient-toggle">
@@ -122,9 +122,9 @@ class ExamplePatient extends React.Component {
               <div className="">
                 <div className="page-title">
                   <div className="title_left">
-                    <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
-                    <p>{this.state.data.is_archived?" (This patient has been archived)":""}</p>
-                    <h4>MRN: {loaded?this.state.data.MRN:placeholder}</h4>
+                    <h3>{loaded?data.first_name + " " + data.last_name:placeholder}</h3>
+                    <p>{data.is_archived?" (This patient has been archived)":""}</p>
+                    <h4>MRN: {loaded?data.MRN:placeholder}</h4>
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
@@ -139,10 +139,10 @@ class ExamplePatient extends React.Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{loaded?this.state.data.age:placeholder}</td>
-                          <td>{loaded?this.state.data.sex:placeholder}</td>
-                          <td>{loaded?this.state.data.ward:placeholder}</td>
-                          <td>{loaded?this.state.data.health_condition:placeholder}</td>
+                          <td>{loaded?data.age:placeholder}</td>
+                          <td>{loaded?data.sex:placeholder}</td>
+                          <td>{loaded?data.ward:placeholder}</td>
+                          <td>{loaded?data.health_condition:placeholder}</td>
                         </tr>
                       </tbody>
                     </table>
