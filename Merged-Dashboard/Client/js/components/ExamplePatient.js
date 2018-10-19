@@ -99,7 +99,7 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
-                    <table class="table">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th scope="col">Age</th>
