@@ -94,6 +94,7 @@ class ExamplePatient extends React.Component {
                 <div className="page-title">
                   <div className="title_left">
                     <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
+                    <p>{this.state.data.is_archived?" (This patient has been archived)":""}</p>
                     <h4>MRN: {loaded?this.state.data.MRN:placeholder}</h4>
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
