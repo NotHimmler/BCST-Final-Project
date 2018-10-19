@@ -38,7 +38,8 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({data: data, loaded:true})
+      this.setState({data: data});
+      this.updateLastCheckup(mrn);
     });
 
     /* $.ajax({
@@ -57,11 +58,39 @@ class ExamplePatient extends React.Component {
     }); */
   }
 
+  updateLastCheckup(mrn) {
+    let endpoint = `/api/patient/updateLastCheckup`;
+    let patientInfo = {
+      username: this.props.username,
+      mrn
+    }
+    let option = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({patientInfo})
+    }
+    fetch(endpoint,option)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      this.setState({loaded: true});
+    });
+  }
+
   getLastCheckup(){
-    if(this.state.data.last_checkup_date == null){
-      return "No last checkup"
+    const {data} = this.state;
+    const lastCheckupDate = data.last_checkup_date;
+    if(lastCheckupDate == null){
+      return "No last checkup";
     } else {
-      let string = new Date(this.state.data.last_checkup_date).toDateString()+" by "+this.state.data.last_checkup_by;
+      let string = new Date(lastCheckupDate).toDateString()+ " by "+ data.last_checkup_by;
       return string;
     }
 

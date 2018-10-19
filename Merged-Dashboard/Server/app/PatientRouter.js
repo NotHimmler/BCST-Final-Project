@@ -98,14 +98,14 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
         last_checkup_date: lastCheckupDate,
         last_checkup_by: username
     }, {
-        where: {MRN:body.mrn, first_name: body.firstName.trim(), last_name: body.lastName.trim()}
+        where: {MRN:body.mrn}
 
     })
     .then(data => {
         console.log(data);
         let message = `update ${data.length} last check up data for ${username}`;
         res.status(200);
-        res.send(message);
+        res.send({message});
     }).catch(err => {
         console.log(error);
        res.status(400);
