@@ -98,6 +98,24 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Ward</th>
+                          <th scope="col">Health Condition</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{loaded?this.state.data.age:placeholder}</td>
+                          <td>{loaded?this.state.data.sex:placeholder}</td>
+                          <td>{loaded?this.state.data.ward:placeholder}</td>
+                          <td>{loaded?this.state.data.health_condition:placeholder}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 <div className="clearfix"></div>
