@@ -32,7 +32,7 @@ class PatientRow extends React.Component {
               <td scope="row">{this.props.patient.last_name}</td>
               <td scope="row">{this.props.patient.age}</td>
               <td scope="row">{this.props.patient.sex}</td>
-              <td scope="row">{this.props.patient.health_condition}</td>
+              <td scope="row">{this.props.patient.last_checkup_date}</td>
           </tr>
           : 
           <tr>
@@ -57,7 +57,7 @@ const activePatientHeader  = () => {
           <th scope="col">{"Last Name"}</th>
           <th scope="col">{"Age"}</th>
           <th scope="col">{"Sex"}</th>
-          <th scope="col">{"Health Condition"}</th>
+          <th scope="col">{"Last Checkup"}</th>
       </tr>
   )
 }

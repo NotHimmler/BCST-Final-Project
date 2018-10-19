@@ -57,6 +57,16 @@ class ExamplePatient extends React.Component {
     }); */
   }
 
+  getLastCheckup(){
+    if(this.state.data.last_checkup_date == null){
+      return "No last checkup"
+    } else {
+      let string = new Date(this.state.data.last_checkup_date).toDateString()+" by "+this.state.data.last_checkup_by;
+      return string;
+    }
+
+  }
+
 
     render() {
       const {loaded, placeholder} = this.state;
@@ -84,8 +94,29 @@ class ExamplePatient extends React.Component {
                 <div className="page-title">
                   <div className="title_left">
                     <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
+                    <p>{this.state.data.is_archived?" (This patient has been archived)":""}</p>
                     <h4>MRN: {loaded?this.state.data.MRN:placeholder}</h4>
-                    <h5><i>Last check up: {loaded?this.state.data.last_checkup_date:placeholder}</i></h5>
+                    <h5 className="last_checkup"><i>Last check up: {loaded
+                          ? this.getLastCheckup()
+                          : placeholder}</i></h5>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Ward</th>
+                          <th scope="col">Health Condition</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{loaded?this.state.data.age:placeholder}</td>
+                          <td>{loaded?this.state.data.sex:placeholder}</td>
+                          <td>{loaded?this.state.data.ward:placeholder}</td>
+                          <td>{loaded?this.state.data.health_condition:placeholder}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 <div className="clearfix"></div>

@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     date_archived: {
       type: DataTypes.DATE,
+    },
+    last_checkup_by: {
+      type: DataTypes.STRING,
+    },
+    last_checkup_date: {
+      type: DataTypes.DATE,
     }
   }, {});
   Patient.associate = function(models) {

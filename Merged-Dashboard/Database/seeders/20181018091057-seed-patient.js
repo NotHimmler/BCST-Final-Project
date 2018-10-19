@@ -21,6 +21,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Non-neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-01"),
       createdAt: new Date(),
       updatedAt: new Date()
     },

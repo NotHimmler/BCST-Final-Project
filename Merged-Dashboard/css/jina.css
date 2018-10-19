@@ -64,3 +64,8 @@
 label {
   display: block;
 }
+
+.last_checkup {
+  font-weight: bold;
+  font-size: 120%;
+}
