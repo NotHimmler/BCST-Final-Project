@@ -15,6 +15,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import AddPatient from "./components/AddPatient";
 import WalkAppTable from "./components/WalkAppTable";
+import FitbitAuth from "./components/FitbitAuth";
 
 class App extends React.Component {
   constructor(props){
@@ -43,6 +44,8 @@ class App extends React.Component {
             <Route path="/" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
             <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
             <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
+            <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
+            <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
       </Switch>
     );
   }
@@ -67,6 +70,8 @@ class App extends React.Component {
                       <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
                       <Route path="/walkAppTable" render={(props) => {return (<WalkAppTable mrn={80000001}/>)}} exact/>
                       <Route path="/test" render={(props) => {return (<Test/>)}} exact/>
+                      <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
+                      <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
                 </Switch>
               </div>
             </div>
@@ -80,8 +85,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="nav-md">
-          {LoginPage}
-          {HomePage}
+          {this.state.isLoggedin ? this.getHomePage() : this.getLoginPage()}
         </div>
       </BrowserRouter>
 
