@@ -48,33 +48,6 @@ class PatientRow extends React.Component {
   }
 }
 
-const activePatientHeader  = () => {
-  return(
-      <tr>
-          <th scope="col">{"MRN"}</th>
-          <th scope="col">{"Ward"}</th>
-          <th scope="col">{"First Name"}</th>
-          <th scope="col">{"Last Name"}</th>
-          <th scope="col">{"Age"}</th>
-          <th scope="col">{"Sex"}</th>
-          <th scope="col">{"Last Checkup"}</th>
-      </tr>
-  )
-}
-
-const archivedPatientHeader  = () => {
-  return(
-      <tr>
-          <th scope="col">{"MRN"}</th>
-          <th scope="col">{"First Name"}</th>
-          <th scope="col">{"Last Name"}</th>
-          <th scope="col">{"Age"}</th>
-          <th scope="col">{"Sex"}</th>
-          <th scope="col">{"Health Condition"}</th>
-          <th scope="col">{"Date Archived"}</th>
-      </tr>
-  )
-}
 
 class PatientList extends React.Component {
 
@@ -83,9 +56,56 @@ class PatientList extends React.Component {
     this.state = {
         "archived": false, 
         "patientRows": [],
+        patients: [],
         loaded: false,
-        placeholder: "Loading..."
+        placeholder: "Loading...",
+        sort: 1
     }
+
+    this.sortColHandler = this.sortColHandler.bind(this);
+  }
+
+  sortColHandler(col, event) {
+    console.log(col);
+    let rows = [];
+    let data = this.state.patients.sort((a, b) => {
+        if (col == "MRN" || col == "age") return (Number(a[col]) - Number(b[col]))*this.state.sort;
+        return (a[col].localeCompare(b[col]))*this.state.sort
+    });
+    console.log(data)
+    for (let patient of data) {
+        console.log(patient);
+        rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
+    }
+    this.setState({patientRows: rows, sort: this.state.sort*-1})
+  }
+
+  activePatientHeader() {
+    return(
+        <tr>
+            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"}</th>
+            <th onClick={(e) => this.sortColHandler("ward", e)} scope="col">{"Ward"}</th>
+            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"}</th>
+            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"}</th>
+            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"}</th>
+            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"}</th>
+            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"}</th>
+        </tr>
+    )
+  }
+
+  archivedPatientHeader() {
+    return(
+        <tr>
+            <th scope="col">{"MRN"}</th>
+            <th scope="col">{"First Name"}</th>
+            <th scope="col">{"Last Name"}</th>
+            <th scope="col">{"Age"}</th>
+            <th scope="col">{"Sex"}</th>
+            <th scope="col">{"Health Condition"}</th>
+            <th scope="col">{"Date Archived"}</th>
+        </tr>
+    )
   }
 
   componentDidMount() {
@@ -102,11 +122,12 @@ class PatientList extends React.Component {
     })
     .then(data => {
         let rows = []
+
         for (let patient of data) {
             console.log(patient);
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
-        this.setState({"patientRows": rows, loaded: true})
+        this.setState({"patientRows": rows, loaded: true, patients: data})
     });   
     
 }
@@ -124,7 +145,7 @@ class PatientList extends React.Component {
 { loaded ?
               <table className="table">
                     <thead className="thead-light">
-                        { !this.state.archived ? activePatientHeader() : archivedPatientHeader()}
+                        { !this.state.archived ? this.activePatientHeader() : this.archivedPatientHeader()}
                         { this.state.patientRows  }
                     </thead>
                 </table>
