@@ -13,7 +13,7 @@ class AmountTable extends React.Component {
           <div className="row col-lg-12">
             <div className="x_panel">
               <div className="x_title">
-                <h2>AMOUNT Exercises</h2>
+                <h2>Exercise Logs</h2>
                 <ul className="nav navbar-right panel_toolbox">
                   <li><a className="close-link"><i className="fa fa-close"></i></a>
                   </li>
