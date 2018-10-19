@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development ./Client/js/app.js",
-    "dev": "nodemon ./Server/index.js dev",
+    "dev": "FBCS=dbe33653c4a3667122eed5ebe28175f0 FBCID=22CZMN nodemon ./Server/index.js dev",
     "deploy": "nodemon ./Server/index.js deploy",
     "test": "jest",
     "heroku": "git subtree push --prefix Merged-Dashboard heroku master"
