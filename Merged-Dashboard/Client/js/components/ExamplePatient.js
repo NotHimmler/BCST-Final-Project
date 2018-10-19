@@ -92,8 +92,8 @@ class ExamplePatient extends React.Component {
                 </div>
 
               {
-                (this.state.content === "Data")
-                    ? <PatientGraph mrn={this.state.data.MRN}/>
+                (this.state.content === "Data" && this.state.loaded)
+                    ? <PatientGraph mrn={this.props.match.params.MRN}/>
                     : null
               }
 
