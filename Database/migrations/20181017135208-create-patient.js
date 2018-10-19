@@ -36,6 +36,12 @@ module.exports = {
       date_archived: {
         type: Sequelize.DATE,
       },
+      last_checkup_by: {
+        type: Sequelize.STRING,
+      },
+      last_checkup_date: {
+        type: Sequelize.DATE,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
