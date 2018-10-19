@@ -75,7 +75,8 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
      let body = req.body.patientInfo;
      return db.Patient.findOrCreate({where: {MRN: body.mrn}, defaults: {first_name: body.firstName, last_name: body.lastName, ward:body.ward, age:body.age, sex: body.gender}})
      .then(data => {
-        let isNewRecord = data[0].isNewRecord;
+        let isNewRecord = data[0]._options.isNewRecord;
+        console.log(data)
         res.status(200);
         if (isNewRecord) {
             res.send({okay: "Patient added"})
