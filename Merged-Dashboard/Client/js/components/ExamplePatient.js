@@ -57,6 +57,16 @@ class ExamplePatient extends React.Component {
     }); */
   }
 
+  getLastCheckup(){
+    if(this.state.data.last_checkup_date == null){
+      return "No last checkup"
+    } else {
+      let string = new Date(this.state.data.last_checkup_date).toDateString()+" by "+this.state.data.last_checkup_by;
+      return string;
+    }
+
+  }
+
 
     render() {
       const {loaded, placeholder} = this.state;
@@ -85,7 +95,9 @@ class ExamplePatient extends React.Component {
                   <div className="title_left">
                     <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
                     <h4>MRN: {loaded?this.state.data.MRN:placeholder}</h4>
-                    <h5><i>Last check up: {loaded?this.state.data.last_checkup_date:placeholder}</i></h5>
+                    <h5 className="last_checkup"><i>Last check up: {loaded
+                          ? this.getLastCheckup()
+                          : placeholder}</i></h5>
                   </div>
                 </div>
                 <div className="clearfix"></div>
