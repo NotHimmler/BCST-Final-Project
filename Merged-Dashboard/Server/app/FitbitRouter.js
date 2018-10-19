@@ -1,6 +1,6 @@
 var express = require('express');
 var fitbitRouter = express.Router();
-const db = require('../../Database/models');
+const db = require('../../Database/models/index.js');
 db.FitbitTokens.sync();
 db.FitbitData.sync();
 fitbitRouter.get('/', function(req,res) {
