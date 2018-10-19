@@ -1,6 +1,6 @@
 var express = require('express');
 var patientRouter = express.Router();
-const db = require('../../Database/models'); // new require for db object 
+const db = require('../../Database/models/index.js'); // new require for db object
 
 // Get all patients
 patientRouter.get('/', function(req,res) {

@@ -1,6 +1,6 @@
 var express = require('express');
 var watbRouter = express.Router();
-const db = require('../../Database/models'); // new require for db object  
+const db = require('../../Database/models/index.js'); // new require for db object  
 db.WatbData.sync().then(data => {
     console.log("table created")
 })
