@@ -16,8 +16,7 @@ class PatientRow extends React.Component {
   }
 
   getDate(d) {
-      let date = new Date(d);
-      console.log(date);
+      let date = new Date(d)
       return (date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear());
   }
 
@@ -32,7 +31,7 @@ class PatientRow extends React.Component {
               <td scope="row">{this.props.patient.last_name}</td>
               <td scope="row">{this.props.patient.age}</td>
               <td scope="row">{this.props.patient.sex}</td>
-              <td scope="row">{this.props.patient.last_checkup_date}</td>
+              <td scope="row">{this.getDate(this.props.patient.last_checkup_date)}</td>
           </tr>
           : 
           <tr>
@@ -41,7 +40,7 @@ class PatientRow extends React.Component {
               <td scope="row">{this.props.patient.last_name}</td>
               <td scope="row">{this.props.patient.age}</td>
               <td scope="row">{this.props.patient.sex}</td>
-              <td scope="row">{this.props.patient.health_condition}</td>
+              <td scope="row">{this.getDate(this.props.patient.last_checkup_date)}</td>
               <td scope="row">{this.getDate(this.props.patient.date_archived)}</td>
           </tr>
       )
@@ -66,15 +65,14 @@ class PatientList extends React.Component {
   }
 
   sortColHandler(col, event) {
-    console.log(col);
+    
     let rows = [];
     let data = this.state.patients.sort((a, b) => {
         if (col == "MRN" || col == "age") return (Number(a[col]) - Number(b[col]))*this.state.sort;
-        return (a[col].localeCompare(b[col]))*this.state.sort
+        return (String(a[col]).localeCompare(String(b[col])))*this.state.sort
     });
-    console.log(data)
+    
     for (let patient of data) {
-        console.log(patient);
         rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
     }
     this.setState({patientRows: rows, sort: this.state.sort*-1})
@@ -97,13 +95,13 @@ class PatientList extends React.Component {
   archivedPatientHeader() {
     return(
         <tr>
-            <th scope="col">{"MRN"}</th>
-            <th scope="col">{"First Name"}</th>
-            <th scope="col">{"Last Name"}</th>
-            <th scope="col">{"Age"}</th>
-            <th scope="col">{"Sex"}</th>
-            <th scope="col">{"Health Condition"}</th>
-            <th scope="col">{"Date Archived"}</th>
+            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"}</th>
+            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"}</th>
+            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"}</th>
+            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"}</th>
+            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"}</th>
+            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"}</th>
+            <th onClick={(e) => this.sortColHandler("date_archived", e)} scope="col">{"Date Archived"}</th>
         </tr>
     )
   }
