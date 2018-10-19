@@ -4,16 +4,62 @@ import { Link } from "react-router-dom";
 import DonutGraph from "../components/DonutGraph"
 
 class Home extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loaded: false,
+      patientList: [],
+      placeholder: "Loading..."
+    }
+  }
+
+  getLastCheckupList() {
+    const { patientList,loaded, placeholder } = this.state;
+    if (!patientList.length) {
+      return null;
+    }
+    
+    const listItem = patientList.map(patient => <li key={patient.MRN} className="media event">
+          <a className="pull-left border-aero profile_thumb">
+            <i className="fa fa-user aero"></i>
+          </a>
+        <div className="media-body">
+          <Link className="title" to={`/patient/${patient.MRN}`}>{`${patient.first_name} ${patient.last_name}`}</Link>
+          <p><strong>{this.getDayLeft(patient.last_checkup_date)}</strong> since last checkup</p>
+        </div>
+    </li>
+    );
+    return loaded? <ul>{listItem}</ul> : <p>{placeholder}</p> 
+  }
+
+  getDayLeft(date) {
+    const timestamps = new Date().getTime() - new Date(date).getTime();
+    const dayLeft = parseInt(timestamps/1000/60/60/24);
+    const day = dayLeft>1 ? ' days': ' day'
+    return dayLeft + day;
+  }
+
+  componentDidMount() {
+    let endpoint = "api/patient/longestTimeSinceCheckup";
+
+    fetch(endpoint)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+        this.setState({loaded: true, patientList: data});
+    });   
+    
+}
     
     render() {
         return (
             <div>
                 <div className="row">
                 <DonutGraph/>
-
-
-                
-
                 <div className="col-sm-4">
                     <div className="x_panel">
                     <div className="x_title">
@@ -21,6 +67,7 @@ class Home extends React.Component {
                     <div className="clearfix"></div>
                     </div>
                     <div className="x_content">
+        {/* { loaded ? */}
                     <ul className="list-unstyled top_profiles scroll-view">
                       <li className="media event">
                         <a className="pull-left border-aero profile_thumb">
@@ -75,7 +122,8 @@ class Home extends React.Component {
                       </li>
 
                     </ul>
-                    </div>
+        {/* : <p>{placeholder}</p> } */}
+                  </div>
                     </div>
                 </div>
 
@@ -86,7 +134,8 @@ class Home extends React.Component {
                     <div className="clearfix"></div>
                     </div>
                     <div className="x_content">
-                    <ul className="list-unstyled top_profiles scroll-view">
+                {/* loaded ?
+                   /* <ul className="list-unstyled top_profiles scroll-view">
                       <li className="media event">
                         <a className="pull-left border-aero profile_thumb">
                           <i className="fa fa-user aero"></i>
@@ -128,7 +177,11 @@ class Home extends React.Component {
                         </div>
                       </li>
 
-                    </ul>
+                </ul>*/
+                // : <p>{placeholder}</p> */
+                }
+                
+                {this.getLastCheckupList()}
                     </div>
                     </div>
                 </div>
