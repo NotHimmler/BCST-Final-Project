@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import browserHistory from "react-router";
 var $ = require('jquery');
 
 class AddPatient extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -53,7 +55,8 @@ class AddPatient extends React.Component {
                 }else{
 					this.setState({
 						redirect:true
-					})
+                    })
+                    window.location.href = `/patient/${this.state.mrn}`
 				}
             }
         });
