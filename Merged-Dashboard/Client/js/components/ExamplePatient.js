@@ -9,6 +9,10 @@ import PatientSettings from '../components/PatientSettings'
 import TestChart from '../components/Charts/TestChart'
 import WalkAppTable from "./WalkAppTable";
 
+const boxMargins = {
+  "padding-left": "20px",
+  "padding-right": "20px"
+}
 
 class ExamplePatient extends React.Component {
 
@@ -71,7 +75,7 @@ class ExamplePatient extends React.Component {
     render() {
       const {loaded, placeholder} = this.state;
         return (
-            <div>
+            <div className="row" style={boxMargins}>
               <div className="btn-group patient-toggle">
                 <button type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Data'})}
@@ -90,7 +94,7 @@ class ExamplePatient extends React.Component {
                 >Download</button>
                 
               </div>
-              <div className="">
+              <div className="row">
                 <div className="page-title">
                   <div className="title_left">
                     <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
@@ -124,7 +128,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Data" && this.state.loaded)
-                    ? <PatientGraph mrn={this.props.match.params.MRN}/>
+                    ? <PatientGraph mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
               }
 

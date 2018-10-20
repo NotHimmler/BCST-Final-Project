@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 let $ = require("jquery");
-
+const boxMargins = {
+    "padding-left": "20px",
+    "padding-right": "20px"
+  }
 //Source - https://stackoverflow.com/questions/5539028/converting-seconds-into-hhmmss/5539081#5539081
 function secondsToHms(d) {
     d = Number(d);
@@ -66,7 +69,7 @@ class WalkAppTable extends React.Component {
     render() {
 
         return (
-            <div className="row col-lg-12">
+            <div className="row w-100" style={boxMargins}>
             <div className="x_panel">
               <div className="x_title">
               <div className="col-md-4"><h2 id="overflow">Walk Details from Walk Around The Block App</h2></div>
