@@ -93,6 +93,7 @@ app.get('/api/v1/patient/fitbit', function (req, res) {
 app.post('/api/v1/login', function (req, res) {
     let body = req.body;
     let userInfo = body.userInfo;
+    console.log(userInfo);
     if (!dbHandler.ready) {
         res.json({
             error: "DB is not ready"

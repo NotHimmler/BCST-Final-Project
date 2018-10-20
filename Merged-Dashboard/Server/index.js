@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var fitbit = require('./app/FitbitRouter')
 var patient = require('./app/PatientRouter')
 let watb = require('./app/WatbRouter');
+let user = require('./app/UserRouter');
 
 app.use(bodyParser.json({ type: 'application/json' }));
 
@@ -21,6 +22,7 @@ app.use("/login.html", express.static("Client/login.html"));
 app.use('/api/fitbit', fitbit);
 app.use('/api/patient', patient);
 app.use('/api/watb', watb);
+app.use('/api/user', user);
 require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;
