@@ -117,7 +117,10 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
     return db.Patient.findAll({
         attributes: ["MRN", "first_name", "last_name", "last_checkup_date"],
         limit: 5,
-        order: ["last_checkup_date"]
+        order: ["last_checkup_date"],
+        where: {
+            is_archived: false,
+        }
     })
     .then((patients) => res.send(patients))
     .catch((err) => {
