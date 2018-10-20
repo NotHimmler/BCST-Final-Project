@@ -68,7 +68,6 @@ class App extends React.Component {
                       <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} exact/>
                       <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
                       <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
-                      <Route render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} />
                       </div>
                       }
                 </Switch>
