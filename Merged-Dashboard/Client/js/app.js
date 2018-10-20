@@ -29,7 +29,7 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    this.setState({whichSwitch: this.state.isLoggedIn ? this.getHomePage() : this.getLoginPage})
+    this.setState({whichSwitch: this.state.isLoggedIn ? this.getHomePage() : this.getLoginPage()})
   }
 
   updateStatus(option){
