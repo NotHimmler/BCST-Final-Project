@@ -1,6 +1,6 @@
 var express = require('express');
 var patientRouter = express.Router();
-const db = require('../../Database/models/index.js'); // new require for db object  
+const db = require('../../Database/models/index.js'); // new require for db object
 
 // Get all patients
 patientRouter.get('/', function(req,res) {
@@ -90,9 +90,45 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
      })
  })
 
+ patientRouter.post("/updateLastCheckup", function(req, res) {
+    let body = req.body.patientInfo;
+    let lastCheckupDate = new Date();
+    let username = body.username;
+    return db.Patient.update({
+        last_checkup_date: lastCheckupDate,
+        last_checkup_by: username
+    }, {
+        where: {MRN:body.mrn}
+
+    })
+    .then(data => {
+        console.log(data);
+        let message = `update ${data.length} last check up data for ${username}`;
+        res.status(200);
+        res.send({message});
+    }).catch(err => {
+        console.log(error);
+       res.status(400);
+       res.end();
+    });
+});
+
+ patientRouter.get("/longestTimeSinceCheckup", function(req, res) {
+    return db.Patient.findAll({
+        attributes: ["MRN", "first_name", "last_name", "last_checkup_date"],
+        limit: 5,
+        order: ["last_checkup_date"]
+    })
+    .then((patients) => res.send(patients))
+    .catch((err) => {
+      console.log('There was an error querying contacts', JSON.stringify(err));
+      return res.send(err);
+    });
+});
+
 // 404 not found
 patientRouter.get('*', function(req,res) {
-    res.status(404).send('404 not found')
+    res.status(404).send('404 not found');
 });
 
 module.exports = patientRouter;

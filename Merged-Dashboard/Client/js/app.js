@@ -64,7 +64,7 @@ class App extends React.Component {
                       <Route path="/" component={Home} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
-                      <Route path="/patient/:MRN" render={(props) => {return (<ExamplePatient {...props}/>)}} />
+                      <Route path="/patient/:MRN" render={(props) => {return (<ExamplePatient {...props} username={this.state.username}/>)}} />
                       <Route path="/addPatient" render={(props) => {return (<AddPatient props={props}/>)}} />
                       <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} />
                       <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>

@@ -42,7 +42,8 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({data: data, loaded:true})
+      this.setState({data: data});
+      this.updateLastCheckup(mrn);
     });
 
     /* $.ajax({
@@ -61,11 +62,39 @@ class ExamplePatient extends React.Component {
     }); */
   }
 
+  updateLastCheckup(mrn) {
+    let endpoint = `/api/patient/updateLastCheckup`;
+    let patientInfo = {
+      username: this.props.username,
+      mrn
+    }
+    let option = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({patientInfo})
+    }
+    fetch(endpoint,option)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      this.setState({loaded: true});
+    });
+  }
+
   getLastCheckup(){
-    if(this.state.data.last_checkup_date == null){
-      return "No last checkup"
+    const {data} = this.state;
+    const lastCheckupDate = data.last_checkup_date;
+    if(lastCheckupDate == null){
+      return "No last checkup";
     } else {
-      let string = new Date(this.state.data.last_checkup_date).toDateString()+" by "+this.state.data.last_checkup_by;
+      let string = new Date(lastCheckupDate).toDateString()+ " by "+ data.last_checkup_by;
       return string;
     }
 
@@ -73,7 +102,7 @@ class ExamplePatient extends React.Component {
 
 
     render() {
-      const {loaded, placeholder} = this.state;
+      const {data, loaded, placeholder} = this.state;
         return (
             <div className="row" style={boxMargins}>
               <div className="btn-group patient-toggle">
@@ -97,13 +126,13 @@ class ExamplePatient extends React.Component {
               <div className="row">
                 <div className="page-title">
                   <div className="title_left">
-                    <h3>{loaded?this.state.data.first_name + " " + this.state.data.last_name:placeholder}</h3>
-                    <p>{this.state.data.is_archived?" (This patient has been archived)":""}</p>
-                    <h4>MRN: {loaded?this.state.data.MRN:placeholder}</h4>
+                    <h3>{loaded?data.first_name + " " + data.last_name:placeholder}</h3>
+                    <p>{data.is_archived?" (This patient has been archived)":""}</p>
+                    <h4>MRN: {loaded?data.MRN:placeholder}</h4>
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
-                    <table class="table">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th scope="col">Age</th>
@@ -114,10 +143,10 @@ class ExamplePatient extends React.Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{loaded?this.state.data.age:placeholder}</td>
-                          <td>{loaded?this.state.data.sex:placeholder}</td>
-                          <td>{loaded?this.state.data.ward:placeholder}</td>
-                          <td>{loaded?this.state.data.health_condition:placeholder}</td>
+                          <td>{loaded?data.age:placeholder}</td>
+                          <td>{loaded?data.sex:placeholder}</td>
+                          <td>{loaded?data.ward:placeholder}</td>
+                          <td>{loaded?data.health_condition:placeholder}</td>
                         </tr>
                       </tbody>
                     </table>
