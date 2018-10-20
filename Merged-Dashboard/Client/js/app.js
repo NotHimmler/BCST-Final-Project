@@ -23,49 +23,32 @@ class App extends React.Component {
     const loggedIn = localStorage.isLoggedIn ? localStorage.isLoggedIn : false;
     this.state = {
       isLoggedIn: loggedIn,
-      username: localStorage.username? localStorage.username : "Log In",
-      whichSwitch: null
+      username: localStorage.username? localStorage.username : "Log In"
     }
   }
   
   componentDidMount() {
-    this.setState({whichSwitch: this.state.isLoggedIn ? this.getHomePage() : this.getLoginPage()})
+    
   }
 
   updateStatus(option){
     this.setState(option);
     localStorage.isLoggedIn = option.isLoggedIn;
     localStorage.username = option.username;
-    if (option.isLoggedIn) {
-      this.setState({whichSwitch: this.getHomePage()})
-    } else {
-      this.setState({whichSwitch: this.getLoginPage()})
-    }
   }
 
-  getLoginPage(){
+  render(){
     return (
-      <div>
-      <Switch>
-            <Route path="/" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
-            <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
-            <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} exact/>
-            <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
-            <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
-            <Route render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} />
-      </Switch>
-      </div>
-    );
-  }
-  
-  getHomePage(){
-    return (
-      <div className="container body">
+      <BrowserRouter>
+        <div className="nav-md">
+        <div className="container body">
             <div className="main_container">
-              <Sidebar username={this.state.username} />
-              <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} />
+              {this.state.isLoggedIn ? <Sidebar username={this.state.username} /> : null}
+              {this.state.isLoggedIn ? <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} />  : null}
               <div className="right_col" role="main">
                 <Switch>
+                  {this.state.isLoggedIn ? 
+                  <div>
                       <Route path="/" component={Home} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
@@ -77,18 +60,21 @@ class App extends React.Component {
                       <Route path="/test" render={(props) => {return (<Test/>)}} exact/>
                       <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
                       <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
+                      </div>
+                      :
+                      <div>
+                      <Route path="/" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
+                      <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
+                      <Route path="/register" render={(props) => {return (<Register updateAppStatus={this.updateStatus.bind(this)} />)}} exact/>
+                      <Route path="/fitbitAuth/:mrn" render={(props) => {return (<FitbitAuth {...props}/>)}} />
+                      <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
+                      <Route render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} />
+                      </div>
+                      }
                 </Switch>
               </div>
             </div>
           </div>
-    )
-  }
-
-  render(){
-    return (
-      <BrowserRouter>
-        <div className="nav-md">
-          {this.state.whichSwitch }
         </div>
       </BrowserRouter>
 
