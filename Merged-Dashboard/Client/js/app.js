@@ -45,6 +45,7 @@ class App extends React.Component {
 
   getLoginPage(){
     return (
+      <div>
       <Switch>
             <Route path="/" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
             <Route path="/login" render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} exact/>
@@ -53,6 +54,7 @@ class App extends React.Component {
             <Route path="/fitbitAuth/" render={(props) => {return (<FitbitAuth {...props}/>)}} />
             <Route render={(props) => {return (<Login updateAppStatus={this.updateStatus.bind(this)}/>)}} />
       </Switch>
+      </div>
     );
   }
   
