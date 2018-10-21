@@ -169,7 +169,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Settings")
-                    ? <PatientSettings mrn={this.props.match.params.MRN} archived={data.is_archived}/>
+                    ? <PatientSettings mrn={this.props.match.rams.MRN} archived={data.is_archived}/>
                     : null
               }
 
