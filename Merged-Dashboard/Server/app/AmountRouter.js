@@ -27,7 +27,7 @@ amountRouter.get("/mrn/:mrn", function(req, res) {
     })
     .then((data) => {
         if (data == null) {
-            res.send({error: "No patient with this mrn"})
+            res.send({error: "No data for this mrn"})
         } else {
             res.send(data)
         }
@@ -37,6 +37,24 @@ amountRouter.get("/mrn/:mrn", function(req, res) {
       return res.send(err)
     });
  });
+
+ amountRouter.post("/addLog/mrn/:mrn", function(req, res) {
+    //console.log(req.params.mrn)
+    let body = req.body;
+    return db.AmountData.findOrCreate(body)
+    .then((data) => {
+        if (data[1]) {
+            res.send({error: "Log already exists"})
+        } else {
+            res.send({okay: "Entry created"})
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+ 
 
 // 404 not found
 amountRouter.get('*', function(req,res) {
