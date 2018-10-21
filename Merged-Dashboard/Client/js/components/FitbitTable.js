@@ -15,8 +15,14 @@ class FitbitTable extends React.Component {
     this.change_weekly = this.change_weekly.bind(this);
     this.change_monthly = this.change_monthly.bind(this);
     this.colorizeBars = this.colorizeBars.bind(this);
+    this.handleInviteButton = this.handleInviteButton.bind(this);
+    this.handleInviteChange = this.handleInviteChange.bind(this);
 
     this.state = {
+      inviting: false,
+      inviteEmail: "",
+      invited: false,
+      inviteLink: "",
       echart: null,
       // optionss
       options_fitbit: {
@@ -312,6 +318,24 @@ class FitbitTable extends React.Component {
     })
   }
 
+  handleInviteButton(data, event) {
+    if (this.state.inviting && data == "cancel") {
+      this.setState({inviting: false})
+    } else if (this.state.inviting && data == "invite") {
+      if (this.state.inviteEmail != "") {
+        
+      }
+    } else {
+
+    }
+    this.setState({inviting: !this.state.inviting})
+  }
+
+  handleInviteChange(event) {
+    let href = `mailto:${this.state.inviteEmail}?subject=Please Connect Your Fitbit For Therapist&body=http://localhost:8080/fitbitAuth/${this.props.mrn}`
+    this.setState({inviteEmail: event.target.value, inviteLink: href})
+  }
+
   render() {
     return (
       
@@ -383,7 +407,7 @@ class FitbitTable extends React.Component {
             </ul>
             <div className="clearfix" />
           </div>
-          No Data
+          No Data - {this.state.inviting ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> : null}<button onClick={() => this.handleInviteButton("cancel")}>{this.state.inviting && this.state.inviteEmail != "" ? <a href={this.state.inviteLink}>Send Email</a> : "Send Patient Invite"}</button> {this.state.inviting ? <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> : null}
         </div>
       }
       </div>
