@@ -54,12 +54,21 @@ class FitbitTable extends React.Component {
         xAxis: [
           {
             type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            name: "Day",
+            axisLabel: {
+              show: true
+            }
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            name: "Steps Walked",
+            axisLabel: {
+              show: true,
+              rotate: 90
+            }
           }
         ],
         series: [
@@ -289,6 +298,18 @@ class FitbitTable extends React.Component {
     this.setState({ options_fitbit: ops });
     echartBar3.setOption(this.state.options_fitbit);
     this.setState({ echart: echartBar3 });
+  }
+
+  //Make a call to the database to see if the patient has any data in the DB or a fitbit token
+  patientHasData() {
+    fetch("/api/fitbit/mrn/"+this.props.mrn)
+    .then(data => {
+      return data.json();
+    }).then(data => {
+      console.log(data)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   render() {
