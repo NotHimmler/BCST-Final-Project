@@ -3,10 +3,96 @@ var fitbitRouter = express.Router();
 const db = require('../../Database/models/index.js');
 db.FitbitTokens.sync();
 db.FitbitData.sync();
+
+const Sequelize = require('sequelize');
+const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
+
+// Get all fb data
 fitbitRouter.get('/', function(req,res) {
-    res.send("Hello World! This is fitbit router!");
+    return db.FitbitData.findAll()
+    .then((data) => res.send(data))
+    .catch((err) => {
+      console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
 });
 
+// Get fb data for patient with specific mrn
+fitbitRouter.get("/mrn/:mrn", function(req, res) {
+    //console.log(req.params.mrn)
+    return db.FitbitData.findAll({
+        where: {
+            MRN: req.params.mrn,
+        },
+        order: [['date', 'DESC']],
+    })
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+ // Get fb data for patient with specific mrn
+fitbitRouter.get("/mrn/:mrn/weekly", function(req, res) {
+    //console.log(req.params.mrn)
+    db.sequelize.query("SELECT MRN,strftime('%Y-%m-%d', `date`)AS `week end`,SUM(steps) FROM `FitbitData` WHERE MRN = 80000001 GROUP BY strftime('%W', `date`)", { type: db.sequelize.QueryTypes.SELECT})
+    /* return db.FitbitData.findAll({
+        attributes: ['MRN', "steps",
+        [Sequelize.fn('strftime', Sequelize.col('date'), '%m-%d-%Y'), 'date']],
+        where: {
+            MRN: req.params.mrn,
+        },
+        order: [['date', 'DESC']]
+    }) */
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+            //console.log(data);
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+  // Get fb data for patient with specific mrn
+fitbitRouter.get("/mrn/:mrn/weeklytest", function(req, res) {
+    //console.log(req.params.mrn)
+    db.sequelize.query("SELECT MRN,strftime('%Y-%m-%d', `date`)AS `date`,strftime('%W', `date`)AS `week`, strftime('%w', `date`)AS `weekday`,steps FROM `FitbitData` WHERE MRN = 80000001", { type: db.sequelize.QueryTypes.SELECT})
+    /* return db.FitbitData.findAll({
+        attributes: ['MRN', "steps",
+        [Sequelize.fn('strftime', Sequelize.col('date'), '%m-%d-%Y'), 'date']],
+        where: {
+            MRN: req.params.mrn,
+        },
+        order: [['date', 'DESC']]
+    }) */
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+            //console.log(data);
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+// FITBIT AUTH STUFF
+//=============================================================================================
 fitbitRouter.get('/getAuthBasic', (req, res) => {
     const fitbitSecret = process.env.FBCS;
     const fitbitClient = process.env.FBCID;

@@ -117,13 +117,44 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
     return db.Patient.findAll({
         attributes: ["MRN", "first_name", "last_name", "last_checkup_date"],
         limit: 5,
-        order: ["last_checkup_date"]
+        order: ["last_checkup_date"],
+        where: {
+            is_archived: false,
+        }
     })
     .then((patients) => res.send(patients))
     .catch((err) => {
       console.log('There was an error querying contacts', JSON.stringify(err));
       return res.send(err);
     });
+});
+
+// wait for later test
+patientRouter.post("/changePatientStatus", function(req, res) {
+    console.log(req.body.patientInfo);
+    let mrn = req.body.patientInfo.mrn;
+    let new_is_archived = !req.body.patientInfo.is_archived;
+    return db.Patient.update({
+        is_archived: new_is_archived,
+        date_archived: new Date()
+    }, {
+        where: {
+            MRN: mrn
+        }
+    }).then(
+        data => {
+            console.log(data);
+            let msg = "The patient state is successfully changed.";
+            res.status(200);
+            res.send({msg});
+        }
+    ).catch(
+        err => {
+            console.log(err);
+            res.status(400);
+            res.end();
+        }
+    );
 });
 
 // 404 not found

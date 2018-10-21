@@ -284,21 +284,23 @@ class DBHandler {
         // }
         // )
 
-        // let sqlQuery = `select patient_id from PatientMatchTherapist where therapist_id in ('${therapistId}')`;
-        // let promise = new Promise((resolve, reject) => {
-        //     this.sequelize.query(sqlQuery).then(data => {
-        //         let response = data[0];
-        //         if (response && response[0] && response[0].last_checkout) {
-        //             resolve(response[0].last_checkout);
-        //         } else {
-        //             resolve(errorInfo);
-        //         }
+        let sqlQuery = 'select patient_id from PatientMatchTherapist where patient_id = "test"';
+        let promise = new Promise((resolve, reject) => {
+            this.sequelize.query(sqlQuery).then(data => {
+                // console.log(data);
+                let response = data[0];
+                console.log(response);
+                if (response) {
+                    resolve({patientIds: response[0].patient_id});
+                } else {
+                    resolve(errorInfo);
+                }
 
-        //     }).catch((e) => {
-        //         resolve(e);
-        //     });
-        // });
-        // return promise;
+            }).catch((e) => {
+                resolve(e);
+            });
+        });
+        return promise;
 
     }
 
