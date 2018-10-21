@@ -48,17 +48,19 @@ class StatusSettings extends React.Component {
                 {
                   this.props.archived
                   ? <div className="btn btn-success" 
-                    onClick={() => { if (window.confirm('Are you sure you wish to re-admit this patient?'))
-                    this.changePatientStatus(this.props.mrn, this.props.archived)
+                    onClick={() => { if (window.confirm('Are you sure you wish to re-admit this patient?')){
+                    this.changePatientStatus(this.props.mrn, this.props.archived);
+                    window.location.reload();
                     // this.printProps()
-                       } }>
+                     }  } }>
                       Re-admit Patient</div>
                   : <div className="btn btn-success"
-                  onClick={() => { if (window.confirm('Are you sure you wish to archive this patient?'))
+                  onClick={() => { if (window.confirm('Are you sure you wish to archive this patient?')){
                   // this.printProps()
                     // this.onCancel();
-                    this.changePatientStatus(this.props.mrn, this.props.archived)
-                       } }>
+                    this.changePatientStatus(this.props.mrn, this.props.archived);
+                    window.location.reload()
+                      }} }>
                       Archive Patient</div>
                 }
                   
