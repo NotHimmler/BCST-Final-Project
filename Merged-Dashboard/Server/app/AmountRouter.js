@@ -39,11 +39,12 @@ amountRouter.get("/mrn/:mrn", function(req, res) {
  });
 
  amountRouter.post("/addLog/mrn/:mrn", function(req, res) {
-    //console.log(req.params.mrn)
     let body = req.body;
-    return db.AmountData.findOrCreate(body)
+    body["MRN"] = req.params.mrn;
+    return db.AmountData.findOrCreate({where: body})
     .then((data) => {
-        if (data[1]) {
+        console.log(data[1])
+        if (!data[1]) {
             res.send({error: "Log already exists"})
         } else {
             res.send({okay: "Entry created"})
