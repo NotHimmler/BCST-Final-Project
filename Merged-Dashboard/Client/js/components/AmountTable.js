@@ -7,7 +7,48 @@ const boxMargins = {
 }
 
 class AmountTable extends React.Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+      rows: "No Data"
+    }
+  }
+
+  componentDidMount() {
+    let endpoint = `/api/amount/mrn/${mrn}`;
+
+    fetch(endpoint)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      this.setState({data: data});
+      this.generateAndSetRows(data);
+    });
+  }
+
+  generateAndSetRows(data) {
+    let rows = data.map((rowData) => {
+      return (
+        <tr>
+          <th scope="row">{rowData.exercise}</th>
+          <td>{rowData.sets}</td>
+          <td>{rowData.sets_L}</td>
+          <td>{rowData.sets_R}</td>
+          <td>{rowData.reps}</td>
+          <td>{rowData.reps_L}</td>
+          <td>{rowData.reps_R}</td>
+          <td>{rowData.dur}</td>
+          <td>{rowData.is_completed}</td>
+        </tr>
+      )
+    })
+  }
 
   render() {
     return (
@@ -116,7 +157,7 @@ class AmountTable extends React.Component {
             </ul>
             <div className="clearfix" />
           </div>
-          No Data
+          {this.state.rows}
         </div>
         }
       </div>
