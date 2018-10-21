@@ -12,7 +12,7 @@ class PatientSettings extends React.Component {
             <div>
               {/*ALL HTML MUST BE WITHIN THIS DIV*/}
               <GraphSettings/>
-              <StatusSettings archived={this.props.archived}/>
+              <StatusSettings mrn={this.props.mrn} archived={this.props.archived}/>
 
             </div>
         )

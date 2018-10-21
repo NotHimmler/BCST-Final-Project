@@ -15,14 +15,14 @@ class StatusSettings extends React.Component {
       let patientInfo = {
         'mrn': mrn,
         'is_archived': is_archived
-      }
+      };
       let option = {
-        method: 'POST',
+        method: "POST",
         headers: {
           'Content-Type': 'application/json'
         },
-        body: {patientInfo}
-      }
+        body: JSON.stringify({patientInfo})
+      };
       fetch(endpoint, option).then(
         res => {
           if (res.status !== 200) {
@@ -31,7 +31,10 @@ class StatusSettings extends React.Component {
           return res.json();
         }
 
-      )
+      );
+    }
+    printProps(){
+      console.log(this.props);
     }
     render() {
         return (
@@ -46,13 +49,15 @@ class StatusSettings extends React.Component {
                   this.props.archived
                   ? <div className="btn btn-success" 
                     onClick={() => { if (window.confirm('Are you sure you wish to re-admit this patient?'))
-                    changePatientStatus(this.props.match.params.MRN, this.props.match.params.is_archived)
+                    this.changePatientStatus(this.props.mrn, this.props.archived)
+                    // this.printProps()
                        } }>
                       Re-admit Patient</div>
                   : <div className="btn btn-success"
                   onClick={() => { if (window.confirm('Are you sure you wish to archive this patient?'))
+                  // this.printProps()
                     // this.onCancel();
-                    changePatientStatus(this.props.match.params.MRN, this.props.match.params.is_archived)
+                    this.changePatientStatus(this.props.mrn, this.props.archived)
                        } }>
                       Archive Patient</div>
                 }

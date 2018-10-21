@@ -131,10 +131,11 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
 
 // wait for later test
 patientRouter.post("/changePatientStatus", function(req, res) {
+    console.log(req.body.patientInfo);
     let mrn = req.body.patientInfo.mrn;
     let new_is_archived = !req.body.patientInfo.is_archived;
     return db.Patient.update({
-        is_archived: new_is_archieved,
+        is_archived: new_is_archived,
         date_archived: new Date()
     }, {
         where: {
