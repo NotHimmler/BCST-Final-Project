@@ -130,11 +130,12 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
 });
 
 // wait for later test
-patientRouter.post("/changePatientState", function(req, res) {
+patientRouter.post("/changePatientStatus", function(req, res) {
     let mrn = req.body.patientInfo.mrn;
-    let new_is_archieved = !req.body.patientInfo.is_archieved;
+    let new_is_archived = !req.body.patientInfo.is_archived;
     return db.Patient.update({
-        is_archieved: new_is_archieved
+        is_archived: new_is_archieved,
+        date_archived: new Date()
     }, {
         where: {
             MRN: mrn
@@ -146,12 +147,15 @@ patientRouter.post("/changePatientState", function(req, res) {
             res.status(200);
             res.send({msg});
         }
-    ).catch(err => {
-        console.log(err);
-        res.status(400);
-        res.end();
-    });
+    ).catch(
+        err => {
+            console.log(err);
+            res.status(400);
+            res.end();
+        }
+    );
 });
+
 // 404 not found
 patientRouter.get('*', function(req,res) {
     res.status(404).send('404 not found');
