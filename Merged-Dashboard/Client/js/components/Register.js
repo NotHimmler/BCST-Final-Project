@@ -18,20 +18,24 @@ class Register extends React.Component {
     submitHandler(e) {
 		e.preventDefault();
 		if (this.props.onSubmit) this.props.onSubmit();
-        var userid =$('.register .userid').val();
+        var user_id =$('.register .userid').val();
 		var password = $('.register .password').val();
 		var email = $('.register .email').val();
-        if(!userid||!password||!email){
+		var first_name = $('.register .firstname').val();
+		var last_name = $('.register .lastname').val();
+        if(!user_id||!password||!email||!first_name||!last_name){
             return;
         }
         let data = JSON.stringify({
             userInfo:{
-				userid,
+				user_id,
 				email,
-                password
+				password,
+				first_name,
+				last_name
             }});
         $.ajax({
-            url:'/api/v1/register',
+            url:'/api/user/register',
             type:"post",
             data:data,
             contentType:"application/json;charset=utf-8",
@@ -48,7 +52,7 @@ class Register extends React.Component {
 					})
 					this.props.updateAppStatus({
                         isLoggedin:true,
-                        username:userid
+                        username:user_id
                     });
 				}
             }
@@ -75,6 +79,12 @@ class Register extends React.Component {
 	                <section className="login_content">
 	                    <form onSubmit={this.submitHandler}>
 	                        <h1>Create Account</h1>
+							<div>
+	                            <input type="text" className="form-control firstname" placeholder="First Name" required="" />
+	                        </div>
+							<div>
+	                            <input type="text" className="form-control lastname" placeholder="Last Name" required="" />
+	                        </div>
 	                        <div>
 	                            <input type="text" className="form-control userid" placeholder="Username" required="" />
 	                        </div>

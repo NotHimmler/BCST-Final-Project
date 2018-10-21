@@ -14,6 +14,8 @@ class UserDetails: UIViewController {
     var lastName: String = ""
     //MARK: Properties
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
 
     override func viewDidLoad() {
@@ -36,11 +38,13 @@ class UserDetails: UIViewController {
                 firstName = userInfo.value(forKey: "firstName") as! String? ?? "John"
                 lastName = userInfo.value(forKey: "lastName") as! String? ?? "Doe"
                 loginButton.setTitle("Logout", for: .normal)
-                
+                nameLabel.text = firstName + " " + lastName
+                nameLabel.isHidden = false;
             } else {
                 for object in result! {
                     context.delete(object)
                 }
+                nameLabel.isHidden = true;
                 try context.save()
             }
         } catch let error as NSError {
@@ -67,6 +71,7 @@ class UserDetails: UIViewController {
                 print("Could not fetch. \(error), \(error.userInfo)")
             }
             loginButton.setTitle("Patient Login", for: .normal)
+            nameLabel.isHidden = true;
         }
         
     }

@@ -16,6 +16,7 @@ class LoginView: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
     
     
     override func viewDidLoad() {
@@ -39,19 +40,22 @@ class LoginView: UIViewController {
         
         self.usernameTextField.inputAccessoryView = doneToolbar
         self.passwordTextField.inputAccessoryView = doneToolbar
+        self.lastNameTextField.inputAccessoryView = doneToolbar
     }
     
     @objc func doneButtonAction() {
         self.usernameTextField.resignFirstResponder()
         self.passwordTextField.resignFirstResponder()
+        self.lastNameTextField.resignFirstResponder()
     }
     
     @IBAction func loginHandler(_ sender: Any) {
-        if usernameTextField.text == "" || passwordTextField.text == ""{
+        if usernameTextField.text == "" || passwordTextField.text == "" ||
+            lastNameTextField.text == "" {
             return
         }
         //declare parameter as a dictionary which contains string as key and value combination.
-        let parameters = ["userInfo": ["userid": usernameTextField.text, "password": passwordTextField.text]]
+        let parameters = ["userInfo": ["mrn": usernameTextField.text, "firstName": passwordTextField.text, "lastName": lastNameTextField.text]]
         
         //create the url with NSURL
         let url = NSURL(string: WalkSyncing.loginString)
@@ -96,10 +100,12 @@ class LoginView: UIViewController {
                     print(json)
                     // handle json...
                     if json["error"] == nil {
-                        let token = json["token"]
+                        let token = json["MRN"]
                         
                         let newUserInfo = NSManagedObject(entity: entity, insertInto: context)
                         newUserInfo.setValue(token, forKey: "token")
+                        newUserInfo.setValue(json["first_name"], forKey: "firstName")
+                        newUserInfo.setValue(json["last_name"], forKey: "lastName")
                         do {
                             try context.save()
                             finished = true

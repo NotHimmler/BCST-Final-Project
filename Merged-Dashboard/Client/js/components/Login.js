@@ -23,8 +23,9 @@ class Login extends React.Component {
                 userid,
                 password
             }});
+
         $.ajax({
-            url:'/api/v1/login',
+            url:'/api/user/login',
             type:"post",
             data:data,
             contentType:"application/json;charset=utf-8",
@@ -37,10 +38,13 @@ class Login extends React.Component {
 					});
                 }else{
                     this.props.updateAppStatus({
-                        isLoggedin:true,
-                        username:userid
+                        isLoggedIn:true,
+                        username: userid
                     });
                 }
+            },
+            error: (error) => {
+                console.log(error);
             }
         });
     }

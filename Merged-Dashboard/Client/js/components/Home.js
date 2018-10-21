@@ -4,16 +4,60 @@ import { Link } from "react-router-dom";
 import DonutGraph from "../components/DonutGraph"
 
 class Home extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loaded: false,
+      patientList: [],
+      placeholder: "Loading..."
+    }
+  }
+
+  getLastCheckupList() {
+    const { patientList,loaded, placeholder } = this.state;
+    if (!patientList.length) {
+      return null;
+    }
+    const listItem = patientList.map(patient => <li key={patient.MRN} className="media event">
+          <a className="pull-left border-aero profile_thumb">
+            <i className="fa fa-user aero"></i>
+          </a>
+        <div className="media-body">
+          <Link className="title" to={`/patient/${patient.MRN}`}>{`${patient.first_name} ${patient.last_name}`}</Link>
+          <p><strong>{this.getDayLeft(patient.last_checkup_date)}</strong> since last checkup</p>
+        </div>
+    </li>
+    );
+    return loaded? <ul>{listItem}</ul> : <p>{placeholder}</p> 
+  }
+
+  getDayLeft(date) {
+    const timestamps = new Date().getTime() - new Date(date).getTime();
+    const dayLeft = parseInt(timestamps/1000/60/60/24);
+    const day = dayLeft>1 ? ' days': ' day'
+    return dayLeft + day;
+  }
+
+  componentDidMount() {
+    let endpoint = "api/patient/longestTimeSinceCheckup";
+
+    fetch(endpoint)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+        this.setState({loaded: true, patientList: data});
+    });  
+  }
     
     render() {
         return (
             <div>
                 <div className="row">
                 <DonutGraph/>
-
-
-                
-
                 <div className="col-sm-4">
                     <div className="x_panel">
                     <div className="x_title">
@@ -21,6 +65,7 @@ class Home extends React.Component {
                     <div className="clearfix"></div>
                     </div>
                     <div className="x_content">
+        {/* { loaded ? */}
                     <ul className="list-unstyled top_profiles scroll-view">
                       <li className="media event">
                         <a className="pull-left border-aero profile_thumb">
@@ -37,7 +82,7 @@ class Home extends React.Component {
                           <i className="fa fa-user green"></i>
                         </a>
                         <div className="media-body">
-                          <Link to="/patient" className="title">Elizabeth Smith</Link>
+                          <Link to="/patient/80000001" className="title">Elizabeth Smith</Link>
                           <p><strong>34% </strong> uncompleted</p>
 
                         </div>
@@ -75,7 +120,8 @@ class Home extends React.Component {
                       </li>
 
                     </ul>
-                    </div>
+        {/* : <p>{placeholder}</p> } */}
+                  </div>
                     </div>
                 </div>
 
@@ -85,50 +131,8 @@ class Home extends React.Component {
                     <h2><span className="fa fa-clock-o"></span> Longest Time Since Checkup</h2>
                     <div className="clearfix"></div>
                     </div>
-                    <div className="x_content">
-                    <ul className="list-unstyled top_profiles scroll-view">
-                      <li className="media event">
-                        <a className="pull-left border-aero profile_thumb">
-                          <i className="fa fa-user aero"></i>
-                        </a>
-                        <div className="media-body">
-                          <a className="title" href="#">Patient D10</a>
-                          <p><strong>29 days </strong> since last checkup</p>
-
-                        </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-green profile_thumb">
-                          <i className="fa fa-user blue"></i>
-                        </a>
-                        <div className="media-body">
-                          <Link to="/patient" className="title">Patient D09</Link>
-                          <p><strong>17 days </strong> since last checkup</p>
-
-                        </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-blue profile_thumb">
-                          <i className="fa fa-user aero"></i>
-                        </a>
-                        <div className="media-body">
-                          <a className="title" href="#">Patient D18</a>
-                          <p><strong>15 days </strong> since last checkup</p>
-
-                        </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-aero profile_thumb">
-                          <i className="fa fa-user green"></i>
-                        </a>
-                        <div className="media-body">
-                          <Link to="/patient" className="title">Elizabeth Smith</Link>
-                          <p><strong>14 days </strong> since last checkup</p>
-
-                        </div>
-                      </li>
-
-                    </ul>
+                    <div className="x_content"> 
+                        {this.getLastCheckupList()}
                     </div>
                     </div>
                 </div>
@@ -172,19 +176,7 @@ class Home extends React.Component {
                   </div>
                 </div>
                 {/*  End to do list */}
-
-                
-
                 </div>
-                
-
-                
-
-                
-
-                
-                
-
             </div>
         )
     }
