@@ -133,10 +133,8 @@ class TestChart extends React.Component {
                     </div>
                     <div className="x_content">
                         <div id="test_chart"></div>
-                        <button onClick={this.addData}>Add data</button>
                         <p>From: {loaded?moment(this.state.fromDate).format('dddd, MMMM Do YYYY'):placeholder}</p>
                         <p>To: {loaded?moment(this.state.toDate).format('dddd, MMMM Do YYYY'):placeholder}</p>
-                        <p>Test: {moment("2018-10-12").format('dddd, MMMM Do YYYY')}</p>
                     </div>
                 </div>
 
