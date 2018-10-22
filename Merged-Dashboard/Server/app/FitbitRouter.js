@@ -219,8 +219,10 @@ fitbitRouter.post('/addFitbitToken', (req, res) => {
 })
 
 fitbitRouter.get('/getAuthURL', (req, res) => {
-    let serverDomain = process.env.DEV ? require('./TestConfig').redirect_uri : require('./BuildConfig').redirect_uri;
-    let url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22CZMN&redirect_uri=${serverDomain}/fitbitAuth/&scope=activity%20profile&expires_in=31536000`
+    let config = process.env.DEV ? require("./TestConfig") : require("./BuildConfig");
+    let clientId = config.client_id;
+    let serverDomain = config.redirect_uri;
+    let url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${serverDomain}/fitbitAuth/&scope=activity%20profile&expires_in=31536000`
     res.send({url: url});
 })
 
