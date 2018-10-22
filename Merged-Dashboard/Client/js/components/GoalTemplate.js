@@ -12,15 +12,15 @@ class GoalTemplate extends React.Component {
                     <FormGroup controlId="goalStart">
                         <ControlLabel>Goal Start*</ControlLabel>
                         <FormControl
-                            type="text"
-                            placeholder="Start date ..."
+                            type="date"
+                            id="startDate"
                         />
                     </FormGroup>
                     <FormGroup controlId="goalEnd">
                         <ControlLabel>Goal End*</ControlLabel>
                         <FormControl
-                            type="text"
-                            placeholder="End date ..."
+                            type="date"
+                            id="endDate"
                         />
                     </FormGroup>
                     <FormGroup controlId="goalStatement">
