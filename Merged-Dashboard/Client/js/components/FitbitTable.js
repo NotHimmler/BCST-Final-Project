@@ -5,8 +5,8 @@ import DateRangePicker from "../components/DateRangePicker";
 
 import etheme from "../components/Charts/Theme";
 const boxMargins = {
-  "padding-left": "20px",
-  "padding-right": "20px"
+  "paddingLeft": "20px",
+  "paddingRight": "20px"
 }
 class FitbitTable extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class FitbitTable extends React.Component {
     this.colorizeBars = this.colorizeBars.bind(this);
     this.handleInviteButton = this.handleInviteButton.bind(this);
     this.handleInviteChange = this.handleInviteChange.bind(this);
+    this.patientHasData = this.patientHasData.bind(this);
 
     this.state = {
       inviting: false,
@@ -123,6 +124,7 @@ class FitbitTable extends React.Component {
     };
   }
   componentDidMount() {
+    this.patientHasData();
     // Panel toolbox
     if(this.props.lastName != "Test") return;
     $(".collapse-link").on("click", function() {
@@ -308,6 +310,7 @@ class FitbitTable extends React.Component {
 
   //Make a call to the database to see if the patient has any data in the DB or a fitbit token
   patientHasData() {
+    console.log("Calling patient has data");
     fetch("/api/fitbit/mrn/"+this.props.mrn)
     .then(data => {
       return data.json();
