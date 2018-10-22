@@ -27,8 +27,22 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
         order: [['date', 'DESC']],
     })
     .then((data) => {
+        //No database in fitbit table
         if (data == null) {
-            res.send({error: "No patient with this mrn"})
+            //Check if there is a fitbit token
+            db.FitbitTokens.findOne({where: {MRN: req.params.mrn}})
+            .then(data => {
+                if(data == null) {
+                    res.send({error: "No data for patient with this mrn"})
+                } else {
+                    //Use fitbit api to get data
+                    res.send({"okay": "Patient has data"});
+                }
+            }).catch(err => {
+                console.log('There was an error querying contacts', JSON.stringify(err))
+                return res.send(err)
+            })
+        //There is stored data in the database
         } else {
             res.send(data)
         }
