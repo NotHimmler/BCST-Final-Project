@@ -27,6 +27,9 @@ class ExamplePatient extends React.Component {
       loaded: false,
       placeholder: "Loading...",
     };
+
+    this.setContent = this.setContent.bind(this);
+    this.updateLastCheckup = this.updateLastCheckup.bind(this);
   }
 
   componentWillMount() {
@@ -44,7 +47,8 @@ class ExamplePatient extends React.Component {
     .then(data => {
       console.log(data);
       this.setState({data: data});
-      this.updateLastCheckup(mrn);
+      this.setState({loaded: true});
+      //this.updateLastCheckup(mrn);
     });
 
     /* $.ajax({
@@ -85,8 +89,11 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({loaded: true});
     });
+  }
+
+  setContent(contentType) {
+    this.setState({"content": contentType});
   }
 
   getLastCheckup(){
@@ -113,6 +120,9 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Goal'})}
                 >Goals</button>
+                <button type="button" className="btn btn-primary" 
+                onClick={() => this.setState({content: 'Notes'})}
+                >Checkup Notes</button>
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
@@ -176,7 +186,7 @@ class ExamplePatient extends React.Component {
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} /> : null
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} setContent={this.setContent} user={this.props.username} checkupUpdate={this.updateLastCheckup}/> : null
               }
 
 
