@@ -16,15 +16,25 @@ class TestChart extends React.Component {
             loaded: false,
             placeholder: "Loading...",
             fitbitData: {},
-            fromDate: moment()
+            fromDate: moment(),
+            toDate: moment(),
+            minDate: moment(),
+            maxDate: moment(),
         };
         this.addData = this.addData.bind(this);
-        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleFromDateChange = this.handleFromDateChange.bind(this);
+        this.handleToDateChange = this.handleToDateChange.bind(this);
     }
 
-    handleDateChange(date) {
+    handleFromDateChange(date) {
         this.setState({
           fromDate: date
+        });
+      }
+
+    handleToDateChange(date) {
+        this.setState({
+          toDate: date
         });
       }
 
@@ -62,6 +72,8 @@ class TestChart extends React.Component {
                 this.setState({
                     fromDate: moment(from[0]),
                     toDate: moment(to[0]),
+                    minDate: moment(from[0]),
+                    maxDate: moment(to[0]),
                 });
 
                 // Get fitbit data from database
@@ -99,7 +111,19 @@ class TestChart extends React.Component {
                 <div className="col-sm">
                 <DatePicker
                     selected={this.state.fromDate}
-                    onChange={this.handleDateChange}/>
+                    minDate={this.state.minDate}
+                    maxDate={this.state.maxDate}
+                    onChange={this.handleFromDateChange}/>
+                </div>
+                <div className="col-sm">
+                    <p>To</p>
+                </div>
+                <div className="col-sm">
+                <DatePicker
+                    selected={this.state.toDate}
+                    minDate={this.state.minDate}
+                    maxDate={this.state.maxDate}
+                    onChange={this.handleToDateChange}/>
                 </div>
                 </div>
                 <div className="x_panel">
