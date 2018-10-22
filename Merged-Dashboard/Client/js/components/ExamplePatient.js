@@ -11,8 +11,8 @@ import TestChart from '../components/Charts/TestChart'
 import WalkAppTable from "./WalkAppTable";
 
 const boxMargins = {
-  "padding-left": "20px",
-  "padding-right": "20px"
+  "paddingLeft": "20px",
+  "paddingRight": "20px"
 }
 
 class ExamplePatient extends React.Component {
