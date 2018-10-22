@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PatientGraph from '../components/PatientGraph'
 import PatientGoal from '../components/PatientGoal'
 import PatientSettings from '../components/PatientSettings'
+import PatientCheckup from '../components/PatientCheckup'
 
 //For testing
 import TestChart from '../components/Charts/TestChart'
@@ -132,6 +133,7 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
+                    <button onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
                     <table className="table">
                       <thead>
                         <tr>
@@ -171,6 +173,10 @@ class ExamplePatient extends React.Component {
                 (this.state.content === "Settings")
                     ? <PatientSettings mrn={this.props.match.params.MRN} archived={data.is_archived}/>
                     : null
+              }
+
+              {
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} /> : null
               }
 
 
