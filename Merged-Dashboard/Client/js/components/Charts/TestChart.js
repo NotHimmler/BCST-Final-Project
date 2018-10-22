@@ -19,6 +19,7 @@ class TestChart extends React.Component {
             toDate: moment(),
             minDate: moment(),
             maxDate: moment(),
+            mrn: '80000001',
         };
         this.addData = this.addData.bind(this);
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
@@ -27,6 +28,9 @@ class TestChart extends React.Component {
 
     // Handler for 'from' date picker
     handleFromDateChange(date) {
+        let endpoint = `/api/fitbit/mrn/${this.state.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
+        console.log(endpoint);
+        this.addData(endpoint)
         this.setState({
           fromDate: date
         });
@@ -34,6 +38,8 @@ class TestChart extends React.Component {
     
     // Handler for 'to' date picker
     handleToDateChange(date) {
+        let endpoint = `/api/fitbit/mrn/${this.state.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
+        this.addData(endpoint)
         this.setState({
           toDate: date
         });
@@ -73,9 +79,8 @@ class TestChart extends React.Component {
         ec.setOption(this.state.option);
         this.setState({ec:ec});
 
-        let mrn = '80000001'
-        let dateEndpoint = `/api/fitbit/mrn/${mrn}/datelimit`;
-        let dataEndpoint = `/api/fitbit/mrn/${mrn}`
+        let dateEndpoint = `/api/fitbit/mrn/${this.state.mrn}/datelimit`;
+        let dataEndpoint = `/api/fitbit/mrn/${this.state.mrn}`;
         
         // Get date limits
         fetch(dateEndpoint)
