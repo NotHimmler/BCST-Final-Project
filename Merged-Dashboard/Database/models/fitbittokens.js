@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     refreshToken: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    user_id: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
   }, {});
   FitbitTokens.associate = function(models) {
