@@ -110,6 +110,13 @@ class PatientList extends React.Component {
     )
   }
 
+  keywordsNotMatchPatient(patient) {
+    return (!patient.MRN.includes(this.state.keyword) &&
+        !(patient.ward.toLowerCase().includes(this.state.keyword) && !patient.is_archived) &&
+        !patient.first_name.toLowerCase().includes(this.state.keyword) &&
+        !patient.last_name.toLowerCase().includes(this.state.keyword) );
+  }
+
   generateTable(keywords) {
     this.setState({"archived": this.props.archived});
     this.setState({"keyword": keywords.toLowerCase()});
@@ -128,10 +135,7 @@ class PatientList extends React.Component {
 
         for (let patient of data) {
             console.log(patient);
-            if (!patient.MRN.includes(this.state.keyword) &&
-            !patient.ward.toLowerCase().includes(this.state.keyword) &&
-            !patient.first_name.toLowerCase().includes(this.state.keyword) &&
-            !patient.last_name.toLowerCase().includes(this.state.keyword))
+            if (this.keywordsNotMatchPatient(patient))
                 continue;
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
