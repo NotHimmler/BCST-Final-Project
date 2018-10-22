@@ -112,7 +112,7 @@ class PatientList extends React.Component {
 
   generateTable(keywords) {
     this.setState({"archived": this.props.archived});
-    this.setState({"keyword": keywords});
+    this.setState({"keyword": keywords.toLowerCase()});
     let endpoint = "";
     this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
 
