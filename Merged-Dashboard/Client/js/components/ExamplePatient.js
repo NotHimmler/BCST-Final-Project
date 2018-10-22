@@ -167,8 +167,8 @@ class ExamplePatient extends React.Component {
 
               {/*For testing...*/}
               {
-                (this.state.content === "Test")
-                    ? <TestChart/>
+                (this.state.content === "Test" && this.state.loaded)
+                    ? <TestChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
               }
 
