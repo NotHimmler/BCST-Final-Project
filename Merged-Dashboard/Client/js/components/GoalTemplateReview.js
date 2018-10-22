@@ -9,16 +9,21 @@ class GoalTemplate extends React.Component {
             goalString : "Edit goal here..."
         }
     }
+
+    submitHandler() {
+
+    }
     
     render() {
         return (
             <div>
                 <p>Review goal</p>
-                <form>
+                <form onSubmit={this.props.addGoalHandler}>
                     <FormGroup controlId="reviewGoal">
                         <FormControl
                             type="textarea"
                             placeholder="Edit goal ..."
+                            value={this.props.goalString} 
                         />
                     </FormGroup>
                     <button className="btn btn-primary" type="submit" value="Submit">Add Goal</button>

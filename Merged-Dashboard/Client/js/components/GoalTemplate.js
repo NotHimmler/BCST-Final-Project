@@ -12,8 +12,24 @@ class GoalTemplate extends React.Component {
     submitHandler(e) {
         e.preventDefault();
         let formItemIdList = ['start', 'end', 'activity', 'measurement', 'freq_val', 'freq_unit', 'per'];
-        let requestOption = this.getRequestOption(formItemIdList);
-        console.log(requestOption);
+        let option = this.getRequestOption(formItemIdList);
+        let {start, end} = option;
+        if(!this.verifyOption(option)){
+            return;
+        }
+        console.log(option);
+        option.goalString = this.getGoalString(option);
+        option.start = new Date(start);
+        option.end = new Date(end);
+        this.props.reviewGoal(option);
+    }
+
+    verifyOption(option) {
+        let {start, end, activity} = option;
+        if(!start || !end || !activity){
+            return false;
+        } 
+        return true;
     }
 
     getRequestOption(formItemIdList) {
@@ -27,8 +43,25 @@ class GoalTemplate extends React.Component {
         return option;
     }
 
-    getGoalFreqStr() {
-
+    getGoalString(option) {
+        let str = option.activity;
+        var goalMeasurement = $('#goalMeasurement').val();
+        let measurement = option.measurement;
+        var goalMeasurementUnit = $('#goalMeasurementUnit').val();
+        if(goalMeasurement && goalMeasurementUnit && measurement) {
+            str += `,${goalMeasurement} ${measurement} ${goalMeasurementUnit}`;
+        }
+        
+        let goalFrequency = $('#goalFrequency').val();
+        let freqVal = option.freq_val;
+        let freqUnit = option.freq_unit;
+        let per = option.per;
+        if(goalFrequency && freqVal && freqUnit && per){
+            str += `,${goalFrequency} ${freqVal} ${freqUnit} per ${per}`;
+        }
+        str += `,from ${option.start} to ${option.end}`;
+        
+        return str;
     }
     
     render() {
@@ -60,8 +93,8 @@ class GoalTemplate extends React.Component {
                         <ControlLabel>Goal Measurement</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="none">-</option>
-                            <option value="select">at least</option>
-                            <option value="other">in under</option>
+                            <option value="at least">at least</option>
+                            <option value="in under">in under</option>
                         </FormControl>
                     </FormGroup>
 
@@ -72,7 +105,7 @@ class GoalTemplate extends React.Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="goalMeasurement3">
+                    <FormGroup controlId="goalMeasurementUnit">
                         <FormControl componentClass="select" placeholder="select">
                             <option value="none">-</option>
                             <option value="times">time(s)</option>
