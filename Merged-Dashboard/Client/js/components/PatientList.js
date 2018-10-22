@@ -112,7 +112,6 @@ class PatientList extends React.Component {
 
   generateTable(keywords) {
     this.setState({"archived": this.props.archived});
-    // console.log(this.props.searchKeywords);
     this.setState({"keyword": keywords});
     let endpoint = "";
     this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
@@ -129,7 +128,10 @@ class PatientList extends React.Component {
 
         for (let patient of data) {
             console.log(patient);
-            if (!patient.MRN.includes(this.state.keyword))
+            if (!patient.MRN.includes(this.state.keyword) &&
+            !patient.ward.toLowerCase().includes(this.state.keyword) &&
+            !patient.first_name.toLowerCase().includes(this.state.keyword) &&
+            !patient.last_name.toLowerCase().includes(this.state.keyword))
                 continue;
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
