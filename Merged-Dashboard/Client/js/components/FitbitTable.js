@@ -74,8 +74,7 @@ class FitbitTable extends React.Component {
             type: "value",
             name: "Steps Walked",
             axisLabel: {
-              show: true,
-              rotate: 90
+              show: true
             }
           }
         ],
@@ -125,9 +124,13 @@ class FitbitTable extends React.Component {
     };
   }
   componentDidMount() {
-    this.patientHasData();
+   this.patientHasData(); 
+  }
+  
+  createMockChart() {
+
     // Panel toolbox
-    if(this.props.lastName != "Test") return;
+    
     $(".collapse-link").on("click", function() {
       var $BOX_PANEL = $(this).closest(".x_panel"),
         $ICON = $(this).find("i"),
@@ -311,7 +314,13 @@ class FitbitTable extends React.Component {
 
   //Make a call to the database to see if the patient has any data in the DB or a fitbit token
   patientHasData() {
-    console.log("Calling patient has data");
+    if(this.props.lastName == "Test") {
+      console.log("Making the mock graph");
+      this.setState({hasData: true}, () => {
+        this.createMockChart();
+      })
+      return;
+    }
     fetch("/api/fitbit/mrn/"+this.props.mrn)
     .then(data => {
       return data.json();
