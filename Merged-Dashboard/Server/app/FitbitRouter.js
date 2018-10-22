@@ -116,6 +116,33 @@ fitbitRouter.get("/mrn/:mrn/datelimit", function(req, res) {
     });
  });
 
+// Get fb data for patient with specific mrn between specific dates
+// Dates should be in the format "YYYY-MM-DD"
+fitbitRouter.get("/mrn/:mrn/dates/:from/:to", function(req, res) {
+    return db.FitbitData.findAll({
+        attributes: ['MRN', 'date', 'steps'],
+        where: {
+            MRN: req.params.mrn,
+            date: {
+                [gt]: moment(req.params.from),
+                [lte]: moment(req.params.to).add(1, 'days')
+            }
+        },
+        order: [['date', 'DESC']],
+    })
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
  // Get fb data for patient with specific mrn
 fitbitRouter.get("/mrn/:mrn/weekly", function(req, res) {
     //console.log(req.params.mrn)

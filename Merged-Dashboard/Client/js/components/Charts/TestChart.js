@@ -15,37 +15,62 @@ class TestChart extends React.Component {
             option:op,
             loaded: false,
             placeholder: "Loading...",
-            fitbitData: {},
             fromDate: moment(),
             toDate: moment(),
             minDate: moment(),
             maxDate: moment(),
+            mrn: '80000001',
         };
         this.addData = this.addData.bind(this);
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
         this.handleToDateChange = this.handleToDateChange.bind(this);
     }
 
+    // Handler for 'from' date picker
     handleFromDateChange(date) {
+        let endpoint = `/api/fitbit/mrn/${this.state.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
+        console.log(endpoint);
+        this.addData(endpoint)
         this.setState({
           fromDate: date
         });
       }
-
+    
+    // Handler for 'to' date picker
     handleToDateChange(date) {
+        let endpoint = `/api/fitbit/mrn/${this.state.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
+        this.addData(endpoint)
         this.setState({
           toDate: date
         });
       }
 
-    addData(stepsPayload, datesPayload) {
-        let newOp = this.state.option;
-        //newOp.xAxis[0].data = ['1', '2', '3', '4', '5', '6', '7','1', '2', '3', '4', '5', '6', '7' ];
-        newOp.xAxis[0].data = datesPayload;
-        newOp.series[0].data = stepsPayload;    //Get data from payload
-        //newOp.series[1].data = payload.goal;    //Get goal data from payload
-        this.setState(state =>({option: newOp}));
-        this.state.ec.setOption(this.state.option);
+    addData(endpoint) {
+        // Get fitbit data from database
+        fetch(endpoint)
+            .then(response => {
+            if (response.status !== 200) {
+                return this.setState({ placeholder: "Something went wrong" });
+            }
+            return response.json();
+            })
+            .then(data => {
+                // Add default data
+                let stepsPayload = [];
+                let datesPayload = [];
+                for(let entry of data) {
+                    stepsPayload.unshift(entry.steps);
+                    // Note: split string to remove tiemezone
+                    datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
+                }
+                let newOp = this.state.option;
+                newOp.xAxis[0].data = datesPayload;
+                newOp.series[0].data = stepsPayload;    //Get data from payload
+                //newOp.series[1].data = payload.goal;    //Get goal data from payload
+                this.setState(state =>({option: newOp}));
+                this.state.ec.setOption(this.state.option);
+                this.setState({loaded:true});
+        });  
     }
 
     componentDidMount() {
@@ -54,9 +79,8 @@ class TestChart extends React.Component {
         ec.setOption(this.state.option);
         this.setState({ec:ec});
 
-        let mrn = '80000001'
-        let dateEndpoint = `/api/fitbit/mrn/${mrn}/datelimit`;
-        let dataEndpoint = `/api/fitbit/mrn/${mrn}`
+        let dateEndpoint = `/api/fitbit/mrn/${this.state.mrn}/datelimit`;
+        let dataEndpoint = `/api/fitbit/mrn/${this.state.mrn}`;
         
         // Get date limits
         fetch(dateEndpoint)
@@ -75,28 +99,7 @@ class TestChart extends React.Component {
                     minDate: moment(from[0]),
                     maxDate: moment(to[0]),
                 });
-
-                // Get fitbit data from database
-                fetch(dataEndpoint)
-                    .then(response => {
-                    if (response.status !== 200) {
-                        return this.setState({ placeholder: "Something went wrong" });
-                    }
-                    return response.json();
-                    })
-                    .then(data => {
-                        let stepsPayload = [];
-                        let datesPayload = [];
-                        for(let entry of data) {
-                            stepsPayload.unshift(entry.steps);
-                            // Note: split string to remove tiemezone
-                            datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
-                        }
-                        //console.log(datesPayload);
-                        this.addData(stepsPayload,datesPayload);
-                        this.setState({fitbitData:data, loaded:true});
-                });  
-        });
+            }).then(()=>{this.addData(dataEndpoint)});
     }
     
     render() {
