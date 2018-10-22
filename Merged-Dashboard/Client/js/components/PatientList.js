@@ -61,7 +61,8 @@ class PatientList extends React.Component {
         patients: [],
         loaded: false,
         placeholder: "Loading...",
-        sort: 1
+        sort: 1,
+        "keyword": ''
     }
 
     this.sortColHandler = this.sortColHandler.bind(this);
@@ -109,28 +110,9 @@ class PatientList extends React.Component {
     )
   }
 
-  componentDidMount() {
-    let therapistId = 0;
-    $.ajax({
-        // url:'/api/v1/therapist/patientList?therapistId=${this.props.username}',
-        url:'/api/v1/therapist/patientList?therapistId=${therapistId}',
-        type:"get",
-        contentType:"application/json;charset=utf-8",
-        success: (data)=>{
-            console.log(data.patientIds);
-            console.log("pppppppappppkfoa");
-            let error = data.error;
-            if (error) {
-              this.setState({
-                errorMessage:error
-              });
-            } else {
-                // patients = data;
-            }
-        }
-    });
-
+  generateTable(keywords) {
     this.setState({"archived": this.props.archived});
+    this.setState({"keyword": keywords.toLowerCase()});
     let endpoint = "";
     this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
 
@@ -146,13 +128,29 @@ class PatientList extends React.Component {
 
         for (let patient of data) {
             console.log(patient);
+            if (!patient.MRN.includes(this.state.keyword) &&
+            !patient.ward.toLowerCase().includes(this.state.keyword) &&
+            !patient.first_name.toLowerCase().includes(this.state.keyword) &&
+            !patient.last_name.toLowerCase().includes(this.state.keyword))
+                continue;
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
         this.setState({"patientRows": rows, loaded: true, patients: data})
-    });   
+    });
+  }
+
+    componentDidMount() {
+        this.generateTable(this.props.searchKeywords);
     
-}
-    
+    }
+    componentWillReceiveProps(props) {
+        let { archived, searchKeywords } = this.props;
+        console.log(searchKeywords + ' : ' + props.searchKeywords);
+        if (props.searchKeywords !== searchKeywords) {
+            // console.log()
+            this.generateTable(props.searchKeywords); 
+        }
+    }
     render() {
 
         const { loaded, placeholder } = this.state;
