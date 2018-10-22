@@ -69,3 +69,16 @@ label {
   font-weight: bold;
   font-size: 120%;
 }
+
+.datepicker-inline {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.date-from, .date-to {
+  font-weight:bold;
+}
+
+.float-right {
+  float: right;
+}

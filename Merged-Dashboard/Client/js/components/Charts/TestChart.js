@@ -131,32 +131,38 @@ class TestChart extends React.Component {
         return (
             <div>
                 <h3>This is a testing area</h3>
-                <div className="row">
-                <div className="col-sm">
-                    <p>From</p>
-                </div>
-                <div className="col-sm">
-                <DatePicker
-                    selected={this.state.fromDate}
-                    minDate={this.state.minDate}
-                    maxDate={this.getMaxDate()}
-                    onChange={this.handleFromDateChange}/>
-                </div>
-                <div className="col-sm">
-                    <p>To</p>
-                </div>
-                <div className="col-sm">
-                <DatePicker
-                    selected={this.state.toDate}
-                    minDate={this.getMinDate()}
-                    maxDate={this.state.maxDate}
-                    onChange={this.handleToDateChange}/>
-                </div>
-                <button className="btn btn-primary" onClick={this.resetDates}>Reset</button>
-                </div>
                 <div className="x_panel">
                     <div className="x_title">
-                        <h2>Steps from Fitbit</h2>
+                        <h2 className="datepicker-inline">Steps from Fitbit</h2>
+                        <div className="float-right">
+                            <div className="datepicker-inline date-from">
+                                <p>From </p>
+                            </div>
+                            <div className="datepicker-inline">
+                            <DatePicker
+                                className="col-sm"
+                                dateFormat="ddd DD/MM/YY"
+                                selected={this.state.fromDate}
+                                minDate={this.state.minDate}
+                                maxDate={this.getMaxDate()}
+                                onChange={this.handleFromDateChange}/>
+                            </div>
+                            <div className="datepicker-inline date-to">
+                                <p>To </p>
+                            </div>
+                            <div className="datepicker-inline">
+                            <DatePicker
+                                className="col-sm"
+                                dateFormat="ddd DD/MM/YY"
+                                selected={this.state.toDate}
+                                minDate={this.getMinDate()}
+                                maxDate={this.state.maxDate}
+                                onChange={this.handleToDateChange}/>
+                            </div>
+                            <div className="datepicker-inline">
+                            <button className="btn btn-primary" onClick={this.resetDates}>Reset</button>
+                            </div>
+                        </div>
                         <div className="clearfix"></div>
                     </div>
                     <div className="x_content">
