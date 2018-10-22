@@ -17,12 +17,11 @@ const options = {
     toolbox: {
       show: false,
       feature : {
-         dataZoom : {show: true},
+         dataZoom : {show: false},
      }
     },
-
     dataZoom : {
-      show : true,
+      show : false,
       realtime: true,
       start : 0,
       end : 100

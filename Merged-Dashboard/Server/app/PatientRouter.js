@@ -2,6 +2,9 @@ var express = require('express');
 var patientRouter = express.Router();
 const db = require('../../Database/models/index.js'); // new require for db object
 
+const Sequelize = require('sequelize');
+const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
+
 // Get all patients
 patientRouter.get('/', function(req,res) {
     return db.Patient.findAll()
@@ -120,6 +123,9 @@ patientRouter.get("/mrn/:mrn", function(req, res) {
         order: ["last_checkup_date"],
         where: {
             is_archived: false,
+            last_checkup_date: {
+                [ne] : null,    //not equal to null
+            }
         }
     })
     .then((patients) => res.send(patients))

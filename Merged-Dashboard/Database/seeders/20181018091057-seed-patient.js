@@ -35,6 +35,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-05"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -47,6 +49,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-02"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -59,6 +63,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-01"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -71,6 +77,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Non-neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-07"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -83,6 +91,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-08"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -95,6 +105,8 @@ module.exports = {
       sex: "F",
       is_archived: false,
       health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-10"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -107,6 +119,8 @@ module.exports = {
       sex: "M",
       is_archived: false,
       health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-09-15"),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -194,6 +208,22 @@ module.exports = {
       is_archived: true,
       date_archived: new Date(),
       health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-04"),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      MRN: "80000020",
+      first_name: "Elizabeth",
+      last_name: "Smith",
+      ward: "1B",
+      age: 45,
+      sex: "F",
+      is_archived: false,
+      health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-04"),
       createdAt: new Date(),
       updatedAt: new Date()
     }

@@ -19,7 +19,6 @@ class ExamplePatient extends React.Component {
 
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = { 
       content : "Test",
       lastCheckedup: "",
@@ -37,6 +36,7 @@ class ExamplePatient extends React.Component {
     console.log(mrn);
     let endpoint = `/api/patient/mrn/${mrn}`;
 
+    // Get general patient details (e.g. age/sex/ward)
     fetch(endpoint)
     .then(response => {
       if (response.status !== 200) {
@@ -46,27 +46,17 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
+<<<<<<< HEAD
       this.setState({data: data});
       this.setState({loaded: true});
+=======
+      this.setState({data: data, loaded:true});
+>>>>>>> 9dadef76034c511209b874f4ca1af44fab73d4cb
       //this.updateLastCheckup(mrn);
     });
-
-    /* $.ajax({
-        url:"/api/patient/archived",
-        type:"get",
-        contentType:"application/json;charset=utf-8",
-        success: (data)=>{
-            console.log(data);
-            let error = data.error;
-            if (error) {
-              this.setState({
-                errorMessage:error
-              });
-            }
-        }
-    }); */
   }
 
+  // Update last checkup
   updateLastCheckup(mrn) {
     let endpoint = `/api/patient/updateLastCheckup`;
     let patientInfo = {
@@ -92,10 +82,14 @@ class ExamplePatient extends React.Component {
     });
   }
 
+<<<<<<< HEAD
   setContent(contentType) {
     this.setState({"content": contentType});
   }
 
+=======
+  // Get a string for last checkup
+>>>>>>> 9dadef76034c511209b874f4ca1af44fab73d4cb
   getLastCheckup(){
     const {data} = this.state;
     const lastCheckupDate = data.last_checkup_date;
@@ -150,7 +144,6 @@ class ExamplePatient extends React.Component {
                           <th scope="col">Age</th>
                           <th scope="col">Gender</th>
                           <th scope="col">Ward</th>
-                          <th scope="col">Health Condition</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -158,7 +151,6 @@ class ExamplePatient extends React.Component {
                           <td>{loaded?data.age:placeholder}</td>
                           <td>{loaded?data.sex:placeholder}</td>
                           <td>{loaded?data.ward:placeholder}</td>
-                          <td>{loaded?data.health_condition:placeholder}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -192,8 +184,8 @@ class ExamplePatient extends React.Component {
 
               {/*For testing...*/}
               {
-                (this.state.content === "Test")
-                    ? <TestChart/>
+                (this.state.content === "Test" && this.state.loaded)
+                    ? <TestChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
               }
 
