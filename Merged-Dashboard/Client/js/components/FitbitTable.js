@@ -5,8 +5,8 @@ import DateRangePicker from "../components/DateRangePicker";
 
 import etheme from "../components/Charts/Theme";
 const boxMargins = {
-  "padding-left": "20px",
-  "padding-right": "20px"
+  "paddingLeft": "20px",
+  "paddingRight": "20px"
 }
 class FitbitTable extends React.Component {
   constructor(props) {
@@ -15,8 +15,16 @@ class FitbitTable extends React.Component {
     this.change_weekly = this.change_weekly.bind(this);
     this.change_monthly = this.change_monthly.bind(this);
     this.colorizeBars = this.colorizeBars.bind(this);
+    this.handleInviteButton = this.handleInviteButton.bind(this);
+    this.handleInviteChange = this.handleInviteChange.bind(this);
+    this.patientHasData = this.patientHasData.bind(this);
 
     this.state = {
+      inviting: false,
+      inviteEmail: "",
+      invited: false,
+      inviteLink: "",
+      hasData: false,
       echart: null,
       // optionss
       options_fitbit: {
@@ -54,12 +62,20 @@ class FitbitTable extends React.Component {
         xAxis: [
           {
             type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            name: "Day",
+            axisLabel: {
+              show: true
+            }
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            name: "Steps Walked",
+            axisLabel: {
+              show: true
+            }
           }
         ],
         series: [
@@ -108,8 +124,13 @@ class FitbitTable extends React.Component {
     };
   }
   componentDidMount() {
+   this.patientHasData(); 
+  }
+  
+  createMockChart() {
+
     // Panel toolbox
-    if(this.props.lastName != "Test") return;
+    
     $(".collapse-link").on("click", function() {
       var $BOX_PANEL = $(this).closest(".x_panel"),
         $ICON = $(this).find("i"),
@@ -291,11 +312,80 @@ class FitbitTable extends React.Component {
     this.setState({ echart: echartBar3 });
   }
 
+  //Make a call to the database to see if the patient has any data in the DB or a fitbit token
+  patientHasData() {
+    if(this.props.lastName == "Test") {
+      console.log("Making the mock graph");
+      this.setState({hasData: true}, () => {
+        this.createMockChart();
+      })
+      return;
+    }
+    fetch("/api/fitbit/mrn/"+this.props.mrn)
+    .then(data => {
+      return data.json();
+    }).then(data => {
+      if (data['activities-tracker-steps'] == undefined) return;
+      console.log(data['activities-tracker-steps'])
+      this.setState({hasData: true}, () => {
+        this.createChart(data['activities-tracker-steps'])
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  createChart(fitbitData) {
+    if (fitbitData == undefined) return;
+    var echartBar1 = echarts.init(
+      document.getElementById("mainb"),
+      this.state.theme
+    );
+    var ops = this.state.options_fitbit;
+    ops.title.text = "Daily";
+
+    ops.xAxis[0].data = fitbitData.map((dataItem) => {
+      return dataItem.dateTime;
+    })
+    // process the input data
+    // var rawSteps = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
+    var rawSteps = fitbitData.map((dataItem) => {
+      return dataItem.value;
+    })
+    var rawGoal = fitbitData.map(() => {
+      return 10000
+    })
+
+    ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
+    //ops.series[1].markLine.data[0].yAxis = 2000;
+    ops.series[1].data = rawGoal;
+    this.setState({ options_fitbit: ops });
+    echartBar1.setOption(this.state.options_fitbit);
+    this.setState({ echart: echartBar1 });
+  }
+
+  handleInviteButton(data, event) {
+    if (this.state.inviting && data == "cancel") {
+      this.setState({inviting: false})
+    } else if (this.state.inviting && data == "invite") {
+      if (this.state.inviteEmail != "") {
+        
+      }
+    } else {
+
+    }
+    this.setState({inviting: !this.state.inviting})
+  }
+
+  handleInviteChange(event) {
+    let href = `mailto:${this.state.inviteEmail}?subject=Please Connect Your Fitbit For Therapist&body=http://localhost:8080/fitbitAuth/${this.props.mrn}`
+    this.setState({inviteEmail: event.target.value, inviteLink: href})
+  }
+
   render() {
     return (
       
       <div className="row w-100" style={boxMargins}>
-      {this.props.lastName == "Test" ? 
         <div className="x_panel">
           <div className="x_title">
             <div className="col-md-4">
@@ -344,27 +434,10 @@ class FitbitTable extends React.Component {
           </div>{" "}
           {/*end x_title*/}
           <div className="x_content">
-            <div id="mainb" />
+            {this.state.hasData ? <div id="mainb" /> : <div>No Data - {this.state.inviting ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> : null}<button onClick={() => this.handleInviteButton("cancel")}>{this.state.inviting && this.state.inviteEmail != "" ? <a href={this.state.inviteLink}>Send Email</a> : "Send Patient Invite"}</button> {this.state.inviting ? <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> : null} </div>}
           </div>{" "}
           {/*end x_content*/}
         </div>
-
-      : 
-      <div className="x_panel">
-          <div className="x_title">
-            <h2>Steps from Fitbit</h2>
-            <ul className="nav navbar-right panel_toolbox">
-              <li>
-                <a className="close-link">
-                  <i className="fa fa-close" />
-                </a>
-              </li>
-            </ul>
-            <div className="clearfix" />
-          </div>
-          No Data
-        </div>
-      }
       </div>
     );
   }

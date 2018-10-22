@@ -31,7 +31,7 @@ const options = {
     calculable: false,
     xAxis: [{
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: [],
     }],
     yAxis: [{
       type: 'value'

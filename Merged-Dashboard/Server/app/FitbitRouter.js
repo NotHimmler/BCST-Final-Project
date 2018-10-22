@@ -1,4 +1,6 @@
 var express = require('express');
+var request = require('request-promise-native');
+var moment = require('moment');
 var fitbitRouter = express.Router();
 const db = require('../../Database/models/index.js');
 db.FitbitTokens.sync();
@@ -6,6 +8,33 @@ db.FitbitData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
+
+//Fitbit API calls
+
+//Date format needs to be yyyy-MM-dd
+//Defaults to the past week
+function getDataBetweenDates(token, user_id, date1, date2) {
+    let endDate = date1 ? moment(date1) : moment(new Date());
+    let baseDate = date2 ? moment(date2) : moment().subtract(6, "days");
+    const baseString = baseDate.format("YYYY-MM-DD")
+    const endString = endDate.format("YYYY-MM-DD");
+    let url = `https://api.fitbit.com/1/user/${user_id}/activities/tracker/steps/date/${baseString}/${endString}.json`
+    let options = {
+        url: url,
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
+    return new Promise((resolve, reject) => {
+        request(options).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+////////////////////////////////////////////////////
 
 // Get all fb data
 fitbitRouter.get('/', function(req,res) {
@@ -21,8 +50,83 @@ fitbitRouter.get('/', function(req,res) {
 fitbitRouter.get("/mrn/:mrn", function(req, res) {
     //console.log(req.params.mrn)
     return db.FitbitData.findAll({
+        attributes: ['MRN', 'date', 'steps'],
         where: {
             MRN: req.params.mrn,
+        },
+        order: [['date', 'DESC']],
+    })
+    .then((data) => {
+        //No database in fitbit table
+        console.log("DB Data");
+        if (data.length == 0) {
+            //Check if there is a fitbit token
+            db.FitbitTokens.findOne({where: {MRN: req.params.mrn}})
+            .then(data => {
+                //console.log(data);
+                if(data == null) {
+                    res.send({error: "No data for patient with this mrn"})
+                } else {
+                    //Use fitbit api to get data
+                    let token = data.dataValues.token;
+                    let user_id = data.dataValues.user_id;
+                    getDataBetweenDates(token, user_id).then(data => {
+                        res.send(data);
+                    }).catch(err => {
+                        res.send({"error": err})
+                    })
+                }
+            }).catch(err => {
+                console.log('There was an error querying contacts', JSON.stringify(err))
+                return res.send(err)
+            })
+        //There is stored data in the database
+        } else {
+            res.send(data)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+ // Get fb data for patient with specific mrn
+fitbitRouter.get("/mrn/:mrn/datelimit", function(req, res) {
+    //console.log(req.params.mrn)
+    return db.FitbitData.findAll({
+        attributes: ['MRN', 
+        [Sequelize.fn('min', Sequelize.col('date')), 'from'],
+        [Sequelize.fn('max', Sequelize.col('date')), 'to']],
+        where: {
+            MRN: req.params.mrn,
+        },
+        group: ['MRN']
+    })
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+// Get fb data for patient with specific mrn between specific dates
+// Dates should be in the format "YYYY-MM-DD"
+fitbitRouter.get("/mrn/:mrn/dates/:from/:to", function(req, res) {
+    return db.FitbitData.findAll({
+        attributes: ['MRN', 'date', 'steps'],
+        where: {
+            MRN: req.params.mrn,
+            date: {
+                [gt]: moment(req.params.from),
+                [lte]: moment(req.params.to).add(1, 'days')
+            }
         },
         order: [['date', 'DESC']],
     })
@@ -102,19 +206,51 @@ fitbitRouter.get('/getAuthBasic', (req, res) => {
 
 fitbitRouter.post('/addFitbitToken', (req, res) => {
     let body = req.body;
+    let code = body.code
     let mrn = body.mrn;
-    let token = body.token;
-    let refreshToken = body.refreshToken;
-    db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: {token: token, refreshToken: refreshToken}})
-    .then(data => {
-        console.log(data);
-        res.status(200);
-        res.redirect("/");
+    const fitbitSecret = process.env.FBCS;
+    const fitbitClient = process.env.FBCID;
+    let auth_basic = (Buffer.from(fitbitClient + ":" + fitbitSecret)).toString('base64');
+    let serverDomain = process.env.DEV ? require('./TestConfig').redirect_uri : require('./BuildConfig').redirect_uri;
+    let options = {
+        url: `https://api.fitbit.com/oauth2/token?clientId=22CZMN&grant_type=authorization_code&redirect_uri=${serverDomain}/fitbitAuth/&code=${code}`,
+        headers: {
+            'Authorization': `Basic ${auth_basic}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        method: "POST"
+    }
+    request(options).then(data => {
+        let data2 = JSON.parse(data);
+        let token = data2["access_token"];
+        let refreshToken = data2['refresh_token'];
+        let user_id = data2['user_id'];
+        let defaults = {
+            token: token,
+            refreshToken: refreshToken,
+            user_id: user_id
+        }
+
+        db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: defaults})
+        .then(data => {
+            console.log(data);
+            res.status(200);
+        }).catch(err => {
+            console.log(err);
+            res.status(400);
+            res.send({error: "Database error"});
+        })
     }).catch(err => {
-        console.log(err);
-        res.status(400);
-        res.send({error: "Database error"});
+        console.log(err)
     })
+})
+
+fitbitRouter.get('/getAuthURL', (req, res) => {
+    let config = process.env.DEV ? require("./TestConfig") : require("./BuildConfig");
+    let clientId = config.client_id;
+    let serverDomain = config.redirect_uri;
+    let url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${serverDomain}/fitbitAuth/&scope=activity%20profile&expires_in=31536000`
+    res.send({url: url});
 })
 
 // 404 not found
