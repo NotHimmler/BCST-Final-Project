@@ -111,10 +111,11 @@ class PatientList extends React.Component {
   }
 
   keywordsNotMatchPatient(patient) {
-    return (!patient.MRN.includes(this.state.keyword) &&
+    return !patient.MRN.includes(this.state.keyword) &&
         !(patient.ward.toLowerCase().includes(this.state.keyword) && !patient.is_archived) &&
         !patient.first_name.toLowerCase().includes(this.state.keyword) &&
-        !patient.last_name.toLowerCase().includes(this.state.keyword) );
+        !patient.last_name.toLowerCase().includes(this.state.keyword) &&
+        !(patient.first_name.toLowerCase()+' '+patient.last_name.toLowerCase()).includes(this.state.keyword);
   }
 
   generateTable(keywords) {
