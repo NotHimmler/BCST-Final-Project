@@ -40,6 +40,31 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
  });
 
  // Get fb data for patient with specific mrn
+fitbitRouter.get("/mrn/:mrn/datelimit", function(req, res) {
+    //console.log(req.params.mrn)
+    return db.FitbitData.findAll({
+        attributes: ['MRN', 
+        [Sequelize.fn('min', Sequelize.col('date')), 'from'],
+        [Sequelize.fn('max', Sequelize.col('date')), 'to']],
+        where: {
+            MRN: req.params.mrn,
+        },
+        group: ['MRN']
+    })
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No patient with this mrn"})
+        } else {
+            res.send(data)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+ // Get fb data for patient with specific mrn
 fitbitRouter.get("/mrn/:mrn/weekly", function(req, res) {
     //console.log(req.params.mrn)
     db.sequelize.query("SELECT MRN,strftime('%Y-%m-%d', `date`)AS `week end`,SUM(steps) FROM `FitbitData` WHERE MRN = 80000001 GROUP BY strftime('%W', `date`)", { type: db.sequelize.QueryTypes.SELECT})
