@@ -21,6 +21,7 @@ fitbitRouter.get('/', function(req,res) {
 fitbitRouter.get("/mrn/:mrn", function(req, res) {
     //console.log(req.params.mrn)
     return db.FitbitData.findAll({
+        attributes: ['MRN', 'date', 'steps'],
         where: {
             MRN: req.params.mrn,
         },
