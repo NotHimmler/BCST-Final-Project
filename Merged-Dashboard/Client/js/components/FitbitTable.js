@@ -316,6 +316,7 @@ class FitbitTable extends React.Component {
     .then(data => {
       return data.json();
     }).then(data => {
+      if (data['activities-tracker-steps'] == undefined) return;
       console.log(data['activities-tracker-steps'])
       this.setState({hasData: true}, () => {
         this.createChart(data['activities-tracker-steps'])
@@ -326,6 +327,7 @@ class FitbitTable extends React.Component {
   }
 
   createChart(fitbitData) {
+    if (fitbitData == undefined) return;
     var echartBar1 = echarts.init(
       document.getElementById("mainb"),
       this.state.theme

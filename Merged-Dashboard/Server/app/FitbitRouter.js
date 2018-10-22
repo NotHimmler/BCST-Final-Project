@@ -178,19 +178,43 @@ fitbitRouter.get('/getAuthBasic', (req, res) => {
 
 fitbitRouter.post('/addFitbitToken', (req, res) => {
     let body = req.body;
-    let mrn = body.mrn;
-    let token = body.token;
-    let refreshToken = body.refreshToken;
-    db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: {token: token, refreshToken: refreshToken}})
-    .then(data => {
+    let code = body.code
+
+    const fitbitSecret = process.env.FBCS;
+    const fitbitClient = process.env.FBCID;
+    let auth_basic = (Buffer.from(fitbitClient + ":" + fitbitSecret)).toString('base64');
+    let serverDomain = process.env.DEV ? require('TestConfig').redirect_uri : require('BuildConfig').redirect_uri;
+    let options = {
+        url: `https://api.fitbit.com/oauth2/token?clientId=22CZMN&grant_type=authorization_code&redirect_uri=${serverDomain}/fitbitAuth/&code=${code}`,
+        headers: {
+            'Authorization': `Basic ${auth_basic}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        method: "POST"
+    }
+    request(options).then(data => {
         console.log(data);
-        res.status(200);
-        res.redirect("/");
+        let token = data.access_token;
+        let refreshToken = data.refresh_token;
+        let user_id = data.user_id
+        db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: {token: token, refreshToken: refreshToken, user_id: user_id}})
+        .then(data => {
+            console.log(data);
+            res.status(200);
+        }).catch(err => {
+            console.log(err);
+            res.status(400);
+            res.send({error: "Database error"});
+        })
     }).catch(err => {
-        console.log(err);
-        res.status(400);
-        res.send({error: "Database error"});
+        console.log(err)
     })
+})
+
+fitbitRouter.get('/getAuthURL', (req, res) => {
+    let serverDomain = process.env.DEV ? require('TestConfig').redirect_uri : require('BuildConfig').redirect_uri;
+    let url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22CZMN&redirect_uri=${serverDomain}/fitbitAuth/&scope=activity%20profile&expires_in=31536000`
+    res.send({url: url});
 })
 
 // 404 not found
