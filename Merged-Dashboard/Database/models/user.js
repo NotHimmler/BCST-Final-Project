@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'created_by',
       onDelete: 'CASCADE'
     });
+    // many to many with patient
+    // User.belongsToMany(models.Patient, { through: UserPatients })
+    
   };
+  
+  // User.belongsToMany(models.)
   return User;
 };
