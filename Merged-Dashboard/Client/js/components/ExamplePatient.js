@@ -46,12 +46,7 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-<<<<<<< HEAD
-      this.setState({data: data});
-      this.setState({loaded: true});
-=======
       this.setState({data: data, loaded:true});
->>>>>>> 9dadef76034c511209b874f4ca1af44fab73d4cb
       //this.updateLastCheckup(mrn);
     });
   }
@@ -82,14 +77,11 @@ class ExamplePatient extends React.Component {
     });
   }
 
-<<<<<<< HEAD
   setContent(contentType) {
     this.setState({"content": contentType});
   }
 
-=======
   // Get a string for last checkup
->>>>>>> 9dadef76034c511209b874f4ca1af44fab73d4cb
   getLastCheckup(){
     const {data} = this.state;
     const lastCheckupDate = data.last_checkup_date;
