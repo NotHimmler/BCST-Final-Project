@@ -13,12 +13,12 @@ const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
 
 //Date format needs to be yyyy-MM-dd
 //Defaults to the past week
-function getDataBetweenDates(token, date1, date2) {
+function getDataBetweenDates(token, user_id, date1, date2) {
     let endDate = date1 ? moment(date1) : moment(new Date());
     let baseDate = date2 ? moment(date2) : moment().subtract(6, "days");
     const baseString = baseDate.format("YYYY-MM-DD")
     const endString = endDate.format("YYYY-MM-DD");
-    let url = `https://api.fitbit.com/1/user/-/activities/tracker/steps/date/${baseString}/${endString}.json`
+    let url = `https://api.fitbit.com/1/user/${user_id}/activities/tracker/steps/date/${baseString}/${endString}.json`
     let options = {
         url: url,
         headers: {
@@ -69,7 +69,8 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
                 } else {
                     //Use fitbit api to get data
                     let token = data.dataValues.token;
-                    getDataBetweenDates(token).then(data => {
+                    let user_id = data.dataValues.user_id;
+                    getDataBetweenDates(token, user_id).then(data => {
                         res.send(data);
                     }).catch(err => {
                         res.send({"error": err})
@@ -220,11 +221,17 @@ fitbitRouter.post('/addFitbitToken', (req, res) => {
         method: "POST"
     }
     request(options).then(data => {
-        console.log(data);
-        let token = data.access_token;
-        let refreshToken = data.refresh_token;
-        let user_id = data.user_id
-        db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: {token: token, refreshToken: refreshToken, user_id: user_id}})
+        let data2 = JSON.parse(data);
+        let token = data2["access_token"];
+        let refreshToken = data2['refresh_token'];
+        let user_id = data2['user_id'];
+        let defaults = {
+            token: token,
+            refreshToken: refreshToken,
+            user_id: user_id
+        }
+
+        db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: defaults})
         .then(data => {
             console.log(data);
             res.status(200);
