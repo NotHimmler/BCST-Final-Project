@@ -179,11 +179,11 @@ fitbitRouter.get('/getAuthBasic', (req, res) => {
 fitbitRouter.post('/addFitbitToken', (req, res) => {
     let body = req.body;
     let code = body.code
-
+    let mrn = body.mrn;
     const fitbitSecret = process.env.FBCS;
     const fitbitClient = process.env.FBCID;
     let auth_basic = (Buffer.from(fitbitClient + ":" + fitbitSecret)).toString('base64');
-    let serverDomain = process.env.DEV ? require('TestConfig').redirect_uri : require('BuildConfig').redirect_uri;
+    let serverDomain = process.env.DEV ? require('./TestConfig').redirect_uri : require('./BuildConfig').redirect_uri;
     let options = {
         url: `https://api.fitbit.com/oauth2/token?clientId=22CZMN&grant_type=authorization_code&redirect_uri=${serverDomain}/fitbitAuth/&code=${code}`,
         headers: {
@@ -212,7 +212,7 @@ fitbitRouter.post('/addFitbitToken', (req, res) => {
 })
 
 fitbitRouter.get('/getAuthURL', (req, res) => {
-    let serverDomain = process.env.DEV ? require('TestConfig').redirect_uri : require('BuildConfig').redirect_uri;
+    let serverDomain = process.env.DEV ? require('./TestConfig').redirect_uri : require('./BuildConfig').redirect_uri;
     let url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22CZMN&redirect_uri=${serverDomain}/fitbitAuth/&scope=activity%20profile&expires_in=31536000`
     res.send({url: url});
 })
