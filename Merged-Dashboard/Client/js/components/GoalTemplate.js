@@ -1,27 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import $ from "jquery";
 
 class GoalTemplate extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    submitHandler(e) {
+        e.preventDefault();
+        let formItemIdList = ['start', 'end', 'activity', 'measurement', 'freq_val', 'freq_unit', 'per'];
+        let requestOption = this.getRequestOption(formItemIdList);
+        console.log(requestOption);
+    }
+
+    getRequestOption(formItemIdList) {
+        let option = {};
+        formItemIdList.forEach(id => {
+            let inputValue = $(`#${id}`).val();
+            if (inputValue) {
+                option[id] = inputValue;
+            }
+        });
+        return option;
+    }
+
+    getGoalFreqStr() {
+
+    }
     
     render() {
         return (
             <div>
                 <p>Create a goal using the goal template</p>
-                <form onSubmit={this.props.reviewGoal}>
-                    <FormGroup controlId="goalStart">
+                <form onSubmit={this.submitHandler.bind(this)}>
+                    <FormGroup controlId="start">
                         <ControlLabel>Goal Start*</ControlLabel>
                         <FormControl
                             type="date"
                         />
                     </FormGroup>
-                    <FormGroup controlId="goalEnd">
+                    <FormGroup controlId="end">
                         <ControlLabel>Goal End*</ControlLabel>
                         <FormControl
                             type="date"
                         />
                     </FormGroup>
-                    <FormGroup controlId="goalStatement">
+                    <FormGroup controlId="activity">
                         <ControlLabel>Goal Activity*</ControlLabel>
                         <FormControl
                             type="text"
@@ -38,7 +65,7 @@ class GoalTemplate extends React.Component {
                         </FormControl>
                     </FormGroup>
 
-                    <FormGroup controlId="goalMeasurement2">
+                    <FormGroup controlId="measurement">
                         <FormControl
                             type="text"
                             placeholder="Enter value here"
@@ -65,21 +92,21 @@ class GoalTemplate extends React.Component {
                         </FormControl>
                     </FormGroup>
 
-                    <FormGroup controlId="goalFrequency2">
+                    <FormGroup controlId="freq_val">
                         <FormControl
                             type="text"
                             placeholder="Enter value here"
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="goalFrequency3">
+                    <FormGroup controlId="freq_unit">
                         <FormControl componentClass="select" placeholder="select">
                             <option value="none">-</option>
                             <option value="times">time(s)</option>
                             <option value="days">day(s)</option>
                         </FormControl>
                     </FormGroup>
-                    <FormGroup controlId="goalFrequency4">
+                    <FormGroup controlId="per">
                         <p>per</p>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="none">-</option>

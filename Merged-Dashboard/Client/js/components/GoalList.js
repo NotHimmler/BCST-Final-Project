@@ -55,7 +55,7 @@ class GoalList extends React.Component {
                             <tr>
                               <th colSpan="4">Sub Goal(s)</th>
                             </tr>
-                          </thead>
+                  </thead>
 
                   <thead>
                       <tr>

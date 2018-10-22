@@ -16,10 +16,10 @@ goalRouter.post('/addGoal', function(req,res) {
     return db.Goal.findOrCreate({where: {MRN: body.mrn}, defaults: {first_name: body.firstName, last_name: body.lastName, ward:body.ward, age:body.age, sex: body.gender}})
     .then(data => {
         let isNewRecord = data[0]._options.isNewRecord;
-        console.log(data)
+        console.log(data);
         res.status(200);
         if (isNewRecord) {
-            res.send({okay: "Patient added"})
+            res.send({okay: "Patient added"});
         } else {
             res.send({error: "Patient with this mrn already exists"});
         }
