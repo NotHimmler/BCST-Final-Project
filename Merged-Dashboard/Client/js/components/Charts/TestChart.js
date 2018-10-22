@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import etheme from '../../components/Charts/Theme'
 //import payload from '../../components/Charts/TestPayload'
@@ -15,8 +16,26 @@ class TestChart extends React.Component {
             loaded: false,
             placeholder: "Loading...",
             fitbitData: {},
+            fromDate: moment()
         };
         this.addData = this.addData.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+    }
+
+    handleDateChange(date) {
+        this.setState({
+          fromDate: date
+        });
+      }
+
+    addData(stepsPayload, datesPayload) {
+        let newOp = this.state.option;
+        //newOp.xAxis[0].data = ['1', '2', '3', '4', '5', '6', '7','1', '2', '3', '4', '5', '6', '7' ];
+        newOp.xAxis[0].data = datesPayload;
+        newOp.series[0].data = stepsPayload;    //Get data from payload
+        //newOp.series[1].data = payload.goal;    //Get goal data from payload
+        this.setState(state =>({option: newOp}));
+        this.state.ec.setOption(this.state.option);
     }
 
     componentDidMount() {
@@ -38,10 +57,11 @@ class TestChart extends React.Component {
             return response.json();
             })
             .then(data => {
-                console.log(data);
+                let from = data[0].from.split(" ");
+                let to = data[0].to.split(" ");
                 this.setState({
-                    fromDate: data[0].from,
-                    toDate: data[0].to,
+                    fromDate: moment(from[0]),
+                    toDate: moment(to[0]),
                 });
 
                 // Get fitbit data from database
@@ -53,29 +73,18 @@ class TestChart extends React.Component {
                     return response.json();
                     })
                     .then(data => {
-                        console.log(data);
                         let stepsPayload = [];
                         let datesPayload = [];
                         for(let entry of data) {
-                            console.log(entry);
                             stepsPayload.unshift(entry.steps);
-                            datesPayload.unshift(new Date(entry.date).toDateString());
+                            // Note: split string to remove tiemezone
+                            datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
                         }
-                        console.log(datesPayload);
+                        //console.log(datesPayload);
                         this.addData(stepsPayload,datesPayload);
                         this.setState({fitbitData:data, loaded:true});
                 });  
         });
-    }
-
-    addData(stepsPayload, datesPayload) {
-        let newOp = this.state.option;
-        //newOp.xAxis[0].data = ['1', '2', '3', '4', '5', '6', '7','1', '2', '3', '4', '5', '6', '7' ];
-        newOp.xAxis[0].data = datesPayload;
-        newOp.series[0].data = stepsPayload;    //Get data from payload
-        //newOp.series[1].data = payload.goal;    //Get goal data from payload
-        this.setState(state =>({option: newOp}));
-        this.state.ec.setOption(this.state.option);
     }
     
     render() {
@@ -83,6 +92,16 @@ class TestChart extends React.Component {
         return (
             <div>
                 <h3>This is a testing area</h3>
+                <div className="row">
+                <div className="col-sm">
+                    <p>From</p>
+                </div>
+                <div className="col-sm">
+                <DatePicker
+                    selected={this.state.fromDate}
+                    onChange={this.handleDateChange}/>
+                </div>
+                </div>
                 <div className="x_panel">
                     <div className="x_title">
                         <h2>Steps from Fitbit</h2>
@@ -91,8 +110,9 @@ class TestChart extends React.Component {
                     <div className="x_content">
                         <div id="test_chart"></div>
                         <button onClick={this.addData}>Add data</button>
-                        <p>From: {loaded?new Date(this.state.fromDate).toDateString():placeholder}</p>
-                        <p>To: {loaded?new Date(this.state.toDate).toDateString():placeholder}</p>
+                        <p>From: {loaded?moment(this.state.fromDate).format('dddd, MMMM Do YYYY'):placeholder}</p>
+                        <p>To: {loaded?moment(this.state.toDate).format('dddd, MMMM Do YYYY'):placeholder}</p>
+                        <p>Test: {moment("2018-10-12").format('dddd, MMMM Do YYYY')}</p>
                     </div>
                 </div>
 
