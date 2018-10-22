@@ -43,8 +43,8 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({data: data});
-      this.updateLastCheckup(mrn);
+      this.setState({data: data, loaded:true});
+      //this.updateLastCheckup(mrn);
     });
   }
 
