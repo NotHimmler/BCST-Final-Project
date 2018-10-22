@@ -8,7 +8,7 @@ class GoalTemplate extends React.Component {
         return (
             <div>
                 <p>Create a goal using the goal template</p>
-                <form>
+                <form onSubmit={this.props.reviewGoal}>
                     <FormGroup controlId="goalStart">
                         <ControlLabel>Goal Start*</ControlLabel>
                         <FormControl
@@ -90,6 +90,7 @@ class GoalTemplate extends React.Component {
                             <option value="month">month</option>
                         </FormControl>
                     </FormGroup>
+                    <button className="btn btn-primary" type="submit" value="Submit">Review Goal</button>
                 </form>
             </div>
         )

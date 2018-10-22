@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import { withFormik, Form, Field } from 'formik'
 
 import GoalTemplate from '../components/GoalTemplate'
+import GoalTemplateReview from '../components/GoalTemplateReview'
 import GoalFormik from '../components/GoalFormik'
 
 class GoalModal extends React.Component {
@@ -13,10 +14,16 @@ class GoalModal extends React.Component {
             goalType: "template",
         }
         this.setGoalType = this.setGoalType.bind(this);
+        this.reviewGoal = this.reviewGoal.bind(this);
+
     }
 
     setGoalType(event){
         this.setState({ goalType: event.target.value});
+    }
+
+    reviewGoal(event){
+        this.setState({ goalType: "template_review"});
     }
     
     render() {
@@ -31,20 +38,25 @@ class GoalModal extends React.Component {
 
                 <Modal.Body>
                     <div>
-                        <select 
+                        {/* <select 
                             className="form-control"
                             value={this.state.goalType} 
                             onChange={this.setGoalType}
                             placeholder="Please select ...">
                             <option value="template">Use goal template</option>
                             <option value="custom">Create custom goal</option>
-                        </select>
+                        </select> */}
                         <div className="clearfix"/>
-                        <br/>
 
                         {
                             (this.state.goalType === "template")
-                                ? <GoalTemplate/>
+                                ? <GoalTemplate reviewGoal={this.reviewGoal}/>
+                                : null
+                        }
+
+                        {
+                            (this.state.goalType === "template_review")
+                                ? <GoalTemplateReview/>
                                 : null
                         }
 
@@ -62,7 +74,6 @@ class GoalModal extends React.Component {
 
                 <Modal.Footer>
                 <button className="btn btn-outline-dark" onClick={this.props.onHide}>Close</button>
-                <button className="btn btn-primary">Save changes</button>
                 </Modal.Footer>
             </Modal>
         )
