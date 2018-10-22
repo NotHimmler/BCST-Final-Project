@@ -43,8 +43,8 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({data: data});
-      this.updateLastCheckup(mrn);
+      this.setState({data: data, loaded:true});
+      //this.updateLastCheckup(mrn);
     });
   }
 
@@ -127,7 +127,6 @@ class ExamplePatient extends React.Component {
                           <th scope="col">Age</th>
                           <th scope="col">Gender</th>
                           <th scope="col">Ward</th>
-                          <th scope="col">Health Condition</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -135,7 +134,6 @@ class ExamplePatient extends React.Component {
                           <td>{loaded?data.age:placeholder}</td>
                           <td>{loaded?data.sex:placeholder}</td>
                           <td>{loaded?data.ward:placeholder}</td>
-                          <td>{loaded?data.health_condition:placeholder}</td>
                         </tr>
                       </tbody>
                     </table>
