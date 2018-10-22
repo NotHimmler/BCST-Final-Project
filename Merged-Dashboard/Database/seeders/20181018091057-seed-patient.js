@@ -212,6 +212,20 @@ module.exports = {
       last_checkup_date: new Date("2018-10-04"),
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      MRN: "80000020",
+      first_name: "Elizabeth",
+      last_name: "Smith",
+      ward: "1B",
+      age: 45,
+      sex: "F",
+      is_archived: false,
+      health_condition: 'Neurological',
+      last_checkup_by: "Leanne Hassett",
+      last_checkup_date: new Date("2018-10-04"),
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
 ], {}).catch(function (msg) {console.log(msg)});
   },
