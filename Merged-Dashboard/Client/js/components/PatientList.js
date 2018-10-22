@@ -16,6 +16,9 @@ class PatientRow extends React.Component {
   }
 
   getDate(d) {
+      if(d == null){
+          return "No last checkup";
+      }
       let date = new Date(d)
       return (date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear());
   }

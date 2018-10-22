@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PatientGraph from '../components/PatientGraph'
 import PatientGoal from '../components/PatientGoal'
 import PatientSettings from '../components/PatientSettings'
+import PatientCheckup from '../components/PatientCheckup'
 
 //For testing
 import TestChart from '../components/Charts/TestChart'
@@ -18,7 +19,6 @@ class ExamplePatient extends React.Component {
 
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = { 
       content : "Test",
       lastCheckedup: "",
@@ -33,6 +33,7 @@ class ExamplePatient extends React.Component {
     console.log(mrn);
     let endpoint = `/api/patient/mrn/${mrn}`;
 
+    // Get general patient details (e.g. age/sex/ward)
     fetch(endpoint)
     .then(response => {
       if (response.status !== 200) {
@@ -45,23 +46,9 @@ class ExamplePatient extends React.Component {
       this.setState({data: data});
       this.updateLastCheckup(mrn);
     });
-
-    /* $.ajax({
-        url:"/api/patient/archived",
-        type:"get",
-        contentType:"application/json;charset=utf-8",
-        success: (data)=>{
-            console.log(data);
-            let error = data.error;
-            if (error) {
-              this.setState({
-                errorMessage:error
-              });
-            }
-        }
-    }); */
   }
 
+  // Update last checkup
   updateLastCheckup(mrn) {
     let endpoint = `/api/patient/updateLastCheckup`;
     let patientInfo = {
@@ -88,6 +75,7 @@ class ExamplePatient extends React.Component {
     });
   }
 
+  // Get a string for last checkup
   getLastCheckup(){
     const {data} = this.state;
     const lastCheckupDate = data.last_checkup_date;
@@ -132,6 +120,7 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckup()
                           : placeholder}</i></h5>
+                    <button onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
                     <table className="table">
                       <thead>
                         <tr>
@@ -171,6 +160,10 @@ class ExamplePatient extends React.Component {
                 (this.state.content === "Settings")
                     ? <PatientSettings mrn={this.props.match.params.MRN} archived={data.is_archived}/>
                     : null
+              }
+
+              {
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} /> : null
               }
 
 
