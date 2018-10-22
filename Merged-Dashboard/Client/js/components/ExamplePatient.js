@@ -19,7 +19,6 @@ class ExamplePatient extends React.Component {
 
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = { 
       content : "Test",
       lastCheckedup: "",
@@ -34,6 +33,7 @@ class ExamplePatient extends React.Component {
     console.log(mrn);
     let endpoint = `/api/patient/mrn/${mrn}`;
 
+    // Get general patient details (e.g. age/sex/ward)
     fetch(endpoint)
     .then(response => {
       if (response.status !== 200) {
@@ -46,23 +46,9 @@ class ExamplePatient extends React.Component {
       this.setState({data: data});
       this.updateLastCheckup(mrn);
     });
-
-    /* $.ajax({
-        url:"/api/patient/archived",
-        type:"get",
-        contentType:"application/json;charset=utf-8",
-        success: (data)=>{
-            console.log(data);
-            let error = data.error;
-            if (error) {
-              this.setState({
-                errorMessage:error
-              });
-            }
-        }
-    }); */
   }
 
+  // Update last checkup
   updateLastCheckup(mrn) {
     let endpoint = `/api/patient/updateLastCheckup`;
     let patientInfo = {
@@ -89,6 +75,7 @@ class ExamplePatient extends React.Component {
     });
   }
 
+  // Get a string for last checkup
   getLastCheckup(){
     const {data} = this.state;
     const lastCheckupDate = data.last_checkup_date;
