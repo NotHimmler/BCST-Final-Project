@@ -67,6 +67,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'MRN',
       onDelete: 'CASCADE'
     });
+    // many to many relationship with user
+    // Patient.belongsToMany(User, { through: UserPatients });
   };
   return Patient;
 };
