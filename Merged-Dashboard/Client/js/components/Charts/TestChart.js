@@ -24,12 +24,15 @@ class TestChart extends React.Component {
         this.addData = this.addData.bind(this);
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
         this.handleToDateChange = this.handleToDateChange.bind(this);
+        this.getMinDate = this.getMinDate.bind(this);
+        this.getMaxDate = this.getMaxDate.bind(this);
+        this.resetDates = this.resetDates.bind(this);
     }
 
     // Handler for 'from' date picker
     handleFromDateChange(date) {
         let endpoint = `/api/fitbit/mrn/${this.state.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
-        console.log(endpoint);
+        //console.log(endpoint);
         this.addData(endpoint)
         this.setState({
           fromDate: date
@@ -44,6 +47,27 @@ class TestChart extends React.Component {
           toDate: date
         });
       }
+    
+    getMinDate(){
+        if(this.state.fromDate > this.state.minDate){
+            return this.state.fromDate;
+        } else {
+            return this.state.minDate;
+        }
+    }
+
+    getMaxDate(){
+        if(this.state.toDate < this.state.maxDate){
+            return this.state.toDate;
+        } else {
+            return this.state.maxDate;
+        }
+    }
+
+    resetDates(){
+        this.setState({fromDate: this.state.minDate, toDate: this.state.maxDate});
+        this.addData(`/api/fitbit/mrn/${this.state.mrn}`);
+    }
 
     addData(endpoint) {
         // Get fitbit data from database
@@ -115,7 +139,7 @@ class TestChart extends React.Component {
                 <DatePicker
                     selected={this.state.fromDate}
                     minDate={this.state.minDate}
-                    maxDate={this.state.maxDate}
+                    maxDate={this.getMaxDate()}
                     onChange={this.handleFromDateChange}/>
                 </div>
                 <div className="col-sm">
@@ -124,10 +148,11 @@ class TestChart extends React.Component {
                 <div className="col-sm">
                 <DatePicker
                     selected={this.state.toDate}
-                    minDate={this.state.minDate}
+                    minDate={this.getMinDate()}
                     maxDate={this.state.maxDate}
                     onChange={this.handleToDateChange}/>
                 </div>
+                <button className="btn btn-primary" onClick={this.resetDates}>Reset</button>
                 </div>
                 <div className="x_panel">
                     <div className="x_title">
