@@ -1,4 +1,6 @@
 var express = require('express');
+var request = require('request-promise-native');
+var moment = require('moment');
 var fitbitRouter = express.Router();
 const db = require('../../Database/models/index.js');
 db.FitbitTokens.sync();
@@ -6,6 +8,32 @@ db.FitbitData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
+
+//Fitbit API calls
+
+//Date format needs to be yyyy-MM-dd
+function getDataBetweenDates(date1, date2, token) {
+    let now = moment(new Date());
+    let weekAgo = moment().subtract(6, "days");
+    const nowString = now.format("YYYY-MM-DD")
+    const weekAgoString = weekAgo.format("YYYY-MM-DD");
+    let url = `https://api.fitbit.com/1/user/-/activities/tracker/steps/date/${weekAgoString}/${nowString}.json`
+    let options = {
+        url: url,
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
+    return new Promise((resolve, reject) => {
+        request(options).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+////////////////////////////////////////////////////
 
 // Get all fb data
 fitbitRouter.get('/', function(req,res) {
@@ -28,15 +56,22 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
     })
     .then((data) => {
         //No database in fitbit table
-        if (data == null) {
+        console.log("DB Data");
+        if (data.length == 0) {
             //Check if there is a fitbit token
             db.FitbitTokens.findOne({where: {MRN: req.params.mrn}})
             .then(data => {
+                //console.log(data);
                 if(data == null) {
                     res.send({error: "No data for patient with this mrn"})
                 } else {
                     //Use fitbit api to get data
-                    res.send({"okay": "Patient has data"});
+                    let token = data.dataValues.token;
+                    getDataBetweenDates(123, 456, token).then(data => {
+                        res.send(data);
+                    }).catch(err => {
+                        res.send({"error": err})
+                    })
                 }
             }).catch(err => {
                 console.log('There was an error querying contacts', JSON.stringify(err))
