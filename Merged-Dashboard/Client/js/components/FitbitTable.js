@@ -24,6 +24,7 @@ class FitbitTable extends React.Component {
       inviteEmail: "",
       invited: false,
       inviteLink: "",
+      hasData: false,
       echart: null,
       // optionss
       options_fitbit: {
@@ -315,10 +316,41 @@ class FitbitTable extends React.Component {
     .then(data => {
       return data.json();
     }).then(data => {
-      console.log(data)
+      console.log(data['activities-tracker-steps'])
+      this.setState({hasData: true}, () => {
+        this.createChart(data['activities-tracker-steps'])
+      })
     }).catch(err => {
       console.log(err)
     })
+  }
+
+  createChart(fitbitData) {
+    var echartBar1 = echarts.init(
+      document.getElementById("mainb"),
+      this.state.theme
+    );
+    var ops = this.state.options_fitbit;
+    ops.title.text = "Daily";
+
+    ops.xAxis[0].data = fitbitData.map((dataItem) => {
+      return dataItem.dateTime;
+    })
+    // process the input data
+    // var rawSteps = [2292, 2000, 1860, 1881, 2188, 2140, 2088];
+    var rawSteps = fitbitData.map((dataItem) => {
+      return dataItem.value;
+    })
+    var rawGoal = fitbitData.map(() => {
+      return 10000
+    })
+
+    ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
+    //ops.series[1].markLine.data[0].yAxis = 2000;
+    ops.series[1].data = rawGoal;
+    this.setState({ options_fitbit: ops });
+    echartBar1.setOption(this.state.options_fitbit);
+    this.setState({ echart: echartBar1 });
   }
 
   handleInviteButton(data, event) {
@@ -343,7 +375,6 @@ class FitbitTable extends React.Component {
     return (
       
       <div className="row w-100" style={boxMargins}>
-      {this.props.lastName == "Test" ? 
         <div className="x_panel">
           <div className="x_title">
             <div className="col-md-4">
@@ -392,27 +423,10 @@ class FitbitTable extends React.Component {
           </div>{" "}
           {/*end x_title*/}
           <div className="x_content">
-            <div id="mainb" />
+            {this.state.hasData ? <div id="mainb" /> : <div>No Data - {this.state.inviting ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> : null}<button onClick={() => this.handleInviteButton("cancel")}>{this.state.inviting && this.state.inviteEmail != "" ? <a href={this.state.inviteLink}>Send Email</a> : "Send Patient Invite"}</button> {this.state.inviting ? <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> : null} </div>}
           </div>{" "}
           {/*end x_content*/}
         </div>
-
-      : 
-      <div className="x_panel">
-          <div className="x_title">
-            <h2>Steps from Fitbit</h2>
-            <ul className="nav navbar-right panel_toolbox">
-              <li>
-                <a className="close-link">
-                  <i className="fa fa-close" />
-                </a>
-              </li>
-            </ul>
-            <div className="clearfix" />
-          </div>
-          No Data - {this.state.inviting ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> : null}<button onClick={() => this.handleInviteButton("cancel")}>{this.state.inviting && this.state.inviteEmail != "" ? <a href={this.state.inviteLink}>Send Email</a> : "Send Patient Invite"}</button> {this.state.inviting ? <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> : null}
-        </div>
-      }
       </div>
     );
   }

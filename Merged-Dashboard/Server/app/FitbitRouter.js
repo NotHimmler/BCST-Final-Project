@@ -12,12 +12,13 @@ const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
 //Fitbit API calls
 
 //Date format needs to be yyyy-MM-dd
-function getDataBetweenDates(date1, date2, token) {
-    let now = moment(new Date());
-    let weekAgo = moment().subtract(6, "days");
-    const nowString = now.format("YYYY-MM-DD")
-    const weekAgoString = weekAgo.format("YYYY-MM-DD");
-    let url = `https://api.fitbit.com/1/user/-/activities/tracker/steps/date/${weekAgoString}/${nowString}.json`
+//Defaults to the past week
+function getDataBetweenDates(token, date1, date2) {
+    let endDate = date1 ? moment(date1) : moment(new Date());
+    let baseDate = date2 ? moment(date2) : moment().subtract(6, "days");
+    const baseString = baseDate.format("YYYY-MM-DD")
+    const endString = endDate.format("YYYY-MM-DD");
+    let url = `https://api.fitbit.com/1/user/-/activities/tracker/steps/date/${baseString}/${endString}.json`
     let options = {
         url: url,
         headers: {
@@ -68,7 +69,7 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
                 } else {
                     //Use fitbit api to get data
                     let token = data.dataValues.token;
-                    getDataBetweenDates(123, 456, token).then(data => {
+                    getDataBetweenDates(token).then(data => {
                         res.send(data);
                     }).catch(err => {
                         res.send({"error": err})
