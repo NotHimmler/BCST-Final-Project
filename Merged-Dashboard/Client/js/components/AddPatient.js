@@ -14,9 +14,6 @@ class AddPatient extends React.Component {
             ward: "",
             age: 0,
             gender: "F",
-            amount: false,
-            fitbit: false,
-            watb: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -78,12 +75,6 @@ class AddPatient extends React.Component {
                         <option value="M">Male</option>
                         </select>
                     </label><br />
-                    <br />
-                    <label>Treatments:</label><br />
-                    
-                    <label><input type="checkbox" name="amount" checked={this.state.amount} onChange={this.handleInputChange}/> AMOUNT</label><br />
-                    <label><input type="checkbox" name="fitbit" checked={this.state.fitbit} onChange={this.handleInputChange}/> Fitbit</label><br />
-                    <label><input type="checkbox" name="watb" checked={this.state.watb} onChange={this.handleInputChange}/> WalkAroundTheBlock</label><br />
                     <br />
                     <div style={{"display":"flex", "justifyContent": "center", "width": "100%"}}>
                     <input type="submit" value="Submit"/>
