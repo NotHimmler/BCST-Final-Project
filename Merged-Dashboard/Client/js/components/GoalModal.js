@@ -56,6 +56,11 @@ class GoalModal extends React.Component {
             this.setState({ goalType: 'template'});
           });
     }
+
+    closeHandler() {
+        this.setState({ goalType: 'template'});
+        this.props.onHide();
+    }
     
     render() {
         return (
@@ -104,7 +109,7 @@ class GoalModal extends React.Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                <button className="btn btn-outline-dark" onClick={this.props.onHide}>Close</button>
+                <button className="btn btn-outline-dark" onClick={this.closeHandler.bind(this)}>Close</button>
                 </Modal.Footer>
             </Modal>
         )
