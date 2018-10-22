@@ -8,7 +8,7 @@ import PatientCheckup from '../components/PatientCheckup'
 
 //For testing
 import TestChart from '../components/Charts/TestChart'
-import WalkAppTable from "./WalkAppTable";
+import CheckupHistory from "./CheckupHistory";
 
 const boxMargins = {
   "padding-left": "20px",
@@ -167,6 +167,12 @@ class ExamplePatient extends React.Component {
                 (this.state.content === "Settings")
                     ? <PatientSettings mrn={this.props.match.params.MRN} archived={data.is_archived}/>
                     : null
+              }
+
+              {
+                (this.state.content === "Notes")
+                ? <CheckupHistory user={this.props.username} />
+                : null
               }
 
               {
