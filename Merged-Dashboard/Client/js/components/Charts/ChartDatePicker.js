@@ -11,13 +11,16 @@ class ChartDatePicker extends React.Component {
             toDate: moment(),
             minDate: moment(),
             maxDate: moment(),
+            range: "See last 7 days",
         };
 
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
         this.handleToDateChange = this.handleToDateChange.bind(this);
         this.getMinDate = this.getMinDate.bind(this);
         this.getMaxDate = this.getMaxDate.bind(this);
-        this.resetDates = this.resetDates.bind(this);
+        this.resetWeek = this.resetWeek.bind(this);
+        this.resetMonth = this.resetMonth.bind(this);
+
     }
 
     // Handler for 'from' date picker
@@ -55,9 +58,30 @@ class ChartDatePicker extends React.Component {
         }
     }
 
-    resetDates(){
-        this.setState({fromDate: moment(this.state.maxDate).subtract(6, "days"), toDate: this.state.maxDate});
+    resetWeek(){
+        let from;
+        (moment(this.state.maxDate).subtract(6, "days") < this.state.minDate)
+            ? from = this.state.minDate
+            : from = moment(this.state.maxDate).subtract(6, "days");
+        this.setState({
+            fromDate: from, 
+            toDate: this.state.maxDate,
+            range: "See last 7 days"
+        });
         this.props.addData(`${this.props.endpoint}${this.props.mrn}`);
+    }
+
+    resetMonth(){
+        let from;
+        (moment(this.state.maxDate).subtract(29, "days") < this.state.minDate)
+            ? from = this.state.minDate
+            : from = moment(this.state.maxDate).subtract(29, "days");
+        this.setState({
+            fromDate: from, 
+            toDate: this.state.maxDate,
+            range: "See last 30 days",
+        });
+        this.props.addData(`${this.props.endpoint}${this.props.mrn}/dates/${from.format('YYYY-MM-DD')}/${moment(this.state.maxDate).format('YYYY-MM-DD')}`);
     }
 
     componentDidMount() {
@@ -88,6 +112,7 @@ class ChartDatePicker extends React.Component {
                 <div className="datepicker-inline date-from">
                     <p>From </p>
                 </div>
+                
                 <div className="datepicker-inline">
                 <DatePicker
                     className="col-sm"
@@ -97,20 +122,41 @@ class ChartDatePicker extends React.Component {
                     maxDate={this.getMaxDate()}
                     onChange={this.handleFromDateChange}/>
                 </div>
+
                 <div className="datepicker-inline date-to">
                     <p>To </p>
                 </div>
+
                 <div className="datepicker-inline">
-                <DatePicker
-                    className="col-sm"
-                    dateFormat="ddd DD/MM/YY"
-                    selected={this.state.toDate}
-                    minDate={this.getMinDate()}
-                    maxDate={this.state.maxDate}
-                    onChange={this.handleToDateChange}/>
+                    <DatePicker
+                        className="col-sm"
+                        dateFormat="ddd DD/MM/YY"
+                        selected={this.state.toDate}
+                        minDate={this.getMinDate()}
+                        maxDate={this.state.maxDate}
+                        onChange={this.handleToDateChange}/>
                 </div>
+
                 <div className="datepicker-inline">
-                <button className="btn btn-primary" onClick={this.resetDates}>Reset</button>
+                    <li className="dropdown">
+                    <button
+                        id="dropdown_fitbit"
+                        className="btn btn-primary dropdown-toggle"
+                        type="button"
+                        data-toggle="dropdown"
+                    >
+                        {this.state.range}
+                        <span className="caret" />
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li>
+                        <a onClick={this.resetWeek}>See last 7 days</a>
+                        </li>
+                        <li>
+                        <a onClick={this.resetMonth}>See last 30 days</a>
+                        </li>
+                    </ul>
+                    </li>
                 </div>
             </div>
         )
