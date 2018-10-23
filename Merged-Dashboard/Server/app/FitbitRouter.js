@@ -3,8 +3,8 @@ var request = require('request-promise-native');
 var moment = require('moment');
 var fitbitRouter = express.Router();
 const db = require('../../Database/models/index.js');
-db.FitbitTokens.sync();
-db.FitbitData.sync();
+//db.FitbitTokens.sync();
+//db.FitbitData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
@@ -57,6 +57,7 @@ fitbitRouter.get("/mrn/:mrn", function(req, res) {
             MRN: req.params.mrn,
         },
         order: [['date', 'DESC']],
+        limit: 7,
     })
     .then((data) => {
         //No database in fitbit table
@@ -106,8 +107,25 @@ fitbitRouter.get("/mrn/:mrn/datelimit", function(req, res) {
         group: ['MRN']
     })
     .then((data) => {
-        if (data == null) {
-            res.send({error: "No patient with this mrn"})
+        if (data.length == 0) {
+            //Check if there is a fitbit token
+            db.FitbitTokens.findOne({where: {MRN: req.params.mrn}})
+            .then(data => {
+                //console.log(data);
+                if(data == null) {
+                    res.send({error: "No data for patient with this mrn"})
+                } else {
+                    let defaultData = [{
+                        to:moment(new Date()),
+                        from:"2000-01-01",
+                    }];
+                    res.send(defaultData);
+                }
+            }).catch(err => {
+                console.log('There was an error querying contacts', JSON.stringify(err))
+                return res.send(err)
+            })
+        //There is stored data in the database
         } else {
             res.send(data)
         }
@@ -133,8 +151,28 @@ fitbitRouter.get("/mrn/:mrn/dates/:from/:to", function(req, res) {
         order: [['date', 'DESC']],
     })
     .then((data) => {
-        if (data == null) {
-            res.send({error: "No patient with this mrn"})
+        if (data.length == 0) {
+            //Check if there is a fitbit token
+            db.FitbitTokens.findOne({where: {MRN: req.params.mrn}})
+            .then(data => {
+                //console.log(data);
+                if(data == null) {
+                    res.send({error: "No data for patient with this mrn"})
+                } else {
+                    //Use fitbit api to get data
+                    let token = data.dataValues.token;
+                    let user_id = data.dataValues.user_id;
+                    getDataBetweenDates(token, user_id, req.params.from, req.params.to).then(data => {
+                        res.send(data);
+                    }).catch(err => {
+                        res.send({"error": err})
+                    })
+                }
+            }).catch(err => {
+                console.log('There was an error querying contacts', JSON.stringify(err))
+                return res.send(err)
+            })
+        //There is stored data in the database
         } else {
             res.send(data)
         }

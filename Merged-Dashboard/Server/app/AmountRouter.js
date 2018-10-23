@@ -1,7 +1,7 @@
 var express = require('express');
 var amountRouter = express.Router();
 const db = require('../../Database/models/index.js');
-db.AmountData.sync();
+//db.AmountData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
@@ -27,12 +27,12 @@ const correctCols = amountData.map(item => {
   })
 })
 
-db.AmountData.findOrCreate({where: correctCols[0]})
+/* db.AmountData.findOrCreate({where: correctCols[0]})
 .then(data => {
     console.log(data);
 }).catch(err => {
     console.log(err);
-})
+}) */
 
 // Get all fb data
 amountRouter.get('/', function(req,res) {
@@ -43,6 +43,31 @@ amountRouter.get('/', function(req,res) {
       return res.send(err)
     });
 });
+
+amountRouter.get("/programs", (req, res) => {
+    db.AmountData.findAll().then(entries => {
+        let programs = entries.map(item => item['program']) 
+        let unique = Array.from(new Set(programs));
+        res.send({okay: "List retrieved", programs: unique});
+    }).catch(err => {
+        console.log(err);
+        res.send({error: "Database error"});
+    })
+})
+
+amountRouter.get("/programs/exercises/:program", (req, res) => {
+    let program = req.params.program;
+    console.log(program);
+    db.AmountData.findAll({where: {program: program}})
+    .then(data => {
+        let exercises = data.map(item => item['exercise']);
+        let unique = Array.from(new Set(exercises));
+        res.send({okay: "List retrieved", exercises: unique});
+    }).then(err => {
+        console.log(err);
+        res.send({"error": "Database error"})
+    })
+})
 
 // Get fb data for patient with specific mrn
 amountRouter.get("/mrn/:mrn", function(req, res) {

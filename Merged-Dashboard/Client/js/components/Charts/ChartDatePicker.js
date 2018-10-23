@@ -11,18 +11,21 @@ class ChartDatePicker extends React.Component {
             toDate: moment(),
             minDate: moment(),
             maxDate: moment(),
+            range: "See last 7 days",
         };
 
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
         this.handleToDateChange = this.handleToDateChange.bind(this);
         this.getMinDate = this.getMinDate.bind(this);
         this.getMaxDate = this.getMaxDate.bind(this);
-        this.resetDates = this.resetDates.bind(this);
+        this.resetWeek = this.resetWeek.bind(this);
+        this.resetMonth = this.resetMonth.bind(this);
+
     }
 
     // Handler for 'from' date picker
     handleFromDateChange(date) {
-        let endpoint = `/api/fitbit/mrn/${this.props.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
+        let endpoint = `${this.props.endpoint}${this.props.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
         //console.log(endpoint);
         this.props.addData(endpoint)
         this.setState({
@@ -32,7 +35,7 @@ class ChartDatePicker extends React.Component {
     
     // Handler for 'to' date picker
     handleToDateChange(date) {
-        let endpoint = `/api/fitbit/mrn/${this.props.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
+        let endpoint = `${this.props.endpoint}${this.props.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
         this.props.addData(endpoint)
         this.setState({
           toDate: date
@@ -55,14 +58,34 @@ class ChartDatePicker extends React.Component {
         }
     }
 
-    resetDates(){
-        this.setState({fromDate: this.state.minDate, toDate: this.state.maxDate});
-        this.props.addData(`/api/fitbit/mrn/${this.props.mrn}`);
+    resetWeek(){
+        let from;
+        (moment(this.state.maxDate).subtract(6, "days") < this.state.minDate)
+            ? from = this.state.minDate
+            : from = moment(this.state.maxDate).subtract(6, "days");
+        this.setState({
+            fromDate: from, 
+            toDate: this.state.maxDate,
+            range: "See last 7 days"
+        });
+        this.props.addData(`${this.props.endpoint}${this.props.mrn}`);
+    }
+
+    resetMonth(){
+        let from;
+        (moment(this.state.maxDate).subtract(29, "days") < this.state.minDate)
+            ? from = this.state.minDate
+            : from = moment(this.state.maxDate).subtract(29, "days");
+        this.setState({
+            fromDate: from, 
+            toDate: this.state.maxDate,
+            range: "See last 30 days",
+        });
+        this.props.addData(`${this.props.endpoint}${this.props.mrn}/dates/${from.format('YYYY-MM-DD')}/${moment(this.state.maxDate).format('YYYY-MM-DD')}`);
     }
 
     componentDidMount() {
-        let dateEndpoint = `/api/fitbit/mrn/${this.props.mrn}/datelimit`;
-
+        let dateEndpoint = `${this.props.endpoint}${this.props.mrn}/datelimit`;
         // Get date limits
         fetch(dateEndpoint)
             .then(response => {
@@ -75,7 +98,7 @@ class ChartDatePicker extends React.Component {
                 let from = data[0].from.split(" ");
                 let to = data[0].to.split(" ");
                 this.setState({
-                    fromDate: moment(from[0]),
+                    fromDate: moment(to[0]).subtract(6, "days"),
                     toDate: moment(to[0]),
                     minDate: moment(from[0]),
                     maxDate: moment(to[0]),
@@ -89,6 +112,7 @@ class ChartDatePicker extends React.Component {
                 <div className="datepicker-inline date-from">
                     <p>From </p>
                 </div>
+                
                 <div className="datepicker-inline">
                 <DatePicker
                     className="col-sm"
@@ -98,20 +122,41 @@ class ChartDatePicker extends React.Component {
                     maxDate={this.getMaxDate()}
                     onChange={this.handleFromDateChange}/>
                 </div>
+
                 <div className="datepicker-inline date-to">
                     <p>To </p>
                 </div>
+
                 <div className="datepicker-inline">
-                <DatePicker
-                    className="col-sm"
-                    dateFormat="ddd DD/MM/YY"
-                    selected={this.state.toDate}
-                    minDate={this.getMinDate()}
-                    maxDate={this.state.maxDate}
-                    onChange={this.handleToDateChange}/>
+                    <DatePicker
+                        className="col-sm"
+                        dateFormat="ddd DD/MM/YY"
+                        selected={this.state.toDate}
+                        minDate={this.getMinDate()}
+                        maxDate={this.state.maxDate}
+                        onChange={this.handleToDateChange}/>
                 </div>
+
                 <div className="datepicker-inline">
-                <button className="btn btn-primary" onClick={this.resetDates}>Reset</button>
+                    <li className="dropdown">
+                    <button
+                        id="dropdown_fitbit"
+                        className="btn btn-primary dropdown-toggle"
+                        type="button"
+                        data-toggle="dropdown"
+                    >
+                        {this.state.range}
+                        <span className="caret" />
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li>
+                        <a onClick={this.resetWeek}>See last 7 days</a>
+                        </li>
+                        <li>
+                        <a onClick={this.resetMonth}>See last 30 days</a>
+                        </li>
+                    </ul>
+                    </li>
                 </div>
             </div>
         )

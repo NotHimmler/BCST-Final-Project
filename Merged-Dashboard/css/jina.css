@@ -82,3 +82,7 @@ label {
 .float-right {
   float: right;
 }
+
+.dropdown {
+  list-style: none;
+}

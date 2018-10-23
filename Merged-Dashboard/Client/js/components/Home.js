@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import DonutGraph from "../components/DonutGraph"
+import TodoList from "../components/TodoList"
 
 class Home extends React.Component {
   constructor(props){
@@ -144,37 +145,7 @@ class Home extends React.Component {
                 <div className="row">
 
 {/*  Start to do list  */}
-                <div className="col-sm-4 to_do">
-                  <div className="x_panel">
-                    <div className="x_title">
-                      <h2>To Do List </h2>
-                      <div className="clearfix"></div>
-                    </div>
-                    <div className="x_content">
-
-                      <div className="">
-                        <ul className="to_do">
-                          <li>
-                              <p>
-                              <input type="checkbox" className="flat"/> Patient D01 report due</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" className="flat"/> Plan a meeting </p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" className="flat"/> Patient D02 report due</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" className="flat"/> Patient D03 report due</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <TodoList username={this.props.username}/>
                 {/*  End to do list */}
                 </div>
             </div>
