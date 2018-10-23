@@ -47,6 +47,7 @@ class Register extends React.Component {
 						errorMessage:error
 					});
                 }else{
+					console.log(data);
 					this.setState({
 						redirect:true
 					})
