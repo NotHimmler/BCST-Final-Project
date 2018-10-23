@@ -86,3 +86,9 @@ label {
 .dropdown {
   list-style: none;
 }
+
+.fitbit-badge {
+  color: white !important;
+  background-color: #42a3b8;
+  margin-top: 10px;
+}

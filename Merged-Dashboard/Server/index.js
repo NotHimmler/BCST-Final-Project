@@ -8,6 +8,7 @@ let watb = require('./app/WatbRouter');
 let user = require('./app/UserRouter');
 let amount = require('./app/AmountRouter');
 let notes = require('./app/NoteRouter');
+let todos = require("./app/TodoRouter");
 let fitbittokens = require('./app/FitbitTokenRouter');
 let goal = require('./app/GoalRouter');
 
@@ -31,6 +32,7 @@ app.use('/api/amount', amount);
 app.use('/api/notes', notes);
 app.use('/api/tokens', fitbittokens);
 app.use('/api/goal', goal);
+app.use('/api/todos', todos);
 require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;

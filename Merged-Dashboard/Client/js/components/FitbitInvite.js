@@ -5,7 +5,6 @@ class FitbitInvite extends React.Component {
         super(props);
 
         this.state = {
-            hasToken: false,
             inviting: false,
             inviteEmail: "",
             invited: false,
@@ -33,52 +32,26 @@ class FitbitInvite extends React.Component {
     let href = `mailto:${this.state.inviteEmail}?subject=Please Connect Your Fitbit For Therapist&body=http://localhost:8080/fitbitAuth/${this.props.mrn}`
     this.setState({inviteEmail: event.target.value, inviteLink: href})
     }
-
-    componentDidMount() {
-        let endpoint = `/api/tokens/mrn/${this.props.mrn}`
-        fetch(endpoint)
-            .then(response => {
-            if (response.status !== 200) {
-                return this.setState({ placeholder: "Something went wrong" });
-            }
-            return response.json();
-            })
-            .then(data => {
-                if(!data.error){
-                    this.setState({hasToken:true});
-                }
-            });
-    }
     
     render() {
         return (
             <div>
-                <div className="x_panel">
-
-                    <div className="x_title">
-                        <h2>Connect to Fitbit</h2>
-                        <div className="clearfix"></div>
+                { this.props.hasFitbitToken
+                    ? <p>Patient is already connected to Fitbit</p>
+                    : <div>
+                        {this.state.inviting 
+                            ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> 
+                            : null}
+                        <button className="" onClick={() => this.handleInviteButton("cancel")}>
+                            {this.state.inviting && this.state.inviteEmail != "" 
+                                ? <a href={this.state.inviteLink}>Send Email</a> 
+                                : "Send Patient Invite"}
+                        </button> 
+                        {this.state.inviting 
+                            ? <button className="" onClick={() => this.handleInviteButton("cancel")}>Cancel</button> 
+                            : null} 
                     </div>
-
-                    <div className="x_content">
-                        { this.state.hasToken
-                            ? <p>Patient is already connected to Fitbit</p>
-                            : <div>
-                                {this.state.inviting 
-                                    ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> 
-                                    : null}
-                                <button className="" onClick={() => this.handleInviteButton("cancel")}>
-                                    {this.state.inviting && this.state.inviteEmail != "" 
-                                        ? <a href={this.state.inviteLink}>Send Email</a> 
-                                        : "Send Patient Invite"}
-                                </button> 
-                                {this.state.inviting 
-                                    ? <button className="" onClick={() => this.handleInviteButton("cancel")}>Cancel</button> 
-                                    : null} 
-                            </div>
-                        }
-                    </div>
-                </div>
+                }
             </div>
         )
     }

@@ -7,6 +7,7 @@ class PatientCheckup extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.updateLastCheckup = this.updateLastCheckup.bind(this);
 
         this.state = {
             note: "",
@@ -32,7 +33,7 @@ class PatientCheckup extends React.Component {
            return data.json()
         }).then(data => {
             if (data.okay) {
-                this.props.checkupUpdate(this.props.mrn);
+                this.updateLastCheckup(this.props.mrn);
                 this.props.setContent("Data");
             }
         })
@@ -41,6 +42,32 @@ class PatientCheckup extends React.Component {
     handleInputChange(event) {
         const noteValue = event.target.value;
         this.setState({note: noteValue});
+    }
+
+    // Update last checkup
+    updateLastCheckup(mrn) {
+        let endpoint = `/api/patient/updateLastCheckup`;
+        let patientInfo = {
+        username: this.props.user,
+        mrn
+        }
+        let option = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({patientInfo})
+        }
+        fetch(endpoint,option)
+        .then(response => {
+        if (response.status !== 200) {
+            return this.setState({ placeholder: "Something went wrong" });
+        }
+        return response.json();
+        })
+        .then(data => {
+        console.log(data);
+        });
     }
     
     render() {
