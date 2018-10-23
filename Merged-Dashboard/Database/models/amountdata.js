@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const AmountData = sequelize.define('AmountData', {
     MRN: {
-      type: DataTypes.STRING,
+      type: DataTypes.CHAR(8),
       allowNull: false,
       primaryKey: true,
     },
