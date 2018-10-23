@@ -57,7 +57,7 @@
 }
 
 /* TEST CHART STUFF */
-#test_chart {
+.test_chart {
   height: 250px;
 }
 

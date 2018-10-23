@@ -29,6 +29,8 @@ function getDataBetweenDates(token, user_id, date1, date2) {
         request(options).then(data => {
             resolve(data);
         }).catch(err => {
+            console.log("Could not fetch fitbit data");
+            console.log(err.message);
             reject(err);
         })
     })

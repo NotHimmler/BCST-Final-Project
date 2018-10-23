@@ -7,7 +7,7 @@ import PatientSettings from '../components/PatientSettings'
 import PatientCheckup from '../components/PatientCheckup'
 
 //For testing
-import TestChart from '../components/Charts/TestChart'
+import FitbitChart from '../components/Charts/FitbitChart'
 import CheckupHistory from "./CheckupHistory";
 
 const boxMargins = {
@@ -183,7 +183,7 @@ class ExamplePatient extends React.Component {
               {/*For testing...*/}
               {
                 (this.state.content === "Test" && this.state.loaded)
-                    ? <TestChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
+                    ? <FitbitChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
               }
 
