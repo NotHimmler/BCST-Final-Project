@@ -33,7 +33,7 @@ class CheckupHistory extends React.Component {
         }).then(data => {
             let rows = data.data.map(item => {
                 return (<div style={{border: "1px solid #73879C", borderRadius: "5px", margin: "5px 0"}}>
-                    <div style={{backgroundColor: "#73879C", color: "white", padding: "5px"}}><h4 style={{display: "inline-block"}}>{moment(item.date).format("dddd, MMM Do YYYY")}</h4> by <h5 style={{display: "inline-block"}}>{item.user}</h5><br/></div>
+                    <div style={{backgroundColor: "#73879C", color: "white", padding: "5px"}}><h4 style={{display: "inline-block"}}>{moment(Number(item.date)).format("dddd, MMM Do YYYY")}</h4> by <h5 style={{display: "inline-block"}}>{item.user}</h5><br/></div>
                     <div style={{padding: "5px"}}>{item.note}</div>
                     </div>)
             })
