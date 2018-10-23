@@ -54,6 +54,7 @@ class GoalModal extends React.Component {
           .then(data => {
             console.log(data);
             this.setState({ goalType: 'template'});
+            this.closeHandler();
           });
     }
 

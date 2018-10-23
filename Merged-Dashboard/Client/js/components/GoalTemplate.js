@@ -121,7 +121,7 @@ class GoalTemplate extends React.Component {
                         <ControlLabel>Goal Frequency</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="none">-</option>
-                            <option value="select">at least</option>
+                            <option value="at least">at least</option>
                         </FormControl>
                     </FormGroup>
 

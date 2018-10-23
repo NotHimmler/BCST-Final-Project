@@ -2,13 +2,14 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 //Routes
-var fitbit = require('./app/FitbitRouter')
-var patient = require('./app/PatientRouter')
+var fitbit = require('./app/FitbitRouter');
+var patient = require('./app/PatientRouter');
 let watb = require('./app/WatbRouter');
 let user = require('./app/UserRouter');
 let amount = require('./app/AmountRouter');
 let notes = require('./app/NoteRouter');
 let fitbittokens = require('./app/FitbitTokenRouter');
+let goal = require('./app/GoalRouter');
 
 app.use(bodyParser.json({ type: 'application/json' }));
 
@@ -29,6 +30,7 @@ app.use('/api/user', user);
 app.use('/api/amount', amount);
 app.use('/api/notes', notes);
 app.use('/api/tokens', fitbittokens);
+app.use('/api/goal', goal);
 require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;
