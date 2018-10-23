@@ -11,7 +11,7 @@ module.exports = {
         name: 'John Doe',
         isBetaMember: false
       }], {});
-    */
+    *//*
     return queryInterface.bulkInsert('Users', [{
       user_id: uuidv4(),
       email: 'test@test.com',
@@ -37,8 +37,8 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
+  */
   },
-
   down: (queryInterface, Sequelize) => {
     /*
       Add reverting commands here.
