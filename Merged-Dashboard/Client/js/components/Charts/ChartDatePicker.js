@@ -95,6 +95,9 @@ class ChartDatePicker extends React.Component {
             return response.json();
             })
             .then(data => {
+                if(data.error){
+                    return;
+                }
                 let from = data[0].from.split(" ");
                 let to = data[0].to.split(" ");
                 this.setState({
@@ -108,7 +111,7 @@ class ChartDatePicker extends React.Component {
     
     render() {
         return (
-            <div>
+            <div style={{display: this.state.display}}>
                 <div className="datepicker-inline date-from">
                     <p>From </p>
                 </div>

@@ -13,7 +13,18 @@ class PatientSettings extends React.Component {
               <StatusSettings mrn={this.props.mrn} archived={this.props.archived}/>
               {this.props.archived
                 ? null
-                : <FitbitInvite mrn={this.props.mrn}/>}
+                : <div>
+                    <div className="x_panel">
+                        <div className="x_title">
+                            <h2>Connect to Fitbit</h2>
+                            <div className="clearfix"></div>
+                        </div>
+                        <div className="x_content">
+                            <FitbitInvite mrn={this.props.mrn} hasFitbitToken={this.props.hasFitbitToken}/>
+                        </div>
+                    </div>
+                    </div>
+                }
             </div>
         )
     }

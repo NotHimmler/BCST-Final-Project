@@ -13,7 +13,7 @@ class PatientGraph extends React.Component {
     render() {
         return (
             <div className="row w-100">
-                <FitbitChart mrn={this.props.mrn} lastName={this.props.lastName}/>
+                <FitbitChart mrn={this.props.mrn} lastName={this.props.lastName} hasFitbitToken={this.props.hasFitbitToken}/>
                 <AmountTable mrn={this.props.mrn} lastName={this.props.lastName}/>
                 <WalkTable mrn={this.props.mrn} lastName={this.props.lastName}/>
                 <WalkAppTable mrn={this.props.mrn} />

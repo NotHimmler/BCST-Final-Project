@@ -7,6 +7,7 @@ import op from './FitbitOptions'
 import blankOp from './FitbitOptions'
 
 import ChartDatePicker from './ChartDatePicker'
+import FitbitInvite from '../../components/FitbitInvite'
 
 class FitbitChart extends React.Component {
     constructor(props) {
@@ -16,8 +17,8 @@ class FitbitChart extends React.Component {
             option:op,
             loaded: false,
             placeholder: "Loading...",
-            hasData: false,
-            hasToken: false,
+            chartDisplay: "block",
+            testing: "",
         };
 
         this.addData = this.addData.bind(this);
@@ -27,7 +28,7 @@ class FitbitChart extends React.Component {
         this.state.ec.showLoading();
         fetch(endpoint)
         .then(response => {
-        if (response.status !== 200) {this.state.ec.showLoading();return this.setState({ placeholder: "Something went wrong" });}
+        if (response.status !== 200) {this.state.ec.hideLoading();return this.setState({ placeholder: "Something went wrong" });}
         return response.json();
         })
         .then(data => {
@@ -38,11 +39,14 @@ class FitbitChart extends React.Component {
             if(data.error){
                 newOp.xAxis[0].data = [];
                 newOp.series[0].data = [];
+                this.state.ec.hideLoading();
+                this.setState({chartDisplay: "none"});
+                return;
             }
             //-------------------If connected to Fitbit------------------------//
-            else if(this.state.hasToken) {
+            else if(this.props.hasFitbitToken) {
                 if (data['activities-tracker-steps'] == undefined) return;
-                datesPayload = data['activities-tracker-steps'].map((dataItem) => {return dataItem.dateTime});
+                datesPayload = data['activities-tracker-steps'].map((dataItem) => {return moment(dataItem.dateTime).format('ddd DD/MM/YY')});
                 stepsPayload = data['activities-tracker-steps'].map((dataItem) => {return dataItem.value});
             } 
             //------------------Else, not connected to Fitbit------------------//
@@ -60,28 +64,15 @@ class FitbitChart extends React.Component {
             this.setState(state =>({option: newOp}));
             this.state.ec.setOption(this.state.option);
             this.state.ec.hideLoading();
+            this.setState({loaded:true});
         });  
     }
 
     componentDidMount() {
-        //------------Check if patient has a fitbit token---------------------//
-        fetch(`/api/tokens/mrn/${this.props.mrn}`)
-        .then(response => {
-        if (response.status !== 200) {return this.setState({ placeholder: "Something went wrong" });}
-        return response.json();
-        })
-        .then(data => {
-            if(!data.error){    //If patient has fitbit token
-                this.setState({hasToken:true}); //Update state
-            }
-        }) //------------------------------------------------------------------//
-        .then(() => {
-            //Initialise echart
-            let ec = echarts.init(document.getElementById(`test_chart_${this.props.mrn}`), this.state.theme);
-            ec.showLoading();
-            ec.setOption(blankOp);
-            this.setState({ec:ec});
-
+        //Initialise echart
+        let ec = echarts.init(document.getElementById(`test_chart_${this.props.mrn}`), this.state.theme);
+        //ec.setOption(blankOp);
+        this.setState({ec:ec}, ()=> {
             //Get data from api endpoint
             let dataEndpoint = `/api/fitbit/mrn/${this.props.mrn}`;
             this.addData(dataEndpoint)
@@ -95,17 +86,28 @@ class FitbitChart extends React.Component {
                     <div className="x_title">
                         <h2 className="datepicker-inline">Steps from Fitbit</h2>
                         <div className="float-right">
-                            <ChartDatePicker 
-                                addData={this.addData} 
-                                mrn={this.props.mrn} 
-                                hasToken={this.props.hasToken}
-                                endpoint={"/api/fitbit/mrn/"}/>
+                        { (this.state.loaded)
+                            ?<ChartDatePicker 
+                            addData={this.addData} 
+                            mrn={this.props.mrn} 
+                            endpoint={"/api/fitbit/mrn/"}
+                            chartDisplay={this.state.chartDisplay}/>
+                            :null
+                        }
                         </div>
                         <div className="clearfix"></div>
                     </div>{" "}
                     {/*end x_title*/}
                     <div className="x_content">
-                        <div className="test_chart" id={`test_chart_${this.props.mrn}`}/>
+                        <div style={{display: this.state.chartDisplay}} className="test_chart" id={`test_chart_${this.props.mrn}`}/>
+                        {
+                            (this.state.chartDisplay === "none")
+                            ? <div>
+                                <p>Data does not exist</p>
+                                <p>Link to Fitbit: </p>
+                                <FitbitInvite mrn={this.props.mrn} hasFitbitToken={this.props.hasFitbitToken}/>                                </div>
+                            : null
+                        }
                     </div>{" "}
                     {/*end x_content*/}
                 </div>

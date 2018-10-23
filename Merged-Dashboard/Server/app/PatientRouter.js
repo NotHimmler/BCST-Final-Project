@@ -3,7 +3,7 @@ var patientRouter = express.Router();
 const db = require('../../Database/models/index.js'); // new require for db object
 
 const Sequelize = require('sequelize');
-const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
+const {gt, lte, ne, eq, like, in: opIn} = Sequelize.Op;
 
 // Get all patients
 patientRouter.get('/', function(req,res) {
@@ -45,13 +45,28 @@ patientRouter.get('/archived', function(req,res) {
 
 // Get patient with specific mrn
 patientRouter.get("/mrn/:mrn", function(req, res) {
-    console.log(req.params.mrn)
     return db.Patient.findById(req.params.mrn)
     .then((patient) => {
         if (patient == null) {
             res.send({error: "No patient with this mrn"})
         } else {
             res.send(patient)
+        }
+    })
+    .catch((err) => {
+        console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+ });
+
+ // Get patient with specific mrn
+patientRouter.get("/details/mrn/:mrn", function(req, res) {
+    db.sequelize.query(`SELECT * FROM Patients LEFT OUTER JOIN FitbitTokens USING (MRN) WHERE MRN=${req.params.mrn}`)
+    .then((data) => {
+        if (data == null) {
+            res.send({error: "No fitbit token"});
+        } else {
+            res.send(data[0][0]);
         }
     })
     .catch((err) => {
