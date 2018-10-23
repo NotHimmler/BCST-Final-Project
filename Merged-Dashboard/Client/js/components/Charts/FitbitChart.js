@@ -17,108 +17,79 @@ class FitbitChart extends React.Component {
             loaded: false,
             placeholder: "Loading...",
             hasData: false,
-            connectedToFitbit: false,
+            hasToken: false,
         };
 
         this.addData = this.addData.bind(this);
     }
 
     addData(endpoint) {
-        // Get fitbit data from database
         fetch(endpoint)
-            .then(response => {
-            if (response.status !== 200) {
-                return this.setState({ placeholder: "Something went wrong" });
+        .then(response => {
+        if (response.status !== 200) {return this.setState({ placeholder: "Something went wrong" });}
+        return response.json();
+        })
+        .then(data => {
+            let newOp = this.state.option;
+            let stepsPayload = [];
+            let datesPayload = [];
+            //-------------------If no data entries----------------------------//
+            if(data.error){
+                newOp.xAxis[0].data = [];
+                newOp.series[0].data = [];
             }
-            return response.json();
-            })
-            .then(data => {
-                let newOp = this.state.option;
-                if(data.error){ //If there are no data entries
-                    newOp.xAxis[0].data = [];
-                    newOp.series[0].data = [];
-                } else {    //If data exists
-                    let stepsPayload = [];
-                    let datesPayload = [];
-                    // Add default data
-                    for(let entry of data) {
-                        stepsPayload.unshift(entry.steps);
-                        // Note: split string to remove tiemezone
-                        datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
-                    }
-                    newOp.xAxis[0].data = datesPayload;
-                    newOp.series[0].data = stepsPayload;    //Get data from payload
-                    //newOp.series[1].data = payload.goal;    //Get goal data from payload
+            //-------------------If connected to Fitbit------------------------//
+            else if(this.state.hasToken) {
+                if (data['activities-tracker-steps'] == undefined) return;
+                datesPayload = data['activities-tracker-steps'].map((dataItem) => {return dataItem.dateTime});
+                stepsPayload = data['activities-tracker-steps'].map((dataItem) => {return dataItem.value});
+            } 
+            //------------------Else, not connected to Fitbit------------------//
+            else {
+                for(let entry of data) {
+                    stepsPayload.unshift(entry.steps);
+                    // Note: split string to remove tiemezone
+                    datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
                 }
-                this.setState(state =>({option: newOp}));
-                this.state.ec.setOption(this.state.option);
-                this.setState({loaded:true});
+            }
+            //Update the chart
+            newOp.xAxis[0].data = datesPayload;
+            newOp.series[0].data = stepsPayload;    //Get data from payload
+            //newOp.series[1].data = payload.goal;    //Get goal data from payload
+            this.setState(state =>({option: newOp}));
+            this.state.ec.setOption(this.state.option);
+            this.state.ec.hideLoading();
         });  
     }
 
     componentDidMount() {
-        if(this.props.lastName == "Test") {
-            this.setState({hasData: true}, () => {
-                //Initialise echart
-                console.log("Trying to init");
-                let ec = echarts.init(document.getElementById(`test_chart_${this.props.mrn}`), this.state.theme);
-                ec.setOption(blankOp);
-                this.setState({ec:ec});
-
-                //Get data from api endpoint
-                let dataEndpoint = `/api/fitbit/mrn/${this.props.mrn}`;
-                this.addData(dataEndpoint)
-            })
-            return;
-        }
-        
-        //Check if patient has fitbit token
-        fetch("/api/fitbit/mrn/"+this.props.mrn)
-        .then(data => {
-        return data.json();
-        }).then(data => {
-        if (data['activities-tracker-steps'] == undefined) return;
-        console.log(data['activities-tracker-steps'])
-        this.setState({hasData: true}, () => {
-            this.createChart(data['activities-tracker-steps'])
+        //------------Check if patient has a fitbit token---------------------//
+        fetch(`/api/tokens/mrn/${this.props.mrn}`)
+        .then(response => {
+        if (response.status !== 200) {return this.setState({ placeholder: "Something went wrong" });}
+        return response.json();
         })
-        }).catch(err => {
-        console.log(err)
+        .then(data => {
+            if(!data.error){    //If patient has fitbit token
+                this.setState({hasToken:true}); //Update state
+            }
+        }) //------------------------------------------------------------------//
+        .then(() => {
+            //Initialise echart
+            let ec = echarts.init(document.getElementById(`test_chart_${this.props.mrn}`), this.state.theme);
+            ec.showLoading();
+            ec.setOption(blankOp);
+            this.setState({ec:ec});
+
+            //Get data from api endpoint
+            let dataEndpoint = `/api/fitbit/mrn/${this.props.mrn}`;
+            this.addData(dataEndpoint)
         });
     }
-
-    createChart(fitbitData) {
-        if (fitbitData == undefined) return;
-        var ec = echarts.init(
-          document.getElementById(`test_chart_${this.props.mrn}`),
-          this.state.theme
-        );
-        var ops = this.state.option;
-        ops.title.text = "Daily";
-    
-        ops.xAxis[0].data = fitbitData.map((dataItem) => {
-          return dataItem.dateTime;
-        })
-        // process the input data
-        var rawSteps = fitbitData.map((dataItem) => {
-          return dataItem.value;
-        })
-        var rawGoal = fitbitData.map(() => {
-          return 10000
-        })
-        
-        ops.series[0].data = rawSteps;
-        //ops.series[0].data = this.colorizeBars(rawSteps, rawGoal);
-        //ops.series[1].data = rawGoal;
-        this.setState({ option: ops });
-        ec.setOption(this.state.option);
-        this.setState({ ec: ec });
-      }
     
     render() {
         return (
             <div>
-                <h3>This is a testing area</h3>
                 <div className="x_panel">
                     <div className="x_title">
                         <h2 className="datepicker-inline">Steps from Fitbit</h2>
@@ -129,7 +100,7 @@ class FitbitChart extends React.Component {
                     </div>{" "}
                     {/*end x_title*/}
                     <div className="x_content">
-                        {this.state.hasData ? <div className="test_chart" id={`test_chart_${this.props.mrn}`} /> : null}
+                        <div className="test_chart" id={`test_chart_${this.props.mrn}`}/>
                     </div>{" "}
                     {/*end x_content*/}
                 </div>
