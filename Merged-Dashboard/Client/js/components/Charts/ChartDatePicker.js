@@ -22,7 +22,7 @@ class ChartDatePicker extends React.Component {
 
     // Handler for 'from' date picker
     handleFromDateChange(date) {
-        let endpoint = `/api/fitbit/mrn/${this.props.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
+        let endpoint = `${this.props.endpoint}${this.props.mrn}/dates/${moment(date).format('YYYY-MM-DD')}/${moment(this.state.toDate).format('YYYY-MM-DD')}`;
         //console.log(endpoint);
         this.props.addData(endpoint)
         this.setState({
@@ -32,7 +32,7 @@ class ChartDatePicker extends React.Component {
     
     // Handler for 'to' date picker
     handleToDateChange(date) {
-        let endpoint = `/api/fitbit/mrn/${this.props.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
+        let endpoint = `${this.props.endpoint}${this.props.mrn}/dates/${moment(this.state.fromDate).format('YYYY-MM-DD')}/${moment(date).format('YYYY-MM-DD')}`;
         this.props.addData(endpoint)
         this.setState({
           toDate: date
@@ -56,13 +56,12 @@ class ChartDatePicker extends React.Component {
     }
 
     resetDates(){
-        this.setState({fromDate: this.state.minDate, toDate: this.state.maxDate});
-        this.props.addData(`/api/fitbit/mrn/${this.props.mrn}`);
+        this.setState({fromDate: moment(this.state.maxDate).subtract(6, "days"), toDate: this.state.maxDate});
+        this.props.addData(`${this.props.endpoint}${this.props.mrn}`);
     }
 
     componentDidMount() {
-        let dateEndpoint = `/api/fitbit/mrn/${this.props.mrn}/datelimit`;
-
+        let dateEndpoint = `${this.props.endpoint}${this.props.mrn}/datelimit`;
         // Get date limits
         fetch(dateEndpoint)
             .then(response => {
@@ -75,7 +74,7 @@ class ChartDatePicker extends React.Component {
                 let from = data[0].from.split(" ");
                 let to = data[0].to.split(" ");
                 this.setState({
-                    fromDate: moment(from[0]),
+                    fromDate: moment(to[0]).subtract(6, "days"),
                     toDate: moment(to[0]),
                     minDate: moment(from[0]),
                     maxDate: moment(to[0]),

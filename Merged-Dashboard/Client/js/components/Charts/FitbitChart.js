@@ -24,9 +24,10 @@ class FitbitChart extends React.Component {
     }
 
     addData(endpoint) {
+        this.state.ec.showLoading();
         fetch(endpoint)
         .then(response => {
-        if (response.status !== 200) {return this.setState({ placeholder: "Something went wrong" });}
+        if (response.status !== 200) {this.state.ec.showLoading();return this.setState({ placeholder: "Something went wrong" });}
         return response.json();
         })
         .then(data => {
@@ -94,7 +95,11 @@ class FitbitChart extends React.Component {
                     <div className="x_title">
                         <h2 className="datepicker-inline">Steps from Fitbit</h2>
                         <div className="float-right">
-                            <ChartDatePicker addData={this.addData} mrn={this.props.mrn}/>
+                            <ChartDatePicker 
+                                addData={this.addData} 
+                                mrn={this.props.mrn} 
+                                hasToken={this.props.hasToken}
+                                endpoint={"/api/fitbit/mrn/"}/>
                         </div>
                         <div className="clearfix"></div>
                     </div>{" "}
