@@ -17,6 +17,7 @@ class PatientCheckup extends React.Component {
         evt.preventDefault();
         if (this.state.note == "") return;
         let url = `/api/notes/addNote/mrn/${this.props.mrn}`
+        
         let body = {note: this.state.note, date: moment().valueOf(), mrn: this.props.mrn, user: this.props.user}
         console.log(body);
         let options = {
