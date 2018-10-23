@@ -4,22 +4,18 @@ module.exports = (sequelize, DataTypes) => {
     MRN: {
       type: DataTypes.CHAR(8),
       allowNull: false,
-      primaryKey: true,
     },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
     program: {
       type:DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
     exercise: {
       type:DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
     is_completed: {
       type: DataTypes.BOOLEAN,
@@ -45,13 +41,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     dur: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
     dur_L: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
     dur_R: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
   }, {});
   AmountData.associate = function(models) {
@@ -61,5 +57,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
   };
+  AmountData.removeAttribute('id');
   return AmountData;
 };
