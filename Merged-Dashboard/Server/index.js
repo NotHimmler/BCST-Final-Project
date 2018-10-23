@@ -7,6 +7,8 @@ var patient = require('./app/PatientRouter')
 let watb = require('./app/WatbRouter');
 let user = require('./app/UserRouter');
 let amount = require('./app/AmountRouter');
+let notes = require('./app/NoteRouter');
+let fitbittokens = require('./app/FitbitTokenRouter');
 
 app.use(bodyParser.json({ type: 'application/json' }));
 
@@ -25,6 +27,8 @@ app.use('/api/patient', patient);
 app.use('/api/watb', watb);
 app.use('/api/user', user);
 app.use('/api/amount', amount);
+app.use('/api/notes', notes);
+app.use('/api/tokens', fitbittokens);
 require('./app/Routes.js')(app);
 
 let port = process.env.PORT || 8080;

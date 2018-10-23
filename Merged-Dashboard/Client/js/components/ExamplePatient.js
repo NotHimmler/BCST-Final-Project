@@ -7,8 +7,8 @@ import PatientSettings from '../components/PatientSettings'
 import PatientCheckup from '../components/PatientCheckup'
 
 //For testing
-import TestChart from '../components/Charts/TestChart'
-import WalkAppTable from "./WalkAppTable";
+import FitbitChart from '../components/Charts/FitbitChart'
+import CheckupHistory from "./CheckupHistory";
 
 const boxMargins = {
   "paddingLeft": "20px",
@@ -20,12 +20,15 @@ class ExamplePatient extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      content : "Test",
+      content : "Data",
       lastCheckedup: "",
       data : {},
       loaded: false,
       placeholder: "Loading...",
     };
+
+    this.setContent = this.setContent.bind(this);
+    this.updateLastCheckup = this.updateLastCheckup.bind(this);
   }
 
   componentWillMount() {
@@ -71,8 +74,11 @@ class ExamplePatient extends React.Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({loaded: true});
     });
+  }
+
+  setContent(contentType) {
+    this.setState({"content": contentType});
   }
 
   // Get a string for last checkup
@@ -100,6 +106,9 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Goal'})}
                 >Goals</button>
+                <button type="button" className="btn btn-primary" 
+                onClick={() => this.setState({content: 'Notes'})}
+                >Checkup Notes</button>
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
@@ -161,14 +170,20 @@ class ExamplePatient extends React.Component {
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} /> : null
+                (this.state.content === "Notes")
+                ? <CheckupHistory user={this.props.username} />
+                : null
+              }
+
+              {
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} setContent={this.setContent} user={this.props.username} checkupUpdate={this.updateLastCheckup}/> : null
               }
 
 
               {/*For testing...*/}
               {
                 (this.state.content === "Test" && this.state.loaded)
-                    ? <TestChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
+                    ? <FitbitChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
               }
 

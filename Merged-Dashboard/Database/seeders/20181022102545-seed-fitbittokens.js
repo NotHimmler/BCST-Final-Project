@@ -15,7 +15,7 @@ module.exports = {
    return queryInterface.bulkInsert('FitbitTokens', [
     {
       MRN: '80000020',
-      token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkNaTU4iLCJzdWIiOiIzUDNRM04iLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJwcm8iLCJleHAiOjE1NDAyMzE5MjksImlhdCI6MTU0MDIwMzEyOX0.XVFtPvcQCivUYjyQNX-PA9Nim4be8Sc9uYb0f6S5ZWE',
+      token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkNaTU4iLCJzdWIiOiIzUDNRM04iLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJwcm8iLCJleHAiOjE1NDAyODAzNzIsImlhdCI6MTU0MDI1MTU3Mn0.YHVSgwUB-SyqjiVvKDrr5btUCG4dh__soIpYhjhPrOU',
       refreshToken: '',
       user_id: "3P3Q3N",
       createdAt: new Date(),
