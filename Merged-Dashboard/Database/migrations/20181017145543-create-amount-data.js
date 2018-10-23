@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('AmountData', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       MRN: {
         type: Sequelize.CHAR(8),
         allowNull: false,
@@ -12,7 +18,7 @@ module.exports = {
         }
       },
       date: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       program: {
@@ -47,13 +53,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       dur: {
-        type: Sequelize.TIME
+        type: Sequelize.STRING
       },
       dur_L: {
-        type: Sequelize.TIME
+        type: Sequelize.STRING
       },
       dur_R: {
-        type: Sequelize.TIME
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -63,12 +69,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }).then(() => {
+    })
+
+    /* .then(() => {
       return queryInterface.sequelize.queryInterface.addConstraint('AmountData', ['MRN','date','program','exercise'], {
         type: 'primary key',
         name: 'pk_amountdata'
      });;
-    });
+    }); */
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('AmountData');

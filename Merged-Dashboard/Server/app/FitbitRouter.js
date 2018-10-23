@@ -3,8 +3,8 @@ var request = require('request-promise-native');
 var moment = require('moment');
 var fitbitRouter = express.Router();
 const db = require('../../Database/models/index.js');
-db.FitbitTokens.sync();
-db.FitbitData.sync();
+//db.FitbitTokens.sync();
+//db.FitbitData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;

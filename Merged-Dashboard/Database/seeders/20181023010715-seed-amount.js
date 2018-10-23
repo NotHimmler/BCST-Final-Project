@@ -16,11 +16,13 @@ const correctCols = amountData.map(item => {
     program: String(item['PatientExerciseDatesExercisesPrograms::Name'].replace('AMOUNT program: ', '')),
     exercise: String(item['PatientExerciseDatesExercises::Exercise title']),
     is_completed: Boolean(item['ExerciseCompleted_c']),
-    MRN: String(item['MRN'])
+    MRN: String(item['MRN']),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   })
 })
 
-console.log(correctCols.length);
+console.log("Seeding " + correctCols.length + " entries");
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -34,7 +36,13 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   return queryInterface.bulkInsert('AmountData', correctCols, {});
+   return queryInterface.bulkInsert('AmountData', correctCols, {})
+   .catch((err) => {
+     if(err.name === 'SequelizeUniqueConstraintError'){
+       console.log("There was a unique constraint error");
+       console.log(err.name);
+      }
+    });
   },
 
   down: (queryInterface, Sequelize) => {
@@ -45,5 +53,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
+   return queryInterface.bulkDelete('AmountData', null, {});
   }
 };

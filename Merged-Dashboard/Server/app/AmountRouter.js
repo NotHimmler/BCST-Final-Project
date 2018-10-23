@@ -1,7 +1,7 @@
 var express = require('express');
 var amountRouter = express.Router();
 const db = require('../../Database/models/index.js');
-db.AmountData.sync();
+//db.AmountData.sync();
 
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
@@ -27,12 +27,12 @@ const correctCols = amountData.map(item => {
   })
 })
 
-db.AmountData.findOrCreate({where: correctCols[0]})
+/* db.AmountData.findOrCreate({where: correctCols[0]})
 .then(data => {
     console.log(data);
 }).catch(err => {
     console.log(err);
-})
+}) */
 
 // Get all fb data
 amountRouter.get('/', function(req,res) {

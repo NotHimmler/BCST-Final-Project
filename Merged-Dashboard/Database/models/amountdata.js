@@ -4,18 +4,22 @@ module.exports = (sequelize, DataTypes) => {
     MRN: {
       type: DataTypes.CHAR(8),
       allowNull: false,
+      //primaryKey: true,
     },
     date: {
       type: DataTypes.STRING,
       allowNull: false,
+      //primaryKey: true,
     },
     program: {
       type:DataTypes.STRING,
       allowNull: false,
+      //primaryKey: true,
     },
     exercise: {
       type:DataTypes.STRING,
       allowNull: false,
+      //primaryKey: true,
     },
     is_completed: {
       type: DataTypes.BOOLEAN,
@@ -57,6 +61,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
   };
-  AmountData.removeAttribute('id');
   return AmountData;
 };
