@@ -42,6 +42,7 @@ class TodoList extends React.Component {
 
     generateRowsFromData(data) {
         let rows = data.map(item => {
+            console.log(item.id);
             return ( <li>
                         <p>
                         <input type="checkbox" className="flat" value={item.done} key={item.id} name={item.id}/>{item.text}</p>
