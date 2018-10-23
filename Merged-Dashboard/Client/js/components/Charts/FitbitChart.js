@@ -7,7 +7,6 @@ import op from './FitbitOptions'
 import blankOp from './FitbitOptions'
 
 import ChartDatePicker from './ChartDatePicker'
-import FitbitInvite from '../FitbitInvite'
 
 class FitbitChart extends React.Component {
     constructor(props) {
@@ -130,7 +129,7 @@ class FitbitChart extends React.Component {
                     </div>{" "}
                     {/*end x_title*/}
                     <div className="x_content">
-                        {this.state.hasData ? <div className="test_chart" id={`test_chart_${this.props.mrn}`} /> : <FitbitInvite mrn={this.props.mrn}/>}
+                        {this.state.hasData ? <div className="test_chart" id={`test_chart_${this.props.mrn}`} /> : null}
                     </div>{" "}
                     {/*end x_content*/}
                 </div>
