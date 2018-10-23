@@ -47,7 +47,7 @@ class FitbitInvite extends React.Component {
                 if(!data.error){
                     this.setState({hasToken:true});
                 }
-            })
+            });
     }
     
     render() {
