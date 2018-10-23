@@ -25,16 +25,15 @@ class ExamplePatient extends React.Component {
       data : {},
       loaded: false,
       placeholder: "Loading...",
+      hasFitbitToken: false,
     };
 
     this.setContent = this.setContent.bind(this);
-    this.updateLastCheckup = this.updateLastCheckup.bind(this);
   }
 
   componentWillMount() {
     const mrn = this.props.match.params.MRN;
-    console.log(mrn);
-    let endpoint = `/api/patient/mrn/${mrn}`;
+    let endpoint = `/api/patient/details/mrn/${mrn}`;
 
     // Get general patient details (e.g. age/sex/ward)
     fetch(endpoint)
@@ -45,35 +44,9 @@ class ExamplePatient extends React.Component {
       return response.json();
     })
     .then(data => {
-      console.log(data);
-      this.setState({data: data, loaded:true});
-      //this.updateLastCheckup(mrn);
-    });
-  }
-
-  // Update last checkup
-  updateLastCheckup(mrn) {
-    let endpoint = `/api/patient/updateLastCheckup`;
-    let patientInfo = {
-      username: this.props.username,
-      mrn
-    }
-    let option = {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({patientInfo})
-    }
-    fetch(endpoint,option)
-    .then(response => {
-      if (response.status !== 200) {
-        return this.setState({ placeholder: "Something went wrong" });
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
+      let hasToken = false;
+      (data.token) ? hasToken=true : hasToken=false;
+      this.setState({data: data, loaded:true, hasFitbitToken: hasToken});
     });
   }
 
@@ -82,7 +55,7 @@ class ExamplePatient extends React.Component {
   }
 
   // Get a string for last checkup
-  getLastCheckup(){
+  getLastCheckupString(){
     const {data} = this.state;
     const lastCheckupDate = data.last_checkup_date;
     if(lastCheckupDate == null){
@@ -91,9 +64,7 @@ class ExamplePatient extends React.Component {
       let string = new Date(lastCheckupDate).toDateString()+ " by "+ data.last_checkup_by;
       return string;
     }
-
   }
-
 
     render() {
       const {data, loaded, placeholder} = this.state;
@@ -127,7 +98,7 @@ class ExamplePatient extends React.Component {
                     <p>{data.is_archived?" (This patient has been archived)":""}</p>
                     <h4>MRN: {loaded?data.MRN:placeholder}</h4>
                     <h5 className="last_checkup"><i>Last check up: {loaded
-                          ? this.getLastCheckup()
+                          ? this.getLastCheckupString()
                           : placeholder}</i></h5>
                     <button onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
                     <table className="table">
@@ -153,7 +124,10 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Data" && this.state.loaded)
-                    ? <PatientGraph mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
+                    ? <PatientGraph 
+                        mrn={this.props.match.params.MRN} 
+                        lastName={this.state.data.last_name}
+                        hasFitbitToken={this.state.hasFitbitToken}/>
                     : null
               }
 
@@ -165,7 +139,10 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Settings")
-                    ? <PatientSettings mrn={this.props.match.params.MRN} archived={data.is_archived}/>
+                    ? <PatientSettings 
+                        mrn={this.props.match.params.MRN} 
+                        archived={data.is_archived}
+                        hasFitbitToken={this.state.hasFitbitToken}/>
                     : null
               }
 
@@ -176,7 +153,7 @@ class ExamplePatient extends React.Component {
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} setContent={this.setContent} user={this.props.username} checkupUpdate={this.updateLastCheckup}/> : null
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} setContent={this.setContent} user={this.props.username}/> : null
               }
 
 

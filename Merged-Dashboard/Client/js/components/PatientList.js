@@ -135,7 +135,7 @@ class PatientList extends React.Component {
         let rows = []
 
         for (let patient of data) {
-            console.log(patient);
+            //console.log(patient);
             if (this.keywordsNotMatchPatient(patient))
                 continue;
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
@@ -150,7 +150,7 @@ class PatientList extends React.Component {
     }
     componentWillReceiveProps(props) {
         let { archived, searchKeywords } = this.props;
-        console.log(searchKeywords + ' : ' + props.searchKeywords);
+        //console.log(searchKeywords + ' : ' + props.searchKeywords);
         if (props.searchKeywords !== searchKeywords) {
             // console.log()
             this.generateTable(props.searchKeywords); 
