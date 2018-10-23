@@ -20,10 +20,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Todos.associate = function(models) {
     // associations can be defined here
+    /*
     Todos.belongsTo(models.User, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE'
     });
+    */
   };
   return Todos;
 };

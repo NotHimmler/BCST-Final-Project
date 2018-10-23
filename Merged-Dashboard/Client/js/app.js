@@ -49,7 +49,7 @@ class App extends React.Component {
                 <Switch>
                   {this.state.isLoggedIn ? 
                   <div>
-                      <Route path="/" component={Home} exact />
+                      <Route path="/" render={(props) => {return <Home {...props} username={this.state.username} />}} exact />
                       <Route path="/curPatients" render={(props) => {return (<CurPatients/>)}} />
                       <Route path="/disPatients" render={(props) => {return (<DisPatients/>)}} />
                       <Route path="/patient/:MRN" render={(props) => {return (<ExamplePatient {...props} username={this.state.username}/>)}} />

@@ -17,18 +17,26 @@ class TodoList extends React.Component {
     }
 
     componentDidMount() {
-
+        this.getTodos();
     }
 
     getTodos() {
-        fetch(`/api/todos/${this.props.username}`)
+        fetch(`/api/todos/getTodos/${this.props.username}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        })
         .then(data => {
             return data.json()
         }).then(data => {
             if(data.okay) {
-                let rows = generateRowsFromData(data.data);
+                let rows = this.generateRowsFromData(data.data);
                 this.setState({rows: rows, data: data.data});
             }
+        }).catch(err => {
+            console.log(err)
         })
     }
 
@@ -49,14 +57,31 @@ class TodoList extends React.Component {
     }
 
     handleNewTodo(event) {
-        let data = this.state.data;
-        data.push({
+        console.log(this.props.username);
+        let newTodo = {
             text: this.state['todo-input'],
             done: false,
             date_done: null,
             user_id: this.props.username
+        }
+        fetch(`/api/todos/addTodo`, {
+            method: "POST",
+            body: JSON.stringify(newTodo),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        }).then(data => {
+            return data.json()
+        }).then(data => {
+            if (data.okay) {
+                let oldTodos = this.state.data;
+                let todo = data.todo;
+                oldTodos.push(todo);
+                this.setState({data: oldTodos, rows: this.generateRowsFromData(oldTodos), "todo-input": ""})
+            }
         })
-        this.setState({data: data, rows: this.generateRowsFromData(data), "todo-input": ""})
+        //
     }
     
     render() {

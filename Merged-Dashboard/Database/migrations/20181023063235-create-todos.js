@@ -22,12 +22,7 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.STRING,
-        allowNull: false,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'MRN'
-        }
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
