@@ -14,6 +14,7 @@ class TodoList extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleNewTodo = this.handleNewTodo.bind(this);
         this.generateRowsFromData = this.generateRowsFromData.bind(this);
+        this.handleTodoChange = this.handleTodoChange.bind(this);
     }
 
     componentDidMount() {
@@ -32,24 +33,55 @@ class TodoList extends React.Component {
             return data.json()
         }).then(data => {
             if(data.okay) {
-                let rows = this.generateRowsFromData(data.data);
-                this.setState({rows: rows, data: data.data});
+                this.setState({data: data.data}, () => {
+                    this.generateRowsFromData();
+                });
             }
         }).catch(err => {
             console.log(err)
         })
     }
 
-    generateRowsFromData(data) {
-        let rows = data.map(item => {
-            console.log(item.id);
-            return ( <li>
-                        <p>
-                        <input type="checkbox" className="flat" value={item.done} key={item.id} name={item.id}/>{item.text}</p>
-                    </li>
-            )
+    generateRowsFromData() {
+        let rows = [];
+        for (let index in this.state.data) {
+            rows.push(<li>
+                <p>
+                <input type="checkbox" className="flat" checked={this.state.data[index].done} key={this.state.data[index].id} name={this.state.data[index].id} onChange={this.handleTodoChange}/>{this.state.data[index].text}</p>
+            </li>)
+        }
+        this.setState({rows: rows});
+    }
+
+    handleTodoChange(event) {
+        let name = event.target.name;
+        let target = event.target;
+        target.disabled = true;
+        let todos = this.state.data
+        for(let index in todos) {
+            let todo = todos[index];
+            if(todo.id == name) {
+                todos[index].done = target.checked;
+            }
+        }
+        this.setState({data: todos}, () => {
+            this.generateRowsFromData();
+            fetch(`/api/todos/update/${name}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({"done": target.checked})
+            }).then(data => {
+                return data.json();
+            }).then(data => {
+                if(data.okay) {
+                    target.disabled = false;
+                }
+            })
         })
-        return rows;
+        
     }
 
     handleInputChange(event) {
@@ -58,7 +90,6 @@ class TodoList extends React.Component {
     }
 
     handleNewTodo(event) {
-        console.log(this.props.username);
         let newTodo = {
             text: this.state['todo-input'],
             done: false,
@@ -79,7 +110,9 @@ class TodoList extends React.Component {
                 let oldTodos = this.state.data;
                 let todo = data.todo;
                 oldTodos.push(todo);
-                this.setState({data: oldTodos, rows: this.generateRowsFromData(oldTodos), "todo-input": ""})
+                this.setState({data: oldTodos, "todo-input": ""}, () => {
+                    this.generateRowsFromData()
+                })
             }
         })
         //
