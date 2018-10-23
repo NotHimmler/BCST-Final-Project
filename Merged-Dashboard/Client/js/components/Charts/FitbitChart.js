@@ -85,6 +85,11 @@ class FitbitChart extends React.Component {
                 <div className="x_panel">
                     <div className="x_title">
                         <h2 className="datepicker-inline">Steps from Fitbit</h2>
+                        {
+                            (this.props.hasFitbitToken)
+                            ? <span class="badge fitbit-badge">Linked to Fitbit</span>
+                            : null
+                        }
                         <div className="float-right">
                         { (this.state.loaded)
                             ?<ChartDatePicker 
