@@ -6,6 +6,34 @@ db.AmountData.sync();
 const Sequelize = require('sequelize');
 const {gt, lte, ne, like, in: opIn} = Sequelize.Op;
 
+const amountData = require('../../data/amount-data.json');
+
+const correctCols = amountData.map(item => {
+  return ({
+    sets: Number(item["Sets"]),
+    sets_L: Number(item['SetsLeft']),
+    sets_R: Number(item['SetsRight']),
+    dur_L: String(item['DurationLeft']),
+    dur_R: String(item['DurationRight']),
+    dur: String(item['Duration']),
+    reps: Number(item['Repetitions']),
+    reps_L: Number(item['RepetitionsLeft']),
+    reps_R: Number(item['RepetitionsRight']),
+    date: String(item['Date']),
+    program: String(item['PatientExerciseDatesExercisesPrograms::Name'].replace('AMOUNT program: ', '')),
+    exercise: String(item['PatientExerciseDatesExercises::Exercise title']),
+    is_completed: Boolean(item['ExerciseCompleted_c']),
+    MRN: String(item['MRN'])
+  })
+})
+
+db.AmountData.findOrCreate({where: correctCols[0]})
+.then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+})
+
 // Get all fb data
 amountRouter.get('/', function(req,res) {
     return db.AmountData.findAll()

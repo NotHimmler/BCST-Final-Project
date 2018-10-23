@@ -3,24 +3,24 @@ const amountData = require('../../data/amount-data.json');
 
 const correctCols = amountData.map(item => {
   return ({
-    sets: item["Sets"],
-    sets_L: item['SetsLeft'],
-    sets_R: item['SetsRight'],
+    sets: Number(item["Sets"]),
+    sets_L: Number(item['SetsLeft']),
+    sets_R: Number(item['SetsRight']),
     dur_L: String(item['DurationLeft']),
     dur_R: String(item['DurationRight']),
-    dur: item['Duration'],
-    reps: item['Repetitions'],
-    reps_L: item['RepetitionsLeft'],
-    reps_R: item['RepetitionsRight'],
-    date: item['Date'],
-    program: item['PatientExerciseDatesExercisesPrograms::Name'].replace('AMOUNT program: ', ''),
-    exercise: item['PatientExerciseDatesExercises::Exercise title'],
-    is_completed: item['ExerciseCompleted_c'],
+    dur: String(item['Duration']),
+    reps: Number(item['Repetitions']),
+    reps_L: Number(item['RepetitionsLeft']),
+    reps_R: Number(item['RepetitionsRight']),
+    date: String(item['Date']),
+    program: String(item['PatientExerciseDatesExercisesPrograms::Name'].replace('AMOUNT program: ', '')),
+    exercise: String(item['PatientExerciseDatesExercises::Exercise title']),
+    is_completed: Boolean(item['ExerciseCompleted_c']),
     MRN: String(item['MRN'])
   })
 })
 
-console.log(correctCols);
+console.log(correctCols.length);
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
