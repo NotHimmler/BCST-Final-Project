@@ -11,7 +11,7 @@ class ChartDatePicker extends React.Component {
             toDate: moment(),
             minDate: moment(),
             maxDate: moment(),
-            range: "See last 7 days",
+            range: "Most recent 7 days",
         };
 
         this.handleFromDateChange = this.handleFromDateChange.bind(this);
@@ -66,7 +66,7 @@ class ChartDatePicker extends React.Component {
         this.setState({
             fromDate: from, 
             toDate: this.state.maxDate,
-            range: "See last 7 days"
+            range: "Most recent 7 days"
         });
         this.props.addData(`${this.props.endpoint}${this.props.mrn}`);
     }
@@ -79,7 +79,7 @@ class ChartDatePicker extends React.Component {
         this.setState({
             fromDate: from, 
             toDate: this.state.maxDate,
-            range: "See last 30 days",
+            range: "Most recent 30 days",
         });
         this.props.addData(`${this.props.endpoint}${this.props.mrn}/dates/${from.format('YYYY-MM-DD')}/${moment(this.state.maxDate).format('YYYY-MM-DD')}`);
     }
@@ -153,10 +153,10 @@ class ChartDatePicker extends React.Component {
                     </button>
                     <ul className="dropdown-menu">
                         <li>
-                        <a onClick={this.resetWeek}>See last 7 days</a>
+                        <a onClick={this.resetWeek}>Most recent 7 days</a>
                         </li>
                         <li>
-                        <a onClick={this.resetMonth}>See last 30 days</a>
+                        <a onClick={this.resetMonth}>Most recent 30 days</a>
                         </li>
                     </ul>
                     </li>
