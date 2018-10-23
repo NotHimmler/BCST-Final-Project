@@ -2,8 +2,77 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 class GoalList extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        loaded: false,
+        goalList: [],
+        placeholder: 'loading...'
+      };
+    }
+
+    componentDidMount() {
+      let endpoint = `/api/goal`;
+      // Get goal list
+      fetch(endpoint)
+      .then(response => {
+        if (response.status !== 200) {
+          return this.setState({
+            loaded: true,
+            placeholder: "Something went wrong" 
+            });
+        }
+        return response.json();
+      })
+      .then(goalList => {
+        this.setState({
+          goalList,
+          loaded: true
+        });
+      });
+    }
+
+    getGoalListTable() {
+      const {goalList} = this.state;
+      if(!goalList.length){
+        return null;
+      }
+      let goalTableList = goalList.map(goal => 
+          <div className="panel panel-heading">
+            <table className="table table-striped" id="long_term_table">
+                <thead>
+                  <tr>
+                    <th width="10%">Date Set</th>
+                    <th width="70%">Description</th>
+                    <th width="10%">Goal</th>
+                    <th width="10%">Progress</th>
+                  </tr>
+                </thead>
+                <tbody className="global_goal">
+                  <tr>
+                    <td>{this.getDateSet(goal.start, goal.end)}</td>
+                    <td>{goal.goal_string}</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+      );
+      return goalTableList; 
+    }
+
+    getDateSet(start, end) {
+      if(!start || !end) {
+        return "";
+      }
+      let startStr = new Date(start).toLocaleDateString();
+      let endStr = new Date(end).toLocaleDateString();
+      return `${startStr} - ${endStr}`
+    }
 
     render() {
+      const {loaded, placeholder} = this.state;
         return (
             <div>
               <div className="clearfix"></div>
@@ -167,11 +236,10 @@ class GoalList extends React.Component {
                           </div>
                         </div>
                       </div>
-
+                      {loaded ? this.getGoalListTable() : <p>{placeholder}</p>}
                     </div>
                      {/* end of accordion */}
 
-                  
               </div>
 
 

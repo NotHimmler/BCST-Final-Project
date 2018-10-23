@@ -92,7 +92,7 @@ class GoalTemplate extends React.Component {
                     <FormGroup controlId="goalMeasurement">
                         <ControlLabel>Goal Measurement</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             <option value="at least">at least</option>
                             <option value="in under">in under</option>
                         </FormControl>
@@ -107,7 +107,7 @@ class GoalTemplate extends React.Component {
 
                     <FormGroup controlId="goalMeasurementUnit">
                         <FormControl componentClass="select" placeholder="select">
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             <option value="times">time(s)</option>
                             <option value="steps">step(s)</option>
                             <option value="ms">metre(s)</option>
@@ -120,7 +120,7 @@ class GoalTemplate extends React.Component {
                     <FormGroup controlId="goalFrequency">
                         <ControlLabel>Goal Frequency</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             <option value="at least">at least</option>
                         </FormControl>
                     </FormGroup>
@@ -134,7 +134,7 @@ class GoalTemplate extends React.Component {
 
                     <FormGroup controlId="freq_unit">
                         <FormControl componentClass="select" placeholder="select">
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             <option value="times">time(s)</option>
                             <option value="days">day(s)</option>
                         </FormControl>
@@ -142,7 +142,7 @@ class GoalTemplate extends React.Component {
                     <FormGroup controlId="per">
                         <p>per</p>
                         <FormControl componentClass="select" placeholder="select">
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             <option value="day">day</option>
                             <option value="week">week</option>
                             <option value="month">month</option>
