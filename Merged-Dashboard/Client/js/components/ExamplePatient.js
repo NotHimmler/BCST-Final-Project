@@ -11,8 +11,8 @@ import FitbitChart from '../components/Charts/FitbitChart'
 import CheckupHistory from "./CheckupHistory";
 
 const boxMargins = {
-  "padding-left": "20px",
-  "padding-right": "20px"
+  "paddingLeft": "20px",
+  "paddingRight": "20px"
 }
 
 class ExamplePatient extends React.Component {

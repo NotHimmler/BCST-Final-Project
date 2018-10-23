@@ -12,6 +12,9 @@ class GoalModal extends React.Component {
         super(props);
         this.state = {
             goalType: "template",
+            dateSet: "",
+            goalString: "",
+            option: {}
         }
         this.setGoalType = this.setGoalType.bind(this);
         this.reviewGoal = this.reviewGoal.bind(this);
@@ -22,8 +25,43 @@ class GoalModal extends React.Component {
         this.setState({ goalType: event.target.value});
     }
 
-    reviewGoal(event){
-        this.setState({ goalType: "template_review"});
+    reviewGoal(option){
+        this.option = option;
+        this.setState({
+            goalType: "template_review",
+            goalString: option.goal_string
+        });
+    }
+
+    addGoalHandler(e){
+        e.preventDefault();
+        let endpoint = `/api/goal/addGoal`;
+        let goalInfo = this.option;
+        let option = {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({goalInfo})
+          }
+          fetch(endpoint, option)
+          .then(response => {
+            if (response.status !== 200) {
+              return this.setState({ placeholder: "Something went wrong" });
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+            this.setState({ goalType: 'template'});
+            this.props.addGoal(goalInfo);
+            this.closeHandler();
+          });
+    }
+
+    closeHandler() {
+        this.setState({ goalType: 'template'});
+        this.props.onHide();
     }
     
     render() {
@@ -56,7 +94,7 @@ class GoalModal extends React.Component {
 
                         {
                             (this.state.goalType === "template_review")
-                                ? <GoalTemplateReview/>
+                                ? <GoalTemplateReview goalString={this.state.goalString} addGoalHandler={this.addGoalHandler.bind(this)}/>
                                 : null
                         }
 
@@ -73,7 +111,7 @@ class GoalModal extends React.Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                <button className="btn btn-outline-dark" onClick={this.props.onHide}>Close</button>
+                <button className="btn btn-outline-dark" onClick={this.closeHandler.bind(this)}>Close</button>
                 </Modal.Footer>
             </Modal>
         )
