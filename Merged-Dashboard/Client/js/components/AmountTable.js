@@ -79,6 +79,7 @@ class AmountTable extends React.Component {
     } else if (data == "cancel") {
       newState = false;
     } else {
+      if (this.state.formData.exercise == "") return;
       //Submit data to database
       let fetchEndpoint = "/api/amount/addLog/mrn/" + this.props.mrn;
       let formData = this.state.formData;
@@ -242,7 +243,7 @@ class AmountTable extends React.Component {
                   <label>Reps:<input type="number"  name="reps" value={this.state.formData.reps} placeholder="Reps" onChange={this.handleInputChange}/></label><br />
                   <label>Reps Left:<input type="number" name="reps_L" value={this.state.formData.reps_L} placeholder="Reps Left" onChange={this.handleInputChange}/></label><br />
                   <label>Reps Right:<input type="number" name="reps_R" value={this.state.formData.reps_R} placeholder="Reps Right" onChange={this.handleInputChange}/></label><br />
-                  <label>Duration:<input type="number" name="duration" value={this.state.formData.dur} placeholder="Duration" onChange={this.handleInputChange}/></label><br />
+                  <label>Duration:<input type="number" name="dur" value={this.state.formData.dur} placeholder="Duration" onChange={this.handleInputChange}/></label><br />
                   <label>Completed:<input type="checkbox" name="is_completed" value={this.state.formData.is_completed} placeholder="Completed" onChange={this.handleInputChange}/></label><br />
             </div>
             : null }
