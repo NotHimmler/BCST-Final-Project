@@ -2,12 +2,12 @@
 module.exports = (sequelize, DataTypes) => {
   const AmountData = sequelize.define('AmountData', {
     MRN: {
-      type: DataTypes.CHAR(8),
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
@@ -45,13 +45,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     dur: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
     dur_L: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
     dur_R: {
-      type: DataTypes.TIME
+      type: DataTypes.STRING
     },
   }, {});
   AmountData.associate = function(models) {
