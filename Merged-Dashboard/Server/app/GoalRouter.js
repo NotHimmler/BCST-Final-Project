@@ -13,7 +13,6 @@ goalRouter.get('/', function (req, res) {
 
 goalRouter.post('/addGoal', function (req, res) {
     let goalInfo = req.body.goalInfo;
-    goalInfo.goal_string = goalInfo.goalString;
     return db.Goal.create(goalInfo)
         .then(data => {
             console.log(data);
