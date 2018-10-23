@@ -6,7 +6,6 @@ class GoalList extends React.Component {
       super(props);
       this.state = {
         loaded: false,
-        goalList: [],
         placeholder: 'loading...'
       };
     }
@@ -26,19 +25,19 @@ class GoalList extends React.Component {
       })
       .then(goalList => {
         this.setState({
-          goalList,
           loaded: true
         });
+        this.props.updateGoalState({goalList});
       });
     }
 
     getGoalListTable() {
-      const {goalList} = this.state;
+      const goalList = this.props.goalList;
       if(!goalList.length){
         return null;
       }
-      let goalTableList = goalList.map(goal => 
-          <div className="panel panel-heading">
+      let goalTableList = goalList.map((goal,index) => 
+          <div key={index} className="panel panel-heading">
             <table className="table table-striped" id="long_term_table">
                 <thead>
                   <tr>

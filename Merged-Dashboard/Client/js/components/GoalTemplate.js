@@ -18,7 +18,7 @@ class GoalTemplate extends React.Component {
             return;
         }
         console.log(option);
-        option.goalString = this.getGoalString(option);
+        option.goal_string = this.getGoalString(option);
         option.start = new Date(start);
         option.end = new Date(end);
         this.props.reviewGoal(option);
