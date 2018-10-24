@@ -6,7 +6,7 @@ class FitbitAuth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            authURL: false
         }
         
         if (this.props.location.search != "") {
