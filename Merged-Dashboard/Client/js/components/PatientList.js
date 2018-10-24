@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import fetch from "cross-fetch";
+
+global.fetch = fetch;
 
 class PatientRow extends React.Component {
   returnIconBasedOnPercentage(percentString) {

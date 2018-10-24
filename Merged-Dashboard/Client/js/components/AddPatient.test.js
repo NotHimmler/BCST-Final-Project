@@ -60,21 +60,6 @@ describe("AddPatient", () => {
         expect(submitButton.length).toEqual(1);
     });
 
-    it('always renders an amount checkbox', () => {
-        const submitButton = addPatient().find('input[name="amount"]')
-        expect(submitButton.length).toEqual(1);
-    });
-
-    it('always renders a fitbit checkbox', () => {
-        const submitButton = addPatient().find('input[name="fitbit"]')
-        expect(submitButton.length).toEqual(1);
-    });
-
-    it('always renders a walk around the block checkbox', () => {
-        const submitButton = addPatient().find('input[name="watb"]')
-        expect(submitButton.length).toEqual(1);
-    });
-
     it('always renders a submit button', () => {
         const submitButton = addPatient().find('input[type="submit"]')
         expect(submitButton.length).toEqual(1);

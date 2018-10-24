@@ -11,6 +11,8 @@ class MockSessionStore {
 }
 */
 
+global.fetch = jest.fn(() =>  new Promise(resolve => resolve()))
+
 describe("PatientGraph", () => {
     let mountedPatientGraph;
 
@@ -34,7 +36,7 @@ describe("PatientGraph", () => {
     });
 
     it("always renders a fitbit table", () => {
-        const form = patientGraph().find("FitbitTable");
+        const form = patientGraph().find("FitbitChart");
         expect(form.length).toEqual(1);
     });
 
@@ -49,7 +51,7 @@ describe("PatientGraph", () => {
     });
 
     it("always renders a walkaroundtheblock table", () => {
-        const form = patientGraph().find("WatbTable");
+        const form = patientGraph().find("WalkAppTable");
         expect(form.length).toEqual(1);
     });
 

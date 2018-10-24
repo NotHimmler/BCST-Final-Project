@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import PatientList from "./PatientList";
 /** 
 const mockTrySetLoggedIn = jest.fn();
@@ -17,7 +17,7 @@ describe("PatientList", () => {
     //Creates a rendered patientList component to test
     const patientList = () => {
         if(!mountedpatientList) {
-            mountedpatientList = mount(<PatientList />);
+            mountedpatientList = shallow(<PatientList />);
         }
     
         return mountedpatientList;

@@ -1,5 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import fetch from "cross-fetch";
+
+global.fetch = fetch;
+
 
 const boxMargins = {
   "paddingLeft": "10px",
@@ -184,6 +188,8 @@ class AmountTable extends React.Component {
           })
         }
         console.log(data);
+      }).catch(err => {
+
       })
     }
     this.setState({isAdding: newState})
@@ -264,6 +270,8 @@ class AmountTable extends React.Component {
         exOptions.push(<option value="-">{"-"}</option>);
         this.setState({exOptions: exOptions})
       }
+    }).catch(err => {
+
     })
   }
 
@@ -282,6 +290,8 @@ class AmountTable extends React.Component {
         progOptions.push(<option value="-">{"-"}</option>);
         this.setState({progOptions: progOptions})
       }
+    }).catch(err => {
+      
     })
   }
 
@@ -305,7 +315,7 @@ class AmountTable extends React.Component {
             this.reactAddForm()
             : null }
             <div className="row" style={{display: "flex", justifyContent: "flex-end", padding: "0 10px"}}>
-            <button onClick={(e) => this.handleButtonClick("add", e)}>Add New Log</button>
+            <button id="add-log-button" onClick={(e) => this.handleButtonClick("add", e)}>Add New Log</button>
             {this.state.isAdding ? <button onClick={(e) => this.handleButtonClick("cancel", e)}>Cancel</button> : null }
             </div>
           </form>

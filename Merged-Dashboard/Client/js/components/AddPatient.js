@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import browserHistory from "react-router";
 var $ = require('jquery');
+import fetch from "cross-fetch";
+
+global.fetch = fetch;
 
 class AddPatient extends React.Component {
     
@@ -37,6 +40,32 @@ class AddPatient extends React.Component {
         if (this.props.onSubmit) this.props.onSubmit(this.state);
         //Make a call to the back-end then redirect to patient page
         let data = JSON.stringify({patientInfo: this.state});
+        fetch('/api/patient/addPatient', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: data
+        }).then(data => {
+            return data.json();
+        }).then(data => {
+            console.log(data);
+            let error = data.error;
+            if (error) {
+                this.setState({
+                    errorMessage:error
+                });
+            }else{
+                this.setState({
+                    redirect:true
+                })
+                window.location.href = `/patient/${this.state.mrn}`
+            }
+        }).catch(err => {
+            //console.log(err);
+        })
+        /**
         $.ajax({
             url:'/api/patient/addPatient',
             type:"post",
@@ -57,6 +86,7 @@ class AddPatient extends React.Component {
 				}
             }
         });
+        */
     }
 
     render() {
