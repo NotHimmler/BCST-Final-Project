@@ -40,18 +40,6 @@ describe('Unit testing the /archived route', () => {
 
 });
 
-describe('Unit testing the /mrn/:mrn route', () => {
-
-    it('should return OK status', function() {
-      return request(app)
-        .get('/mrn/:mrn')
-        .then(function(response){
-            assert.equal(response.status, 200)
-        })
-    });
-
-});
-
 describe('Unit testing the /longestTimeSinceCheckup route', () => {
 
     it('should return OK status', function() {

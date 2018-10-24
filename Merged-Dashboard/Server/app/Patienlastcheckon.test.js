@@ -4,7 +4,7 @@ const request = require('supertest');
 const patientRouter = require('./PatientLastcheckon')
 
 // test the headers
-describe('Unit testing the / lastcheckon', () => {
+describe('Unit testing the / router', () => {
 
     it('should return OK status', function() {
       return request(PatientLastcheckon)
