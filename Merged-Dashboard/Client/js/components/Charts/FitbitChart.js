@@ -19,6 +19,7 @@ class FitbitChart extends React.Component {
             placeholder: "Loading...",
             chartDisplay: "block",
             testing: "",
+            errorMessage: "Data does not exist",
         };
 
         this.addData = this.addData.bind(this);
@@ -37,6 +38,10 @@ class FitbitChart extends React.Component {
             let datesPayload = [];
             //-------------------If no data entries----------------------------//
             if(data.error){
+                if(data.error === 'expired_token'){
+                    this.props.onExpiredToken();
+                    this.setState({errorMessage: "Cannot get data. Fitbit token has expired."})
+                }
                 newOp.xAxis[0].data = [];
                 newOp.series[0].data = [];
                 this.state.ec.hideLoading();
@@ -87,7 +92,7 @@ class FitbitChart extends React.Component {
                         <h2 className="datepicker-inline">Steps from Fitbit</h2>
                         {
                             (this.props.hasFitbitToken)
-                            ? <span class="badge fitbit-badge">Linked to Fitbit</span>
+                            ? <span className="badge fitbit-badge">Linked to Fitbit</span>
                             : null
                         }
                         <div className="float-right">
@@ -108,7 +113,7 @@ class FitbitChart extends React.Component {
                         {
                             (this.state.chartDisplay === "none")
                             ? <div>
-                                <p>Data does not exist</p>
+                                <p>{this.state.errorMessage}</p>
                                 <p>Link to Fitbit: </p>
                                 <FitbitInvite mrn={this.props.mrn} hasFitbitToken={this.props.hasFitbitToken}/>                                </div>
                             : null

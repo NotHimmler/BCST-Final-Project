@@ -2,11 +2,17 @@ let express = require('express');
 let goalRouter = express.Router();
 const db = require('../../Database/models/index.js'); // new require for db object
 
-goalRouter.get('/', function (req, res) {
-    return db.Goal.findAll()
-        .then(goalList => res.send(goalList))
+goalRouter.get('/mrn/:mrn', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.Goal.findAll({
+        where: {
+            MRN: mrn
+        }
+    })
+        .then(goalList =>
+            res.send(goalList))
         .catch((err) => {
-            console.log('There was an error querying contacts', JSON.stringify(err));
+            console.log('There was an error querying goalList', JSON.stringify(err));
             return res.send(err);
         });
 });
