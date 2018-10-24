@@ -25,7 +25,7 @@ class AmountTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      data: [],
       formData: {
         program: "-",
         exercise: "-",
@@ -46,7 +46,8 @@ class AmountTable extends React.Component {
       progVal: "-",
       exOptions: [],
       exVal: "-",
-      totals: false
+      totals: false,
+      dateRange: "No Data"
     }
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -100,9 +101,42 @@ class AmountTable extends React.Component {
       return response.json();
     })
     .then(data => {
-      this.setState({data: data});
-      this.generateAndSetRows(data);
+      if (data.length == 0) return
+      let sorted = data.sort((a,b) => {
+        let aDate = moment(a.date).valueOf()
+        let bDate = moment(b.date).valueOf();
+        return bDate - aDate;
+      })
+      let endDate = moment(sorted[0].date)
+      let startDate = moment(sorted[0].date).subtract(6, "days");
+      let dateRange = `${startDate.format("DD/MM/YYYY")} - ${endDate.format("DD/MM/YYYY")}`
+      let dataRows = sorted.filter(item => {
+        if (moment(item.date).valueOf() <= endDate.valueOf() && moment(item.date).valueOf() >= startDate.valueOf()){
+          return item;
+        }
+      })
+      this.setState({data: data, dateRange: dateRange, startDate: startDate.valueOf(), endDate: endDate.valueOf()});
+      this.generateAndSetRows(dataRows);
     });
+  }
+
+  setLatestWeekRows(data) {
+    if (data.length == 0) return
+      let sorted = data.sort((a,b) => {
+        let aDate = moment(a.date).valueOf()
+        let bDate = moment(b.date).valueOf();
+        return bDate - aDate;
+      })
+      let endDate = moment(sorted[0].date)
+      let startDate = moment(sorted[0].date).subtract(6, "days");
+      let dateRange = `${startDate.format("DD/MM/YYYY")} - ${endDate.format("DD/MM/YYYY")}`
+      let dataRows = sorted.filter(item => {
+        if (moment(item.date).valueOf() <= endDate.valueOf() && moment(item.date).valueOf() >= startDate.valueOf()){
+          return item;
+        }
+      })
+      this.setState({dateRange: dateRange, startDate: startDate.valueOf(), endDate: endDate.valueOf()});
+      this.generateAndSetRows(dataRows);
   }
 
   handleInputChange(event) {
@@ -131,7 +165,7 @@ class AmountTable extends React.Component {
       let fetchEndpoint = "/api/amount/addLog/mrn/" + this.props.mrn;
       let formData = this.state.formData;
       formData["program"] = "Default";
-      formData["date"] = moment().format("YYY-MM-DD");
+      formData["date"] = moment().format("YYYY-MM-DD");
       fetch(fetchEndpoint, {
         method: "POST",
         headers: {
@@ -145,8 +179,9 @@ class AmountTable extends React.Component {
         if (res.okay) {
           let newData = this.state.data;
           newData.push(formData);
-          this.generateAndSetRows(newData);
-          this.setState({data: newData, formData: defaultFormData})
+          this.setState({data: newData, formData: defaultFormData}, () => {
+            this.setLatestWeekRows(newData);
+          })
         }
         console.log(data);
       })
@@ -189,6 +224,29 @@ class AmountTable extends React.Component {
     let formData = this.state.formData;
     formData.exercise = event.target.value;
     this.setState({exerciseSelected: exerciseSelected, formData: formData});
+  }
+
+  handleWeekChange(data) {
+    let endDate, startDate;
+    if(data == "left") {
+      endDate = moment(this.state.startDate)
+      startDate = moment(endDate).subtract(6, 'days')
+    } else {
+      startDate = moment(this.state.endDate);
+      endDate = moment(startDate).add(6, 'days');
+    }
+
+    let dataRows = this.state.data.filter(item => {
+      if (moment(item.date).valueOf() <= endDate.valueOf() && moment(item.date).valueOf() >= startDate.valueOf()){
+        return item;
+      }
+    });
+
+    //No data in the new date range
+    if (dataRows.length == 0) return;
+    let dateRange = `${startDate.format("DD/MM/YYYY")} - ${endDate.format("DD/MM/YYYY")}`
+    this.setState({dateRange: dateRange, startDate: startDate.valueOf(), endDate: endDate.valueOf()});
+    this.generateAndSetRows(dataRows);
   }
 
   getExercisesForProgram(program) {
@@ -247,10 +305,21 @@ class AmountTable extends React.Component {
             this.reactAddForm()
             : null }
             <div className="row" style={{display: "flex", justifyContent: "flex-end", padding: "0 10px"}}>
-            <button onClick={(e) => this.handleButtonClick("add", e)}>Add</button>
+            <button onClick={(e) => this.handleButtonClick("add", e)}>Add New Log</button>
             {this.state.isAdding ? <button onClick={(e) => this.handleButtonClick("cancel", e)}>Cancel</button> : null }
             </div>
           </form>
+          <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+            <button className="btn btn-primary">Totals</button>
+            <div>
+              <button onClick={() => this.handleWeekChange("left")}><i className="fas fa-chevron-left"></i></button>
+              <span style={{paddingRight: "5px"}}>{this.state.dateRange}</span>
+              <button onClick={() => this.handleWeekChange("right")}><i className="fas fa-chevron-right"></i></button>
+            </div>
+            <div>
+
+            </div>
+          </div>
           <div className="x_content">
             <table className="table table-striped">
               <thead>
