@@ -270,7 +270,7 @@ fitbitRouter.post('/addFitbitToken', (req, res) => {
             refreshToken: refreshToken,
             user_id: user_id
         }
-
+        console.log(`Token: ${token}`);
         db.FitbitTokens.findOrCreate({where: {MRN: mrn}, defaults: defaults})
         .then(data => {
             console.log(data);

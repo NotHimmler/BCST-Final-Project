@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const boxMargins = {
-  "padding-left": "20px",
-  "padding-right": "20px"
+  "paddingLeft": "10px",
+  "paddingRight": "10px"
 }
 
 const defaultFormData = {
@@ -45,13 +45,47 @@ class AmountTable extends React.Component {
       progOptions: [],
       progVal: "-",
       exOptions: [],
-      exVal: "-"
+      exVal: "-",
+      totals: false
     }
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleProgramChange = this.handleProgramChange.bind(this);
     this.handleExerciseChange = this.handleExerciseChange.bind(this);
+  }
+
+  reactAddForm() {
+    return (
+      <div className="row" style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
+                  <label>Program: <select onChange={this.handleProgramChange} value={this.state.formData.program}>{this.state.progOptions}</select></label>
+                  {this.state.programSelected ? 
+                  <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
+                  <label>Exercise Name:<select onChange={this.handleExerciseChange} value={this.state.formData.exercise}>{this.state.exOptions}</select></label><br />
+                    {this.state.exerciseSelected ? 
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
+                      <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
+                  <label>Sets:<input type="number" name="sets" value={this.state.formData.sets} placeholder="Sets" onChange={this.handleInputChange}/></label>
+                  <label>Sets Left:<input type="number" name="sets_L" value={this.state.formData.sets_L} placeholder="Sets Left" onChange={this.handleInputChange}/></label>
+                  <label>Sets Right:<input type="number" name="sets_R" value={this.state.formData.sets_R} placeholder="Sets Right" onChange={this.handleInputChange}/></label>
+                  </div>
+                  <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
+                  <label>Reps:<input type="number"  name="reps" value={this.state.formData.reps} placeholder="Reps" onChange={this.handleInputChange}/></label>
+                  <label>Reps Left:<input type="number" name="reps_L" value={this.state.formData.reps_L} placeholder="Reps Left" onChange={this.handleInputChange}/></label>
+                  <label>Reps Right:<input type="number" name="reps_R" value={this.state.formData.reps_R} placeholder="Reps Right" onChange={this.handleInputChange}/></label>
+                  </div>
+                  <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
+                  <label>Duration:<input type="number" name="dur" value={this.state.formData.dur} placeholder="Duration" onChange={this.handleInputChange}/></label>
+                  <label>Duration Left:<input type="number" name="dur_L" value={this.state.formData.dur_L} placeholder="Duration Left" onChange={this.handleInputChange}/></label>
+                  <label>Duration Right:<input type="number" name="dur_R" value={this.state.formData.dur_R} placeholder="Duration Right" onChange={this.handleInputChange}/></label>
+                  </div>
+                  <label>Completed:<input type="checkbox" name="is_completed" value={this.state.formData.is_completed} placeholder="Completed" onChange={this.handleInputChange}/></label><br />
+                  </div>
+                  : null}
+                  </div>
+                  : null}
+            </div>
+    )
   }
 
   componentDidMount() {
@@ -97,7 +131,7 @@ class AmountTable extends React.Component {
       let fetchEndpoint = "/api/amount/addLog/mrn/" + this.props.mrn;
       let formData = this.state.formData;
       formData["program"] = "Default";
-      formData["date"] = new Date();
+      formData["date"] = moment().format("YYY-MM-DD");
       fetch(fetchEndpoint, {
         method: "POST",
         headers: {
@@ -135,6 +169,7 @@ class AmountTable extends React.Component {
           <td>{rowData.dur_L}</td>
           <td>{rowData.dur_R}</td>
           <td>{rowData.is_completed ? "Yes" : "No"}</td>
+          {!this.state.totals ? <td>{rowData.date}</td>:null}
         </tr>
       )
     })
@@ -195,7 +230,7 @@ class AmountTable extends React.Component {
   render() {
     return (
       <div className="row w-100" style={boxMargins}>
-        <div className="x_panel" style={boxMargins}>
+        <div className="x_panel">
           <div className="x_title">
             <h2>Exercise Logs</h2>
             <ul className="nav navbar-right panel_toolbox">
@@ -209,36 +244,9 @@ class AmountTable extends React.Component {
           </div>
           <form className="row">
           {this.state.isAdding ? 
-            <div className="row" style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
-                  <label>Program: <select onChange={this.handleProgramChange} value={this.state.formData.program}>{this.state.progOptions}</select></label>
-                  {this.state.programSelected ? 
-                  <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
-                  <label>Exercise Name:<select onChange={this.handleExerciseChange} value={this.state.formData.exercise}>{this.state.exOptions}</select></label><br />
-                    {this.state.exerciseSelected ? 
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
-                      <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
-                  <label>Sets:<input type="number" name="sets" value={this.state.formData.sets} placeholder="Sets" onChange={this.handleInputChange}/></label>
-                  <label>Sets Left:<input type="number" name="sets_L" value={this.state.formData.sets_L} placeholder="Sets Left" onChange={this.handleInputChange}/></label>
-                  <label>Sets Right:<input type="number" name="sets_R" value={this.state.formData.sets_R} placeholder="Sets Right" onChange={this.handleInputChange}/></label>
-                  </div>
-                  <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
-                  <label>Reps:<input type="number"  name="reps" value={this.state.formData.reps} placeholder="Reps" onChange={this.handleInputChange}/></label>
-                  <label>Reps Left:<input type="number" name="reps_L" value={this.state.formData.reps_L} placeholder="Reps Left" onChange={this.handleInputChange}/></label>
-                  <label>Reps Right:<input type="number" name="reps_R" value={this.state.formData.reps_R} placeholder="Reps Right" onChange={this.handleInputChange}/></label>
-                  </div>
-                  <div style={{display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-around"}}>
-                  <label>Duration:<input type="number" name="dur" value={this.state.formData.dur} placeholder="Duration" onChange={this.handleInputChange}/></label>
-                  <label>Duration Left:<input type="number" name="dur_L" value={this.state.formData.dur_L} placeholder="Duration Left" onChange={this.handleInputChange}/></label>
-                  <label>Duration Right:<input type="number" name="dur_R" value={this.state.formData.dur_R} placeholder="Duration Right" onChange={this.handleInputChange}/></label>
-                  </div>
-                  <label>Completed:<input type="checkbox" name="is_completed" value={this.state.formData.is_completed} placeholder="Completed" onChange={this.handleInputChange}/></label><br />
-                  </div>
-                  : null}
-                  </div>
-                  : null}
-            </div>
+            this.reactAddForm()
             : null }
-            <div className="row" style={{display: "flex", justifyContent: "flex-end"}}>
+            <div className="row" style={{display: "flex", justifyContent: "flex-end", padding: "0 10px"}}>
             <button onClick={(e) => this.handleButtonClick("add", e)}>Add</button>
             {this.state.isAdding ? <button onClick={(e) => this.handleButtonClick("cancel", e)}>Cancel</button> : null }
             </div>
@@ -258,6 +266,7 @@ class AmountTable extends React.Component {
                   <th>Duration Left</th>
                   <th>Duration Right</th>
                   <th>Completed</th>
+                  {!this.state.totals ? <th>Date</th> : null}
                 </tr>
               </thead>
 

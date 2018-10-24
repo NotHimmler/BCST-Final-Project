@@ -8,10 +8,11 @@ class FitbitAuth extends React.Component {
         this.state = {
             authURL: false
         }
-        
+        console.log("Hellof rom auth");
         if (this.props.location.search != "") {
             let params = new URLSearchParams(this.props.location.search)
             let code = params.get('code');
+            console.log(code);
             if(code) {
                 this.getToken(code).then(data => {
                     console.log(data);
