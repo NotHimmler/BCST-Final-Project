@@ -23,8 +23,11 @@ let generateWalkTableRow = (data) => {
             <td>{data.numSteps}</td>
             <td>{data.distance}</td>
             <td>{secondsToHms(data.duration)}</td>
-            <td>{data.goalValue}</td>
-            <td>{data.goalType}</td>
+            <td>{data.goalValue} 
+            {data.GoalType == "distance" ? " meters" : null} 
+            {data.goalType == "steps" ? " steps" : null} 
+            {data.goalType == "minutes" ? " minutes" : null}
+            </td>
             <td>{((data.duration)*100/(data.goalValue*60.0)).toFixed(2)}%</td>
         </tr>
     )
@@ -72,7 +75,7 @@ class WalkAppTable extends React.Component {
             <div className="row w-100" style={boxMargins}>
             <div className="x_panel">
               <div className="x_title">
-              <div className="col-md-4"><h2 id="overflow">Walk Details from Walk Around The Block App</h2></div>
+              <div className="col-md-4"><h2 id="overflow">WalkAroundTheBlock Logs</h2></div>
               <table className="table">
                 <thead>
                     <tr>
@@ -81,7 +84,6 @@ class WalkAppTable extends React.Component {
                     <th>Distance (meters)</th>
                     <th>Duration (minutes)</th>
                     <th>Goal</th>
-                    <th>Goal Type</th>
                     <th>Goal Achieved %</th>
                     </tr>
                     {this.state.rows}
