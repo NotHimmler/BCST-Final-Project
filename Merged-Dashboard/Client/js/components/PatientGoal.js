@@ -51,7 +51,6 @@ class PatientGoal extends React.Component {
             </button>
             <GoalTable/>
             <GoalList goalList={this.state.goalList} updateGoalState={this.updateState.bind(this)}/>
-            <GoalForm/>
 
             <GoalModal show={this.state.showModal} onHide={this.handleClose} 
             handlegoal={this.receiveNewGoal} 
