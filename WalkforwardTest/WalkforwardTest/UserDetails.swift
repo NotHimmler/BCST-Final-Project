@@ -12,10 +12,21 @@ import CoreData
 class UserDetails: UIViewController {
     var firstName: String = ""
     var lastName: String = ""
+    var walkObjs: [Dictionary<String, Any>]?
     //MARK: Properties
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var weeklyButton: UIButton!
+    @IBOutlet weak var monthlyButton: UIButton!
+    @IBOutlet weak var yearlyButton: UIButton!
+    @IBOutlet weak var numWalksLabel: UILabel!
+    @IBOutlet weak var totalDistLabel: UILabel!
+    @IBOutlet weak var avgDistLabel: UILabel!
+    @IBOutlet weak var totalStepsLabel: UILabel!
+    @IBOutlet weak var avgStepsLabel: UILabel!
+    @IBOutlet weak var totalTimeLabel: UILabel!
+    @IBOutlet weak var avgTimeLabel: UILabel!
     
 
     override func viewDidLoad() {
@@ -50,6 +61,64 @@ class UserDetails: UIViewController {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        getAndSetWalkObjects();
+        calculateAndSetStatsForTimePeriod(6);
+    }
+    
+    func getAndSetWalkObjects() {
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        let context = appDelegate.persistentContainer.viewContext
+        let walkFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Walk")
+        var walkResults: [NSManagedObject]?
+        var walkObjs: [Dictionary<String, Any>] = []
+        do {
+            walkResults = try context.fetch(walkFetchRequest)
+            let result = walkResults!
+            for walk in result {
+                var dict: Dictionary = [String: Any]()
+                dict["distance"] = walk.value(forKey: "distance") as! Double;
+                dict["steps"] = walk.value(forKey: "steps") as! Int;
+                dict["duration"] = walk.value(forKey: "duration") as! Int;
+                dict["date"] = walk.value(forKey: "date") as! Date;
+                print(dict)
+                walkObjs.append(dict)
+            }
+            self.walkObjs = walkObjs
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func calculateAndSetStatsForTimePeriod(_ days: Int) {
+        let weekAgo = Calendar.current.date(byAdding: .day, value: -1*days, to: Date())
+        var totalDist = 0
+        var totalSteps = 0
+        var totalTime = 0
+        var count = 0.0;
+        for item in self.walkObjs! {
+            if (item["date"] as! Date) < weekAgo! {
+                continue;
+            }
+            count = count + 1
+            totalDist += Int(item["distance"] as! Double)
+            totalTime += item["duration"] as! Int
+            totalSteps += item["steps"] as! Int
+        }
+        self.totalDistLabel.text = String(totalDist) + " meters"
+        self.totalStepsLabel.text = String(totalSteps)
+        self.totalTimeLabel.text = getTimeStringFromSeconds(Double(totalTime))
+        self.avgDistLabel.text = String(Int(Double(totalDist)/count)) + " meters"
+        self.avgStepsLabel.text = String(Int(Double(totalSteps)/count))
+        self.avgTimeLabel.text = getTimeStringFromSeconds(Double(totalTime)/count)
+        self.numWalksLabel.text = String(Int(count))
+    }
+    
+    func getTimeStringFromSeconds(_ seconds: TimeInterval) -> String {
+        let dcFormatter = DateComponentsFormatter()
+        dcFormatter.unitsStyle = .abbreviated
+        dcFormatter.allowedUnits = [.minute, .second, .hour]
+        return String(dcFormatter.string(from: seconds as TimeInterval)!)
     }
     
     @IBAction func handleLoginButton(_ sender: Any) {
@@ -76,6 +145,17 @@ class UserDetails: UIViewController {
         
     }
     
+    @IBAction func handleWeeklyClick(_ sender: Any) {
+        calculateAndSetStatsForTimePeriod(6)
+    }
+    
+    @IBAction func handleMonthlyClick(_ sender: Any) {
+        calculateAndSetStatsForTimePeriod(30)
+    }
+    
+    @IBAction func handleYearlyClick(_ sender: Any) {
+        calculateAndSetStatsForTimePeriod(364)
+    }
     /*
     // MARK: - Navigation
 
