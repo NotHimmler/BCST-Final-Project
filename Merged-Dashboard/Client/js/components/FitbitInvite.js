@@ -29,7 +29,13 @@ class FitbitInvite extends React.Component {
       }
     
     handleInviteChange(event) {
-    let href = `mailto:${this.state.inviteEmail}?subject=Please Connect Your Fitbit For Therapist&body=http://localhost:8080/fitbitAuth/${this.props.mrn}`
+    let host = window.location.host
+    let start = "http://"
+    if (host == "soft3413-physio-dashboard.herokuapp.com") {
+        start = "https://"
+    }
+    let url = `${start}${host}/fitbitAuth/${this.props.mrn}`
+    let href = `mailto:${event.target.value}?subject=Please%20Allow%20Us%20To%20View%20Your%20Fitbit%20Data&body=Hi%2C%0A%0AIn%20order%20to%20better%20help%20you%20with%20your%20needs%2C%20it%20would%20be%20great%20if%20you%20could%20allow%20us%20to%20see%20some%20of%20your%20Fitbit%20data.%20We%20only%20want%20to%20see%20your%20steps%20and%20active%20minutes.%20If%20you'd%20like%20to%20do%20so%2C%20please%20go%20to%20the%20link%20below%20and%20then%20click%20the%20button%20to%20authenticate%20with%20Fitbit.%0A%0A${url}`
     this.setState({inviteEmail: event.target.value, inviteLink: href})
     }
     

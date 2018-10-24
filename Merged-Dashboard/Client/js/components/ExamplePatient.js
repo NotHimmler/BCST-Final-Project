@@ -29,6 +29,7 @@ class ExamplePatient extends React.Component {
     };
 
     this.setContent = this.setContent.bind(this);
+    this.onExpiredToken = this.onExpiredToken.bind(this);
   }
 
   componentWillMount() {
@@ -64,6 +65,10 @@ class ExamplePatient extends React.Component {
       let string = new Date(lastCheckupDate).toDateString()+ " by "+ data.last_checkup_by;
       return string;
     }
+  }
+
+  onExpiredToken() {
+    this.setState({hasFitbitToken:false});
   }
 
     render() {
@@ -127,7 +132,9 @@ class ExamplePatient extends React.Component {
                     ? <PatientGraph 
                         mrn={this.props.match.params.MRN} 
                         lastName={this.state.data.last_name}
-                        hasFitbitToken={this.state.hasFitbitToken}/>
+                        hasFitbitToken={this.state.hasFitbitToken}
+                        onExpiredToken={this.onExpiredToken}
+                      />
                     : null
               }
 

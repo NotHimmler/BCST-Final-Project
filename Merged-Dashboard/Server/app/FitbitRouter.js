@@ -30,7 +30,13 @@ function getDataBetweenDates(token, user_id, date1, date2) {
             resolve(data);
         }).catch(err => {
             console.log("Could not fetch fitbit data");
-            console.log(err.message);
+            let errors = JSON.parse(err.error)
+            for(let error of errors.errors) {
+                if(error.errorType === 'expired_token')
+                    console.log(error.message)
+                    resolve({error:'expired_token'});
+                    return;
+            }
             reject(err);
         })
     })
