@@ -11,7 +11,8 @@ class GoalList extends React.Component {
     }
 
     componentDidMount() {
-      let endpoint = `/api/goal`;
+      const mrn = this.props.mrn;
+      const endpoint = `/api/goal/mrn/${mrn}`;
       // Get goal list
       fetch(endpoint)
       .then(response => {

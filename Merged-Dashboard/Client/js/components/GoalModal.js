@@ -35,8 +35,10 @@ class GoalModal extends React.Component {
 
     addGoalHandler(e){
         e.preventDefault();
+        const mrn = this.props.mrn;
         let endpoint = `/api/goal/addGoal`;
         let goalInfo = this.option;
+        goalInfo.MRN = mrn;
         let option = {
             method: "POST",
             headers: {
