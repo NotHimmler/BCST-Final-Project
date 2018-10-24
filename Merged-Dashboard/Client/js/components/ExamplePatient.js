@@ -133,7 +133,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Goal")
-                    ? <PatientGoal/>
+                    ? <PatientGoal mrn={this.props.match.params.MRN}/>
                     : null
               }
 
