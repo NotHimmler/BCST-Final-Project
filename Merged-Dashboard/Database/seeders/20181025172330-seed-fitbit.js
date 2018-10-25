@@ -1,6 +1,6 @@
 'use strict';
 const fitbitData = require('../../data/fb-data.json');
-console.log(fitbitData);
+//console.log(fitbitData);
 const correctCols = fitbitData.map(item => {
   return ({
     steps: Number(item['Steps']),
@@ -27,6 +27,7 @@ module.exports = {
     */
    return queryInterface.bulkInsert('FitbitData', correctCols, {})
    .catch((err) => {
+     console.log(err);
      if(err.name === 'SequelizeUniqueConstraintError'){
        console.log("There was a unique constraint error");
        console.log(err.name);
