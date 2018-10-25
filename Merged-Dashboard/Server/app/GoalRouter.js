@@ -5,6 +5,21 @@ const db = require('../../Database/models/index.js'); // new require for db obje
 const Sequelize = require('sequelize');
 const {gt, lte, ne, eq, like, in: opIn} = Sequelize.Op;
 
+goalRouter.get('/all/mrn/:mrn', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.Goal.findAll({
+        where: {
+            MRN: mrn,
+        }
+    })
+        .then(goalList =>
+            res.send(goalList))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
 goalRouter.get('/global/mrn/:mrn', function (req, res) {
     const mrn = req.params.mrn;
     return db.Goal.findAll({
@@ -34,6 +49,28 @@ goalRouter.get('/subgoals/goal_id/:id', function (req, res) {
     })
         .then(goalList =>
             res.send(goalList))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
+goalRouter.get('/rate/mrn/:mrn', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.sequelize.query(`SELECT MRN, AVG(coalesce(rating, 0)) as rate FROM Goals WHERE MRN = ${mrn} GROUP BY MRN`)
+        .then(data =>
+            res.send(data[0]))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
+goalRouter.get('/mostBehindGoals', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.sequelize.query(`SELECT MRN, first_name, last_name, AVG(coalesce(rating, 0)) as rate FROM Patients LEFT OUTER JOIN Goals USING(MRN) GROUP BY MRN ORDER BY rate LIMIT 5`)
+        .then(data =>
+            res.send(data[0]))
         .catch((err) => {
             console.log('There was an error querying goalList', JSON.stringify(err));
             return res.send(err);

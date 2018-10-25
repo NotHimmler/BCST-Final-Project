@@ -23,7 +23,7 @@ class GoalProgressBar extends React.Component {
     }
 
     getRatingString(rating) {
-        if (rating <= 0)
+        if (rating == null || rating <= 0)
             return "Not achieved";
         if (rating > 0 && rating < 50)
             return "Partially achieved (1-49%)";
@@ -36,7 +36,7 @@ class GoalProgressBar extends React.Component {
     }
 
     getColor(rating) {
-        if (rating <= 0)
+        if (rating == null || rating <= 0)
             return "brown";
         if (rating > 0 && rating < 50)
             return "red";
@@ -120,7 +120,7 @@ class GoalProgressBar extends React.Component {
                     {(this.props.goalType === "global") && 
                         <div>
                             <MenuItem divider />
-                            <MenuItem className="gpb-5" eventKey="5" onClick={this.toggleDropdown} onSelect={this.updateRating}>Auto calculate</MenuItem>
+                            <MenuItem className="gpb-5" eventKey="5" onClick={this.toggleDropdown} onSelect={this.updateRating}>Auto calculate (average of sub goal ratings)</MenuItem>
                         </div>
                     }
                 </DropdownButton>

@@ -18,7 +18,8 @@ class PatientGoal extends React.Component {
             loaded: false,
             placeholder: 'loading...',
             newGoal: {},
-            goalList: []
+            goalList: [],
+            goalRate: null,
         };
 
         this.handleClose = this.handleClose.bind(this);
@@ -47,6 +48,30 @@ class PatientGoal extends React.Component {
             goalList: goalList,
           });
         });
+
+        fetch(`/api/goal/all/mrn/${mrn}`)
+        .then(response => {
+            if(response.status !== 200){
+                console.log("Something went wront");
+                return;
+            }
+            return response.json();
+        })
+        .then(goals => {
+            let total = 0;
+            for(let goal of goals){
+                if(goal.rating)
+                    total = total + goal.rating;
+            }
+            if(goals && goals.length>0){
+                let original = total/goals.length;
+                let average = Math.round(original*100)/100;
+                this.setState({goalRate: average.toString()});
+            } else {
+                this.setState({goalRate: null});
+            }
+            
+        })
       }
 
     addGoal(goal) {
@@ -65,6 +90,21 @@ class PatientGoal extends React.Component {
         console.log(val);
     }
 
+    /* getGoalRate() {
+        let total = 0;
+        let rate = 0;
+        for(let goal of this.state.goalList) {
+            total = total + goal.rating;
+        }
+        if(this.state.goalList && this.state.goalList.length> 0){
+            let original = total/this.state.goalList.length
+            rate = Math.round(original*100)/100;
+            this.setState({goalRate: rate});
+        } else {
+            this.setState({goalRate: "N/A"});
+        }
+    } */
+
     render() {
         return (
           <div>
@@ -74,6 +114,12 @@ class PatientGoal extends React.Component {
             >
               Add Goal
             </button>
+            <div className="x_panel">
+                <div className="x_content">
+                    <h4>Overall goal completion rate: {(this.state.loaded) && ((this.state.goalRate)? `${this.state.goalRate}%` : "N/A")}</h4>
+                    <p>(Average rating of all global goals and sub goals)</p>
+                </div>
+            </div>
             <br/>
             {(this.state.loaded) ?
                 this.state.goalList.map(goal => {
@@ -81,7 +127,6 @@ class PatientGoal extends React.Component {
                 })
                 : <p>{this.state.placeholder}</p>
             }
-            {/* <GoalList  mrn={this.props.mrn} goalList={this.state.goalList} updateGoalState={this.updateState.bind(this)}/> */}
             <GoalModal mrn={this.props.mrn} show={this.state.showModal} onHide={this.handleClose} 
                 handlegoal={this.receiveNewGoal} 
                  addGoal={this.addGoal.bind(this)}/>
