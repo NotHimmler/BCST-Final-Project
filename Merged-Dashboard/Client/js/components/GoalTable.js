@@ -6,7 +6,7 @@ class GoalTable extends React.Component {
     render() {
         return (
             <div>
-              <div className="x_panel">
+              {/* <div className="x_panel">
                 <div className="x_title">
                 <h2>Weekly Goals</h2>
                 <div className="clearfix"></div>
@@ -95,6 +95,7 @@ class GoalTable extends React.Component {
                 </div>
               
               </div>
+            */}
             </div>
         )
     }
