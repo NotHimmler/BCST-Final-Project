@@ -75,9 +75,11 @@ class PatientGoal extends React.Component {
       }
 
     addGoal(goal) {
-        let {goalList} = this.state;
-        goalList.push(goal);
-        this.setState({goalList});
+        if(!goal.parent_goal){
+            let {goalList} = this.state;
+            goalList.push(goal);
+            this.setState({goalList});
+        }  
     }
 
     handleClose() {

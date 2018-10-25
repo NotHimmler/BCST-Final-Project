@@ -189,6 +189,21 @@ fitbitRouter.get("/mrn/:mrn/dates/:from/:to", function(req, res) {
     });
  });
 
+fitbitRouter.get('/goals/mrn/:mrn', function(req,res) {
+    const mrn = req.params.mrn;
+    return db.FitbitGoal.findAll({
+        where: {
+            mrn: mrn,
+        },
+        include: [db.Goal]
+    })
+    .then((data) => res.send(data))
+    .catch((err) => {
+      console.log('There was an error querying contacts', JSON.stringify(err))
+      return res.send(err)
+    });
+});
+
  // Get fb data for patient with specific mrn
 fitbitRouter.get("/mrn/:mrn/weekly", function(req, res) {
     //console.log(req.params.mrn)

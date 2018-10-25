@@ -11,12 +11,14 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     // Don't call this.setState() here!
-    this.state = { active: window.location.pathname};
+    this.state = { 
+      active: window.location.pathname,
+    };
   }
 
     componentDidMount() {
 
-      (function($,sr){
+      /* (function($,sr){
         // debouncing function from John Hann
         // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
         var debounce = function (func, threshold, execAsap) {
@@ -42,7 +44,7 @@ class Sidebar extends React.Component {
         // smartresize
         jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
     
-    })(jQuery,'smartresize');
+    })(jQuery,'smartresize'); */
 
 
       var CURRENT_URL = window.location.pathname,
@@ -59,7 +61,7 @@ class Sidebar extends React.Component {
   // TODO: This is some kind of easy fix, maybe we can improve this
   var setContentHeight = function () {
     // reset height
-    $RIGHT_COL.css('min-height', $(window).height());
+    $RIGHT_COL.css('min-height', window.innerHeight);
   
     var bodyHeight = $BODY.outerHeight(),
       footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),

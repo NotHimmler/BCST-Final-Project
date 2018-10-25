@@ -23,12 +23,27 @@ class App extends React.Component {
     const loggedIn = localStorage.isLoggedIn ? localStorage.isLoggedIn : false;
     this.state = {
       isLoggedIn: loggedIn,
-      username: localStorage.username? localStorage.username : "Log In"
+      username: localStorage.username? localStorage.username : "Log In",
+      width: 0,
+      height: 0,
     }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
   }
   
   componentDidMount() {
-    
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    console.log("Update height");
+    console.log(window.innerHeight);
   }
 
   updateStatus(option){

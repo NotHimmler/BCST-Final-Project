@@ -67,6 +67,17 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        goal_id: 'a2d94465-7e62-434b-943f-f6dac8e8cd1b',
+        start: new Date("2016-04-06"),
+        end: new Date("2016-04-12"),
+        activity: "To walk",
+        MRN: '80000001',
+        measurement: 5000,
+        goal_string: "To walk at least 1000 steps at least 3 days per week",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
   ], {});
   },
 
