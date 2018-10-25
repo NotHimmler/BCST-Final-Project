@@ -92,3 +92,29 @@ label {
   background-color: #42a3b8;
   margin-top: 10px;
 }
+
+/* GOAL STUFF */
+
+.goal-progress-button button:first-child, .goal-progress-button div:first-child{
+  width: 100%;
+}
+
+.gpb-0, .gpb-0:hover {
+  text-align: center;
+}
+
+.gpb-1 {
+  text-align: center;
+}
+
+.gpb-2 {
+  text-align: center;
+}
+
+.gpb-3 {
+  text-align: center;
+}
+
+.gpb-4 {
+  text-align: center;
+}

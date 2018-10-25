@@ -1,7 +1,7 @@
 import React from "react";
 import moment from 'moment';
 
-import GoalProgressBar from '../components/GoalProgressBar'
+import GoalProgressButton from './GoalProgressButton'
 
 class GoalTable extends React.Component {
     constructor(props){
@@ -47,8 +47,8 @@ class GoalTable extends React.Component {
                                     <thead>
                                         <tr>
                                             <th width="10%">Date Goal Set</th>
-                                            <th width="60%">Global Goal</th>
-                                            <th width="20%">Progress</th>
+                                            <th width="55%">Global Goal</th>
+                                            <th width="25%">Progress</th>
                                             <th width="10%">Review Date</th>
                                         </tr>
                                     </thead>
@@ -71,18 +71,18 @@ class GoalTable extends React.Component {
                                             <thead>
                                                 <tr>
                                                     <th width="10%">Date Goal Set</th>
-                                                    <th width="60%">Sub Goal(s)</th>
-                                                    <th width="20%">Progress</th>
+                                                    <th width="55%">Sub Goal(s)</th>
+                                                    <th width="25%">Progress</th>
                                                     <th width="10%">Review Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="sub_goal">
 
                                             { this.state.subgoals.map(subgoal => (
-                                                    <tr>
+                                                    <tr key={subgoal.goal_id}>
                                                         <td>{moment(subgoal.start).format('DD/MM/YY')}</td>
                                                         <td>{subgoal.goal_string}</td>
-                                                        <td><GoalProgressBar 
+                                                        <td><GoalProgressButton 
                                                             rating={this.props.goal.rating}
                                                             id={this.props.goal.goal_id}/></td>
                                                         <td>{moment(subgoal.end).format('DD/MM/YY')}</td>
