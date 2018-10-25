@@ -12,6 +12,7 @@ class GoalTable extends React.Component {
         }
 
         this.getGlobalRating = this.getGlobalRating.bind(this);
+        this.updateSubgoalRating = this.updateSubgoalRating.bind(this);
     }
 
     getGlobalRating() {
@@ -20,6 +21,16 @@ class GoalTable extends React.Component {
             total = total + subgoal.rating;
         }
         this.setState({ globalRating: (total/this.state.subgoals.length).toString()});
+    }
+
+    updateSubgoalRating(updatedGoal) {        
+        let currentList = this.state.subgoals;
+        for(let goal of currentList){
+            if(goal.goal_id === updatedGoal.goal_id) {
+                goal.rating = updatedGoal.rating;
+            }
+        }
+        this.setState({subgoals: currentList},()=>{this.getGlobalRating()});
     }
 
 /*     updateSubgoalRating(eventKey, goal_id){
@@ -129,9 +140,8 @@ class GoalTable extends React.Component {
                                                         <td>{moment(subgoal.start).format('DD/MM/YY')}</td>
                                                         <td>{subgoal.goal_string}</td>
                                                         <td><GoalProgressButton 
-                                                            rating={subgoal.rating}
-                                                            id={subgoal.goal_id}
-                                                            //updateSubgoalRating={this.updateSubgoalRating}
+                                                            goal={subgoal}
+                                                            updateGlobalGoal={this.updateSubgoalRating}
                                                             /></td>
                                                         <td>{moment(subgoal.end).format('DD/MM/YY')}</td>
                                                     </tr>            

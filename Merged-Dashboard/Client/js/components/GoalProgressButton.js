@@ -33,11 +33,15 @@ class GoalProgressBar extends React.Component {
     }
 
     updateRating(eventKey){
+        this.props.updateGlobalGoal({
+            goal_id: this.props.goal.goal_id,
+            rating: ratingValue[eventKey],
+        })
         this.setState({rating: ratingValue[eventKey]});
 
         let endpoint = `/api/goal/update_rating`;
         let goalInfo = {
-            goal_id: this.props.id,
+            goal_id: this.props.goal.goal_id,
             rating: ratingValue[eventKey]
         }
         let option = {
@@ -61,7 +65,7 @@ class GoalProgressBar extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({rating: this.props.rating});
+        this.setState({rating: this.props.goal.rating});
     }
     
     render() {
@@ -72,7 +76,7 @@ class GoalProgressBar extends React.Component {
                     bsSize="xsmall"
                     bsStyle='default'
                     title={this.getRatingString(this.state.rating)}
-                    id={`dropdown-basic-${this.props.id}`}
+                    id={`dropdown-basic-${this.props.goal.goal_id}`}
                     className='goal-progress-dropdown'
                 >
                     <MenuItem className="gpb-0" eventKey="0" onSelect={this.updateRating}>Not achieved</MenuItem>
