@@ -179,3 +179,9 @@ label {
 .goal-progress-dropdown {
   font-size: 13px !important;
 }
+
+.option-overflow {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

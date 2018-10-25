@@ -112,6 +112,7 @@ goalRouter.get('/goalCompletionRate2', function (req, res) {
 
 goalRouter.post('/addGoal', function (req, res) {
     let goalInfo = req.body.goalInfo;
+    console.log(goalInfo);
     return db.Goal.create(goalInfo)
         .then(data => {
             console.log(data);

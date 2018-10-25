@@ -127,9 +127,12 @@ class PatientGoal extends React.Component {
                 })
                 : <p>{this.state.placeholder}</p>
             }
-            <GoalModal mrn={this.props.mrn} show={this.state.showModal} onHide={this.handleClose} 
+            <GoalModal 
+                mrn={this.props.mrn} show={this.state.showModal} onHide={this.handleClose} 
                 handlegoal={this.receiveNewGoal} 
-                 addGoal={this.addGoal.bind(this)}/>
+                 addGoal={this.addGoal.bind(this)}
+                 globalGoals={this.state.goalList}
+            />
           </div>
         )
     }

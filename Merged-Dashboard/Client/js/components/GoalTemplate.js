@@ -11,7 +11,7 @@ class GoalTemplate extends React.Component {
 
     submitHandler(e) {
         e.preventDefault();
-        let formItemIdList = ['start', 'end', 'activity', 'measurement', 'freq_val', 'freq_unit', 'per'];
+        let formItemIdList = ['start', 'end', 'activity', 'parent_goal', 'measurement', 'freq_val', 'freq_unit', 'per'];
         let option = this.getRequestOption(formItemIdList);
         let {start, end} = option;
         if(!this.verifyOption(option)){
@@ -81,6 +81,17 @@ class GoalTemplate extends React.Component {
                             type="date"
                         />
                     </FormGroup>
+                    <FormGroup controlId="parent_goal">
+                        <ControlLabel>Global Goal</ControlLabel>
+                        <FormControl componentClass="select" placeholder="select">
+                            <option value="">-</option>
+                            {
+                                this.props.globalGoals.map(goal=>{
+                                    return <option className="option-overflow" value={goal.goal_id}><p>{goal.goal_string}</p></option>
+                                })
+                            }
+                        </FormControl>
+                    </FormGroup>
                     <FormGroup controlId="activity">
                         <ControlLabel>Goal Activity*</ControlLabel>
                         <FormControl
@@ -88,7 +99,6 @@ class GoalTemplate extends React.Component {
                             placeholder="To ..."
                         />
                     </FormGroup>
-
                     <FormGroup controlId="goalMeasurement">
                         <ControlLabel>Goal Measurement</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">

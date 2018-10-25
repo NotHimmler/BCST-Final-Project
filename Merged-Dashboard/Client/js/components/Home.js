@@ -72,7 +72,7 @@ class Home extends React.Component {
                     { (this.state.loaded)
                     ? this.state.patientList2.map(patient=>{
                       if(patient.rate >= 100) return;
-                      return <li className="media event">
+                      return <li className="media event" key={patient.MRN}>
                         <a className="pull-left border-aero profile_thumb">
                           <i className="fa fa-user aero"></i>
                         </a>
@@ -100,7 +100,7 @@ class Home extends React.Component {
                     <ul className="list-unstyled top_profiles scroll-view">
                     { (this.state.loaded)
                     ? this.state.patientList.map(patient=>{
-                      return <li className="media event">
+                      return <li className="media event" key={patient.MRN}>
                         <a className="pull-left border-aero profile_thumb">
                           <i className="fa fa-user aero"></i>
                         </a>

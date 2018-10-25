@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     // Unary relationship for global goal and sub goal
     Goal.belongsTo(models.Goal, {
-      foreignKey: 'parent_goal',
+      foreignKey: 'goal_id',
       onDelete: 'CASCADE'
     });
     Goal.hasMany(models.Goal, {

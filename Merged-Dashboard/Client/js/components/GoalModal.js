@@ -46,6 +46,8 @@ class GoalModal extends React.Component {
             },
             body: JSON.stringify({goalInfo})
           }
+          console.log("Trying...");
+          console.log(option.body);
           fetch(endpoint, option)
           .then(response => {
             if (response.status !== 200) {
@@ -90,7 +92,10 @@ class GoalModal extends React.Component {
 
                         {
                             (this.state.goalType === "template")
-                                ? <GoalTemplate reviewGoal={this.reviewGoal}/>
+                                ? <GoalTemplate 
+                                    reviewGoal={this.reviewGoal}
+                                    globalGoals={this.props.globalGoals}
+                                    />
                                 : null
                         }
 
