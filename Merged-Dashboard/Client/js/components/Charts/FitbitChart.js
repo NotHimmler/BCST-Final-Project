@@ -38,6 +38,7 @@ class FitbitChart extends React.Component {
             let newOp = this.state.option;
             let stepsPayload = [];
             let datesPayload = [];
+            let goalsPayload =[];
             //-------------------If no data entries----------------------------//
             if(data.error){
                 if(data.error === 'expired_token'){
@@ -55,6 +56,7 @@ class FitbitChart extends React.Component {
                 if (data['activities-tracker-steps'] == undefined) return;
                 datesPayload = data['activities-tracker-steps'].map((dataItem) => {return moment(dataItem.dateTime).format('ddd DD/MM/YY')});
                 stepsPayload = data['activities-tracker-steps'].map((dataItem) => {return dataItem.value});
+                goalsPayload = data['activities-tracker-steps'].map((dataItem) => {return 5000});
             } 
             //------------------Else, not connected to Fitbit------------------//
             else {
@@ -62,12 +64,13 @@ class FitbitChart extends React.Component {
                     stepsPayload.unshift(entry.steps);
                     // Note: split string to remove tiemezone
                     datesPayload.unshift(moment(entry.date.split("T")[0]).format('ddd DD/MM/YY'));
+                    goalsPayload.push(5000);
                 }
             }
             //Update the chart
             newOp.xAxis[0].data = datesPayload;
-            newOp.series[0].data = stepsPayload;    //Get data from payload
-            //newOp.series[1].data = payload.goal;    //Get goal data from payload
+            newOp.series[0].data = this.colorizeBars(stepsPayload, goalsPayload);    //Get data from payload
+            newOp.series[1].data = goalsPayload;    //Get goal data from payload
             this.setState(state =>({option: newOp}));
             this.state.ec.setOption(this.state.option);
             this.state.ec.hideLoading();
