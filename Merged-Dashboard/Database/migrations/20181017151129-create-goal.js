@@ -46,6 +46,7 @@ module.exports = {
       MRN: {
         type: Sequelize.STRING,
         onDelete: 'CASCADE',
+        allowNull: false,
         references: {
           model: 'Patients',
           key: 'MRN'
@@ -60,7 +61,11 @@ module.exports = {
         }
       },
       goal_string: {
+        allowNull: false,
         type: Sequelize.STRING
+      },
+      rating: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
