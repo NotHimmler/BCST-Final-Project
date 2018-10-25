@@ -1,12 +1,12 @@
 import React from "react";
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-const ratingString = [
-    "Not achieved",
-    "Partially achieved (1-49%)",
-    "Mostly achieved (50-94%)",
-    "Achieved (95-104%)",
-    "Achieved + (>105%)"
+const ratingValue = [
+    0,  //Not achieved
+    25, //Partially achieved (1-49%)
+    75, //Mostly achieved (50-94%)
+    100,//Achieved (95-104%)
+    105,//Achieved + (>105%)
 ]
 
 class GoalProgressBar extends React.Component {
@@ -19,9 +19,49 @@ class GoalProgressBar extends React.Component {
         this.updateRating = this.updateRating.bind(this);
     }
 
+    getRatingString(rating) {
+        if (rating <= 0)
+            return "Not achieved";
+        if (rating > 0 && rating < 50)
+            return "Partially achieved (1-49%)";
+        if (rating >= 50 && rating < 95)
+            return "Mostly achieved (50-94%)";
+        if (rating >= 95 && rating < 105)
+            return "Achieved (95-104%)";
+        if (rating >= 105)
+            return "Achieved + (>105%)";
+    }
+
     updateRating(eventKey){
-        console.log(`Alert from menu item. EventKey: ${eventKey}`);
-        this.setState({rating: eventKey});
+        this.setState({rating: ratingValue[eventKey]});
+
+        let endpoint = `/api/goal/update_rating`;
+        let goalInfo = {
+            goal_id: this.props.id,
+            rating: ratingValue[eventKey]
+        }
+        let option = {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({goalInfo})
+          }
+          fetch(endpoint, option)
+          .then(response => {
+            if (response.status !== 200) {
+              return this.setState({ placeholder: "Something went wrong" });
+            }
+            console.log("Rating updated successfully");
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+          });
+    }
+
+    componentDidMount() {
+        this.setState({rating: this.props.rating});
     }
     
     render() {
@@ -31,7 +71,7 @@ class GoalProgressBar extends React.Component {
                     pullRight
                     bsSize="xsmall"
                     bsStyle='default'
-                    title={ratingString[this.state.rating]}
+                    title={this.getRatingString(this.state.rating)}
                     id={`dropdown-basic-${this.props.id}`}
                     className='goal-progress-dropdown'
                 >

@@ -83,8 +83,8 @@ class GoalTable extends React.Component {
                                                         <td>{moment(subgoal.start).format('DD/MM/YY')}</td>
                                                         <td>{subgoal.goal_string}</td>
                                                         <td><GoalProgressButton 
-                                                            rating={this.props.goal.rating}
-                                                            id={this.props.goal.goal_id}/></td>
+                                                            rating={subgoal.rating}
+                                                            id={subgoal.goal_id}/></td>
                                                         <td>{moment(subgoal.end).format('DD/MM/YY')}</td>
                                                     </tr>            
                                                 ))
