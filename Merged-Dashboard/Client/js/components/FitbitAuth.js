@@ -8,7 +8,7 @@ class FitbitAuth extends React.Component {
         this.state = {
             authURL: false
         }
-        console.log("Hellof rom auth");
+        
         if (this.props.location.search != "") {
             let params = new URLSearchParams(this.props.location.search)
             let code = params.get('code');
@@ -22,7 +22,7 @@ class FitbitAuth extends React.Component {
             }
             
         } else if(this.props.match.params.mrn) {
-            console.log("Waiting for auth code");
+            
             localStorage.fitbitAuthMrn = this.props.match.params.mrn;
         }
     }
@@ -53,11 +53,43 @@ class FitbitAuth extends React.Component {
         })
     }
 
+    authURLDiv() {
+        return (
+            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                <h2>Hi!</h2> 
+                <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
+                    With your Fitbit Data we can be more effective at helping you get the best treatment possible.
+                </p>
+                <p style={{textAlign: "center"}}>
+                    To link your Fitbit, please click the button below and login to the fitbit website when asked.<br />
+                    We only want access to your step data and active minutes. We're not snooping around, promise!
+                </p>
+                <a href={this.state.authURL}>
+                <div style={{display: "flex", flexDirection: "row", alignItems: "center", padding: "5px", backgroundColor: "#2A3F54", color: "white", width: "fit-content", borderRadius: "5px"}}>
+                    <img src="/img/Fitbit_app_icon.png" style={{width: "30px", height: "30px"}}></img>
+                    <span style={{padding: "5px"}}>Connect Your Fitbit</span>
+                </div>
+                </a>
+            </div>
+        )
+    }
+
+    thanksDiv() {
+        return (
+            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                <h2>Thank You!</h2> 
+                <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
+                    With your Fitbit Data we can be more effective at helping you get the best treatment possible.
+                </p>
+            </div>
+        )
+    }
+
     render() {
         return (
-            <div>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center", width: "100%"}}>
               {/*ALL HTML MUST BE WITHIN THIS DIV*/}
-                {this.state.authURL ? <a href={this.state.authURL}>Link</a> : null}
+                {this.props.match.params.mrn ? (this.state.authURL ? this.authURLDiv() : null) : this.thanksDiv()}
             </div>
         )
     }
