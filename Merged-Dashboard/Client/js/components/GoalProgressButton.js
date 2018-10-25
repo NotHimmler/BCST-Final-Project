@@ -15,9 +15,11 @@ class GoalProgressBar extends React.Component {
         this.state = {
             rating: 0,
             isOpen: false,
+            dropdownIsOpen: false,
         };
 
         this.updateRating = this.updateRating.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     getRatingString(rating) {
@@ -78,6 +80,10 @@ class GoalProgressBar extends React.Component {
           });
     }
 
+    toggleDropdown() {
+        this.setState({ dropdownIsOpen: !this.state.dropdownIsOpen })
+    }
+
     componentDidMount() {
         this.setState({rating: this.props.goal.rating});
     }
@@ -92,13 +98,15 @@ class GoalProgressBar extends React.Component {
                     title={this.getRatingString(this.state.rating)}
                     id={`dropdown-basic-${this.props.goal.goal_id}`}
                     className={`goal-progress-dropdown ${this.props.goalType} fill-${this.getColor(this.state.rating)}`}
+                    onToggle={this.toggleDropdown}
+                    open={this.state.dropdownIsOpen}
                 >
                     <div>
-                    <MenuItem className="gpb-0" eventKey="0" onSelect={this.updateRating}>Not achieved</MenuItem>
-                    <MenuItem className="gpb-1" eventKey="1" onSelect={this.updateRating}>Partially achieved (1-49%)</MenuItem>
-                    <MenuItem className="gpb-2" eventKey="2" onSelect={this.updateRating}>Mostly achieved (50-94%)</MenuItem>
-                    <MenuItem className="gpb-3" eventKey="3" onSelect={this.updateRating}>Achieved (95-104%)</MenuItem>
-                    <MenuItem className="gpb-4" eventKey="4" onSelect={this.updateRating}>Achieved + (>105%)</MenuItem>
+                    <MenuItem className="gpb-0" eventKey="0" onClick={this.toggleDropdown} onSelect={this.updateRating}>Not achieved</MenuItem>
+                    <MenuItem className="gpb-1" eventKey="1" onClick={this.toggleDropdown} onSelect={this.updateRating}>Partially achieved (1-49%)</MenuItem>
+                    <MenuItem className="gpb-2" eventKey="2" onClick={this.toggleDropdown} onSelect={this.updateRating}>Mostly achieved (50-94%)</MenuItem>
+                    <MenuItem className="gpb-3" eventKey="3" onClick={this.toggleDropdown} onSelect={this.updateRating}>Achieved (95-104%)</MenuItem>
+                    <MenuItem className="gpb-4" eventKey="4" onClick={this.toggleDropdown} onSelect={this.updateRating}>Achieved + (>105%)</MenuItem>
                     </div>
                     {(this.props.goalType === "global") && 
                         <div>
