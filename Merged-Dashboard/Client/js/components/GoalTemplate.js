@@ -56,8 +56,11 @@ class GoalTemplate extends React.Component {
         let freqVal = option.freq_val;
         let freqUnit = option.freq_unit;
         let per = option.per;
-        if(goalFrequency && freqVal && freqUnit && per){
-            str += ` ${goalFrequency} ${freqVal} ${freqUnit} per ${per}`;
+        if(goalFrequency && freqVal && freqUnit){
+            str += ` ${goalFrequency} ${freqVal} ${freqUnit}`;
+        }
+        if(per){
+            str += ` per ${per}`
         }
         //str += ` from ${option.start} to ${option.end}`;
         
