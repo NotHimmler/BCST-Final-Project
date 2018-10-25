@@ -20,7 +20,7 @@ class ExamplePatient extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      content : "Goal",
+      content : "Data",
       lastCheckedup: "",
       data : {},
       loaded: false,
@@ -88,12 +88,12 @@ class ExamplePatient extends React.Component {
                 <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
-                <button type="button" className="btn btn-primary"
+                {/* <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Test'})}
-                >Test</button>
+                >Test</button> */}
                 <button type="button" className="btn btn-primary"
                 onClick={() => window.print()}
-                >Download</button>
+                >Print</button>
                 
               </div>
               <div className="row">
@@ -165,11 +165,11 @@ class ExamplePatient extends React.Component {
 
 
               {/*For testing...*/}
-              {
+              {/*
                 (this.state.content === "Test" && this.state.loaded)
                     ? <FitbitChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
                     : null
-              }
+              */}
 
             </div>
         )

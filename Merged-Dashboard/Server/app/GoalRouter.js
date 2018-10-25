@@ -77,6 +77,17 @@ goalRouter.get('/mostBehindGoals', function (req, res) {
         });
 });
 
+goalRouter.get('/mostBehindGoals2', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.sequelize.query(`SELECT MRN, first_name, last_name, AVG(coalesce(rating, 0)) as rate FROM Goals LEFT OUTER JOIN Patients USING(MRN) GROUP BY MRN ORDER BY rate`)
+        .then(data =>
+            res.send(data[0]))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
 goalRouter.post('/addGoal', function (req, res) {
     let goalInfo = req.body.goalInfo;
     return db.Goal.create(goalInfo)

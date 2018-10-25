@@ -49,7 +49,7 @@ class GoalTemplate extends React.Component {
         let measurement = option.measurement;
         var goalMeasurementUnit = $('#goalMeasurementUnit').val();
         if(goalMeasurement && goalMeasurementUnit && measurement) {
-            str += `,${goalMeasurement} ${measurement} ${goalMeasurementUnit}`;
+            str += ` ${goalMeasurement} ${measurement} ${goalMeasurementUnit}`;
         }
         
         let goalFrequency = $('#goalFrequency').val();
@@ -57,9 +57,9 @@ class GoalTemplate extends React.Component {
         let freqUnit = option.freq_unit;
         let per = option.per;
         if(goalFrequency && freqVal && freqUnit && per){
-            str += `,${goalFrequency} ${freqVal} ${freqUnit} per ${per}`;
+            str += ` ${goalFrequency} ${freqVal} ${freqUnit} per ${per}`;
         }
-        str += `,from ${option.start} to ${option.end}`;
+        //str += ` from ${option.start} to ${option.end}`;
         
         return str;
     }

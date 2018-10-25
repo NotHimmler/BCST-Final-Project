@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import DonutGraph from "../components/DonutGraph"
 import TodoList from "../components/TodoList"
+import { get } from "https";
 
 class Home extends React.Component {
   constructor(props){
@@ -10,26 +11,9 @@ class Home extends React.Component {
     this.state = {
       loaded: false,
       patientList: [],
+      patientList2: [],
       placeholder: "Loading..."
     }
-  }
-
-  getLastCheckupList() {
-    const { patientList,loaded, placeholder } = this.state;
-    if (!patientList.length) {
-      return null;
-    }
-    const listItem = patientList.map(patient => <li key={patient.MRN} className="media event">
-          <a className="pull-left border-aero profile_thumb">
-            <i className="fa fa-user aero"></i>
-          </a>
-        <div className="media-body">
-          <Link className="title" to={`/patient/${patient.MRN}`}>{`${patient.first_name} ${patient.last_name}`}</Link>
-          <p><strong>{this.getDayLeft(patient.last_checkup_date)}</strong> since last checkup</p>
-        </div>
-    </li>
-    );
-    return loaded? <ul>{listItem}</ul> : <p>{placeholder}</p> 
   }
 
   getDayLeft(date) {
@@ -39,8 +23,15 @@ class Home extends React.Component {
     return dayLeft + day;
   }
 
+  getRateString(rate) {
+    let original = 100-rate;
+    let string = Math.round(original*100)/100;
+    return (string+"%")
+  }
+
   componentDidMount() {
     let endpoint = "api/patient/longestTimeSinceCheckup";
+    let endpoint2 = "api/goal/mostBehindGoals2";
 
     fetch(endpoint)
     .then(response => {
@@ -50,7 +41,18 @@ class Home extends React.Component {
       return response.json();
     })
     .then(data => {
-        this.setState({loaded: true, patientList: data});
+        this.setState({patientList: data});
+    });  
+
+    fetch(endpoint2)
+    .then(response => {
+      if (response.status !== 200) {
+        return this.setState({ placeholder: "Something went wrong" });
+      }
+      return response.json();
+    })
+    .then(data => {
+        this.setState({patientList2: data, loaded:true});
     });  
   }
     
@@ -66,60 +68,22 @@ class Home extends React.Component {
                     <div className="clearfix"></div>
                     </div>
                     <div className="x_content">
-        {/* { loaded ? */}
                     <ul className="list-unstyled top_profiles scroll-view">
-                      <li className="media event">
+                    { (this.state.loaded)
+                    ? this.state.patientList2.map(patient=>{
+                      if(patient.rate >= 100) return;
+                      return <li className="media event">
                         <a className="pull-left border-aero profile_thumb">
                           <i className="fa fa-user aero"></i>
                         </a>
                         <div className="media-body">
-                          <a className="title" href="#">Patient D05</a>
-                          <p><strong>45% </strong> uncompleted</p>
-
+                        <Link className="title" to={`/patient/${patient.MRN}`}>{`${patient.first_name} ${patient.last_name}`}</Link>
+                          <p><strong>{this.getRateString(patient.rate)}</strong> uncompleted</p>
                         </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-green profile_thumb">
-                          <i className="fa fa-user green"></i>
-                        </a>
-                        <div className="media-body">
-                          <Link to="/patient/80000001" className="title">Elizabeth Smith</Link>
-                          <p><strong>34% </strong> uncompleted</p>
-
-                        </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-blue profile_thumb">
-                          <i className="fa fa-user blue"></i>
-                        </a>
-                        <div className="media-body">
-                          <a className="title" href="#">Patient D02</a>
-                          <p><strong>31% </strong> uncompleted</p>
-
-                        </div>
-                      </li>
-                      <li className="media event">
-                        <a className="pull-left border-aero profile_thumb">
-                          <i className="fa fa-user aero"></i>
-                        </a>
-                        <div className="media-body">
-                          <a className="title" href="#">Patient D03</a>
-                          <p><strong>29% </strong> uncompleted</p>
-
-                        </div>
-                      </li>
-
-                      <li className="media event">
-                        <a className="pull-left border-aero profile_thumb">
-                          <i className="fa fa-user green"></i>
-                        </a>
-                        <div className="media-body">
-                          <Link to="#" className="title">Patient D16</Link>
-                          <p><strong>22% </strong> uncompleted</p>
-
-                        </div>
-                      </li>
-
+                      </li>            
+                    })
+                      : <p>{this.state.placeholder}</p>
+                      }
                     </ul>
         {/* : <p>{placeholder}</p> } */}
                   </div>
@@ -133,7 +97,22 @@ class Home extends React.Component {
                     <div className="clearfix"></div>
                     </div>
                     <div className="x_content"> 
-                        {this.getLastCheckupList()}
+                    <ul className="list-unstyled top_profiles scroll-view">
+                    { (this.state.loaded)
+                    ? this.state.patientList.map(patient=>{
+                      return <li className="media event">
+                        <a className="pull-left border-aero profile_thumb">
+                          <i className="fa fa-user aero"></i>
+                        </a>
+                        <div className="media-body">
+                        <Link className="title" to={`/patient/${patient.MRN}`}>{`${patient.first_name} ${patient.last_name}`}</Link>
+                        <p><strong>{this.getDayLeft(patient.last_checkup_date)}</strong> since last checkup</p>                        </div>
+                      </li>            
+                    })
+                      : <p>{this.state.placeholder}</p>
+                      }
+                    </ul>
+
                     </div>
                     </div>
                 </div>
