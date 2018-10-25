@@ -2,11 +2,34 @@ let express = require('express');
 let goalRouter = express.Router();
 const db = require('../../Database/models/index.js'); // new require for db object
 
-goalRouter.get('/mrn/:mrn', function (req, res) {
+const Sequelize = require('sequelize');
+const {gt, lte, ne, eq, like, in: opIn} = Sequelize.Op;
+
+goalRouter.get('/global/mrn/:mrn', function (req, res) {
     const mrn = req.params.mrn;
     return db.Goal.findAll({
         where: {
-            MRN: mrn
+            MRN: mrn,
+            parent_goal: {
+                [eq]: null,
+            }
+        }
+    })
+        .then(goalList =>
+            res.send(goalList))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
+goalRouter.get('/subgoals/goal_id/:id', function (req, res) {
+    const id = req.params.id;
+    return db.Goal.findAll({
+        where: {
+            parent_goal: {
+                [eq]: id,
+            }
         }
     })
         .then(goalList =>

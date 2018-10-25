@@ -20,7 +20,7 @@ class ExamplePatient extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      content : "Data",
+      content : "Goal",
       lastCheckedup: "",
       data : {},
       loaded: false,
