@@ -4,12 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     MRN: {
       type: DataTypes.CHAR(8),
       allowNull: false,
-      primaryKey: true,
     },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
-      primaryKey: true,
     },
     steps: {
       type: DataTypes.INTEGER
@@ -22,6 +20,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
   };
-  FitbitData.removeAttribute('id');
   return FitbitData;
 };
