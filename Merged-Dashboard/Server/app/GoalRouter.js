@@ -88,6 +88,28 @@ goalRouter.get('/mostBehindGoals2', function (req, res) {
         });
 });
 
+goalRouter.get('/goalCompletionRate', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.sequelize.query(`SELECT AVG(coalesce(rating, 0)) as rate FROM Goals`)
+        .then(data =>
+            res.send(data[0]))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
+goalRouter.get('/goalCompletionRate2', function (req, res) {
+    const mrn = req.params.mrn;
+    return db.sequelize.query(`SELECT AVG(coalesce(rating, 0)) as rate FROM Goals GROUP BY MRN`)
+        .then(data =>
+            res.send(data[0]))
+        .catch((err) => {
+            console.log('There was an error querying goalList', JSON.stringify(err));
+            return res.send(err);
+        });
+});
+
 goalRouter.post('/addGoal', function (req, res) {
     let goalInfo = req.body.goalInfo;
     return db.Goal.create(goalInfo)

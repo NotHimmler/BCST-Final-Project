@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 class DonutGraph extends React.Component {
 
   componentDidMount() {
+
     var theme = {
       color: [
         '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
@@ -217,8 +218,28 @@ class DonutGraph extends React.Component {
     };
 
     var ecd = echarts.init(document.getElementById('ecdonut'), theme);
+    ecd.showLoading();
+        
+    let endpoint='/api/goal/goalCompletionRate2';
 
-			  ecd.setOption({
+    fetch(endpoint)
+    .then(response => {
+      if (response.status !== 200) {
+        return;
+      }
+      return response.json();
+    })
+    .then(data => {
+      let countOver = 0;
+      let countUnder = 0;
+      for(let entry of data){
+        if(entry.rate >= 80){
+          countOver = countOver + 1;
+        } else {
+          countUnder = countUnder + 1;
+        }
+      }
+      ecd.setOption({
 				tooltip: {
 				  trigger: 'item',
 				  formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -282,15 +303,21 @@ class DonutGraph extends React.Component {
 					}
 				  },
 				  data: [{
-          value: 36,
+          value: countOver,
 					name: 'Reaching goals'
 				  }, {
-					value: 7,
+					value: countUnder,
 					name: 'Not reaching goals'
 				  }]
 				}]
-			  });
+        });
+        return ecd;
+    })
+    .then((ecd) => {
+      ecd.hideLoading();
+    });
   }
+
     
     render() {
         return (
