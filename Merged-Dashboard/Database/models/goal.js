@@ -38,11 +38,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    rating: {
+      type: DataTypes.INTEGER,
+    },
   }, {});
   Goal.associate = function(models) {
     // associations can be defined here
     Goal.belongsTo(models.Patient, {
       foreignKey: 'MRN',
+      allowNull: false,
       onDelete: 'CASCADE'
     });
     Goal.belongsTo(models.User, {
