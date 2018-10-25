@@ -49,16 +49,25 @@ class GoalProgressBar extends React.Component {
     }
 
     updateRating(eventKey){
-        this.props.updateGlobalGoal({
-            goal_id: this.props.goal.goal_id,
-            rating: ratingValue[eventKey],
-        })
-        this.setState({rating: ratingValue[eventKey]});
+        let newRating;
+        if(eventKey == 5) {
+            newRating = parseFloat(this.props.getGlobalRating());
+            console.log("Auto global:");
+            console.log(newRating);
+        } else {
+            this.props.updateGlobalGoal({
+                goal_id: this.props.goal.goal_id,
+                rating: ratingValue[eventKey],
+            });
+            newRating = ratingValue[eventKey];
+        }
+        
+        this.setState({rating: newRating});
 
         let endpoint = `/api/goal/update_rating`;
         let goalInfo = {
             goal_id: this.props.goal.goal_id,
-            rating: ratingValue[eventKey]
+            rating: newRating
         }
         let option = {
             method: "POST",
@@ -111,7 +120,7 @@ class GoalProgressBar extends React.Component {
                     {(this.props.goalType === "global") && 
                         <div>
                             <MenuItem divider />
-                            <MenuItem className="gpb-5" eventKey="5">Auto calculate</MenuItem>
+                            <MenuItem className="gpb-5" eventKey="5" onClick={this.toggleDropdown} onSelect={this.updateRating}>Auto calculate</MenuItem>
                         </div>
                     }
                 </DropdownButton>

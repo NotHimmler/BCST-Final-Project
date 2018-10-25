@@ -17,11 +17,16 @@ class GoalTable extends React.Component {
 
     getGlobalRating() {
         let total = 0;
+        let globalRating = 0;
         for(let subgoal of this.state.subgoals) {
             total = total + subgoal.rating;
         }
-        let globalRating = total/this.state.subgoals.length
+        if(this.state.subgoals.length!== 0)
+            globalRating = total/this.state.subgoals.length
         this.setState({ globalRating: (globalRating).toString()});
+        console.log("Global rating is..");
+        console.log(globalRating.toString());
+        return globalRating;
     }
 
     updateSubgoalRating(updatedGoal) {        
@@ -36,14 +41,6 @@ class GoalTable extends React.Component {
 
     componentDidMount() {
         const id = this.props.goal.goal_id;
-        /* $(`#heading_${id}`).click(function(e) {
-            console.log(e.target);
-            if($(e.target).is('button')){
-                e.preventDefault();
-                return false;
-            }
-        });  */
-
         // Get all global goals
         const endpoint = `/api/goal/subgoals/goal_id/${id}`;
         // Get goal list
@@ -75,14 +72,14 @@ class GoalTable extends React.Component {
                             goalType="global"
                             goal={this.props.goal}
                             updateGlobalGoal={this.updateSubgoalRating}
+                            getGlobalRating={this.getGlobalRating}
                             />
                             <a className="panel-heading" role="tab" id={`heading_${this.props.goal.goal_id}`} data-toggle="collapse" data-parent="#accordion" href={`#collapse_${this.props.goal.goal_id}`}>
                                 <table className="table table-striped" id="long_term_table">
                                     <thead>
                                         <tr>
                                             <th width="10%">Date Goal Set</th>
-                                            <th width="55%">Global Goal</th>
-                                            <th width="25%">Progress</th>
+                                            <th width="80%">Global Goal</th>
                                             <th width="10%">Review Date</th>
                                         </tr>
                                     </thead>
@@ -91,7 +88,6 @@ class GoalTable extends React.Component {
                                         <tr>
                                         <td>{moment(this.props.goal.start).format('DD/MM/YY')}</td>
                                         <td>{this.props.goal.goal_string}</td>
-                                        <td></td>
                                         <td>{moment(this.props.goal.end).format('DD/MM/YY')}</td>
                                         </tr>
                                     </tbody>
