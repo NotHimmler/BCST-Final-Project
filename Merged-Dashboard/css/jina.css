@@ -99,22 +99,83 @@ label {
   width: 100%;
 }
 
-.gpb-0, .gpb-0:hover {
+.gpb-0 {
   text-align: center;
+  padding-top: 5px;
+  padding-bottom: 10px;
+
+}
+
+.gpb-0 a:first-child {
+  color: #750000 !important;
 }
 
 .gpb-1 {
   text-align: center;
+  padding-bottom: 10px;
+}
+
+.gpb-1 a:first-child{
+  color: #D12900 !important;
 }
 
 .gpb-2 {
   text-align: center;
+  padding-bottom: 10px;
+}
+
+.gpb-2 a:first-child{
+  color: #D69806 !important;
 }
 
 .gpb-3 {
   text-align: center;
+  padding-bottom: 10px;
+}
+
+.gpb-3 a:first-child{
+  color: #73BD3A !important;
 }
 
 .gpb-4 {
   text-align: center;
+}
+
+.gpb-4 a:first-child{
+  color: #3B9817 !important;
+}
+
+.gpb-5 {
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.fill-brown{
+  color: white;
+  background-color: #8E2E2E !important;
+}
+.fill-red{
+  color: white;
+  background-color: #E74C3C !important;
+}
+.fill-orange{
+  color: white;
+  background-color: #DDAA33 !important;
+}
+.fill-light-green{
+  color: white;
+  background-color: #73BD3A !important;
+}
+.fill-dark-green{
+  color: white;
+  background-color: #4CA12C !important;
+}
+
+.goal-progress-dropdown, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+  color: white !important;
+}
+
+.goal-progress-dropdown {
+  font-size: 13px !important;
 }

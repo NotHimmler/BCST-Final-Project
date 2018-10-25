@@ -20,7 +20,8 @@ class GoalTable extends React.Component {
         for(let subgoal of this.state.subgoals) {
             total = total + subgoal.rating;
         }
-        this.setState({ globalRating: (total/this.state.subgoals.length).toString()});
+        let globalRating = total/this.state.subgoals.length
+        this.setState({ globalRating: (globalRating).toString()});
     }
 
     updateSubgoalRating(updatedGoal) {        
@@ -33,46 +34,17 @@ class GoalTable extends React.Component {
         this.setState({subgoals: currentList},()=>{this.getGlobalRating()});
     }
 
-/*     updateSubgoalRating(eventKey, goal_id){
-        //Update global goal
-        let newSubgoals = this.state.subgoals;
-        for(let subgoal of newSubgoals) {
-            if(subgoal.goal_id === goal_id){
-                console.log(`Goal ${goal_id} needs to update`);
-                subgoal.rating = ratingValue[eventKey];
-            }
-        }
-        this.setState({subgoals: newSubgoals}, ()=>{this.getGlobalRating()});
-
-        //Update database
-        let endpoint = `/api/goal/update_rating`;
-        let goalInfo = {
-            goal_id: this.props.id,
-            rating: ratingValue[eventKey]
-        }
-        let option = {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({goalInfo})
-          }
-          fetch(endpoint, option)
-          .then(response => {
-            if (response.status !== 200) {
-              return this.setState({ placeholder: "Something went wrong" });
-            }
-            console.log("Rating updated successfully");
-            return response.json();
-          })
-          .then(data => {
-            console.log(data);
-          });
-    } */
-
     componentDidMount() {
-        // Get all global goals
         const id = this.props.goal.goal_id;
+        /* $(`#heading_${id}`).click(function(e) {
+            console.log(e.target);
+            if($(e.target).is('button')){
+                e.preventDefault();
+                return false;
+            }
+        });  */
+
+        // Get all global goals
         const endpoint = `/api/goal/subgoals/goal_id/${id}`;
         // Get goal list
         fetch(endpoint)
@@ -99,6 +71,11 @@ class GoalTable extends React.Component {
                 <div className="x_content">
                     <div className="accordion" id="accordion" role="tablist">
                         <div className="panel">
+                        <GoalProgressButton
+                            goalType="global"
+                            goal={this.props.goal}
+                            updateGlobalGoal={this.updateSubgoalRating}
+                            />
                             <a className="panel-heading" role="tab" id={`heading_${this.props.goal.goal_id}`} data-toggle="collapse" data-parent="#accordion" href={`#collapse_${this.props.goal.goal_id}`}>
                                 <table className="table table-striped" id="long_term_table">
                                     <thead>
@@ -114,7 +91,7 @@ class GoalTable extends React.Component {
                                         <tr>
                                         <td>{moment(this.props.goal.start).format('DD/MM/YY')}</td>
                                         <td>{this.props.goal.goal_string}</td>
-                                        <td>{this.state.globalRating}</td>
+                                        <td></td>
                                         <td>{moment(this.props.goal.end).format('DD/MM/YY')}</td>
                                         </tr>
                                     </tbody>
@@ -140,6 +117,7 @@ class GoalTable extends React.Component {
                                                         <td>{moment(subgoal.start).format('DD/MM/YY')}</td>
                                                         <td>{subgoal.goal_string}</td>
                                                         <td><GoalProgressButton 
+                                                            goalType="sub"
                                                             goal={subgoal}
                                                             updateGlobalGoal={this.updateSubgoalRating}
                                                             /></td>
