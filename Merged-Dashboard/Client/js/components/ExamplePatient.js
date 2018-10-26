@@ -93,13 +93,9 @@ class ExamplePatient extends React.Component {
                 >Test</button> */}
                 <button type="button" className="btn btn-primary"
                 onClick={() => {
-                  this.setState({content: "Data"}, () => {
-                    while(!this.state.loaded) {}
-                    window.print()
-                  })
-
+                  window.print()
                 }}
-                >Print</button>
+                >Print/Save Page</button>
                 
               </div>
               <div className="row">
@@ -111,7 +107,7 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckupString()
                           : placeholder}</i></h5>
-                    <button onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
+                    <button className="btn btn-danger" onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
                     <table className="table">
                       <thead>
                         <tr>
