@@ -9,7 +9,7 @@ class PatientSettings extends React.Component {
     
     render() {
         return (
-            <div>
+            <div id="pat-set-comp">
               <StatusSettings mrn={this.props.mrn} archived={this.props.archived}/>
               {this.props.archived
                 ? null

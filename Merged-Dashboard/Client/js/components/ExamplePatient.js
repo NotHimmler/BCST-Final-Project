@@ -19,6 +19,7 @@ class ExamplePatient extends React.Component {
 
   constructor(props) {
     super(props);
+    
     this.state = { 
       content : "Data",
       lastCheckedup: "",
@@ -26,6 +27,7 @@ class ExamplePatient extends React.Component {
       loaded: false,
       placeholder: "Loading...",
       hasFitbitToken: false,
+      mrn: this.props.match ? this.props.match.params.MRN : 80000001
     };
 
     this.setContent = this.setContent.bind(this);
@@ -33,7 +35,7 @@ class ExamplePatient extends React.Component {
   }
 
   componentWillMount() {
-    const mrn = this.props.match.params.MRN;
+    const mrn = this.state.mrn
     let endpoint = `/api/patient/details/mrn/${mrn}`;
 
     // Get general patient details (e.g. age/sex/ward)
@@ -48,7 +50,9 @@ class ExamplePatient extends React.Component {
       let hasToken = false;
       (data.token) ? hasToken=true : hasToken=false;
       this.setState({data: data, loaded:true, hasFitbitToken: hasToken});
-    });
+    }).catch(err => {
+      
+    })
   }
 
   setContent(contentType) {
@@ -76,22 +80,22 @@ class ExamplePatient extends React.Component {
         return (
             <div className="row" style={boxMargins}>
               <div className="btn-group patient-toggle">
-                <button type="button" className="btn btn-primary" 
+                <button id="data-btn" type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Data'})}
                 >Data</button>
-                <button type="button" className="btn btn-primary" 
+                <button id="goal-btn" type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Goal'})}
                 >Goals</button>
-                <button type="button" className="btn btn-primary" 
+                <button id="chkup-notes-btn" type="button" className="btn btn-primary" 
                 onClick={() => this.setState({content: 'Notes'})}
                 >Checkup Notes</button>
-                <button type="button" className="btn btn-primary"
+                <button id="pat-set-btn" type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Settings'})}
                 >Settings</button>
                 {/* <button type="button" className="btn btn-primary"
                 onClick={() => this.setState({content: 'Test'})}
                 >Test</button> */}
-                <button type="button" className="btn btn-primary"
+                <button id="print-btn" type="button" className="btn btn-primary"
                 onClick={() => {
                   window.print()
                 }}
@@ -107,8 +111,8 @@ class ExamplePatient extends React.Component {
                     <h5 className="last_checkup"><i>Last check up: {loaded
                           ? this.getLastCheckupString()
                           : placeholder}</i></h5>
-                    <button className="btn btn-danger" onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
-                    <table className="table">
+                    <button id="chkup-btn" className="btn btn-danger" onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
+                    <table id="pat-info-tab" className="table">
                       <thead>
                         <tr>
                           <th scope="col">Age</th>
@@ -132,7 +136,7 @@ class ExamplePatient extends React.Component {
               {
                 (this.state.content === "Data" && this.state.loaded)
                     ? <PatientGraph 
-                        mrn={this.props.match.params.MRN} 
+                        mrn={this.state.mrn} 
                         lastName={this.state.data.last_name}
                         hasFitbitToken={this.state.hasFitbitToken}
                         onExpiredToken={this.onExpiredToken}
@@ -142,14 +146,14 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Goal")
-                    ? <PatientGoal mrn={this.props.match.params.MRN}/>
+                    ? <PatientGoal mrn={this.state.mrn}/>
                     : null
               }
 
               {
                 (this.state.content === "Settings")
                     ? <PatientSettings 
-                        mrn={this.props.match.params.MRN} 
+                        mrn={this.state.mrn} 
                         archived={data.is_archived}
                         hasFitbitToken={this.state.hasFitbitToken}/>
                     : null
@@ -157,19 +161,19 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Notes")
-                ? <CheckupHistory user={this.props.username} mrn={this.props.match.params.MRN}/>
+                ? <CheckupHistory user={this.props.username} mrn={this.state.mrn}/>
                 : null
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.props.match.params.MRN} setContent={this.setContent} user={this.props.username}/> : null
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.state.mrn} setContent={this.setContent} user={this.props.username}/> : null
               }
 
 
               {/*For testing...*/}
               {/*
                 (this.state.content === "Test" && this.state.loaded)
-                    ? <FitbitChart mrn={this.props.match.params.MRN} lastName={this.state.data.last_name}/>
+                    ? <FitbitChart mrn={this.state.mrn} lastName={this.state.data.last_name}/>
                     : null
               */}
 

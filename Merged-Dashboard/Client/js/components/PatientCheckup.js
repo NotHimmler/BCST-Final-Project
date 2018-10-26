@@ -72,7 +72,7 @@ class PatientCheckup extends React.Component {
     
     render() {
         return (
-            <div>
+            <div id="pat-chckup-comp">
               {/*ALL HTML MUST BE WITHIN THIS DIV*/}
                 <h2>Patient Checkup</h2>
                 <h4>{(new Date()).toLocaleDateString()}</h4>

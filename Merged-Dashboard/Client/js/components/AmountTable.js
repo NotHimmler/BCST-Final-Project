@@ -121,7 +121,9 @@ class AmountTable extends React.Component {
       })
       this.setState({data: data, dateRange: dateRange, startDate: startDate.valueOf(), endDate: endDate.valueOf()});
       this.generateAndSetRows(dataRows);
-    });
+    }).catch(err => {
+      
+    })
   }
 
   setLatestWeekRows(data) {

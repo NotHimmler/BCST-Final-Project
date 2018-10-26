@@ -176,7 +176,9 @@ class PatientList extends React.Component {
             rows.push(<PatientRow key={patient.MRN} patient={patient}/>)
         } 
         this.setState({"patientRows": rows, loaded: true, patients: data})
-    });
+    }).catch(err => {
+        
+    })
   }
 
     componentDidMount() {
