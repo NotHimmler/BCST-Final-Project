@@ -75,7 +75,6 @@ class Sidebar extends React.Component {
   };
   
     $SIDEBAR_MENU.find('a').on('click', function(ev) {
-      console.log('clicked - sidebar_menu');
           var $li = $(this).parent();
   
           if ($li.is('.active')) {
@@ -171,7 +170,7 @@ class Sidebar extends React.Component {
             if ($li.is('.active')) {
               $li.removeClass('active');
             }
-            console.log("Href: "+ $(this).attr("href"));
+            //console.log("Href: "+ $(this).attr("href"));
           return $(this).attr("href") == window.location.pathname;
         }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
           //setContentHeight();

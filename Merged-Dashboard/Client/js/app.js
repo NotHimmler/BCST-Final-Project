@@ -42,8 +42,8 @@ class App extends React.Component {
   
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log("Update height");
-    console.log(window.innerHeight);
+    //console.log("Update height");
+    //console.log(window.innerHeight);
   }
 
   updateStatus(option){

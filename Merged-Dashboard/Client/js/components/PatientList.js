@@ -120,13 +120,13 @@ class PatientList extends React.Component {
   activePatientHeader() {
     return(
         <tr>
-            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"} <i class={this.state.chevronIconsActive.MRN}></i></th>
-            <th onClick={(e) => this.sortColHandler("ward", e)} scope="col">{"Ward"} <i class={this.state.chevronIconsActive.ward}></i></th>
-            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"} <i class={this.state.chevronIconsActive.first_name}></i></th>
-            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"} <i class={this.state.chevronIconsActive.last_name}></i></th>
-            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"} <i class={this.state.chevronIconsActive.age}></i></th>
-            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"} <i class={this.state.chevronIconsActive.sex}></i></th>
-            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"} <i class={this.state.chevronIconsActive.last_checkup_date}></i></th>
+            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"} <i className={this.state.chevronIconsActive.MRN}></i></th>
+            <th onClick={(e) => this.sortColHandler("ward", e)} scope="col">{"Ward"} <i className={this.state.chevronIconsActive.ward}></i></th>
+            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"} <i className={this.state.chevronIconsActive.first_name}></i></th>
+            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"} <i className={this.state.chevronIconsActive.last_name}></i></th>
+            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"} <i className={this.state.chevronIconsActive.age}></i></th>
+            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"} <i className={this.state.chevronIconsActive.sex}></i></th>
+            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"} <i className={this.state.chevronIconsActive.last_checkup_date}></i></th>
         </tr>
     )
   }
@@ -134,13 +134,13 @@ class PatientList extends React.Component {
   archivedPatientHeader() {
     return(
         <tr>
-            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"} <i class={this.state.chevronIconsArchived.MRN}></i></th>
-            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"} <i class={this.state.chevronIconsArchived.first_name}></i></th>
-            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"} <i class={this.state.chevronIconsArchived.last_name}></i></th>
-            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"} <i class={this.state.chevronIconsArchived.age}></i></th>
-            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"} <i class={this.state.chevronIconsArchived.sex}></i></th>
-            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"} <i class={this.state.chevronIconsArchived.last_checkup_date}></i></th>
-            <th onClick={(e) => this.sortColHandler("date_archived", e)} scope="col">{"Date Archived"} <i class={this.state.chevronIconsArchived.date_archived}></i></th>
+            <th onClick={(e) => this.sortColHandler("MRN", e)} scope="col">{"MRN"} <i className={this.state.chevronIconsArchived.MRN}></i></th>
+            <th onClick={(e) => this.sortColHandler("first_name", e)} scope="col">{"First Name"} <i className={this.state.chevronIconsArchived.first_name}></i></th>
+            <th onClick={(e) => this.sortColHandler("last_name", e)} scope="col">{"Last Name"} <i className={this.state.chevronIconsArchived.last_name}></i></th>
+            <th onClick={(e) => this.sortColHandler("age", e)} scope="col">{"Age"} <i className={this.state.chevronIconsArchived.age}></i></th>
+            <th onClick={(e) => this.sortColHandler("sex", e)} scope="col">{"Sex"} <i className={this.state.chevronIconsArchived.sex}></i></th>
+            <th onClick={(e) => this.sortColHandler("last_checkup_date", e)} scope="col">{"Last Checkup"} <i className={this.state.chevronIconsArchived.last_checkup_date}></i></th>
+            <th onClick={(e) => this.sortColHandler("date_archived", e)} scope="col">{"Date Archived"} <i className={this.state.chevronIconsArchived.date_archived}></i></th>
         </tr>
     )
   }

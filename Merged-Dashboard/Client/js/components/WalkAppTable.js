@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 let $ = require("jquery");
 const boxMargins = {
-    "padding-left": "20px",
-    "padding-right": "20px"
+    "paddingLeft": "20px",
+    "paddingRight": "20px"
   }
 //Source - https://stackoverflow.com/questions/5539028/converting-seconds-into-hhmmss/5539081#5539081
 function secondsToHms(d) {
@@ -55,16 +55,14 @@ class WalkAppTable extends React.Component {
             type: "get",
             contentType:"application/json;charset=utf-8",
             success: (data) => {
-                console.log(data)
                 let rows = []
                 for (let item in data){
                     rows.push(generateWalkTableRow(data[item]))
                 }
                 this.setState({rows: rows})
-                console.log("Fetch succeeded")
             }, 
             error: data => {
-                console.log("Fetch failed")
+                
             }
         })
     }

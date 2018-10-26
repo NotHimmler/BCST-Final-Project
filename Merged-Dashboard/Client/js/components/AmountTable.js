@@ -187,7 +187,6 @@ class AmountTable extends React.Component {
             this.setLatestWeekRows(newData);
           })
         }
-        console.log(data);
       }).catch(err => {
 
       })
@@ -196,9 +195,12 @@ class AmountTable extends React.Component {
   }
 
   generateAndSetRows(data) {
+    let i = 0;
     let rows = data.map((rowData) => {
+      let j = i + 1;
+      i++;
       return (
-        <tr>
+        <tr key={j}>
           <th scope="row">{rowData.exercise}</th>
           <td>{rowData.sets}</td>
           <td>{rowData.sets_L}</td>
@@ -261,7 +263,6 @@ class AmountTable extends React.Component {
       return data.json();
     })
     .then(data => {
-      console.log(data)
       if (data.okay) {
         let exOptions = [];
         exOptions = data.exercises.map(item => {
@@ -281,7 +282,6 @@ class AmountTable extends React.Component {
       return data.json();
     })
     .then(data => {
-      console.log(data)
       if (data.okay) {
         let progOptions = [];
         progOptions = data.programs.map(item => {
