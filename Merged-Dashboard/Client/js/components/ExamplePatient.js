@@ -92,7 +92,13 @@ class ExamplePatient extends React.Component {
                 onClick={() => this.setState({content: 'Test'})}
                 >Test</button> */}
                 <button type="button" className="btn btn-primary"
-                onClick={() => window.print()}
+                onClick={() => {
+                  this.setState({content: "Data"}, () => {
+                    while(!this.state.loaded) {}
+                    window.print()
+                  })
+
+                }}
                 >Print</button>
                 
               </div>
@@ -155,7 +161,7 @@ class ExamplePatient extends React.Component {
 
               {
                 (this.state.content === "Notes")
-                ? <CheckupHistory user={this.props.username} />
+                ? <CheckupHistory user={this.props.username} mrn={this.props.match.params.MRN}/>
                 : null
               }
 

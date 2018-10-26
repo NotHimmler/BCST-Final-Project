@@ -20,9 +20,9 @@ noteRouter.post("/addNote/mrn/:mrn", (req, res) => {
     })
 })
 
-noteRouter.get("/getNotes/user/:user", (req, res) => {
+noteRouter.get("/getNotes/user/:user/:mrn", (req, res) => {
     console.log(req.params.user);
-    db.Notes.findAll({where: {user: req.params.user}})
+    db.Notes.findAll({where: {user: req.params.user, mrn: req.params.mrn}})
     .then(data => {
         console.log(data);
         if(data.length > 0) {
