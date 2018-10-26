@@ -155,7 +155,7 @@ class PatientList extends React.Component {
 
   generateTable(keywords) {
     this.setState({"archived": this.props.archived});
-    this.setState({"keyword": keywords.toLowerCase()});
+    this.setState({"keyword": keywords ? keywords.toLowerCase() : ""});
     let endpoint = "";
     this.props.archived ? endpoint = "api/patient/archived" : endpoint = "api/patient/current";
 
@@ -201,15 +201,19 @@ class PatientList extends React.Component {
 
               <div className='x_content'>
 
-{ loaded ?
+
               <table className="table">
                     <thead className="thead-light">
                         { !this.state.archived ? this.activePatientHeader() : this.archivedPatientHeader()}
-                        { this.state.patientRows  }
+                        { 
+                        loaded ?
+                        this.state.patientRows
+                        : 
+                        <p>{placeholder}</p>
+                        }
                     </thead>
                 </table>
-                : <p>{placeholder}</p>
-}
+                
 
               </div>
 
