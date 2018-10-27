@@ -35,6 +35,19 @@ describe("FitbitAuth", () => {
         expect(divs.length).toBeGreaterThan(0);
     });
 
+    it("renders a div with the auth url when mrn is present", () => {
+        let fbAuth = fitbitAuth();
+        fbAuth.setState({mrn: 80000001, authURL: "doesntmatter"})
+        const authDiv = fbAuth.find("#auth-url-box");
+        expect(authDiv.length).toBe(1);
+    })
+
+    it("renders a div with a thanks message when code param is present", () => {
+        let fbAuth = fitbitAuth();
+        const authDiv = fbAuth.find("#auth-thanks-box");
+        expect(authDiv.length).toBe(1);
+    })
+
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
             const divs = fitbitAuth().find("div");

@@ -8,10 +8,11 @@ class FitbitAuth extends React.Component {
         super(props);
         this.state = {
             authURL: false,
-            mrn: this.props.match ? this.props.match.params.mrn : 80000001
+            mrn: this.props.match ? this.props.match.params.mrn : false,
+            location: this.props.location ? this.props.location : false
         }
-        if(!this.props.location) return;
-        if (this.props.location.search != "") {
+        if(!this.state.location) return;
+        if (this.state.location.search != "") {
             let params = new URLSearchParams(this.props.location.search)
             let code = params.get('code');
             console.log(code);
@@ -52,12 +53,14 @@ class FitbitAuth extends React.Component {
            return data.json();
         }).then(data => {
             this.setState({authURL: data.url}); 
+        }).catch(err => {
+
         })
     }
 
     authURLDiv() {
         return (
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+            <div id="auth-url-box" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <h2>Hi!</h2> 
                 <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
                     With your Fitbit Data we can be more effective at helping you get the best treatment possible.
@@ -78,7 +81,7 @@ class FitbitAuth extends React.Component {
 
     thanksDiv() {
         return (
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+            <div id="auth-thanks-box" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <h2>Thank You!</h2> 
                 <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
                     With your Fitbit Data we can be more effective at helping you get the best treatment possible.
