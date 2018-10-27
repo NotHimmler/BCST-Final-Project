@@ -14,73 +14,22 @@ class Sidebar extends React.Component {
     this.state = { 
       active: window.location.pathname,
     };
+    this.updateSidebar = this.updateSidebar.bind(this);
   }
 
-    componentDidMount() {
-
-      /* (function($,sr){
-        // debouncing function from John Hann
-        // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
-        var debounce = function (func, threshold, execAsap) {
-          var timeout;
-    
-            return function debounced () {
-                var obj = this, args = arguments;
-                function delayed () {
-                    if (!execAsap)
-                        func.apply(obj, args);
-                    timeout = null;
-                }
-    
-                if (timeout)
-                    clearTimeout(timeout);
-                else if (execAsap)
-                    func.apply(obj, args);
-    
-                timeout = setTimeout(delayed, threshold || 100);
-            };
-        };
-    
-        // smartresize
-        jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
-    
-    })(jQuery,'smartresize'); */
-
-
-      var CURRENT_URL = window.location.pathname,
+  updateSidebar() {
+    var CURRENT_URL = window.location.pathname,
           $BODY = $('body'),
-          $MENU_TOGGLE = $('#menu_toggle'),
-          $SIDEBAR_MENU = $('#sidebar-menu'),
-          $SIDEBAR_FOOTER = $('.sidebar-footer'),
-          $LEFT_COL = $('.left_col'),
-          $RIGHT_COL = $('.right_col'),
-          $NAV_MENU = $('.nav_menu'),
-          $FOOTER = $('footer');
+          $SIDEBAR_MENU = $('#sidebar-menu');
 
     // Sidebar
-  // TODO: This is some kind of easy fix, maybe we can improve this
-  var setContentHeight = function () {
-    // reset height
-    $RIGHT_COL.css('min-height', window.innerHeight);
-  
-    var bodyHeight = $BODY.outerHeight(),
-      footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),
-      leftColHeight = $LEFT_COL.eq(1).height() + $SIDEBAR_FOOTER.height(),
-      contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight;
-  
-    // normalize content
-    contentHeight -= $NAV_MENU.height() + footerHeight;
-  
-    $RIGHT_COL.css('min-height', contentHeight);
-  };
-  
     $SIDEBAR_MENU.find('a').on('click', function(ev) {
           var $li = $(this).parent();
   
           if ($li.is('.active')) {
               $li.removeClass('active active-sm');
               $('ul:first', $li).slideUp(function() {
-                  setContentHeight();
+                  //setContentHeight();
               });
           } else {
               // prevent closing menu if we are on child menu
@@ -98,30 +47,10 @@ class Sidebar extends React.Component {
               $li.addClass('active');
   
               $('ul:first', $li).slideDown(function() {
-                  setContentHeight();
+                  //setContentHeight();
               });
           }
       });
-  
-  // toggle small or large menu
-  /*
-  $MENU_TOGGLE.on('click', function() {
-      console.log('clicked - menu toggle');
-  
-      if ($BODY.hasClass('nav-md')) {
-        $SIDEBAR_MENU.find('li.active ul').hide();
-        $SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
-      } else {
-        $SIDEBAR_MENU.find('li.active-sm ul').show();
-        $SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
-      }
-  
-    $BODY.toggleClass('nav-md nav-sm');
-  
-    setContentHeight();
-  
-    $('.dataTable').each ( function () { $(this).dataTable().fnDraw(); });
-  });*/
   
     // check active menu
     $SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
@@ -131,16 +60,9 @@ class Sidebar extends React.Component {
     $SIDEBAR_MENU.find('a').filter(function () {
       return this.href == CURRENT_URL;
     }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
-      setContentHeight();
+      //setContentHeight();
     }).parent().addClass('active');
-  
-    // recompute content when resizing
-    $(window).smartresize(function(){
-      setContentHeight();
-    });
-  
-    setContentHeight();
-  
+    
     // fixed sidebar
     if ($.fn.mCustomScrollbar) {
       $('.menu_fixed').mCustomScrollbar({
@@ -150,6 +72,12 @@ class Sidebar extends React.Component {
       });
   };
   // /Sidebar
+
+  }
+
+    componentDidMount() {
+      this.updateSidebar();
+      
 }
 
     render() {
@@ -173,7 +101,6 @@ class Sidebar extends React.Component {
             //console.log("Href: "+ $(this).attr("href"));
           return $(this).attr("href") == window.location.pathname;
         }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
-          //setContentHeight();
         }).parent().addClass('active');;
       }
 

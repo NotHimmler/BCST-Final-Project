@@ -3,19 +3,22 @@ import { Link } from "react-router-dom";
 
 class PatientSidebar extends React.Component {
 
-  componentDidMount() {
+  /* componentDidMount() {
     $('a').filter(function () {
       var $li = $(this).parent();
       if ($li.is('.current-page')) {
         $li.removeClass('current-page');}
+        let re = new RegExp(`${$(this).attr("href")}*`);
         //console.log("Href: "+ $(this).attr("href"));
-      return $(this).attr("href") == window.location.pathname;
+        //console.log("Window path: " + window.location.pathname);
+        //console.log(re.test(window.location.pathname));
+      return false; //re.test(window.location.pathname);
     }).parent('li').addClass('current-page');
-  }
+  } */
 
   render() {
 
-    function updateActive() {
+   /* function updateActive() {
       //console.log("update: " + window.location.pathname);
 
       $('a').filter(function () {
@@ -23,11 +26,12 @@ class PatientSidebar extends React.Component {
         if ($li.is('.current-page')) {
           $li.removeClass('current-page');}
           //console.log("Href: "+ $(this).attr("href"));
-        return $(this).attr("href") == window.location.pathname;
+          let re = new RegExp(`${$(this).attr("href")}[0-9]`);
+        return false; //re.test(window.location.pathname);
       }).parent('li').addClass('current-page');
     }
 
-    updateActive();
+    updateActive(); */
     
       return (
         <div>
@@ -35,8 +39,8 @@ class PatientSidebar extends React.Component {
           <div id="sidebar-menu" className="main_menu_side hidden-print main_menu">
           <div className="menu_section">
             <ul className="nav side-menu">
-            <li>
-              <Link to="patient">
+            <li className="current-page testing">
+              <Link to="#">
               <i className="fa fa-bar-chart-o"></i> Patient Data 
               </Link>
               </li>
