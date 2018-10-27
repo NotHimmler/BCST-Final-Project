@@ -13,6 +13,7 @@ class MockSessionStore {
 
 describe("PatientList", () => {
     let mountedpatientList;
+    let patList = new PatientList();
 
     //Creates a rendered patientList component to test
     const patientList = () => {
@@ -47,3 +48,25 @@ describe("PatientList", () => {
         });
       });
 });
+
+describe("activeHeader()", () => {
+    const patList = new PatientList();
+
+    it("generates a header with some columns", () => {
+        let header = shallow(patList.activePatientHeader()).find("tr");
+        expect(header.length).toBe(1);
+        let cols = header.find("th");
+        expect(cols.length).toBe(7);
+    })
+})
+
+describe("archivedHeader()", () => {
+    const patList = new PatientList();
+
+    it("generates a header with some columns", () => {
+        let header = shallow(patList.archivedPatientHeader()).find("tr");
+        expect(header.length).toBe(1);
+        let cols = header.find("th");
+        expect(cols.length).toBe(7);
+    })
+})
