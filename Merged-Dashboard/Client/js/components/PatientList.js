@@ -198,7 +198,7 @@ class PatientList extends React.Component {
         const { loaded, placeholder } = this.state;
 
         return (
-          <div>
+          <div id="pat-list-comp">
             <div className='x_panel'>
 
               <div className='x_content'>
@@ -207,13 +207,16 @@ class PatientList extends React.Component {
               <table className="table">
                     <thead className="thead-light">
                         { !this.state.archived ? this.activePatientHeader() : this.archivedPatientHeader()}
+                        
+                    </thead>
+                    <tbody>
                         { 
                         loaded ?
                         this.state.patientRows
                         : 
-                        <p>{placeholder}</p>
+                        <tr><td>placeholder</td></tr>
                         }
-                    </thead>
+                    </tbody>
                 </table>
                 
 
