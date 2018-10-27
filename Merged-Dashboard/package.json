@@ -8,6 +8,7 @@
     "dev": "FBCS=dbe33653c4a3667122eed5ebe28175f0 FBCID=22CZMN DEV=true nodemon ./Server/index.js dev",
     "deploy": "nodemon ./Server/index.js deploy",
     "test": "jest",
+    "comp-test": "jest Client/js/*",
     "heroku": "git subtree push --prefix Merged-Dashboard heroku master"
   },
   "repository": {
