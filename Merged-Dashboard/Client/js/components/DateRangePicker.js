@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+const moment = require('moment');
+const $ = require('jquery');
 
 class DateRangePicker extends React.Component {
 
@@ -54,7 +56,7 @@ class DateRangePicker extends React.Component {
         };
 
         $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-        $('#reportrange').daterangepicker(optionSet1, cb);
+        //$('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
         $('#reportrange').on('show.daterangepicker', function() {
           console.log("show event fired");
         });
