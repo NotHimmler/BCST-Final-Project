@@ -57,10 +57,10 @@ class App extends React.Component {
       <BrowserRouter>
         <div className="nav-md">
         <div className="container body">
-            <div className="main_container">
+            <div className="main_container" style={{height: this.state.height}}>
               {this.state.isLoggedIn ? <Sidebar username={this.state.username} /> : null}
               {this.state.isLoggedIn ? <Topnav username={this.state.username} updateAppStatus={this.updateStatus.bind(this)} />  : null}
-              <div className="right_col" role="main">
+              <div className="right_col" style={{height: this.state.height-60}} role="main">
                 <Switch>
                   {this.state.isLoggedIn ? 
                   <div>
