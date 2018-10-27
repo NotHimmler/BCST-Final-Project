@@ -434,7 +434,22 @@ class FitbitTable extends React.Component {
           </div>{" "}
           {/*end x_title*/}
           <div className="x_content">
-            {this.state.hasData ? <div id="mainb" /> : <div>No Data - {this.state.inviting ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> : null}<button onClick={() => this.handleInviteButton("cancel")}>{this.state.inviting && this.state.inviteEmail != "" ? <a href={this.state.inviteLink}>Send Email</a> : "Send Patient Invite"}</button> {this.state.inviting ? <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> : null} </div>}
+            {this.state.hasData ? 
+            <div id="mainb" /> : 
+            <div>
+              No Data - {this.state.inviting 
+                        ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} placeholder="Patient Email Address"/> 
+                        : null}
+                        <button onClick={() => this.handleInviteButton("cancel")}>
+                          {this.state.inviting && this.state.inviteEmail != "" 
+                          ? <a href={this.state.inviteLink}>Send Email</a> 
+                          : "Send Patient Invite"}
+                        </button> 
+                        {this.state.inviting ? 
+                        <button onClick={() => this.handleInviteButton("cancel")}>Cancel</button> 
+                        : null} 
+            </div>
+            }
           </div>{" "}
           {/*end x_content*/}
         </div>
