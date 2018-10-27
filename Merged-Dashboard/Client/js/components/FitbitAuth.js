@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 let $ = require('jquery');
+const fetch = require('cross-fetch');
 
 class FitbitAuth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            authURL: false
+            authURL: false,
+            mrn: this.props.match ? this.props.match.params.mrn : 80000001
         }
-        
+        if(!this.props.location) return;
         if (this.props.location.search != "") {
             let params = new URLSearchParams(this.props.location.search)
             let code = params.get('code');
@@ -21,9 +23,9 @@ class FitbitAuth extends React.Component {
                 })
             }
             
-        } else if(this.props.match.params.mrn) {
+        } else if(this.state.mrn) {
             
-            localStorage.fitbitAuthMrn = this.props.match.params.mrn;
+            localStorage.fitbitAuthMrn = this.state.mrn;
         }
     }
 
@@ -89,7 +91,7 @@ class FitbitAuth extends React.Component {
         return (
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center", width: "100%"}}>
               {/*ALL HTML MUST BE WITHIN THIS DIV*/}
-                {this.props.match.params.mrn ? (this.state.authURL ? this.authURLDiv() : null) : this.thanksDiv()}
+                {this.state.mrn ? (this.state.authURL ? this.authURLDiv() : null) : this.thanksDiv()}
             </div>
         )
     }
