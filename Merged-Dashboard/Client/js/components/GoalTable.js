@@ -127,6 +127,8 @@ class GoalTable extends React.Component {
                                     }
                                 </div>
                             </div>
+
+                            {/* <button className="btn btn-add-subgoal">Add sub goal</button> */}
                         </div>
                     </div>
                 </div>
