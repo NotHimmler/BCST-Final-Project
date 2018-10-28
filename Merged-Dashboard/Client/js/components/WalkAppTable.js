@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 let $ = require("jquery");
 const boxMargins = {
-    "paddingLeft": "20px",
-    "paddingRight": "20px"
+    "paddingLeft": "10px",
+    "paddingRight": "10px"
   }
 //Source - https://stackoverflow.com/questions/5539028/converting-seconds-into-hhmmss/5539081#5539081
 function secondsToHms(d) {

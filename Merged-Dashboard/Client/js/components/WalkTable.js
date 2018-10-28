@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import DateRangePicker from "../components/DateRangePicker";
 import etheme from "../components/Charts/Theme";
 const boxMargins = {
-  "paddingLeft": "20px",
-  "paddingRight": "20px"
+  "paddingLeft": "10px",
+  "paddingRight": "10px"
 }
 class WalkTable extends React.Component {
   constructor(props) {
