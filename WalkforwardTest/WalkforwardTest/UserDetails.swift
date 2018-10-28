@@ -13,6 +13,7 @@ class UserDetails: UIViewController {
     var firstName: String = ""
     var lastName: String = ""
     var walkObjs: [Dictionary<String, Any>]?
+    var defaultBlue: UIColor?
     //MARK: Properties
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
@@ -31,6 +32,13 @@ class UserDetails: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        defaultBlue = self.view.tintColor;
+        loginButton.setTitleColor(.white, for: .normal);
+        loginButton.backgroundColor = defaultBlue;
+        loginButton.layer.cornerRadius = 5
+        weeklyButton.layer.cornerRadius = 5
+        monthlyButton.layer.cornerRadius = 5
+        yearlyButton.layer.cornerRadius = 5
         // Do any additional setup after loading the view.
     }
     
@@ -49,6 +57,8 @@ class UserDetails: UIViewController {
                 firstName = userInfo.value(forKey: "firstName") as! String? ?? "John"
                 lastName = userInfo.value(forKey: "lastName") as! String? ?? "Doe"
                 loginButton.setTitle("Logout", for: .normal)
+                loginButton.setTitleColor(.white, for: .normal);
+                loginButton.backgroundColor = UIColor(displayP3Red: 1.0, green: 59.0/255.0, blue: 48.0/255.0, alpha: 1.0)
                 nameLabel.text = firstName + " " + lastName
                 nameLabel.isHidden = false;
             } else {
@@ -64,6 +74,8 @@ class UserDetails: UIViewController {
         
         getAndSetWalkObjects();
         calculateAndSetStatsForTimePeriod(6);
+        
+        setActiveButton(weeklyButton)
     }
     
     func getAndSetWalkObjects() {
@@ -81,7 +93,7 @@ class UserDetails: UIViewController {
                 dict["steps"] = walk.value(forKey: "steps") as! Int;
                 dict["duration"] = walk.value(forKey: "duration") as! Int;
                 dict["date"] = walk.value(forKey: "date") as! Date;
-                print(dict)
+                
                 walkObjs.append(dict)
             }
             self.walkObjs = walkObjs
@@ -140,6 +152,7 @@ class UserDetails: UIViewController {
                 print("Could not fetch. \(error), \(error.userInfo)")
             }
             loginButton.setTitle("Patient Login", for: .normal)
+            loginButton.backgroundColor = defaultBlue
             nameLabel.isHidden = true;
         }
         
@@ -147,14 +160,33 @@ class UserDetails: UIViewController {
     
     @IBAction func handleWeeklyClick(_ sender: Any) {
         calculateAndSetStatsForTimePeriod(6)
+        setActiveButton(weeklyButton);
+        setInactiveButton(monthlyButton);
+        setInactiveButton(yearlyButton);
     }
     
     @IBAction func handleMonthlyClick(_ sender: Any) {
         calculateAndSetStatsForTimePeriod(30)
+        setActiveButton(monthlyButton);
+        setInactiveButton(weeklyButton);
+        setInactiveButton(yearlyButton);
     }
     
     @IBAction func handleYearlyClick(_ sender: Any) {
         calculateAndSetStatsForTimePeriod(364)
+        setActiveButton(yearlyButton);
+        setInactiveButton(monthlyButton);
+        setInactiveButton(weeklyButton);
+    }
+    
+    func setActiveButton(_ btn: UIButton) {
+        btn.setTitleColor(.white, for: .normal);
+        btn.backgroundColor = defaultBlue;
+    }
+    
+    func setInactiveButton(_ btn: UIButton) {
+        btn.setTitleColor(defaultBlue, for: .normal);
+        btn.backgroundColor = .white;
     }
     /*
     // MARK: - Navigation
