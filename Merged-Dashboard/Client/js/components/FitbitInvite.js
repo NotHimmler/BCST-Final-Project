@@ -46,15 +46,15 @@ class FitbitInvite extends React.Component {
                     ? <p>Patient is already connected to Fitbit</p>
                     : <div>
                         {this.state.inviting 
-                            ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} /> 
+                            ? <input autoComplete={"off"} type="email" name="email" value={this.state.inviteEmail} onChange={this.handleInviteChange} placeholder="Patient Email Address" style={{marginRight: "5px", minWidth: "300px"}}/> 
                             : null}
-                        <button className="" onClick={() => this.handleInviteButton("cancel")}>
+                        <button className="btn btn-success" onClick={() => this.handleInviteButton("cancel")}>
                             {this.state.inviting && this.state.inviteEmail != "" 
-                                ? <a href={this.state.inviteLink}>Send Email</a> 
+                                ? <a href={this.state.inviteLink} style={{color: "white"}}>Send Email</a> 
                                 : "Send Patient Invite"}
                         </button> 
                         {this.state.inviting 
-                            ? <button className="" onClick={() => this.handleInviteButton("cancel")}>Cancel</button> 
+                            ? <button className="btn btn-danger" onClick={() => this.handleInviteButton("cancel")}>Cancel</button> 
                             : null} 
                     </div>
                 }

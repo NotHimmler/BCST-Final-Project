@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 let $ = require('jquery');
+const fetch = require('cross-fetch');
 
 class FitbitAuth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            authURL: false
+            authURL: false,
+            mrn: this.props.match ? this.props.match.params.mrn : false,
+            location: this.props.location ? this.props.location : false
         }
-        
-        if (this.props.location.search != "") {
+        if(!this.state.location) return;
+        if (this.state.location.search != "") {
             let params = new URLSearchParams(this.props.location.search)
             let code = params.get('code');
             console.log(code);
@@ -21,9 +24,9 @@ class FitbitAuth extends React.Component {
                 })
             }
             
-        } else if(this.props.match.params.mrn) {
+        } else if(this.state.mrn) {
             
-            localStorage.fitbitAuthMrn = this.props.match.params.mrn;
+            localStorage.fitbitAuthMrn = this.state.mrn;
         }
     }
 
@@ -50,12 +53,14 @@ class FitbitAuth extends React.Component {
            return data.json();
         }).then(data => {
             this.setState({authURL: data.url}); 
+        }).catch(err => {
+
         })
     }
 
     authURLDiv() {
         return (
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+            <div id="auth-url-box" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <h2>Hi!</h2> 
                 <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
                     With your Fitbit Data we can be more effective at helping you get the best treatment possible.
@@ -76,7 +81,7 @@ class FitbitAuth extends React.Component {
 
     thanksDiv() {
         return (
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+            <div id="auth-thanks-box" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <h2>Thank You!</h2> 
                 <p style={{textAlign: "center"}}>Thanks for taking the time to connect your Fitbit Data to the dashboard.<br/>
                     With your Fitbit Data we can be more effective at helping you get the best treatment possible.
@@ -89,7 +94,7 @@ class FitbitAuth extends React.Component {
         return (
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center", width: "100%"}}>
               {/*ALL HTML MUST BE WITHIN THIS DIV*/}
-                {this.props.match.params.mrn ? (this.state.authURL ? this.authURLDiv() : null) : this.thanksDiv()}
+                {this.state.mrn ? (this.state.authURL ? this.authURLDiv() : null) : this.thanksDiv()}
             </div>
         )
     }

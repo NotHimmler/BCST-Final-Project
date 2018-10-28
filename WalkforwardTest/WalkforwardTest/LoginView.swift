@@ -55,7 +55,7 @@ class LoginView: UIViewController {
             return
         }
         //declare parameter as a dictionary which contains string as key and value combination.
-        let parameters = ["userInfo": ["mrn": usernameTextField.text, "firstName": passwordTextField.text, "lastName": lastNameTextField.text]]
+        let parameters = ["userInfo": ["mrn": usernameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), "firstName": passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), "lastName": lastNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)]]
         
         //create the url with NSURL
         let url = NSURL(string: WalkSyncing.loginString)
@@ -125,13 +125,20 @@ class LoginView: UIViewController {
             }
             
         })
-        
+        let this = self
         task.resume()
-        while !finished {}
-        if(failed) {
-            self.present(alertController, animated: true, completion: nil)
+        loginButton.isEnabled = false;
+        loginButton.setTitle("Logging In...", for: .normal);
+        DispatchQueue.global().async {
+            while !finished {}
+            if(failed) {
+                this.present(alertController, animated: true, completion: nil)
+                this.loginButton.isEnabled = true;
+                this.loginButton.setTitle("Login", for: .normal);
+            } else {
+                this.dismiss(animated: true, completion: nil)
+            }
         }
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelHandler(_ sender: Any) {

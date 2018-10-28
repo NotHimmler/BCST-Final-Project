@@ -23,6 +23,7 @@ class ExamplePatient extends React.Component {
     this.state = { 
       content : "Data",
       lastCheckedup: "",
+      lastCheckupString: "",
       data : {},
       loaded: false,
       placeholder: "Loading...",
@@ -49,7 +50,7 @@ class ExamplePatient extends React.Component {
     .then(data => {
       let hasToken = false;
       (data.token) ? hasToken=true : hasToken=false;
-      this.setState({data: data, loaded:true, hasFitbitToken: hasToken});
+      this.setState({data: data, lastCheckupString: this.getLastCheckupString(data.last_checkup_date, data.last_checkup_by), loaded:true, hasFitbitToken: hasToken});
     }).catch(err => {
       
     })
@@ -60,15 +61,19 @@ class ExamplePatient extends React.Component {
   }
 
   // Get a string for last checkup
-  getLastCheckupString(){
-    const {data} = this.state;
-    const lastCheckupDate = data.last_checkup_date;
+  getLastCheckupString(date, by){
+    const lastCheckupDate = date
     if(lastCheckupDate == null){
       return "No last checkup";
     } else {
-      let string = new Date(lastCheckupDate).toDateString()+ " by "+ data.last_checkup_by;
+      let string = new Date(lastCheckupDate).toDateString()+ " by "+ by;
       return string;
     }
+  }
+
+  updateCheckupDate(date) {
+    let checkupString = this.getLastCheckupString(date, this.props.username)
+    this.setState({lastCheckupString: checkupString})
   }
 
   onExpiredToken() {
@@ -109,7 +114,7 @@ class ExamplePatient extends React.Component {
                     <p>{data.is_archived?" (This patient has been archived)":""}</p>
                     <h4>MRN: {loaded?data.MRN:placeholder}</h4>
                     <h5 className="last_checkup"><i>Last check up: {loaded
-                          ? this.getLastCheckupString()
+                          ? this.state.lastCheckupString
                           : placeholder}</i></h5>
                     <button id="chkup-btn" className="btn btn-danger" onClick={() => this.setState({content: "Checkup"})}>Perform Checkup</button>
                     <table id="pat-info-tab" className="table">
@@ -166,7 +171,7 @@ class ExamplePatient extends React.Component {
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.state.mrn} setContent={this.setContent} user={this.props.username}/> : null
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.state.mrn} setContent={this.setContent} user={this.props.username} updateCheckup={this.updateCheckupDate.bind(this)}/> : null
               }
 
 

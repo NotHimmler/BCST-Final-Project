@@ -35,6 +35,7 @@ class PatientCheckup extends React.Component {
             if (data.okay) {
                 this.updateLastCheckup(this.props.mrn);
                 this.props.setContent("Data");
+                this.props.updateCheckup(new Date());
             }
         })
     }

@@ -85,6 +85,7 @@ class ViewController: UIViewController {
         self.distGoalTextField.resignFirstResponder()
         self.stepGoalTextField.resignFirstResponder()
         self.minGoalTextField.resignFirstResponder()
+        self.view.frame.origin.y = 0;
     }
     
     func getSavedGoals() {
@@ -178,6 +179,7 @@ class ViewController: UIViewController {
             } else {
                 if view == minGoalTextField {
                     minGoalTextField.becomeFirstResponder()
+                    self.view.frame.origin.y -= 150;
                 }
                 goalType = "minutes"
                 goalValue = Int(minGoalTextField.text!)!
