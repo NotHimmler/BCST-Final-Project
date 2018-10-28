@@ -80,12 +80,16 @@ patientRouter.get("/details/mrn/:mrn", function(req, res) {
      return db.Patient.findOne({where: {MRN:body.mrn, first_name: body.firstName.trim(), last_name: body.lastName.trim()}})
      .then(data => {
         console.log(data.dataValues);
-        res.status(200)
-        res.send(data.dataValues);
+        if (data == null) {
+            res.send({"error": "Patient not found"});
+        } else {
+            res.send(data.dataValues);
+        }
+        
      }).catch(err => {
-         console.log(error)
+         console.log(err)
         res.status(400);
-        res.end()
+        res.send({"error": "Database error"})
      })
  })
 
