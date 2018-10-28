@@ -171,7 +171,7 @@ class ExamplePatient extends React.Component {
               }
 
               {
-                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.state.mrn} setContent={this.setContent} user={this.props.username} updateCheck={this.updateCheckupDate.bind(this)}/> : null
+                (this.state.content === "Checkup") ? <PatientCheckup mrn={this.state.mrn} setContent={this.setContent} user={this.props.username} updateCheckup={this.updateCheckupDate.bind(this)}/> : null
               }
 
 
