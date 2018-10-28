@@ -56,7 +56,10 @@ class Register extends React.Component {
                         username:user_id
                     });
 				}
-            }
+			},
+			error: data => {
+				
+			}
         });
 	}
 	

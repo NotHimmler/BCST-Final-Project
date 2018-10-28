@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+const fetch = require('cross-fetch');
 import DateRangePicker from "../components/DateRangePicker";
-
+const echarts = require('echarts');
 import etheme from "../components/Charts/Theme";
 const boxMargins = {
   "paddingLeft": "20px",
@@ -331,7 +331,7 @@ class FitbitTable extends React.Component {
         this.createChart(data['activities-tracker-steps'])
       })
     }).catch(err => {
-      console.log(err)
+      //console.log(err)
     })
   }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+const fetch = require('cross-fetch');
 
 class GoalList extends React.Component {
     constructor(props) {
@@ -29,7 +30,9 @@ class GoalList extends React.Component {
           loaded: true
         });
         this.props.updateGoalState({goalList});
-      });
+      }).catch( err => {
+        //Do something with the error
+      })
     }
 
     getGoalListTable() {

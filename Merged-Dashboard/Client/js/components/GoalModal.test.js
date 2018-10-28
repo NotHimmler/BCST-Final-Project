@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import GoalModal from "./GoalModal";
 /** 
 const mockTrySetLoggedIn = jest.fn();
@@ -18,7 +18,7 @@ describe("GoalModal", () => {
     //Creates a rendered GoalModal component to test
     const goalModal = () => {
         if(!mountedGoalModal) {
-            mountedGoalModal = mount(<GoalModal onSubmit={onSubmit}/>);
+            mountedGoalModal = shallow(<GoalModal show={true} onSubmit={onSubmit}/>);
         }
     
         return mountedGoalModal;
@@ -31,6 +31,7 @@ describe("GoalModal", () => {
     });
 
     it("always renders a div", () => {
+        
         const divs = goalModal().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
