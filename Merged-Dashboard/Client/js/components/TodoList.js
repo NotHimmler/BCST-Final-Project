@@ -38,7 +38,8 @@ class TodoList extends React.Component {
                 });
             }
         }).catch(err => {
-            console.log(err)
+            //Do something with the error
+            //console.log(err)
         })
     }
 
@@ -120,7 +121,7 @@ class TodoList extends React.Component {
     
     render() {
         return (
-            <div>
+            <div id="therapist-todos-box">
               <div className="col-sm-4 to_do">
                   <div className="x_panel">
                     <div className="x_title">

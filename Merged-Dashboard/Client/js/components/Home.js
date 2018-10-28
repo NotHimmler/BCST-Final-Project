@@ -5,6 +5,9 @@ import DonutGraph from "../components/DonutGraph"
 import TodoList from "../components/TodoList"
 import { get } from "https";
 
+const fetch = global.fetch ? global.fetch : require('cross-fetch');
+global.fetch = fetch;
+
 class Home extends React.Component {
   constructor(props){
     super(props);
@@ -42,7 +45,9 @@ class Home extends React.Component {
     })
     .then(data => {
         this.setState({patientList: data});
-    });  
+    }).catch(err => {
+      //Do seomthing with the error
+    }); 
 
     fetch(endpoint2)
     .then(response => {
@@ -53,7 +58,9 @@ class Home extends React.Component {
     })
     .then(data => {
         this.setState({patientList2: data, loaded:true});
-    });  
+    }).catch(err => {
+      //Do seomthing with the error
+    })
   }
     
     render() {
@@ -61,7 +68,7 @@ class Home extends React.Component {
             <div>
                 <div className="row">
                 <DonutGraph/>
-                <div className="col-sm-4">
+                <div id="most-behind-box" className="col-sm-4">
                     <div className="x_panel">
                     <div className="x_title">
                     <h2><span className="fa fa-exclamation-circle"></span> Most Behind on Goals</h2>
@@ -90,7 +97,7 @@ class Home extends React.Component {
                     </div>
                 </div>
 
-                <div className="col-sm-4">
+                <div id="longest-time-box" className="col-sm-4">
                     <div className="x_panel">
                     <div className="x_title donut">
                     <h2><span className="fa fa-clock-o"></span> Longest Time Since Checkup</h2>
