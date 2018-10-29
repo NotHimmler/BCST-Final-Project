@@ -41,7 +41,7 @@ class PatientSidebar extends React.Component {
             <ul className="nav side-menu">
             <li className="current-page testing">
               
-              <i className="fa fa-bar-chart-o"></i> Patient Data 
+              <Link to="#"><i className="fa fa-bar-chart-o"></i> Patient Data</Link>
               </li>
 
               {/* <li><Link to="patient-goal"><i className="fa fa-table"></i> Goals </Link>
