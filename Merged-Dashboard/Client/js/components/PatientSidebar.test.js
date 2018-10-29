@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import PatientSidebar from "./PatientSidebar";
 /** 
 const mockTrySetLoggedIn = jest.fn();
@@ -18,7 +18,7 @@ describe("PatientSidebar", () => {
     //Creates a rendered PatientSidebar component to test
     const patientSidebar = () => {
         if(!mountedPatientSidebar) {
-            mountedPatientSidebar = mount(<PatientSidebar onSubmit={onSubmit}/>);
+            mountedPatientSidebar = shallow(<PatientSidebar onSubmit={onSubmit}/>);
         }
     
         return mountedPatientSidebar;

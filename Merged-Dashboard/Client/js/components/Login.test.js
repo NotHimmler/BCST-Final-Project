@@ -27,7 +27,6 @@ describe("Login", () => {
     //Resets the rendered Login component before each test
     beforeEach(() => {
         mountedLogin = undefined;
-        onSubmit = jest.fn(e => {});
     });
 
     //React component requirement
