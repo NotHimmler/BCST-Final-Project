@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+const $ = require('jquery');
 
 class Login extends React.Component {
     constructor(props, context) {
@@ -74,7 +75,7 @@ class Login extends React.Component {
                             <input type="password" className="form-control password" placeholder="Password" required="" />
                         </div>
                         <div>
-                            <Link to="/" className="btn btn-default submit" onClick={this.submitHandler}>Log in</Link>
+                            <a to="/" id="submit-link" className="btn btn-default submit" onClick={this.submitHandler}>Log in</a>
                             <a className="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -82,7 +83,7 @@ class Login extends React.Component {
 
                         <div className="separator">
                             <p className="change_link">New to site?
-                                <Link to="/register" className="to_register"> Create Account </Link>
+                                <a to="/register" className="to_register"> Create Account </a>
                             </p>
 
                             <div className="clearfix"></div>

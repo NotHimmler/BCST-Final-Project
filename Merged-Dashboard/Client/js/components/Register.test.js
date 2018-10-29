@@ -31,6 +31,7 @@ describe("Register", () => {
         onSubmit = jest.fn();
     });
 
+    //React component requirement
     it("always renders a div", () => {
         const divs = register().find("div");
         expect(divs.length).toBeGreaterThan(0);
@@ -40,8 +41,6 @@ describe("Register", () => {
         const form = register().find("form");
         expect(form.length).toBeGreaterThan(0);
     });
-
-
 
     it("calls onSubmit when form is submitted and passes state", () => {
         const submitButton = register().find("form").last();
