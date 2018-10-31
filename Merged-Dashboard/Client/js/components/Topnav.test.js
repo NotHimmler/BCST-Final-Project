@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { mount, shallow } from "enzyme";
 import Topnav from "./Topnav";
 /** 
@@ -18,7 +19,7 @@ describe("Topnav", () => {
     //Creates a rendered Topnav component to test
     const topnav = () => {
         if(!mountedTopnav) {
-            mountedTopnav = shallow(<Topnav onSubmit={onSubmit}/>);
+            mountedTopnav = shallow(<Topnav updateAppStatus={(object) => {}}/>);
         }
     
         return mountedTopnav;
@@ -33,6 +34,20 @@ describe("Topnav", () => {
     it("always renders a div", () => {
         const divs = topnav().find("div");
         expect(divs.length).toBeGreaterThan(0);
+    });
+
+    it("has a link to logout", () => {
+        const logout = topnav().find(Link);
+        expect(logout).toHaveLength(1);
+    })
+
+    it("calls the logout handler when the logout link is clicked", () => {
+        const mountedTopNav = topnav();
+        const spy = jest.spyOn(mountedTopNav.instance(), 'logOutHandler');
+        mountedTopNav.instance().forceUpdate();
+        const logout = mountedTopNav.find(Link);
+        logout.first().simulate('click');
+        expect(spy).toBeCalled();
     });
 
     describe("the rendered div", () => {

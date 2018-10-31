@@ -35,6 +35,34 @@ describe("TodoList", () => {
         expect(divs.length).toBeGreaterThan(0);
     });
 
+    it("has a text input and submit button", () => {
+        const todoListComp = todoList();
+        const input = todoListComp.find("input");
+        const button = todoListComp.find("button");
+        expect(input).toHaveLength(1);
+        expect(button).toHaveLength(1);
+    });
+
+    it("does not try to submit a new todo when no text is entered", () => {
+        const todoListComp = todoList();
+        const spy = jest.spyOn(todoListComp.instance(), 'handleNewTodo');
+        todoListComp.instance().forceUpdate();
+        todoListComp.setState({"todo-input": ""});
+        const button = todoListComp.find("button");
+        button.first().simulate('click');
+        expect(spy).toBeCalledTimes(0);
+    })
+
+    it("tries to submit a new todo when text is entered", () => {
+        const todoListComp = todoList();
+        const spy = jest.spyOn(todoListComp.instance(), 'handleNewTodo');
+        todoListComp.instance().forceUpdate();
+        todoListComp.setState({"todo-input": "Text"});
+        const button = todoListComp.find("button");
+        button.first().simulate('click');
+        expect(spy).toBeCalledTimes(1);
+    })
+
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
             const divs = todoList().find("div");

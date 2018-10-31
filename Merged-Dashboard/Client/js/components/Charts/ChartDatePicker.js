@@ -108,6 +108,8 @@ class ChartDatePicker extends React.Component {
                     minDate: moment(from[0]),
                     maxDate: moment(to[0]),
                 });
+            }).catch(err => {
+                //Handle error her
             });
     }
     

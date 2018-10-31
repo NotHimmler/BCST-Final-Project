@@ -37,6 +37,8 @@ class PatientCheckup extends React.Component {
                 this.props.setContent("Data");
                 this.props.updateCheckup(new Date());
             }
+        }).catch(err => {
+            //Handle error here
         })
     }
 
@@ -47,6 +49,7 @@ class PatientCheckup extends React.Component {
 
     // Update last checkup
     updateLastCheckup(mrn) {
+        if (this.state.note == "") return;
         let endpoint = `/api/patient/updateLastCheckup`;
         let patientInfo = {
         username: this.props.user,
@@ -68,6 +71,8 @@ class PatientCheckup extends React.Component {
         })
         .then(data => {
         console.log(data);
+        }).catch(err => {
+            //Handle error here
         });
     }
     
@@ -81,7 +86,7 @@ class PatientCheckup extends React.Component {
                     <label>Checkup Notes<br />
                     <textarea name="notes" style={{width: "100%"}} onChange={this.handleInputChange} value={this.state.note}></textarea>
                     </label>
-                    <button type="submit">Complete Checkup</button> <button onClick={() => this.props.setContent("Data")}>Cancel</button>
+                    <button className="btn btn-success" type="submit" disabled={this.state.note == ""}>Complete Checkup</button> <button className="btn btn-danger" id="chkup-cancel-btn" onClick={() => this.props.setContent("Data")}>Cancel</button>
                 </form>
             </div>
         )

@@ -242,7 +242,7 @@ class AmountTable extends React.Component {
       endDate = moment(this.state.startDate)
       startDate = moment(endDate).subtract(6, 'days')
     } else {
-      startDate = moment(this.state.endDate);
+      startDate = moment(this.state.endDate).add(1, 'days');
       endDate = moment(startDate).add(6, 'days');
     }
 

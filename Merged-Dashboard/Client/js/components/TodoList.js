@@ -93,6 +93,7 @@ class TodoList extends React.Component {
     }
 
     handleNewTodo(event) {
+        
         let newTodo = {
             text: this.state['todo-input'],
             done: false,
@@ -117,6 +118,8 @@ class TodoList extends React.Component {
                     this.generateRowsFromData()
                 })
             }
+        }).catch(err => {
+            //Handle error here
         })
         //
     }
@@ -139,7 +142,7 @@ class TodoList extends React.Component {
                       </div>
                       <div>
                           <input type="text" placeholder="New Todo Item" name="todo-input" value={this.state['todo-input']} onChange={this.handleInputChange}></input>
-                          <button onClick={this.handleNewTodo}>Add</button>
+                          <button onClick={this.handleNewTodo} disabled={this.state['todo-input'] == ""}>Add</button>
                       </div>
                     </div>
                   </div>

@@ -35,6 +35,16 @@ describe("DisPatients", () => {
         expect(divs.length).toBeGreaterThan(0);
     });
 
+    it("always renders a search box", () => {
+        const searchBox = disPatients().find("#patient-search-box");
+        expect(searchBox.length).toBe(1);
+    });
+
+    it("always renders a patient list component", () => {
+        const patientList = disPatients().find("#pat-list-comp");
+        expect(patientList.length).toBe(1);
+    })
+
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
             const divs = disPatients().find("div");
