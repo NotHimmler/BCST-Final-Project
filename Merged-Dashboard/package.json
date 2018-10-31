@@ -4,7 +4,8 @@
   "description": "A medical dashboard for physiotherapists and patients",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development ./Client/js/app.js",
+    "build": "webpack --mode development --watch ./Client/js/app.js",
+    "build-prod": "webpack --mode production --config webpack.prod.js ./Client/js/app.js",
     "dev": "FBCS=dbe33653c4a3667122eed5ebe28175f0 FBCID=22CZMN DEV=true nodemon ./Server/index.js dev",
     "deploy": "nodemon ./Server/index.js deploy",
     "test": "jest",
