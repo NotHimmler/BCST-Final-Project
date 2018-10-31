@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import Template from "./Template";
+import Sidebar from "./Sidebar";
 /** 
 const mockTrySetLoggedIn = jest.fn();
 
@@ -11,36 +11,36 @@ class MockSessionStore {
 }
 */
 
-describe("Template", () => {
-    let mountedTemplate;
+describe("Sidebar", () => {
+    let mountedSidebar;
     let onSubmit = jest.fn();
 
-    //Creates a rendered Template component to test
-    const template = () => {
-        if(!mountedTemplate) {
-            mountedTemplate = mount(<Template onSubmit={onSubmit}/>);
+    //Creates a rendered Sidebar component to test
+    const sidebar = () => {
+        if(!mountedSidebar) {
+            mountedSidebar = shallow(<Sidebar onSubmit={onSubmit}/>);
         }
     
-        return mountedTemplate;
+        return mountedSidebar;
     }
     
-    //Resets the rendered Template component before each test
+    //Resets the rendered Sidebar component before each test
     beforeEach(() => {
-        mountedTemplate = undefined;
+        mountedSidebar = undefined;
         onSubmit = jest.fn();
     });
 
     it("always renders a div", () => {
-        const divs = template().find("div");
+        const divs = sidebar().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
 
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
-            const divs = template().find("div");
+            const divs = sidebar().find("div");
             const wrappingDiv = divs.first();
     
-            expect(wrappingDiv.children()).toEqual(template().find("div").first().children());
+            expect(wrappingDiv.children()).toEqual(sidebar().find("div").first().children());
         });
       });
 });

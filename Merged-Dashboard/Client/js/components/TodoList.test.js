@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import Template from "./Template";
+import TodoList from "./TodoList";
 /** 
 const mockTrySetLoggedIn = jest.fn();
 
@@ -11,36 +11,36 @@ class MockSessionStore {
 }
 */
 
-describe("Template", () => {
-    let mountedTemplate;
+describe("TodoList", () => {
+    let mountedTodoList;
     let onSubmit = jest.fn();
 
-    //Creates a rendered Template component to test
-    const template = () => {
-        if(!mountedTemplate) {
-            mountedTemplate = mount(<Template onSubmit={onSubmit}/>);
+    //Creates a rendered TodoList component to test
+    const todoList = () => {
+        if(!mountedTodoList) {
+            mountedTodoList = mount(<TodoList onSubmit={onSubmit}/>);
         }
     
-        return mountedTemplate;
+        return mountedTodoList;
     }
     
-    //Resets the rendered Template component before each test
+    //Resets the rendered TodoList component before each test
     beforeEach(() => {
-        mountedTemplate = undefined;
+        mountedTodoList = undefined;
         onSubmit = jest.fn();
     });
 
     it("always renders a div", () => {
-        const divs = template().find("div");
+        const divs = todoList().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
 
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
-            const divs = template().find("div");
+            const divs = todoList().find("div");
             const wrappingDiv = divs.first();
     
-            expect(wrappingDiv.children()).toEqual(template().find("div").first().children());
+            expect(wrappingDiv.children()).toEqual(todoList().find("div").first().children());
         });
       });
 });

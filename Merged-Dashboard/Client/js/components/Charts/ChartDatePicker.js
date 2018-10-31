@@ -3,6 +3,8 @@ import React from "react";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+global.fetch = global.fetch ? global.fetch : require('cross-fetch');
+
 class ChartDatePicker extends React.Component {
     constructor(props){
         super(props);

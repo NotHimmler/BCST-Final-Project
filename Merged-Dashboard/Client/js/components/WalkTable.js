@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import DateRangePicker from "../components/DateRangePicker";
 import etheme from "../components/Charts/Theme";
+const $ = require('jquery');
 const boxMargins = {
   "paddingLeft": "10px",
   "paddingRight": "10px"

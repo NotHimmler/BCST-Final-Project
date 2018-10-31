@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import Template from "./Template";
+import Topnav from "./Topnav";
 /** 
 const mockTrySetLoggedIn = jest.fn();
 
@@ -11,36 +11,36 @@ class MockSessionStore {
 }
 */
 
-describe("Template", () => {
-    let mountedTemplate;
+describe("Topnav", () => {
+    let mountedTopnav;
     let onSubmit = jest.fn();
 
-    //Creates a rendered Template component to test
-    const template = () => {
-        if(!mountedTemplate) {
-            mountedTemplate = mount(<Template onSubmit={onSubmit}/>);
+    //Creates a rendered Topnav component to test
+    const topnav = () => {
+        if(!mountedTopnav) {
+            mountedTopnav = shallow(<Topnav onSubmit={onSubmit}/>);
         }
     
-        return mountedTemplate;
+        return mountedTopnav;
     }
     
-    //Resets the rendered Template component before each test
+    //Resets the rendered Topnav component before each test
     beforeEach(() => {
-        mountedTemplate = undefined;
+        mountedTopnav = undefined;
         onSubmit = jest.fn();
     });
 
     it("always renders a div", () => {
-        const divs = template().find("div");
+        const divs = topnav().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
 
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () => {
-            const divs = template().find("div");
+            const divs = topnav().find("div");
             const wrappingDiv = divs.first();
     
-            expect(wrappingDiv.children()).toEqual(template().find("div").first().children());
+            expect(wrappingDiv.children()).toEqual(topnav().find("div").first().children());
         });
       });
 });

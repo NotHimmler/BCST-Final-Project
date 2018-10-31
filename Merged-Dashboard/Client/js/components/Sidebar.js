@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import PatientSidebar from "../components/PatientSidebar";
-
+const $ = require('jquery');
 //NOTES//
 //Implement className="navbar nav_title" style="border: 0;"
 

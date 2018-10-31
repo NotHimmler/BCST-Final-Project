@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import moment from 'moment';
 
 import etheme from './Theme'
@@ -8,6 +9,8 @@ import blankOp from './FitbitOptions'
 
 import ChartDatePicker from './ChartDatePicker'
 import FitbitInvite from '../../components/FitbitInvite'
+const echarts = require('echarts')
+global.fetch = global.fetch ? global.fetch : require('cross-fetch');
 
 class FitbitChart extends React.Component {
     constructor(props) {
@@ -20,8 +23,9 @@ class FitbitChart extends React.Component {
             chartDisplay: "block",
             testing: "",
             errorMessage: "Data does not exist",
+            
         };
-
+        this.chartRef = React.createRef();
         this.addData = this.addData.bind(this);
         this.addGoal = this.addGoal.bind(this);
         this.colorizeBars = this.colorizeBars.bind(this);
@@ -149,7 +153,8 @@ class FitbitChart extends React.Component {
 
     componentDidMount() {
         //Initialise echart
-        let ec = echarts.init(document.getElementById(`test_chart_${this.props.mrn}`), this.state.theme);
+        
+        let ec = echarts.init(this.chartRef.current, this.state.theme);
         //ec.setOption(blankOp);
         this.setState({ec:ec}, ()=> {
             //Get data from api endpoint
@@ -183,7 +188,7 @@ class FitbitChart extends React.Component {
                     </div>{" "}
                     {/*end x_title*/}
                     <div className="x_content">
-                        <div style={{display: this.state.chartDisplay}} className="test_chart" id={`test_chart_${this.props.mrn}`}/>
+                        <div style={{display: this.state.chartDisplay}} className="test_chart" id={`test_chart_${this.props.mrn}`} ref={this.chartRef}/>
                         {
                             (this.state.chartDisplay === "none")
                             ? <div>
