@@ -83,7 +83,7 @@ class Login extends React.Component {
 
                         <div className="separator">
                             <p className="change_link">New to site?
-                                <a to="/register" className="to_register"> Create Account </a>
+                                <Link to="/register" className="to_register"> Create Account </Link>
                             </p>
 
                             <div className="clearfix"></div>

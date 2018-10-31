@@ -48,8 +48,14 @@ class App extends React.Component {
 
   updateStatus(option){
     this.setState(option);
-    localStorage.isLoggedIn = option.isLoggedIn;
-    localStorage.username = option.username;
+    if (!option.isLoggedIn) {
+      localStorage.clear("isLoggedIn");
+      localStorage.clear("username");
+    } else {
+      localStorage.isLoggedIn = option.isLoggedIn;
+      localStorage.username = option.username;
+    }
+    
   }
 
   render(){
