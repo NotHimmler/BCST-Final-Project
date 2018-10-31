@@ -136,8 +136,9 @@ class WalkTable extends React.Component {
     // /Panel toolbox
   
     //echart Bar
+    if(this.chartRef.current == null) return;
     var ec = echarts.init(this.chartRef.current, this.state.theme);
-
+    
     ec.setOption(this.state.options_distance);
     //   let option =  options_distance;
     //   option.title.text = 'bbbb';
