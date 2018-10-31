@@ -31,6 +31,7 @@ Can be acquired in the MacOS App Store for free
 5. Run the command to start the development server - NOTE - Port 8080 must be open
     ```npm run dev```
 6. Go to ```http://localhost:8080/```
+7. Login with username: "leanneh" and password: "leanne" - Or create an account
 
 
 ##How to run the App##
