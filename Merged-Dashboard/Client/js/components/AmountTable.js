@@ -321,7 +321,7 @@ class AmountTable extends React.Component {
             {this.state.isAdding ? <button className="btn btn-danger" onClick={(e) => this.handleButtonClick("cancel", e)}>Cancel</button> : null }
             </div>
           </form>
-          <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+          <div style={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
             <div>
               <button onClick={() => this.handleWeekChange("left")}><i className="fas fa-chevron-left"></i></button>
               <span style={{paddingRight: "5px"}}>{this.state.dateRange}</span>
