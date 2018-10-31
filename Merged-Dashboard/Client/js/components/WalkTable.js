@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import DateRangePicker from "../components/DateRangePicker";
 import etheme from "../components/Charts/Theme";
+
 const $ = require('jquery');
+const echarts = require('echarts');
+
 const boxMargins = {
   "paddingLeft": "10px",
   "paddingRight": "10px"
 }
+
 class WalkTable extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +18,7 @@ class WalkTable extends React.Component {
     this.change_weekly = this.change_weekly.bind(this);
     this.change_monthly = this.change_monthly.bind(this);
     this.colorize_bars = this.colorize_bars.bind(this);
-
+    this.dropdownDistRef = React.createRef();
     this.state = {
       echart: null,
       // optionss
@@ -102,7 +105,9 @@ class WalkTable extends React.Component {
       //Theme
       theme: etheme
     };
+    this.chartRef = React.createRef();
   }
+
   componentDidMount() {
     // Panel toolbox
     $(".collapse-link").on("click", function() {
@@ -129,10 +134,9 @@ class WalkTable extends React.Component {
       $BOX_PANEL.remove();
     });
     // /Panel toolbox
-    
-    if(this.props.lastName != "Test") return;
+  
     //echart Bar
-    var ec = echarts.init(document.getElementById("mainc"), this.state.theme);
+    var ec = echarts.init(this.chartRef.current, this.state.theme);
 
     ec.setOption(this.state.options_distance);
     //   let option =  options_distance;
@@ -170,11 +174,12 @@ class WalkTable extends React.Component {
 
   // changefunc
   change_daily() {
-    document.getElementById("dropdown_distance").innerHTML =
+    let dropdownDist = this.dropdownDistRef.current;
+    dropdownDist.innerHTML =
       "Daily" + ' <span class="caret"></span>';
 
     var echartBar1 = echarts.init(
-      document.getElementById("mainc"),
+      this.chartRef.current,
       this.state.theme
     );
     var ops = this.state.options_distance;
@@ -191,12 +196,14 @@ class WalkTable extends React.Component {
     echartBar1.setOption(this.state.options_distance);
     this.setState({ echart: echartBar1 });
   }
+
   change_weekly() {
-    document.getElementById("dropdown_distance").innerHTML =
+    let dropdownDist = this.dropdownDistRef.current;
+    dropdownDist.innerHTML =
       "Weekly" + ' <span class="caret"></span>';
 
     var echartBar2 = echarts.init(
-      document.getElementById("mainc"),
+      this.chartRef.current,
       this.state.theme
     );
 
@@ -225,11 +232,12 @@ class WalkTable extends React.Component {
   }
 
   change_monthly() {
-    document.getElementById("dropdown_distance").innerHTML =
+    let dropdownDist = this.dropdownDistRef.current;
+    dropdownDist.innerHTML =
       "Monthly" + ' <span class="caret"></span>';
 
     var echartBar3 = echarts.init(
-      document.getElementById("mainc"),
+      this.chartRef.current,
       this.state.theme
     );
     var ops = this.state.options_distance;
@@ -291,20 +299,20 @@ class WalkTable extends React.Component {
                     id="dropdown_distance"
                     className="btn btn-primary dropdown-toggle"
                     type="button"
-                    data-toggle="dropdown"
+                    data-toggle="dropdown" ref={this.dropdownDistRef}
                   >
                     Daily
                     <span className="caret" />
                   </button>
                   <ul className="dropdown-menu">
                     <li>
-                      <a onClick={this.change_daily}>Daily</a>
+                      <a id="change-daily-btn" onClick={this.change_daily}>Daily</a>
                     </li>
                     <li>
-                      <a onClick={this.change_weekly}>Weekly</a>
+                      <a id="change-weekly-btn" onClick={this.change_weekly}>Weekly</a>
                     </li>
                     <li>
-                      <a onClick={this.change_monthly}>Monthly</a>
+                      <a id="change-monthly-btn" onClick={this.change_monthly}>Monthly</a>
                     </li>
                   </ul>
                 </li>
@@ -321,7 +329,7 @@ class WalkTable extends React.Component {
             <div className="clearfix" />
           </div>
           <div className="x_content">
-            <div id="mainc" />
+            <div id="mainc" ref={this.chartRef}/>
           </div>
         </div>
         : 
