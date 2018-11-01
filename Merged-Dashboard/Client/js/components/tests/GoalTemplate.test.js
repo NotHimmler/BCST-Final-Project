@@ -18,7 +18,7 @@ describe("GoalTemplate", () => {
     //Creates a rendered GoalTemplate component to test
     const goalTemplate = () => {
         if(!mountedGoalTemplate) {
-            mountedGoalTemplate = mount(<GoalTemplate onSubmit={onSubmit}/>);
+            mountedGoalTemplate = mount(<GoalTemplate globalGoals={[]}/>);
         }
     
         return mountedGoalTemplate;

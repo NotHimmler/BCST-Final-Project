@@ -1,6 +1,7 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
 import GoalTable from "../GoalTable";
+global.fetch = require('cross-fetch');
 /** 
 const mockTrySetLoggedIn = jest.fn();
 
@@ -18,7 +19,7 @@ describe("GoalTable", () => {
     //Creates a rendered GoalTable component to test
     const goalTable = () => {
         if(!mountedGoalTable) {
-            mountedGoalTable = mount(<GoalTable onSubmit={onSubmit}/>);
+            mountedGoalTable = mount(<GoalTable goal={{}}/>);
         }
     
         return mountedGoalTable;

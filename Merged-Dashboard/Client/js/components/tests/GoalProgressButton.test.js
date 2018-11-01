@@ -18,7 +18,7 @@ describe("GoalProgressButton", () => {
     //Creates a rendered GoalProgressButton component to test
     const goalProgressButton = () => {
         if(!mountedGoalProgressButton) {
-            mountedGoalProgressButton = mount(<GoalProgressButton onSubmit={onSubmit}/>);
+            mountedGoalProgressButton = mount(<GoalProgressButton goal={{}}/>);
         }
     
         return mountedGoalProgressButton;
