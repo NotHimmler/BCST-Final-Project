@@ -82,6 +82,8 @@ class FitbitChart extends React.Component {
             return stepsPayload;
         }).then((rawSteps) => {
             //this.addGoal(rawSteps)
+        }).catch(err => {
+            //Handle Error here
         });  
     }
 
@@ -123,6 +125,8 @@ class FitbitChart extends React.Component {
   
                 //console.log(`Start ${start} end ${end} val ${goalVal}`);
             }
+        }).catch(err => {
+            //Handle error here
         })
     }
 

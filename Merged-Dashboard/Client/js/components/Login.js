@@ -13,7 +13,7 @@ class Login extends React.Component {
       }
 
     submitHandler(e) {
-        e.preventDefault();
+        if(e) e.preventDefault();
         var userid =$('.login .userid').val();
         var password = $('.login .password').val();
         if(!userid||!password){

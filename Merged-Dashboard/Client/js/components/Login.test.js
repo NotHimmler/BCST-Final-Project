@@ -18,7 +18,7 @@ describe("Login", () => {
     //Creates a rendered Login component to test
     const login = () => {
         if(!mountedLogin) {
-            mountedLogin = mount(<Login />);
+            mountedLogin = shallow(<Login />);
         }
     
         return mountedLogin;
