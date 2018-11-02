@@ -41,3 +41,9 @@ Can be acquired in the MacOS App Store for free
 3. Go to the WalkforwardTest folder
 4. Double click the ```WalkforwardTest.xcworkspace``` XCode workspace file
 5. Click the play button to launch on your phone or a simulator
+
+OR If you have an iPhone
+
+1. Download the Test Flight App from the App Store
+2. Go to ```https://testflight.apple.com/join/9RXmxp8L```
+3. Accept the terms and conditions and install
